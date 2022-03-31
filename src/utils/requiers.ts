@@ -1,9 +1,19 @@
 import axios from "axios"
 import { Message } from "@arco-design/web-vue"
 import { AxiosRequestConfig } from "axios"
+import {h} from 'vue'
+import {IconRecord} from '@arco-design/web-vue/es/icon'
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   show?: boolean
+}
+interface ShowMessageOptions {
+  show?: boolean,
+  res?:{
+    msg?: string;
+  }
+  msg: string
+  code?: number
 }
 
 const config = {
@@ -30,22 +40,25 @@ requier.interceptors.response.use(
     return res.data
   },
   (err) => {
-    Message.error(`err:${err}`)
+    ShowMessage(err)
     console.log(err)
     return Promise.reject(err)
   }
 )
 
 // show Message
-function ShowMessage(data) {
-  if (data.show) {
+function ShowMessage(data:ShowMessageOptions) {
+  console.log('data :>> ', data);
+  if (data.show && data.code === 200) {
     Message.success(data.msg)
+  }else{
+    Message.warning({ icon: () => h(IconRecord), content: data.msg || data.res.msg || '' })
   }
 }
 // 其实接口服务 直接支持 post get
 //转换 object => string
-function ObjInStr(data) {
-  if (!data) return
+function ObjInStr(data:{[string:string]:string | number}):string {
+  if (!data) return ''
   let str = "?"
   for (const key in data) {
     if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -64,3 +77,5 @@ const apprequire = (RqConfig: MyAxiosRequestConfig) => {
   return requier(RqConfig)
 }
 export default apprequire
+
+

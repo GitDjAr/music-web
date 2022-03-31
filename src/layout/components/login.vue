@@ -16,7 +16,7 @@
           <a-input v-model="form.phone" placeholder="please enter your phone..." />
         </a-form-item>
         <a-form-item field="password" :label="$t('login.password')">
-          <a-input v-model="form.password" placeholder="please enter your password..." />
+          <a-input-password v-model="form.password"  placeholder="please enter your password..." />
         </a-form-item>
         <p class="login-way">{{ $t('login.loginWithEmail') }}</p>
         <a-form-item field="isRead">

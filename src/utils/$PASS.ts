@@ -7,6 +7,19 @@ interface resOption {
   code: number
   msg: string
 }
+
+
+/**
+ * 通过状态码 定制返回结果
+ * @param code 状态码
+ * @param msg 提示信息
+ * @param data 返回数据
+ * @param success 成功回调
+ * @param fail 失败回调
+ * @param complete 完成回调
+ * @param options 配置
+ * @param options.isShowMsg 是否显示提示信息
+ */
 class PASS {
   // constructor(msg: string, code: number) {
   //   this.msg = msg
@@ -23,3 +36,6 @@ class PASS {
 }
 
 export default new PASS()
+
+
+
