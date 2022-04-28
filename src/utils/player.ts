@@ -1,11 +1,16 @@
+import {reactive,watch} from 'vue'
+import { Howler, Howl } from 'howler';
 class Player {
   constructor(name,option){
-    super
-    this.name = name
-    this.options = options
+    // this.name = name
+    this.options = {
+      playstatus: false,
+      ...option,
+    }
   }
-  play(){
-    return ``
+  playFun(){
+    console.log('playFun',this);
+    // options.playstatus = !options.playstatus
   }
   spuse(){
 
@@ -16,7 +21,24 @@ class Player {
   prov(){
 
   }
+
+  get playstatus():boolean{
+    return this.options.playstatus
+  }
   
 }
+// const Play = reactive(new Player('palyer-sound',{}) )
 
-export default new Player('palyer-sound',{})
+// setTimeout(() => {
+//   console.log(Play.playstatus);
+  
+// Play.playFun = ()=>{}    
+// console.log(Play.playstatus);
+
+// }, 1000);
+// watch(()=>Play,(newVal)=>{
+//   console.log(newVal);
+// })
+let b = new Player('palyer-sound',{})
+b.playFun()
+export default Player

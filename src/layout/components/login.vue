@@ -78,7 +78,7 @@ export default defineComponent({
     const login = async () => {
       const res = await Home.Login(state.form)
       if (proxy.$PASS(res)) {
-        store.dispatch('UserLogin', res.data)
+        store.dispatch('UserLogin', res)
         handleCancel()
       }
     }

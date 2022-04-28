@@ -17,17 +17,18 @@ interface ShowMessageOptions {
 }
 
 const config = {
-  baseURL: "http://8.140.43.205:3000",
-  timeout: 5000,
+  // 默认配置
+  baseURL: "/api",
+  timeout: 20000,
 }
 const requier = axios.create(config)
 requier.interceptors.request.use(
   (cf) => {
-    cf.data.cookie = JSON.parse(localStorage.getItem("userInfo") || "{}")?.cookie
+    // cf.data.cookie = JSON.parse(localStorage.getItem("userInfo") || "{}")?.cookie
     return cf
   },
   (err) => {
-    Message.error(`err:${err}`)
+    Message.error(`request err: ${err}`)
     console.log(err)
     return Promise.reject(err)
   }
@@ -37,22 +38,23 @@ requier.interceptors.response.use(
   (res) => {
     const { data } = res
     ShowMessage(data)
-    return res.data
+    return res.data || res
   },
   (err) => {
-    ShowMessage(err)
-    console.log(err)
-    return Promise.reject(err)
+    ShowMessage({msg:err.message,code:500})
+    return Promise.reject({data:{},err})
   }
 )
 
 // show Message
 function ShowMessage(data:ShowMessageOptions) {
-  console.log('data :>> ', data);
+  // console.log('data :>> ', data);
+  const msg = data.msg || data?.res?.msg || '' 
+  if(!msg)return
   if (data.show && data.code === 200) {
     Message.success(data.msg)
   }else{
-    Message.warning({ icon: () => h(IconRecord), content: data.msg || data.res.msg || '' })
+    Message.warning({ icon: () => h(IconRecord), content: msg})
   }
 }
 // 其实接口服务 直接支持 post get

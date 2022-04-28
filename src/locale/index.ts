@@ -4,7 +4,7 @@ import Store from "../store/index"
 import { createI18n } from "vue-i18n"
 
 const I18n = createI18n({
-  locale: Store?.state?.app?.locale || "zh-CN",
+  locale: "zh-CN",
   messages: {
     "zh-CN": CN,
     en

@@ -1,0 +1,37 @@
+{
+	"info": {
+		"_postman_id": "41ea661a-68aa-4760-b058-a03f59bb19e5",
+		"name": "rj",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "正式库链接",
+			"item": [
+				{
+					"name": "4101 正式库",
+					"request": {
+						"method": "get",
+						"url": {
+							"raw": "http://10.121.0.65:20001/isp-api/powercsb/4101",
+							"protocol": "http",
+							"host": [
+								"10",
+								"121",
+								"0",
+								"65"
+							],
+							"port": "20001",
+							"path": [
+								"isp-api",
+								"powercsb",
+								"4101"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+		]
+}

@@ -13,6 +13,7 @@ export default {
     favorite: "Favorite",
     history: "History",
     settings: "Settings",
+    guitar: "Guitar",
   },
   footer: {
     settings: "Settings",

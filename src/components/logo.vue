@@ -15,8 +15,8 @@ export default defineComponent({
     width:String,
     height: String,
     logo:{
-      type:String || Number,
-      default:0
+      type:String,
+      default:'0'
     }
   },
   setup(props) {
@@ -27,13 +27,15 @@ export default defineComponent({
       },
       src:''
     })
-    const srcMap = {
+    interface srcMapOpt {
+      [key: string]: string
+    }
+    const srcMap:srcMapOpt = {
       '0': palylogo,
       '1': logo
     }
     let a = props.logo
     state.src = srcMap[a]
-    console.log(state.src);
     
     state.style.width = props?.width || '100%'
     state.style.height = props?.height || '100%'

@@ -16,6 +16,9 @@
       ></a-option>
     </a-select>
     <h1>{{ $t('nav.home') }}</h1>
+    <div>
+      {{}}
+    </div>
   </div>
 </template>
 

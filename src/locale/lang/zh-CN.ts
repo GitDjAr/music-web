@@ -12,7 +12,8 @@ export default {
     collect:'收藏',
     favorite:'最爱',
     settings:'设置',
-    history:'播放历史'
+    history:'播放历史',
+    guitar:'吉他谱'
   },
   home: {
     recommendPlaylist: '推荐歌单',

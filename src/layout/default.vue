@@ -51,26 +51,28 @@
         </nav>
       </div>
       <div class="right-box">
+        <!-- <router-view></router-view> -->
         <Suspense>
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'fade'" mode="out-in">
-              <!-- <keep-alive> -->
+              <keep-alive>
                 <component
                   :is="Component"
                   :key="route.meta.usePathKey ? route.path : undefined"
                 />
-              <!-- </keep-alive> -->
+              </keep-alive>
             </transition>
           </router-view>
         </Suspense>
       </div>
     </main>
-    <footer class="footer-play padding10">{{userInfo}}</footer>
+    <footerVue class="footer-play padding10" />
   </div>
   <loginVue v-model:visible='visible' />
 </template>
 
 <script lang="ts">
+import footerVue from "./components/footer.vue"
 import { defineComponent, reactive, toRefs, onMounted,getCurrentInstance } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import loginVue from "./components/login.vue"
@@ -78,7 +80,7 @@ import store from "../store"
 import {mapGetters} from 'vuex'
 
 export default defineComponent({
-  components: {loginVue},
+  components: {loginVue,footerVue},
   computed:{
     ...mapGetters(['userInfo','loginStatus'])
   },
@@ -94,12 +96,13 @@ export default defineComponent({
       visible:false,
       active: 0,
       NavList: [
-        { to: "/home", name: "nav.home" },
-        { to: "/radio", name: "nav.radio" },
-        { to: "/alboms", name: "nav.alboms" },
-        { to: "/favorite", name: "nav.favorite" },
-        { to: "/history", name: "nav.history" },
-        { to: "/settings", name: "nav.settings" },
+        { to: "/Music/home", name: "nav.home" },
+        { to: "/Music/radio", name: "nav.radio" },
+        { to: "/Music/alboms", name: "nav.alboms" },
+        { to: "/Music/favorite", name: "nav.favorite" },
+        { to: "/Music/history", name: "nav.history" },
+        { to: "/Music/settings", name: "nav.settings" },
+        { to: "/Gtp/Guitar", name: "nav.guitar" },
       ],
     })
     const Router = useRouter()
@@ -179,6 +182,7 @@ export default defineComponent({
     }
   }
   .right-box {
+    height: 100%;
     padding: 5px 10px;
     overflow:hidden  auto;
     border-radius: 5px;

@@ -1,41 +1,61 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-const layout = ()=>import("../layout/default.vue")
-const Home = ()=>import( "../views/Home.vue")
-const setting = ()=>import( "../views/settings/index.vue")
-const About = ()=>import( "../views/About.vue")
-const TopCharts = ()=>import( "../views/TopCharts.vue")
+import type { RouteComponent } from 'vue-router'
 
+// muisc
+const layout = () => import("../layout/default.vue")
+const Home = () => import("../views/Home.vue")
+const setting = () => import("../views/settings/index.vue")
+const About = () => import("../views/About.vue")
+const TopCharts = () => import("../views/TopCharts.vue")
+
+// Gutian
+const Gutian = () => import("../layout/G.vue")
+const GuitarHome: RouteComponent = () => import("../views/Guitar/index.vue")
 const routes: Array<RouteRecordRaw> = [
-
   {
-    path: "/D",
+    path: "/Music",
     name: "layout",
     component: layout,
+    children: [
+      {
+        path: 'Home',
+        name: 'Home',
+        component: Home
+      },
+      {
+        path: 'topCharts',
+        name: 'TopCharts',
+        component: TopCharts
+      },
+      {
+        path: 'About',
+        name: 'About',
+        component: About
+      },
+      {
+        path: 'settings',
+        name: 'settings',
+        component: setting
+      },
+    ]
   },
   {
-    path:'/Home',
-    name:'Home',
-    component:Home
+    path: "/Gtp",
+    name: "Gt",
+    component: Gutian,
+    children: [
+      {
+        path: 'Guitar',
+        name: 'Guitar',
+        component: GuitarHome
+      }
+    ]
   },
   {
-    path:'/topCharts',
-    name:'TopCharts',
-    component:TopCharts
-  },
-  {
-    path:'/About',
-    name:'About',
-    component:About
-  },
-  {
-    path:'/settings',
-    name:'settings',
-    component:setting
-  },
-  {
-    path:'/*',
-    redirect:'/Home'
+    path: "/",
+    redirect: "/Music/Home"
   }
+
   // {
   //   path: "/about",
   //   name: "About",

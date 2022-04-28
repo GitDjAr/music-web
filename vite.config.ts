@@ -4,16 +4,40 @@ import * as path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  // base:'./',d
+
+  plugins: [vue({
+    reactivityTransform: true,// 开启reactivityTransform $ref
+  })],
+
+  define: {
+    //https://vue-i18n.intlify.dev/guide/advanced/optimization.html#reduce-bundle-size-with-feature-build-flags
+    // __VUE_I18N_FULL_INSTALL__: true,
+    // __VUE_I18N_LEGACY_API__: false,
+    // __INTLIFY_PROD_DEVTOOLS__: false,
+  },
   server: {
+    port: 4000,
     proxy: {
-      "/api": {
+      "/api/": {
         target: "http://8.140.43.205:3000",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/api\//, ""),
       },
+      "/apiG/": {//gitee
+        target: "http://xn--lg3a.top:83",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/apiG\//, ""),
+      },
+      "/apiG2/": {//gtpso.com
+        target: "http://xn--lg3a.top:84",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/apiG2\//, ""),
+      }
     },
-    cors:true
+    cors: true
   },
   css: {
     preprocessorOptions: {

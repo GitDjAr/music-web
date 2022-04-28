@@ -1,9 +1,9 @@
 
 const Getter = {
-  loginStatus:(store)=>{
+  loginStatus:(store:any)=>{
     return store.app.loginStatus
   },
-  userInfo:(store)=>{
+  userInfo:(store:any)=>{
     return store.app.userInfo
   }
 }
