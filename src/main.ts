@@ -6,6 +6,7 @@ import vuex from "./store/index"
 // tailwind.css  样式覆盖问题
 // https://github.com/arco-design/arco-design-vue/issues/759
 import "./style/tailwind.css"
+import "./style/reset-arco.scss"
 
 import ArcoVue from "@arco-design/web-vue"// 
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';//额外引入图标库
@@ -20,7 +21,12 @@ import "./style/index.scss"
 import "./style/threm.scss"
 import "./style/init.scss"
 
-
+// import './mock/mock'
+// // mock开关，设置是否引入文件
+// const mock = true
+// if (mock) {
+//   // require('./mock/mock') // 注意使用require，不用import，在需要的时使用。
+// }
 
 const app = createApp(App)
   .use(ArcoVue)

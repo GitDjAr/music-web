@@ -84,6 +84,7 @@ export default {
     login: '登录',
     outin: '退出',
     loginWithEmail: '邮箱登录',
+    loginQRCode: '二维码登录',
     loginWithPhone: '手机号登录',
     notice: `PlaySound承诺不会保存你的任何账号信息到云端。<br />
       你的密码会在本地进行 MD5 加密后再传输到网易云 API。<br />

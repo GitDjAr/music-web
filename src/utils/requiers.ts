@@ -1,15 +1,16 @@
 import axios from "axios"
 import { Message } from "@arco-design/web-vue"
 import { AxiosRequestConfig } from "axios"
-import {h} from 'vue'
-import {IconRecord} from '@arco-design/web-vue/es/icon'
+import Cache from './cache'
+import { h } from 'vue'
+import { IconRecord } from '@arco-design/web-vue/es/icon'
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   show?: boolean
 }
 interface ShowMessageOptions {
   show?: boolean,
-  res?:{
+  res?: {
     msg?: string;
   }
   msg: string
@@ -24,7 +25,15 @@ const config = {
 const requier = axios.create(config)
 requier.interceptors.request.use(
   (cf) => {
-    // cf.data.cookie = JSON.parse(localStorage.getItem("userInfo") || "{}")?.cookie
+    const user = localStorage.getItem("userInfo") || '{}'
+    const cookie = JSON.parse(user)?.cookie
+    // cf.headers.head.cookie = cookie
+    // cf.headers.post.cookie = cookie
+    if(cf.method?.toLowerCase() === 'post'){
+      cf.data.cookie = cookie
+    }
+    // cf.headers['cookie'] = cookie
+    // cf.url +='&realIP=211.161.244.70'
     return cf
   },
   (err) => {
@@ -36,31 +45,38 @@ requier.interceptors.request.use(
 
 requier.interceptors.response.use(
   (res) => {
-    const { data } = res
+    const { data = null } = res
     ShowMessage(data)
-    return res.data || res
+    // 进行缓存
+    if (data.code === 200) {
+      const CacheName = res.config.method?.toLowerCase() === "get"
+        ? res.config.url
+        : JSON.stringify(res.config.data)
+      Cache.set(CacheName, data || res)
+    }
+    return data || res
   },
   (err) => {
-    ShowMessage({msg:err.message,code:500})
-    return Promise.reject({data:{},err})
+    ShowMessage({ msg: err.message, code: 500 })
+    return Promise.reject({ data: {}, err })
   }
 )
 
 // show Message
-function ShowMessage(data:ShowMessageOptions) {
+function ShowMessage(data: ShowMessageOptions) {
   // console.log('data :>> ', data);
-  const msg = data.msg || data?.res?.msg || '' 
-  if(!msg)return
+  const msg = data.msg || data?.res?.msg || ''
+  if (!msg) return
   if (data.show && data.code === 200) {
     Message.success(data.msg)
-  }else{
-    Message.warning({ icon: () => h(IconRecord), content: msg})
+  } else {
+    Message.warning({ icon: () => h(IconRecord), content: msg })
   }
 }
 // 其实接口服务 直接支持 post get
 //转换 object => string
-function ObjInStr(data:{[string:string]:string | number}):string {
-  if (!data) return ''
+function ObjInStr(data: { [string: string]: string | number }): string {
+  if (!data || JSON.stringify(data) === '{}') return ''
   let str = "?"
   for (const key in data) {
     if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -71,11 +87,24 @@ function ObjInStr(data:{[string:string]:string | number}):string {
 }
 
 const apprequire = (RqConfig: MyAxiosRequestConfig) => {
-  const { data, method } = RqConfig
-  if (method === "get") {
+  const { data, method, url } = RqConfig
+  const type = method?.toLowerCase()
+  if (type === "get") {
     RqConfig.url += ObjInStr(data)
     delete RqConfig.data
   }
+  // debugger
+  // 是否有缓存
+  const CacheName = type === "get"
+    ? url
+    : JSON.stringify(data)
+  console.log('CacheName :>> ', CacheName,);
+
+  if (Cache.has(CacheName)) {
+    console.log('cache :>> ', CacheName, Cache.get(CacheName));
+    return Promise.resolve(Cache.get(CacheName))
+  }
+  // const cookie = JSON.parse(localStorage.getItem("userInfo") || "{}")?.cookie
   return requier(RqConfig)
 }
 export default apprequire

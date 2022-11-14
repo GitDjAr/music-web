@@ -1,8 +1,7 @@
 <!--  -->
 <template>
   <a-drawer
-    popup-container="#app"
-    class="Adrawer"
+    class="Adrawer overflow-hidden"
     :closable="false"
     width="400px"
     :visible="visible"
@@ -18,7 +17,7 @@
         <a-form-item field="password" :label="$t('login.password')">
           <a-input-password v-model="form.password"  placeholder="please enter your password..." />
         </a-form-item>
-        <p class="login-way">{{ $t('login.loginWithEmail') }}</p>
+        <p class="login-way">{{ $t('login.loginQRCode') }}</p>
         <a-form-item field="isRead">
           <a-checkbox v-model="form.isRead">{{ $t('login.accessToAll') }}</a-checkbox>
         </a-form-item>
@@ -39,6 +38,7 @@
 <script lang="ts" >
 import * as Home from '@/api/Home'
 import { defineComponent, reactive, toRefs, onMounted, watchEffect, withCtx, watch, computed, getCurrentInstance } from "vue"
+import MD5 from 'md5'
 import store from '../../store';
 // defineProps({
 //   visible:Boolean
@@ -76,7 +76,10 @@ export default defineComponent({
     }
     // 登录
     const login = async () => {
-      const res = await Home.Login(state.form)
+      const res = await Home.Login({
+        phone: state.form.phone,
+        md5_password: MD5(state.form.password),
+      })
       if (proxy.$PASS(res)) {
         store.dispatch('UserLogin', res)
         handleCancel()

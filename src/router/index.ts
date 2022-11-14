@@ -3,10 +3,11 @@ import type { RouteComponent } from 'vue-router'
 
 // muisc
 const layout = () => import("../layout/default.vue")
-const Home = () => import("../views/Home.vue")
+const Home = () => import("../views/Home/index.vue")
+const radio = () => import("../views/Radio/index.vue")
 const setting = () => import("../views/settings/index.vue")
 const About = () => import("../views/About.vue")
-const TopCharts = () => import("../views/TopCharts.vue")
+const TopCharts = () => import("../views/Home/TopCharts.vue")
 
 // Gutian
 const Gutian = () => import("../layout/G.vue")
@@ -21,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'Home',
         name: 'Home',
         component: Home
+      },
+      {
+        path: 'radio',
+        name: 'radio',
+        component: radio
       },
       {
         path: 'topCharts',
@@ -71,6 +77,10 @@ const router = createRouter({
   // history: createWebHistory(process?.env?.BASE_URL),
   history: createWebHistory(),
   routes,
+  scrollBehavior:()=>{
+    // debugger
+    return { top: 1000 }
+  }
 });
 
 export default router;

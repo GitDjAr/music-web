@@ -20,7 +20,8 @@ export default defineConfig({
     port: 4000,
     proxy: {
       "/api/": {
-        target: "http://8.140.43.205:3000",
+        target: "http://localhost:3000",
+        // target: "https://music.qier222.com/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\//, ""),
       },
@@ -51,6 +52,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src/"),
+      // "@components": path.resolve(__dirname, "src/components/"),
     },
   },
 })

@@ -6,13 +6,13 @@
       <a-space class="rg-apace w-full">
         <a-select @change="activeF" :style="{ width: '320px' }" :loading="loading" placeholder="搜索谱子" allow-search
           allow-clear @search="handleSearch" :filter-option="false" v-model="state.activeItem">
-          <a-option v-for="item of SearchList" :value="item">{{ item.song }}</a-option>
+          <a-option v-for="item of SearchList" :value="item" :key="item.song">{{ item.song }}</a-option>
         </a-select>
         <a-button @click="cleraList">重置</a-button>
       </a-space>
       <div :class="`${isActive ? 'h-full' : 'hidden '} my-1`">
         <a-carousel autoPlay indicator-type="line" class="w-full h-full">
-          <a-carousel-item v-for="image in images">
+          <a-carousel-item v-for="(image,index) in images" :key="index">
             <img @click="viewImg(image)" :src="image" :style="{
               width: '100%',
             }" />
@@ -25,9 +25,10 @@
         </div>
       </div>
       <ul class="h-full overflow-scroll">
-        <li :class="{
-          'text-blue-500': state.active === index,
-        }" class="flex cursor-pointer  hover:text-blue-500  h-12 py-4 text-sm justify-between"
+        <li 
+          :class="{ 'text-blue-500': state.active === index, }" 
+          class="flex cursor-pointer  hover:text-blue-500  h-12 py-4 text-sm justify-between"
+          :key="index"
           v-for="(item, index) in Hot" @click="activeF(index, item)">
           <!-- <span>{{ item.artist }}</span> -->
           <span class=" text-ellipsis whitespace-nowrap overflow-hidden ">{{ item.song }}</span>
@@ -36,14 +37,22 @@
         </li>
       </ul>
     </div>
-    <div :class="`${isActive ? ' w-0 hidden' : 'w-3/5'} `" class="left-view h-full ml-6 ">
+    <div id="image-demo-preview-popup-container" :class="`${isActive ? ' w-0 hidden' : 'w-3/5'} `"
+      class="left-view h-full ml-6 ">
       <a-page-header title="Home" :subtitle="state.activeItem.song" @back="cleraList"></a-page-header>
-      <a-image class="view-img" :src="src" >
-      <template #loader>
-        <a-spin tip="加载中---" dot class="h-full" />
-      </template>
-      </a-image>
-      <a-spin :loading="Imgloading" tip="加载中---" dot class="h-full" />
+      <div class="scroll 100vh">
+        <a-image-preview-group v-if="empty" :preview-props="{
+        popupContainer: '#app',
+      }">
+        <a-image lazy class="view-img" :src="src" :key="src" v-for="{ src } in listImg">
+          <template #loader>
+            <a-spin tip="加载中---" dot class="h-full" />
+          </template>
+        </a-image>
+      </a-image-preview-group>
+      <a-empty v-else />
+      <a-spin :loading="Imgloading" v-show="Imgloading"  tip="加载中---" dot class="h-full" />
+      </div>
     </div>
   </div>
 </template>
@@ -52,8 +61,7 @@
 import { getNewTabs, getUrlById, getHomelist, search } from '../../api/Guitar';
 import { ref, reactive, onMounted, toRef, toRefs, computed, isRef, } from 'vue'
 import { IconImageClose } from '@arco-design/web-vue/es/icon';
-import serchcom from './searchCom.vue'
-import { type } from 'os';
+import { delay } from '../../utils/delay';
 
 const state = reactive({
   active: -1,
@@ -90,15 +98,30 @@ function cleraList() {
 }
 // 预览视图
 const src = ref('')
+const listImg = ref([{ src: '' }])
+const empty = ref(true)
 const Imgloading = ref(false)
 const viewImg = async (res: string) => {
   if (isUrl(res)) {
     src.value = res
   } else {
-    Imgloading.value = true
-    let url = await getUrlById(res)
-    src.value = `https://${url.split('|')[0]}`
-    Imgloading.value = false
+    try {
+      Imgloading.value = true
+      listImg.value = []
+      let url = await getUrlById(res)
+      // await delay(2000)
+      Imgloading.value = false
+      // 第一个 / 以前的内容
+      const host = url.split('/')[0]
+      url.split('|').forEach((item: string) => {
+        listImg.value.push({
+          src: `https://${item.includes(host) ? item : `${host}/${item}`}`,
+        })
+      })
+    } catch (error) {
+      Imgloading.value = false
+      empty.value = false
+    }
   }
 }
 // 获取home banner
@@ -112,7 +135,7 @@ const Hot = ref([])
 const backHot: Object[] = []
 const NewTabs = async () => {
   Hot.value = (await getNewTabs())
-  .filter(item => item.type === '3')
+    .filter(item => item.type === '3')
   backHot.push(...Hot.value)
 }
 // 判断字符串 是否是链接
@@ -128,6 +151,7 @@ function activeF(e: Object | number, item?: Object) {
     state.active = e
     state.activeItem = item || {}
   } else {
+    state.activeItem = e
     state.active = SearchList.value.findIndex(v => v.song === e.song)
   }
   viewImg(state.activeItem.id)
@@ -142,6 +166,12 @@ onMounted(async () => {
 })
 
 </script>
+<style>
+#app .arco-image-preview-toolbar {
+  bottom: 0;
+  background: #E3E9FC;
+}
+</style>
 <style scoped lang='scss'>
 .geter-box {
   margin: 0 10px;

@@ -3,9 +3,9 @@ type Data = Object | string
 
 //获取音乐 url
 // 说明 : 使用歌单详情接口后 , 能得到的音乐的 id, 但不能得到的音乐 url, 调用此接口, 传入的音乐 id( 可多个 , 用逗号隔开 ), 可以获取对应的音乐的 url,未登录状态或者非会员返回试听片段(返回字段包含被截取的正常歌曲的开始时间和结束时间)
-export function GetSong(data: Data = {}, method?: any) {
+export function GetSong(data: Data = {}, Time: Boolean = false, method?: any) {
   return requier({
-    url: "/song/url",
+    url: `/song/url?timestamp=${Time ? new Date().getTime() : ''}`,
     method: method || "POST",
     data: data,
     show: true,
@@ -19,7 +19,7 @@ export function GetSong(data: Data = {}, method?: any) {
 export function GetSongDetail(data: Data = {}, method?: any) {
   return requier({
     url: "/song/detail",
-    method: method || "POST",
+    method: method || "Get",
     data: data,
   })
 }

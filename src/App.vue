@@ -1,3 +1,4 @@
+
 <script setup lang="ts">
 import Cookes from 'js-cookie'
 
@@ -12,7 +13,7 @@ const firstF = () => {
 </script>
 
 <template>
-  <template v-if="first" :msg="user">
+  <div v-if="first" :msg="user">
     <!-- <Suspense>
       <router-view v-slot="{ Component, route }">
         <transition :name="route.meta.transition || 'fade'" mode="out-in">
@@ -23,7 +24,7 @@ const firstF = () => {
       </router-view>
     </Suspense> -->
     <router-view></router-view>
-  </template>
+  </div>
   <div v-else class="h-full flex fx-center">
     <transition name="slide-fade">
       <div class="fx-center">

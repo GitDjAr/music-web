@@ -85,7 +85,8 @@ export default {
     email: "Email address",
     password: "Password",
     login: "Login",
-    loginWithEmail: "Login with Email",
+    loginQRCode: "Login with Email",
+    loginQRCode: "Login with QRCode",
     loginWithPhone: "Login with Phone",
     notice: `YesPlayMusic promises not to save any of your account information to the cloud.<br />
           Your password will be MD5 encrypted locally and then transmitted to NetEase Music API.<br />

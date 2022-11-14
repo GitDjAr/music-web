@@ -3,7 +3,7 @@ type Data = Object | string
 
 export function Login(data: Data = {}, method?: any) {
   return requier({
-    url: "/login/cellphone",
+    url: `/login/cellphone?timestamp=${new Date().getTime()}`,
     method: method || "POST",
     data: data,
     show: true,
