@@ -14,7 +14,10 @@
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'fade'" mode="out-in">
               <keep-alive>
-                <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined" />
+                <component
+                  :is="Component"
+                  :key="route.meta.usePathKey ? route.path : undefined"
+                />
               </keep-alive>
             </transition>
           </router-view>
@@ -22,27 +25,25 @@
       </div>
     </main>
     <footer>
-      <footerVue/>
+      <footerVue />
     </footer>
   </div>
 </template>
 
 <script lang="ts">
-import { mapGetters } from 'vuex'
+import footerVue from './components/footer.vue';
+import titleVue from './components/title.vue';
+import navVue from './components/nav.vue';
+import { mapGetters } from 'vuex';
 export default {
+  components: { footerVue, titleVue, navVue },
   computed: {
-    ...mapGetters(['userInfo', 'loginStatus'])
+    ...mapGetters(['userInfo', 'loginStatus']),
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 
-<script lang="ts" setup>
-import footerVue from "./components/footer.vue"
-import titleVue from './components/title.vue'
-import navVue from './components/nav.vue'
-</script>
 <style scoped lang="scss">
 .parent {
   display: grid;
@@ -87,5 +88,4 @@ import navVue from './components/nav.vue'
     border-radius: 5px;
   }
 }
-
 </style>

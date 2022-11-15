@@ -14,7 +14,7 @@
 </template>
 
 <script lang='ts' setup>
-import { ref, reactive, } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 const NavList = ref([
@@ -36,7 +36,6 @@ console.log(store);
 const NavPath = (path: object, index: number) => {
   store.active = index
   Router.push({ path: path?.to })
-
 }
 
 </script>

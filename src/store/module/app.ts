@@ -1,15 +1,10 @@
 import Cookei from "js-cookie"
-import { Commit } from "vuex"
+import { Store, Commit } from "vuex"
 import { GetSong, GetSongDetail } from "@/api/play"
 import Player from "@/utils/player"
 import { reactive } from 'vue'
 // import type Song from '../types/song'
 
-
-interface active {
-  commit: Commit
-  state: () => {}
-}
 interface userInfoOption {
   [string: string]: Object
 }
@@ -35,23 +30,23 @@ const mutations = {
   },
 }
 const actions = {
-  async setLocale({ commit, state }: active, lang: string) {
+  async setLocale({ commit, state }: { commit: Commit }, lang: string) {
     commit("locale", lang)
     Cookei.set("locale", lang)
   },
-  async UserOutin({ commit }: active, status: boolean = false) {
+  async UserOutin({ commit }: { commit: Commit }, status: boolean = false) {
     commit("loginStatus", status)
     Cookei.remove("loginStatus")
     localStorage.setItem("userInfo", "{}")
   },
-  async UserLogin({ commit }: active, info: userInfoOption) {
+  async UserLogin({ commit }: { commit: Commit }, info: userInfoOption) {
     commit("loginStatus", true)
-    Cookei.set("loginStatus", true)
+    Cookei.set("loginStatus", 'true')
     commit("userLogin", info)
     localStorage.setItem("userInfo", JSON.stringify(info))
   },
   // 切歌
-  async ToggleSong({ commit }: active, song: any) {
+  async ToggleSong({ commit }: { commit: Commit }, song: any) {
     const { data: SongInfo } = await GetSong({ id: song.id }, true)
     const Detail = await GetSongDetail({ ids: song.id })
     // const { data: {songs} } = Detail

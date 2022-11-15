@@ -5,6 +5,8 @@ import Cache from './cache'
 import { h } from 'vue'
 import { IconRecord } from '@arco-design/web-vue/es/icon'
 
+import store from "../store/index"
+
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   show?: boolean
 }
@@ -24,16 +26,16 @@ const config = {
 }
 const requier = axios.create(config)
 requier.interceptors.request.use(
-  (cf) => {
-    const user = localStorage.getItem("userInfo") || '{}'
-    const cookie = JSON.parse(user)?.cookie
-    // cf.headers.head.cookie = cookie
-    // cf.headers.post.cookie = cookie
-    if(cf.method?.toLowerCase() === 'post'){
+  (cf = { headers: {} }) => {
+    const cookie = store.getters.userInfo?.cookie
+    console.log(cf, store.getters.userInfo);
+
+    if (cf.method?.toLowerCase() === 'post') {
+      cf.data.token = cookie
       cf.data.cookie = cookie
+    } else {
+      cf.params['token'] = cookie
     }
-    // cf.headers['cookie'] = cookie
-    // cf.url +='&realIP=211.161.244.70'
     return cf
   },
   (err) => {
@@ -98,10 +100,10 @@ const apprequire = (RqConfig: MyAxiosRequestConfig) => {
   const CacheName = type === "get"
     ? url
     : JSON.stringify(data)
-  console.log('CacheName :>> ', CacheName,);
+  // console.log('CacheName :>> ', CacheName,);
 
   if (Cache.has(CacheName)) {
-    console.log('cache :>> ', CacheName, Cache.get(CacheName));
+    // console.log('cache :>> ', CacheName, Cache.get(CacheName));
     return Promise.resolve(Cache.get(CacheName))
   }
   // const cookie = JSON.parse(localStorage.getItem("userInfo") || "{}")?.cookie
