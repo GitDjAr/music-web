@@ -8,6 +8,13 @@ export default defineConfig({
 
   plugins: [vue({
     reactivityTransform: true,// 开启reactivityTransform $ref
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => {
+          return tag.startsWith('ion-') // (return true)
+        }
+      }
+    }
   })],
 
   define: {
@@ -50,7 +57,9 @@ export default defineConfig({
     },
   },
   resolve: {
+    extensions: ['.ts', '.js', '.jsx', '.tsx', '.json'],
     alias: {
+      'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
       "@": path.resolve(__dirname, "src/"),
       // "@components": path.resolve(__dirname, "src/components/"),
     },
