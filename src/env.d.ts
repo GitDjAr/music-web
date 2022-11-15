@@ -6,3 +6,6 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare module 'md5'
+// declare module '*.ts'

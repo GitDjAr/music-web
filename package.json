@@ -36,7 +36,7 @@
     "@types/js-cookie": "^3.0.1",
     "@types/node": "^17.0.21",
     "@vitejs/plugin-vue": "^2.2.0",
-    "electron": "^21.1.0",
+    "electron": "^21.2.3",
     "node-scss": "^7.0.3",
     "sass": "^1.49.9",
     "scss": "^0.2.4",
