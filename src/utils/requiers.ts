@@ -24,18 +24,17 @@ const config = {
   baseURL: "/api",
   timeout: 20000,
 }
-const requier = axios.create(config)
-requier.interceptors.request.use(
-  (cf = { headers: {} }) => {
-    const cookie = store.getters.userInfo?.cookie
-    console.log(cf, store.getters.userInfo);
+const servers = axios.create(config)
+servers.interceptors.request.use(
+  (cf) => {
+    // const cookie = store.getters.userInfo?.cookie
+    // console.log(cf, store.getters.userInfo);
 
-    if (cf.method?.toLowerCase() === 'post') {
-      cf.data.token = cookie
-      cf.data.cookie = cookie
-    } else {
-      cf.params['token'] = cookie
-    }
+    // cf.headers = {
+    //   ...cf.headers,
+    //   cookie,
+    //   token: cookie
+    // }
     return cf
   },
   (err) => {
@@ -45,7 +44,7 @@ requier.interceptors.request.use(
   }
 )
 
-requier.interceptors.response.use(
+servers.interceptors.response.use(
   (res) => {
     const { data = null } = res
     ShowMessage(data)
@@ -89,25 +88,25 @@ function ObjInStr(data: { [string: string]: string | number }): string {
 }
 
 const apprequire = (RqConfig: MyAxiosRequestConfig) => {
-  const { data, method, url } = RqConfig
-  const type = method?.toLowerCase()
-  if (type === "get") {
-    RqConfig.url += ObjInStr(data)
-    delete RqConfig.data
-  }
+  // const { data, method, url } = RqConfig
+  // const type = method?.toLowerCase()
+  // if (type === "get") {
+  //   RqConfig.url += ObjInStr(data)
+  //   delete RqConfig.data
+  // }
   // debugger
   // 是否有缓存
-  const CacheName = type === "get"
-    ? url
-    : JSON.stringify(data)
-  // console.log('CacheName :>> ', CacheName,);
+  // const CacheName = type === "get"
+  //   ? url
+  //   : JSON.stringify(data)
+  // // console.log('CacheName :>> ', CacheName,);
 
-  if (Cache.has(CacheName)) {
-    // console.log('cache :>> ', CacheName, Cache.get(CacheName));
-    return Promise.resolve(Cache.get(CacheName))
-  }
+  // if (Cache.has(CacheName)) {
+  //   // console.log('cache :>> ', CacheName, Cache.get(CacheName));
+  //   return Promise.resolve(Cache.get(CacheName))
+  // }
   // const cookie = JSON.parse(localStorage.getItem("userInfo") || "{}")?.cookie
-  return requier(RqConfig)
+  return servers(RqConfig)
 }
 export default apprequire
 

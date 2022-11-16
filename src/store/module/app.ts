@@ -1,4 +1,3 @@
-import Cookei from "js-cookie"
 import { Store, Commit } from "vuex"
 import { GetSong, GetSongDetail } from "@/api/play"
 import Player from "@/utils/player"
@@ -11,10 +10,8 @@ interface userInfoOption {
 const appuser = localStorage.getItem("userInfo") || "{}"
 const cp = localStorage.getItem("CurPlaySong") || '{}'
 const state = {
-  locale: Cookei.get("locale") || "zh-CN",
-  test: "test",
+  locale: localStorage.getItem("locale") || "zh-CN",
   userInfo: JSON.parse(appuser) || {},
-  loginStatus: Cookei.get("loginStatus"),
 
   // 当前 or 上次播放历史
   CurPlaySong: JSON.parse(cp) || {},
@@ -22,26 +19,24 @@ const state = {
 }
 const mutations = {
   locale: (state, status): void => (state.locale = status),
-  test: (state, status): void => (state.test = status),
   userLogin: (state, status): void => (state.userInfo = status),
-  loginStatus: (state, status): void => (state.loginStatus = status),
   CurPlaySong: (state, status): void => {
     state.CurPlaySong = status
   },
 }
 const actions = {
+  // 设置语言
   async setLocale({ commit, state }: { commit: Commit }, lang: string) {
     commit("locale", lang)
-    Cookei.set("locale", lang)
+    localStorage.setItem("locale", lang)
   },
+  // user退出
   async UserOutin({ commit }: { commit: Commit }, status: boolean = false) {
-    commit("loginStatus", status)
-    Cookei.remove("loginStatus")
     localStorage.setItem("userInfo", "{}")
+    commit("userLogin", {})
   },
+  // 登录
   async UserLogin({ commit }: { commit: Commit }, info: userInfoOption) {
-    commit("loginStatus", true)
-    Cookei.set("loginStatus", 'true')
     commit("userLogin", info)
     localStorage.setItem("userInfo", JSON.stringify(info))
   },
@@ -68,6 +63,7 @@ const actions = {
   },
 }
 
+// 代理 music 播放器
 function selfish(target: any) {
   const cache = new WeakMap();
   const handler = {

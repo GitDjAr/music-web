@@ -1,12 +1,12 @@
 
 const Getter = {
-  loginStatus:(store:any)=>{
-    return store.app.loginStatus
+  loginStatus: (store: any) => {
+    return JSON.stringify(store.app.userInfo) !== '{}'
   },
-  userInfo:(store:any)=>{
+  userInfo: (store: any) => {
     return store.app.userInfo
   },
-  CurPlaySong:(store:any)=>{
+  CurPlaySong: (store: any) => {
     return store.app.CurPlaySong
   }
 }
