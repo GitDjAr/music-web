@@ -1,30 +1,15 @@
 <!--  -->
 <template>
-  <div class="myfooter relative" @click.stop="toggle">
-    <div
-      class="myclass h-full w-full grid select-none padding10"
-      :class="visible ? 'absolute padding10' : ''"
-    >
-      <div
-        v-if="CurPlaySong.song"
-        class="grid myname items-center justify-center"
-        @click.stop
-      >
-        <img
-          style="width: 50px"
-          class="rounded-lg object-cover cursor-pointer"
-          :disabled="true"
-          :src="CurPlaySong.song.al.picUrl"
-        />
+  <div class="myfooter relative" @click.stop="toggle" v-if="CurPlaySong.song">
+    <div class="myclass h-full w-full grid select-none padding10" :class="visible ? 'absolute padding10' : ''">
+      <div class="grid myname items-center justify-center" @click.stop>
+        <img style="width: 50px" class="rounded-lg object-cover cursor-pointer" :disabled="true"
+          :src="CurPlaySong.song.al.picUrl" />
         <div class="cursor-pointer">
           <h2>{{ CurPlaySong.song.name }}</h2>
           <p>{{ CurPlaySong.copywriter }}</p>
         </div>
-        <icon-heart-fill
-          class="hover:text-pink-500 cursor-pointer"
-          extraProps="{color:red}"
-          v-if="CurPlaySong.heart"
-        />
+        <icon-heart-fill class="hover:text-pink-500 cursor-pointer" extraProps="{color:red}" v-if="CurPlaySong.heart" />
         <icon-heart class="hover:text-pink-500 cursor-pointer" v-else />
       </div>
       <div class="grid">
@@ -32,20 +17,15 @@
           <icon-select-all class="hover:text-violet-300" />
           <icon-backward />
           <button @keydown.enter="Player.pause()">
-            <component
-              @click.stop="Player.pause()"
-              :is="`icon-${Player.playStatus ? 'pause' : 'play'}-circle-fill`"
-              class="text-2xl"
-            />
+            <component @click.stop="Player.pause()" :is="`icon-${Player.playStatus ? 'pause' : 'play'}-circle-fill`"
+              class="text-2xl" />
           </button>
           <icon-forward />
           <icon-sync />
         </div>
         <div @click.stop class="flex items-center justify-between">
           <span class="w-12">{{ Player._progress }}</span>
-          <div
-            @mousedown.self="GoTime($event)"
-            class="
+          <div @mousedown.self="GoTime($event)" class="
               myprogress
               flex-1
               mx-4
@@ -53,11 +33,8 @@
               cursor-pointer
               _B2
               rounded-md
-            "
-          >
-            <div
-              :style="{ width: CurTimeTack }"
-              class="
+            ">
+            <div :style="{ width: CurTimeTack }" class="
                 pointer-events-none
                 rounded-md
                 bg-purple-300
@@ -65,11 +42,8 @@
                 relative
                 transition-all
                 ease-in-out
-              "
-            >
-              <span
-                class="h-3 w-3 -right-1.5 -top-2/4 rounded-2xl absolute _B3"
-              ></span>
+              ">
+              <span class="h-3 w-3 -right-1.5 -top-2/4 rounded-2xl absolute _B3"></span>
             </div>
           </div>
           <span class="w-12">{{ formatTime(CurPlaySong.duration) }}</span>
@@ -79,21 +53,12 @@
         <icon-list />
         <icon-mute v-if="true" />
         <icon-sound v-else />
-        <div
-          class="flex-1 mx-4 h-1 cursor-pointer bg-purple-300 relative"
-        ></div>
+        <div class="flex-1 mx-4 h-1 cursor-pointer bg-purple-300 relative"></div>
       </div>
     </div>
 
-    <a-drawer
-      class="drawer"
-      :visible="visible"
-      :closable="false"
-      :mask="false"
-      height="100%"
-      :footer="false"
-      placement="top"
-    >
+    <a-drawer class="drawer" :visible="visible" :closable="false" :mask="false" height="100%" :footer="false"
+      placement="top">
       <PlayPage @cancel="visible = false"> </PlayPage>
     </a-drawer>
   </div>
@@ -162,21 +127,25 @@ const GoTime = (e: MouseEvent) => {
 };
 </script>
 <style scoped lang='scss'>
+
 </style>
 <style scoped lang='scss'>
 // @include ;
 .myfooter {
   height: 60px;
 }
+
 .padding10 {
   padding: 0 10%;
 }
+
 .myclass {
   grid-template-columns: 2fr 6fr 2fr;
   background: rgba(255, 255, 255, 0.6);
   grid-gap: 0px 10px;
   z-index: 10000;
   overflow: hidden;
+
   svg {
     cursor: pointer;
     font-size: 1.3rem;
@@ -186,6 +155,7 @@ const GoTime = (e: MouseEvent) => {
   .text-2xl {
     font-size: 2rem;
   }
+
   .myprogress {
     height: 6px;
   }

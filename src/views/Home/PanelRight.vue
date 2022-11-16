@@ -1,6 +1,5 @@
 <!--  -->
 <template>
-
   <div class="home-right flex fx-center-a fx-c">
     <h2>{{ $t('home.dayList') }}</h2>
     <ul class="right-ul w-4/5 w-11/12 ">
@@ -74,7 +73,9 @@ async function getDayinPush() {
   // state.dayinPush = dailySongs
 }
 const palySong = async (song: Object) => {
-  Store.dispatch('ToggleSong', song)
+  console.log(song);
+
+  Store.dispatch('ToggleSong', { id: song.al.id })
 }
 
 onMounted(() => {
