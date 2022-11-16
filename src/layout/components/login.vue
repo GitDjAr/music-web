@@ -5,7 +5,10 @@
     <Logo logo="1" width="60%" />
     <a-space direction="vertical" size="large" :style="{ width: '100%' }">
       <div v-if="Qrflag" class="flex justify-center" :style="{ height: '264px' }">
-        <img :src="imgSrc" alt="">
+        <img :src="imgSrc" alt="" v-if="imgSrc" />
+        <img
+          src="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp"
+          alt="" v-else />
       </div>
       <a-form :model="form" layout="vertical" fo v-else="Qrflag">
         <a-form-item field="phone" :label="$t('login.phone')">
@@ -47,12 +50,12 @@ export default defineComponent({
     },
   },
   setup(props, ctx) {
-    let Time: any
+    let timeToken: any
     const state = reactive({
       visible: props.visible,
       layout: "horizontal",
       Qrflag: true,
-      imgSrc: 'https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp',
+      imgSrc: '',
       form: {
         phone: "",
         password: "",
@@ -62,17 +65,16 @@ export default defineComponent({
     // const { proxy } = getCurrentInstance()
     watch(() => props.visible, (v) => {
       state.visible = v
-      if (state.Qrflag) {
+      if (state.Qrflag && state.visible) {
         QRLogin()
       } else {
-
-        clearInterval(Time)
+        clearInterval(timeToken)
       }
     })
-    type AccountObj = Account | { Account: Account } | {}
+    type AccountObj = Account | { account: Account } | {}
     const checkRes = (res: AccountObj) => {
       store.dispatch('UserLogin', res)
-      ctx.emit('update:visible', !state.visible)
+      ctx.emit('update:visible', false)
     }
     // 登录
     const login = async () => {
@@ -88,19 +90,18 @@ export default defineComponent({
     }
     // 二维码登录
     const QRLogin = async () => {
-      if (Time) {
-        clearInterval(Time)
+      if (timeToken) {
+        clearInterval(timeToken)
       }
-      const timestamp = { timestamp: new Date().getTime() }
-      const { data: { unikey } } = await _login_qr_key(timestamp)
+      const { data: { unikey } } = await _login_qr_key({ timestamp: new Date().getTime() })
       const createImg = await _login_qr_create({ key: unikey, qrimg: unikey })
       state.imgSrc = createImg?.data?.qrimg
 
-      Time = setInterval(async () => {
+      timeToken = setInterval(async () => {
         // 800 为二维码过期,801 为等待扫码,802 为待确认,803 为授权登录成功(803 状态码下会返回 cookies)
         const { code } = await _login_qr_check({ key: unikey, timestamp: new Date().getTime() })
         if (code === 803) {
-          clearInterval(Time)
+          clearInterval(timeToken)
           checkRes(await _user_account())
         }
       }, 2000)
