@@ -1,7 +1,8 @@
 import { Store, Commit } from "vuex"
-import { GetSong, GetSongDetail } from "@/api/play"
+import { _song_url_v1, GetSongDetail, GetSong, CheckMusic } from "@/api/play"
 import Player from "@/utils/player"
 import { reactive } from 'vue'
+import { Notification } from "@arco-design/web-vue"
 // import type Song from '../types/song'
 
 interface userInfoOption {
@@ -11,6 +12,8 @@ const appuser = localStorage.getItem("userInfo") || "{}"
 const cp = localStorage.getItem("CurPlaySong") || '{}'
 const state = {
   locale: localStorage.getItem("locale") || "zh-CN",
+  musicLevel: localStorage.getItem('musicLevel') || 'lossless',
+
   userInfo: JSON.parse(appuser) || {},
 
   // 当前 or 上次播放历史
@@ -23,12 +26,18 @@ const mutations = {
   CurPlaySong: (state, status): void => {
     state.CurPlaySong = status
   },
+  musicLevel: (state, status): void => (state.musicLevel = status),
 }
 const actions = {
   // 设置语言
-  async setLocale({ commit, state }: { commit: Commit }, lang: string) {
+  async setLocale({ commit }: { commit: Commit }, lang: string) {
     commit("locale", lang)
     localStorage.setItem("locale", lang)
+  },
+  // 播放等级
+  async setMusicLevel({ commit }: { commit: Commit }, level: string) {
+    commit("musicLevel", level)
+    localStorage.setItem("musicLevel", level)
   },
   // user退出
   async UserOutin({ commit }: { commit: Commit }, status: boolean = false) {
@@ -41,22 +50,25 @@ const actions = {
     localStorage.setItem("userInfo", JSON.stringify(info))
   },
   // 切歌
-  async ToggleSong({ commit }: { commit: Commit }, song: any) {
-    const { data: SongInfo } = await GetSong({ id: song.id }, true)
-    const Detail = await GetSongDetail({ ids: song.id })
-    // const { data: {songs} } = Detail
-    // debugger
-    // let songsList: Song.RootObject[]
+  async ToggleSong({ commit }: { commit: Commit }, { id }: { id: number }) {
+    // 是否可用
+    // const { success, message } = await CheckMusic({ id })
+    // if (!success) {
+    //   Notification.info(message)
+    //   return
+    // }
+    const plist = [GetSong({ id }, true), GetSongDetail({ ids: id })]
+    const [{ data: SongUrl }, SongDetail] = await Promise.all(plist)
+    console.log(id, SongUrl, SongDetail)
     const data: any = {
-      song,
-      picUrl: song.al.picUrl,
-      songName: song.al.name,
-      duration: song.dt,
-      songsList: Detail,
-      url: SongInfo[0]?.url,
+      song: SongDetail,
+      picUrl: SongDetail.al.picUrl,
+      songName: SongDetail.al.name,
+      duration: SongDetail.dt,
+      songsList: SongDetail,
+      url: SongUrl[0]?.url,
     }
     localStorage.setItem("CurPlaySong", JSON.stringify(data))
-    // const { url } = await CheckMusic({ id: song.al.id })
     playerMusic._playAudioSource(data?.url, true)
     commit("CurPlaySong", data)
     console.log(data);
