@@ -13,7 +13,7 @@ const cp = localStorage.getItem("CurPlaySong") || '{}'
 const state = {
   locale: localStorage.getItem("locale") || "zh-CN",
   musicLevel: localStorage.getItem('musicLevel') || 'lossless',
-
+  tagColor: ['red', 'orangered', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'arcoblue', 'purple', 'pinkpurple', 'magenta'],
   userInfo: JSON.parse(appuser) || {},
 
   // 当前 or 上次播放历史

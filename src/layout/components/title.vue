@@ -6,7 +6,8 @@
   </ul>
   <div class="flex">
     <a-select :loading="loading" :style="{ width: '320px' }" @keyup.enter="searchFun" :placeholder="Hot"
-      v-model="searchKey" @search="searchFun" @blur="searchReset" :filter-option="false" allow-clear allow-search>
+      @change="searchFun" v-model="searchKey" @search="searchSuggest" @blur="searchReset" :filter-option="false"
+      allow-clear allow-search>
       <template #empty>
         <div class=" flex flex-wrap p-2">
           <p class="rounded-full bg-sky-100 curp m-1 mycolor " @click="searchFun(first)"
@@ -14,12 +15,14 @@
             {{ first }}</p>
         </div>
       </template>
-      <a-option v-for="item of searchList" :value="item.name" class="flex justify-between">
-        {{ item.name }}
-        <span>{{ item.singer.name }}</span>
-      </a-option>
+      <a-optgroup :label="group" :key="index" v-for="(group, index) in  searchList.order">
+        <a-option v-for="item of searchList[group]" :value="item" class="flex justify-between">
+          {{ item.name }}
+          <span>{{ item?.artists?.[0].name || item?.artist?.name }}</span>
+        </a-option>
+      </a-optgroup>
     </a-select>
-    <div class=" ml-3">
+    <div class="ml-3">
       <a-button type='text' v-if="!loginStatus" @click="loginPage">{{ $t('login.login') }}</a-button>
       <a-popover v-else trigger="click">
         <a-avatar shape="square">
@@ -37,6 +40,7 @@
 <script lang="ts">
 import loginVue from "@/layout/components/login.vue"
 import { mapGetters } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
   computed: {
     ...mapGetters(['userInfo', 'loginStatus'])
@@ -46,9 +50,12 @@ export default {
 };
 </script>
 <script lang='ts' setup>
-import { cloudsearch, _search_hot } from '@/api/Home'
+import { throttle } from '../../utils/gFn'
+import { _search_suggest, _search_hot } from '@/api/Home'
 import { useStore } from 'vuex';
-import { ref, reactive, directive } from 'vue'
+import { ref, reactive, } from 'vue'
+
+const router = useRouter()
 const state = reactive({
   visible: false,
 })
@@ -72,16 +79,46 @@ const searchList = ref([])
 const firstHot = ref([])
 const Hot = ref('')
 const loading = ref(false)
-const searchFun = async (key: string) => {
+const searchSuggest = throttle(async (key: string) => {
   if (key) searchKey.value = key;
-  const { result: { songs } } = await cloudsearch({ keywords: searchKey.value || Hot.value })
-  searchList.value = songs.reduce((p, next) => {
-    p.push({ singer: next.ar?.[0], name: next.name })
-    return p
-  }, [])
-  console.log(searchList);
+  const { result } = await _search_suggest({ keywords: searchKey.value || Hot.value })
+  result.order.forEach(el => {
+    result[el].map(f => {
+      console.log(f, el);
+      return { ...f, $$type: el }
+    })
+    console.log(result);
+  });
+  searchList.value = result
 
+}, 300)
+
+interface searchF {
+  (key?: string): void,
+  (key?: object): void,
 }
+const searchFun: searchF = (Rows?: string | object) => {
+  if (typeof Rows === 'string') {
+    const str = Rows || searchKey.value || Hot.value
+    router.push({ path: 'search', query: { searchKey: str } })
+  } else {
+    let Never: never
+    console.log(Rows);
+
+    switch (Rows.$$type) {
+      case 'albums':
+        router.push({ path: 'albums', query: { searchKey: Rows.id } })
+      case 'artists':
+        router.push({ path: 'artists', query: { searchKey: Rows.id } })
+        break;
+
+      default:
+        throw new Error("没有此类型");
+        break;
+    }
+  }
+}
+
 // 热搜 歌曲
 const getHot = async () => {
   const { result } = await _search_hot()
@@ -99,9 +136,10 @@ const autoScroll = () => {
     }
   }, 3000)
 }
-
+// 重置
 function searchReset() {
-  searchList.value = []; searchKey.value = ''
+  // searchList.value = []
+  // searchKey.value = ''
 }
 
 </script>

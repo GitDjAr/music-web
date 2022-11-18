@@ -9,6 +9,11 @@ body {
   font-size: 12px;
   box-sizing: border-box;
 }
+
+div {
+  box-sizing: border-box;
+}
+
 ul,
 li {
   list-style: none;
@@ -21,26 +26,28 @@ li {
 *::after {
   box-sizing: inherit;
 }
-$BG:#fff;
+
+$BG: #fff;
+
 // 浏览器滚动条美化
 /* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: $T2 $BG;
-  }
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: $T2 $BG;
+}
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 10px;
-  }
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
 
-  *::-webkit-scrollbar-track {
-    background: $BG;
-  }
+*::-webkit-scrollbar-track {
+  background: $BG;
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color:  $T2;
-    border-radius: 10px;
-    border: 2px solid #fff;
-  }
+*::-webkit-scrollbar-thumb {
+  background-color: $T2;
+  border-radius: 10px;
+  border: 2px solid #fff;
+}

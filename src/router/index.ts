@@ -4,6 +4,7 @@ import type { RouteComponent } from 'vue-router'
 // muisc
 const layout = () => import("../layout/default.vue")
 const Home = () => import("../views/Home/index.vue")
+const search = () => import("../views/search/index.vue")
 const radio = () => import("../views/Radio/index.vue")
 const setting = () => import("../views/settings/index.vue")
 const About = () => import("../views/About.vue")
@@ -43,6 +44,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'settings',
         component: setting
       },
+      {
+        path: 'search',
+        name: 'search',
+        component: search
+      },
     ]
   },
   {
@@ -77,7 +83,7 @@ const router = createRouter({
   // history: createWebHistory(process?.env?.BASE_URL),
   history: createWebHistory(),
   routes,
-  scrollBehavior:()=>{
+  scrollBehavior: () => {
     // debugger
     return { top: 1000 }
   }

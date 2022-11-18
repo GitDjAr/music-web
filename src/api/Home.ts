@@ -122,3 +122,26 @@ export function _search_hot(params: string) {
     params
   })
 }
+
+/**搜索多重匹配
+ * 说明 : 调用此接口 , 传入搜索关键词可获得搜索结果
+ */
+export function _search_multimatch(params: object = {}) {
+  return request({
+    url: '/search/multimatch',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 搜索建议
+  说明 : 调用此接口 , 传入搜索关键词可获得搜索建议 , 搜索结果同时包含单曲 , 歌手 , 歌单信息
+ */
+export function _search_suggest(params: object = {}) {
+  return request({
+    url: '/search/suggest',
+    method: 'get',
+    params
+  })
+}
