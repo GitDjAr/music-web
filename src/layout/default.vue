@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import footerVue from './components/footer.vue';
-import titleVue from './components/title.vue';
+import titleVue from './components/title/index.vue';
 import navVue from './components/nav.vue';
 import { mapGetters } from 'vuex';
 export default {
