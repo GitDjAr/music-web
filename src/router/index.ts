@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import type { RouteComponent } from 'vue-router'
 
 // muisc
+const Page404 = () => import("../views/404/index.vue")
 const layout = () => import("../layout/default.vue")
 const Home = () => import("../views/Home/index.vue")
 const search = () => import("../views/search/index.vue")
@@ -9,6 +10,7 @@ const radio = () => import("../views/Radio/index.vue")
 const setting = () => import("../views/settings/index.vue")
 const About = () => import("../views/About.vue")
 const TopCharts = () => import("../views/Home/TopCharts.vue")
+const alboms = () => import("../views/alboms/index.vue")
 
 // Gutian
 const Gutian = () => import("../layout/G.vue")
@@ -22,31 +24,46 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'Home',
         name: 'Home',
+        meta:{title:'首页',keepalive:true},
         component: Home
       },
       {
         path: 'radio',
         name: 'radio',
+        meta:{title:'???',keepalive:true},
         component: radio
       },
       {
         path: 'topCharts',
         name: 'TopCharts',
+        meta:{title:'榜单',keepalive:true},
         component: TopCharts
+      },
+      {
+        path: 'alboms/:id',
+        name: 'alboms',
+        meta:{title:'专辑',keepalive:true},
+        component: alboms,
+        // children:[
+        //   { path: '', component: Page404 },
+        // ]
       },
       {
         path: 'About',
         name: 'About',
+        meta:{title:'关于',keepalive:true},
         component: About
       },
       {
         path: 'settings',
         name: 'settings',
+        meta:{title:'设置',keepalive:true},
         component: setting
       },
       {
         path: 'search',
         name: 'search',
+        meta:{title:'搜索',keepalive:true},
         component: search
       },
     ]
@@ -67,16 +84,6 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     redirect: "/Music/Home"
   }
-
-  // {
-  //   path: "/about",
-  //   name: "About",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  // },
 ];
 
 const router = createRouter({
