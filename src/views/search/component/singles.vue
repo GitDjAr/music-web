@@ -1,6 +1,6 @@
 <!-- 单曲 -->
 <template>
-  <div class=' select-none'>
+  <div class=' select-none h-full overflow-scroll'>
     <div v-for="(item, index) in searchList" :key="index"
       class="flex m-2  px-2 h-12  items-center hover:shadow-lg transition-all rounded-md  border border-b">
       <div class=" cursor-pointer w-96 text-left text-ellipsis overflow-hidden whitespace-nowrap">
@@ -38,7 +38,9 @@ const Emit = defineEmits<{
 
 // 激活周期
 onActivated(() => {
-  if (params.activetion) {
+  console.log(111);
+  
+  if (!params.activetion) {
     searchSuggest()
   }
 })

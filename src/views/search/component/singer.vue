@@ -24,7 +24,8 @@ const Emit = defineEmits<{
 
 // 激活周期
 onActivated(() => {
-  if (params.activetion) {
+  console.log(121);
+  if (!params.activetion) {
     searchSuggest()
   }
 })
@@ -41,7 +42,7 @@ const searchSuggest = async (key?: string) => {
   console.log(params);
 
 }
-searchSuggest()
+// searchSuggest()
 
 </script>
 <style scoped lang='scss'>

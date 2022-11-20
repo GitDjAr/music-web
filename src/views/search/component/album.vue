@@ -2,11 +2,11 @@
 <template>
   <div ref="rootRef" class='MYroot flex h-full  flex-col flex-wrap  overflow-scroll box-border justify-around'>
     <div v-for="(item, index) in searchList" :key="index"
-      class=" cursor-pointer group hover:bg-sky-50 hover:shadow transition-all flex w-96  h-36  px-3 m-2 text-center shadow-sm rounded-md items-center ">
+      class="mybox  cursor-pointer group hover:bg-sky-50 hover:shadow-lg transition-all flex w-96  h-36  px-3 m-2 text-center shadow rounded-md items-center ">
       <div class="  relative  w-32 h-32  ">
-        <a-image class=" absolute -translate-y-1/2 top-1/2 z-10 " :src="item?.blurPicUrl" alt="" />
+        <img class=" rounded-md  w-32 h-32 absolute -translate-y-1/2 top-1/2 z-10 " :src="item?.blurPicUrl" alt="" :lazy="true" />
         <div class="group-hover:translate-x-14 -translate-y-1/2 top-1/2  transition-all absolute">
-          <a-image class="changping w-28 h-28 " src="../../../assets/changpian.png" alt="" />
+          <img class="changping w-28 h-28 " src="../../../assets/changpian.png" alt="" />
         </div>
       </div>
       <div class=" h-4/5 text-left ml-14  flex flex-col justify-around">
@@ -25,7 +25,7 @@
 
 <script lang='ts' setup>
 import { formatformat } from '../../../utils/format'
-import { ref, onActivated, computed } from 'vue'
+import { ref, onActivated, computed ,onMounted} from 'vue'
 import { cloudsearch } from '@/api/Home'
 import store from "@/store"
 
@@ -41,11 +41,15 @@ const Emit = defineEmits<{
 
 // 激活周期
 onActivated(() => {
-  if (params.activetion) {
+  console.log(4111);
+  if (!params.activetion) {
     searchSuggest()
   }
 })
-
+onMounted(()=>{
+  console.log('onmun');
+  
+})
 const arr = ref([])
 arr.value = Array.from({ length: 8 })
 // 专辑 搜索
@@ -56,7 +60,7 @@ const searchSuggest = async (key?: string) => {
   // 更新激活标记
   Emit('update', true)
 }
-searchSuggest()
+// searchSuggest()
 
 // tag 颜色
 const colorFun = computed(() => {
@@ -65,13 +69,17 @@ const colorFun = computed(() => {
 })
 </script>
 <style scoped lang='scss'>
-.changping {
+.mybox:hover .changping {
   -webkit-animation: rotate-center 5s linear infinite;
   animation: rotate-center 5s linear infinite;
 }
 
-.MYroot:hover p {
+.MYroot{
+  height: 100%;
+  overflow: scroll;
+ &:hover p {
   display: block;
+}
 }
 
 @keyframes rotate-center {

@@ -7,9 +7,9 @@
 import { ref, onActivated, } from 'vue'
 onActivated(()=>{
   console.log(111);
-  it.value = 222
+  it.value = 225
 })
-const it = ref(44)
+const it = ref(55)
 </script>
 <style scoped lang='scss'>
 

@@ -4,24 +4,24 @@
     <div class=" h-1/5">
       <div>
         img
-        {{ searchList[0] }}
+        <div v-for="i in searchList">
+          {{ i }}
+        </div>
       </div>
       <div>
         <img src="" alt="">
       </div>
     </div>
     <h1>根据<span class=" text-sky-300   inline-block px-1">{{ searchKey }}</span>搜索显示 </h1>
-    <a-space direction="vertical" class="My-space">
-      <a-tabs position="right" @change="activeFun" :active-key="active" lazy-load animation>
-        <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
-          <KeepAlive :key="item.id">
-            <component :ref="itemRef" :key="item.id" :is="item.Com" :params="item.params"
-              @update="(v: boolean) => item.params.activetion = v">
-            </component>
-          </KeepAlive>
-        </a-tab-pane>
-      </a-tabs>
-    </a-space>
+    <div  class="My-space">
+    <a-tabs position="right" @change="activeFun" :active-key="active" lazy-load  animation>
+      <!-- <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
+          <component :ref="itemRef" :is="item.Com" :params="item.params"
+          @update="(v: boolean) => item.params.activetion = v">
+        </component>
+      </a-tab-pane> -->
+    </a-tabs>
+  </div>
   </div>
 </template>
 
@@ -29,8 +29,8 @@
 import albumVue from './component/album.vue';
 import singerVue from './component/singer.vue';
 import singlesVue from './component/singles.vue';
-import { ref, Ref, onBeforeUpdate, nextTick } from 'vue'
-import {  useRoute, useRouter } from 'vue-router';
+import { ref, Ref,markRaw, onBeforeUpdate, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router';
 import type { Component } from 'vue'
 
 const route = useRoute()
@@ -53,7 +53,7 @@ router.beforeEach(to => {
   })
   nextTick(() => {
     console.log(itemRefList.value, searchList);
-    itemRefList.value?.[0]?.searchSuggest()
+    // itemRefList.value?.[0]?.searchSuggest()
   })
 })
 
@@ -67,9 +67,9 @@ interface searchType {
   }
 }
 const searchList: Ref<searchType[]> = ref([
-  { id: '1', title: '单曲', Com: singlesVue, params: { keysCode: searchKey, activetion: false } },
-  { id: '2', title: '专辑', Com: albumVue, params: { keysCode: searchKey, activetion: false } },
-  { id: '3', title: '歌手', Com: singerVue, params: { keysCode: searchKey, activetion: false } },
+  { id: '1', title: '单曲', Com: markRaw(singlesVue), params: { keysCode: searchKey, activetion: false } },
+  { id: '2', title: '专辑', Com: markRaw(albumVue), params: { keysCode: searchKey, activetion: false } },
+  { id: '3', title: '歌手', Com: markRaw(singerVue), params: { keysCode: searchKey, activetion: false } },
 ])
 
 // 处理子组件 引用
@@ -93,6 +93,6 @@ const activeFun = (id: string) => {
 <style scoped lang='scss'>
 .My-space {
   height: 100%;
-  overflow-y: scroll;
+  // overflow-y: scroll;
 }
 </style>
