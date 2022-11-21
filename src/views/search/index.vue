@@ -1,18 +1,10 @@
 <!--  -->
 <template>
   <div class='flex flex-col w-full h-full'>
-    <div class=" h-1/10">
-      <div>
-        img
-        <div v-for="i in searchList">
-          {{ i }}
-        </div>
-      </div>
-      <div>
-        <img src="" alt="">
-      </div>
+    <div class=" h-1/10  max-h-72 overflow-hidden">
+      <img class=" h-full w-full  object-cover" :src="rendomImgurl" />
     </div>
-    <h1>根据<span class=" text-sky-300   inline-block px-1">{{ searchKey }}</span>搜索显示 </h1>
+    <h1 class=" text-lg">根据<span class=" text-sky-300   inline-block px-1">{{ searchKey }}</span>搜索显示 </h1>
     <a-tabs class="My-space" position="right" @change="activeFun" justify :active-key="active" lazy-load animation>
       <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
         <component :ref="itemRef" :is="item.Com" :params="item.params" :Activated="active === item.id"
@@ -27,28 +19,37 @@
 import albumVue from './component/album.vue';
 import singerVue from './component/singer.vue';
 import singlesVue from './component/singles.vue';
-import { ref, Ref, markRaw, onBeforeUpdate, nextTick } from 'vue'
+import { ref, Ref, markRaw, onBeforeUpdate, nextTick, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import type { Component } from 'vue'
+import { getImg } from '@/api/api-free/index'
 
 const route = useRoute()
 const router = useRouter()
 
+
 // 前置路由 获取searchkey
 const searchKey = ref(<string>route.query.searchKey)
 router.beforeEach(to => {
-  console.log(to);
-  searchKey.value = <string>to.query.searchKey
-  activeFun(<string>to.query.searchType || '1')
-  searchList.value = searchList.value.map(e => {
-    return {
-      ...e,
-      params: {
-        keysCode: searchKey.value,
-        activetion: false
+  if (to.fullPath.includes('/Music/search')) {
+    searchKey.value = <string>to.query.searchKey
+    searchList.value = searchList.value.map(e => {
+      return {
+        ...e,
+        params: {
+          keysCode: searchKey.value,
+          activetion: false
+        }
       }
+    })
+    if (active.value !== '1') {
+      activeFun(<string>to.query.searchType || '1')
+    } else {
+      nextTick(() => {
+        itemRefList.value[0].searchSuggest()
+      })
     }
-  })
+  }
 })
 
 interface searchType {
@@ -82,6 +83,13 @@ const activeFun = (id: string) => {
   active.value = id
 }
 
+// 随机图片
+const rendomImgurl = ref('')
+const IMGFun = async () => {
+  const { imgurl } = await getImg()
+  rendomImgurl.value = imgurl
+}
+IMGFun()
 
 </script>
 <style scoped lang='scss'>
