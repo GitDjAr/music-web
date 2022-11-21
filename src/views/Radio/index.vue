@@ -1,52 +1,34 @@
 <!--  -->
 <template>
   <div class=''>
-    <a-button>click me</a-button>
-    <a-tabs position="right" @change="activeFun" :active-key="active" lazy-load animation>
-      <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
-        <KeepAlive :key="item.id">
-          <component :ref="itemRef" :is="item.Com" :params="item.params"
-            @update="(v: boolean) => item.params.activetion = v">
-          </component>
-        </KeepAlive>
-      </a-tab-pane>
-      <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
-        <KeepAlive :key="item.id">
-          <component :ref="itemRef" :is="item.Com" :params="item.params"
-            @update="(v: boolean) => item.params.activetion = v">
-          </component>
-        </KeepAlive>
-      </a-tab-pane>
-    </a-tabs>
-
+    <img src="https://tva2.sinaimg.cn/large/0072Vf1pgy1foxkjbqfwjj31hc0u0000.jpg" alt="">
   </div>
 </template>
 
 <script lang='ts' setup>
-import { ref, markRaw } from 'vue'
-import asyncComVue from './asyncCom.vue';
-import asyncCom1Vue from './asyncCom.vue';
-const searchList = ref([
-  { id: '1', title: '单曲', Com: markRaw(asyncComVue), params: { keysCode: 'searchKey', activetion: false } },
-  { id: '2', title: '专辑', Com: markRaw(asyncCom1Vue), params: { keysCode: 'searchKey', activetion: false } },
-])
-// 激活 tabs
-const active = ref('1')
-const activeFun = (id: string) => {
-  active.value = id
-}
-function itemRef() {
+import { getImg } from '@/api/api-free/index'
+import { ref, reactive, } from 'vue'
+const state = reactive({
+  count: 0,
+})
 
+// 随机图片
+let IMGFun
+try {
+  IMGFun = async () => {
+    try {
+      const data = await getImg()
+      console.log(data);
+    } catch (error) {
+      const rep = /(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%$#_]*)?/
+      console.log(error.err.stack.match(rep));
+    }
+  }
+} catch (error) {
+  console.log(error);
 }
+IMGFun && IMGFun()
 </script>
 <style scoped lang='scss'>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>
