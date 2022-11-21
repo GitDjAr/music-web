@@ -32,6 +32,12 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\//, ""),
       },
+      "/img/": {
+        target: 'https://api.ixiaowai.cn',
+        // target: 'https://api.ixiaowai.cn/api/api.php',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/img\//, ""),
+      },
       "/apiG/": {//gitee
         target: "http://xn--lg3a.top:83",
         changeOrigin: true,

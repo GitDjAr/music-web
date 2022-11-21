@@ -24,25 +24,25 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'Home',
         name: 'Home',
-        meta:{title:'首页',keepalive:true},
+        meta: { title: '首页', keepalive: true },
         component: Home
       },
       {
         path: 'radio',
         name: 'radio',
-        meta:{title:'???',keepalive:true},
+        meta: { title: '???', keepalive: true },
         component: radio
       },
       {
         path: 'topCharts',
         name: 'TopCharts',
-        meta:{title:'榜单',keepalive:true},
+        meta: { title: '榜单', keepalive: true },
         component: TopCharts
       },
       {
         path: 'alboms/:id',
         name: 'alboms',
-        meta:{title:'专辑',keepalive:true},
+        meta: { title: '专辑', keepalive: true },
         component: alboms,
         // children:[
         //   { path: '', component: Page404 },
@@ -51,19 +51,19 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'About',
         name: 'About',
-        meta:{title:'关于',keepalive:true},
+        meta: { title: '关于', keepalive: true },
         component: About
       },
       {
         path: 'settings',
         name: 'settings',
-        meta:{title:'设置',keepalive:true},
+        meta: { title: '设置', keepalive: true },
         component: setting
       },
       {
         path: 'search',
         name: 'search',
-        meta:{title:'搜索',keepalive:true},
+        meta: { title: '搜索', keepalive: false },
         component: search
       },
     ]

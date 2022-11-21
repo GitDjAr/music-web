@@ -5,7 +5,6 @@ import Cache from './cache'
 import { h } from 'vue'
 import { IconRecord } from '@arco-design/web-vue/es/icon'
 
-import store from "../store/index"
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   show?: boolean
