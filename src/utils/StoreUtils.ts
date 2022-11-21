@@ -1,7 +1,6 @@
 import type { ComputedRef } from 'vue'
-import { useStore } from "vuex"
+import store from "../store/index"
 import { computed } from 'vue'
-const store = useStore()
 /**
  * 模拟 mapStore
  * 解析  'c/f'
@@ -21,8 +20,9 @@ export function mapStore(arr: Array<string>): ComputedRef[] {
 /**
  * 模拟 mapGetter
  */
+// TODO:丧失响应性  待修复
 export function mapGetter(arr: Array<string>): ComputedRef[] {
-  const AR = arr.map(e => computed(item => store.getters[e]))
+  const AR = arr.map(e => computed(item => store?.getters[e]))
   return AR
 }
 

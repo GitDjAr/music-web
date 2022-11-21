@@ -83,7 +83,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     redirect: "/Music/Home"
-  }
+  },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: Page404 },
 ];
 
 const router = createRouter({
