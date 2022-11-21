@@ -8,16 +8,13 @@
       <div class="left-list">
         <navVue />
       </div>
-      <div class="right-box">
+      <div class="right-box w-full h-full">
         <!-- <router-view></router-view> -->
         <Suspense>
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'fade'" mode="out-in">
               <keep-alive>
-                <component
-                  :is="Component"
-                  :key="route.meta.usePathKey ? route.path : undefined"
-                />
+                <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined" />
               </keep-alive>
             </transition>
           </router-view>
@@ -40,7 +37,7 @@ export default {
   computed: {
     ...mapGetters(['userInfo', 'loginStatus']),
   },
-  mounted() {},
+  mounted() { },
 };
 </script>
 

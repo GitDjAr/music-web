@@ -1,14 +1,21 @@
 <!--  -->
 <template>
   <div class=''>
-    <a-button >click me</a-button>
-    <a-tabs position="right" @change="activeFun" :active-key="active" lazy-load  animation>
+    <a-button>click me</a-button>
+    <a-tabs position="right" @change="activeFun" :active-key="active" lazy-load animation>
       <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
-         <KeepAlive :key="item.id">
+        <KeepAlive :key="item.id">
           <component :ref="itemRef" :is="item.Com" :params="item.params"
             @update="(v: boolean) => item.params.activetion = v">
           </component>
-         </KeepAlive>
+        </KeepAlive>
+      </a-tab-pane>
+      <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
+        <KeepAlive :key="item.id">
+          <component :ref="itemRef" :is="item.Com" :params="item.params"
+            @update="(v: boolean) => item.params.activetion = v">
+          </component>
+        </KeepAlive>
       </a-tab-pane>
     </a-tabs>
 
@@ -16,7 +23,7 @@
 </template>
 
 <script lang='ts' setup>
-import {ref,markRaw} from 'vue'
+import { ref, markRaw } from 'vue'
 import asyncComVue from './asyncCom.vue';
 import asyncCom1Vue from './asyncCom.vue';
 const searchList = ref([
@@ -28,7 +35,7 @@ const active = ref('1')
 const activeFun = (id: string) => {
   active.value = id
 }
-function itemRef(){
+function itemRef() {
 
 }
 </script>

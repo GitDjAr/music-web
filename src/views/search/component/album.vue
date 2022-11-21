@@ -4,7 +4,8 @@
     <div v-for="(item, index) in searchList" :key="index"
       class="mybox  cursor-pointer group hover:bg-sky-50 hover:shadow-lg transition-all flex w-96  h-36  px-3 m-2 text-center shadow rounded-md items-center ">
       <div class="  relative  w-32 h-32  ">
-        <img class=" rounded-md  w-32 h-32 absolute -translate-y-1/2 top-1/2 z-10 " :src="item?.blurPicUrl" alt="" :lazy="true" />
+        <img class=" rounded-md  w-32 h-32 absolute -translate-y-1/2 top-1/2 z-10 " :src="item?.blurPicUrl" alt=""
+          :lazy="true" />
         <div class="group-hover:translate-x-14 -translate-y-1/2 top-1/2  transition-all absolute">
           <img class="changping w-28 h-28 " src="../../../assets/changpian.png" alt="" />
         </div>
@@ -25,30 +26,26 @@
 
 <script lang='ts' setup>
 import { formatformat } from '../../../utils/format'
-import { ref, onActivated, computed ,onMounted} from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import { cloudsearch } from '@/api/Home'
 import store from "@/store"
 
-const { params } = defineProps<{
+const { Activated, params } = defineProps<{
   params: {
     activetion: boolean,
     keysCode: string
-  }
+  },
+  Activated: boolean
 }>()
 const Emit = defineEmits<{
   (e: 'update', activetion: boolean): void
 }>()
 
 // 激活周期
-onActivated(() => {
-  console.log(4111);
-  if (!params.activetion) {
+watch(() => Activated, () => {
+  if (!params.activetion && Activated === true) {
     searchSuggest()
   }
-})
-onMounted(()=>{
-  console.log('onmun');
-  
 })
 const arr = ref([])
 arr.value = Array.from({ length: 8 })
@@ -60,7 +57,7 @@ const searchSuggest = async (key?: string) => {
   // 更新激活标记
   Emit('update', true)
 }
-// searchSuggest()
+searchSuggest()
 
 // tag 颜色
 const colorFun = computed(() => {
@@ -74,12 +71,13 @@ const colorFun = computed(() => {
   animation: rotate-center 5s linear infinite;
 }
 
-.MYroot{
+.MYroot {
   height: 100%;
   overflow: scroll;
- &:hover p {
-  display: block;
-}
+
+  &:hover p {
+    display: block;
+  }
 }
 
 @keyframes rotate-center {

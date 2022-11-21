@@ -1,6 +1,6 @@
 <!-- 歌手 -->
 <template>
-  <div class='flex flex-wrap justify-between'>
+  <div class=' overflow-scroll h-full flex flex-wrap justify-between'>
     <div v-for="item in singerList"
       class=" group cursor-pointer w-48 h-40 mb-4 flex-col flex justify-center items-center">
       <a-image class=" rounded-full w-28 h-28 group-hover:scale-105  transition-all" :src="item.img1v1Url" alt="" />
@@ -10,22 +10,24 @@
 </template>
 
 <script lang='ts' setup>
-import { ref, onActivated, } from 'vue'
+import { ref, watch, } from 'vue'
 import { cloudsearch } from '@/api/Home'
-const { params } = defineProps<{
+const { params, Activated } = defineProps<{
   params: {
     activetion: boolean,
     keysCode: string
-  }
+  },
+  Activated: boolean
 }>()
 const Emit = defineEmits<{
   (e: 'update', activetion: boolean): void
 }>()
 
 // 激活周期
-onActivated(() => {
-  console.log(121);
-  if (!params.activetion) {
+
+// 激活周期
+watch(() => Activated, () => {
+  if (!params.activetion && Activated === true) {
     searchSuggest()
   }
 })
@@ -42,7 +44,7 @@ const searchSuggest = async (key?: string) => {
   console.log(params);
 
 }
-// searchSuggest()
+searchSuggest()
 
 </script>
 <style scoped lang='scss'>

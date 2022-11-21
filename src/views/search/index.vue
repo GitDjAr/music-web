@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-  <div class='w-full h-full'>
-    <div class=" h-1/5">
+  <div class='flex flex-col w-full h-full'>
+    <div class=" h-1/10">
       <div>
         img
         <div v-for="i in searchList">
@@ -13,15 +13,13 @@
       </div>
     </div>
     <h1>根据<span class=" text-sky-300   inline-block px-1">{{ searchKey }}</span>搜索显示 </h1>
-    <div  class="My-space">
-    <a-tabs position="right" @change="activeFun" :active-key="active" lazy-load  animation>
-      <!-- <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
-          <component :ref="itemRef" :is="item.Com" :params="item.params"
+    <a-tabs class="My-space" position="right" @change="activeFun" justify :active-key="active" lazy-load animation>
+      <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
+        <component :ref="itemRef" :is="item.Com" :params="item.params" :Activated="active === item.id"
           @update="(v: boolean) => item.params.activetion = v">
         </component>
-      </a-tab-pane> -->
+      </a-tab-pane>
     </a-tabs>
-  </div>
   </div>
 </template>
 
@@ -29,7 +27,7 @@
 import albumVue from './component/album.vue';
 import singerVue from './component/singer.vue';
 import singlesVue from './component/singles.vue';
-import { ref, Ref,markRaw, onBeforeUpdate, nextTick } from 'vue'
+import { ref, Ref, markRaw, onBeforeUpdate, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import type { Component } from 'vue'
 
@@ -50,10 +48,6 @@ router.beforeEach(to => {
         activetion: false
       }
     }
-  })
-  nextTick(() => {
-    console.log(itemRefList.value, searchList);
-    // itemRefList.value?.[0]?.searchSuggest()
   })
 })
 
@@ -92,7 +86,13 @@ const activeFun = (id: string) => {
 </script>
 <style scoped lang='scss'>
 .My-space {
+  height: calc(100% - 10% - 50px);
+  overflow: hidden;
+
+  :deep(.arco-tabs-content-list),
+  :deep(.arco-tabs-pane),
+  {
   height: 100%;
-  // overflow-y: scroll;
+}
 }
 </style>
