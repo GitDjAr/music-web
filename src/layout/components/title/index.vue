@@ -23,16 +23,19 @@
 
 <script lang='ts' setup>
 import { useStore } from 'vuex';
-import { ref, reactive, onMounted } from 'vue'
-import { mapGetter } from '@/utils/StoreUtils'
+import { ref, reactive, onMounted, computed } from 'vue'
+// import { mapGetter } from '@/utils/StoreUtils'
 import seachVue from './seach.vue';
 import loginVue from "@/layout/components/login.vue"
 
 const store = useStore()
-let userInfo = ref(''), loginStatus = ref('')
-onMounted(() => {
-  [userInfo.value, loginStatus.value] = mapGetter(['userInfo', 'loginStatus'])
-})
+let userInfo = computed(() => store.getters.userInfo)
+let loginStatus = computed(() => store.getters.loginStatus)
+
+// let loginStatus = ref('')
+// onMounted(() => {
+//   [userInfo.value, loginStatus.value] = mapGetter(['userInfo', 'loginStatus'])
+// })
 
 const state = reactive({
   visible: false,
