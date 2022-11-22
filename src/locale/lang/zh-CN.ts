@@ -9,11 +9,11 @@ export default {
     alboms: '专辑',
     search: '搜索',
     about: '关于',
-    collect:'收藏',
-    favorite:'最爱',
-    settings:'设置',
-    history:'播放历史',
-    guitar:'吉他谱'
+    collect: '收藏',
+    favorite: '最爱',
+    settings: '设置',
+    history: '播放历史',
+    guitar: '吉他谱'
   },
   home: {
     recommendPlaylist: '推荐歌单',
@@ -21,8 +21,8 @@ export default {
     newAlbum: '新专速递',
     seeMore: '查看全部',
     charts: '排行榜',
-    recommendMv:'推荐mv',
-    dayList:'每日单曲'
+    recommendMv: '推荐mv',
+    dayList: '每日单曲'
   },
   library: {
     sLibrary: '的音乐库',
@@ -55,6 +55,7 @@ export default {
     videos: '个 MV',
     following: '正在关注',
     follow: '关注',
+    Attention: '粉丝',
     similarArtists: '相似艺人',
     artistDesc: '艺术家介绍',
   },

@@ -47,3 +47,25 @@ export function _user_account(params: string | undefined) {
     params
   })
 }
+
+/**
+ * 获取歌手详情
+ */
+export function _artist_detail(params: object = {}) {
+  return request({
+    url: '/artist/detail',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 歌手粉丝数量
+ */
+export function _artist_follow_count(params: string | number) {
+  return request({
+    url: '/artist/follow/count',
+    method: 'get',
+    params
+  })
+}

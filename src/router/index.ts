@@ -11,6 +11,7 @@ const setting = () => import("../views/settings/index.vue")
 const About = () => import("../views/About.vue")
 const TopCharts = () => import("../views/Home/TopCharts.vue")
 const alboms = () => import("../views/alboms/index.vue")
+const singer = () => import("../views/singer/index.vue")
 
 // Gutian
 const Gutian = () => import("../layout/G.vue")
@@ -44,6 +45,15 @@ const routes: Array<RouteRecordRaw> = [
         name: 'alboms',
         meta: { title: '专辑', keepalive: true },
         component: alboms,
+        // children:[
+        //   { path: '', component: Page404 },
+        // ]
+      },
+      {
+        path: 'singer/:id',
+        name: 'singer',
+        meta: { title: '歌手', keepalive: true },
+        component: singer,
         // children:[
         //   { path: '', component: Page404 },
         // ]

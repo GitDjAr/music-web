@@ -1,9 +1,11 @@
 <!--  -->
 <template>
-  <div>
-    <img class="w-full" src="../../assets/404.png" alt="" />
-    <a-button type="primary" @click="go('/Music/Home')" class=" mr-2">回到首页</a-button>
-    <a-button type="primary" @click="go('')">回到上一页</a-button>
+  <div class="flex flex-col  justify-center items-center">
+    <img :style="{ width: '1200px' }" src="../../assets/404.png" alt="" />
+    <div>
+      <a-button type="primary" @click="go('/Music/Home')" class=" mr-2">回到首页</a-button>
+      <a-button type="primary" @click="go('')">回到上一页</a-button>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

@@ -24,8 +24,8 @@ export default {
     newAlbum: "Latest Albums",
     seeMore: "SEE MORE",
     charts: "Top Charts",
-    recommendMv:'Recommend Mv',
-    dayList:'Daily Single'
+    recommendMv: 'Recommend Mv',
+    dayList: 'Daily Single'
   },
   library: {
     sLibrary: "'s Library",
@@ -58,6 +58,7 @@ export default {
     videos: "Music Videos",
     following: "Following",
     follow: "Follow",
+    Attention: 'Attention',
     similarArtists: "Similar Artists",
     artistDesc: "Artist Description",
   },
