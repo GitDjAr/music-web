@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'Home',
+        path: 'home',
         name: 'Home',
         meta: { title: '首页', keepalive: true },
         component: Home

@@ -21,6 +21,8 @@ import "./style/index.scss"
 import "./style/threm.scss"
 import "./style/init.scss"
 
+// 图源
+window.rendomImgurl = 'https://img.2eka.cloud/api/random?type=pc'
 // import './mock/mock'
 // // mock开关，设置是否引入文件
 // const mock = true

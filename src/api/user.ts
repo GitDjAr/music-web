@@ -69,3 +69,15 @@ export function _artist_follow_count(params: string | number) {
     params
   })
 }
+
+/**
+ * 说明 : 登录后调用此接口 , 传入用户 id, 和操作 t,可关注/取消关注用户
+ * t : 1为关注,其他为取消关注
+ */
+export function _follow(params: object = {}) {
+  return request({
+    url: '/follow',
+    method: 'get',
+    params
+  })
+}

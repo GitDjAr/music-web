@@ -33,8 +33,10 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api\//, ""),
       },
       "/img/": {
-        target: 'https://api.ixiaowai.cn',
-        // target: 'https://api.ixiaowai.cn/api/api.php',
+        target: 'https://img.2eka.cloud/',
+        // target: 'https://img.2eka.cloud/api/random?type=pc',
+        // target: 'https://api.ixiaowai.cn',
+        // // target: 'https://api.ixiaowai.cn/api/api.php',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/img\//, ""),
       },

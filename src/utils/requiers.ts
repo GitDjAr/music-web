@@ -38,13 +38,13 @@ servers.interceptors.request.use(
   },
   (err) => {
     Message.error(`request err: ${err}`)
-    console.log(err)
     return Promise.reject(err)
   }
 )
 
 servers.interceptors.response.use(
   (res) => {
+
     const { data = null } = res
     ShowMessage(data)
     // 进行缓存

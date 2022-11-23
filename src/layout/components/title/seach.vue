@@ -19,7 +19,7 @@
 </template>
 
 <script lang='ts' setup>
-import { ref,  } from 'vue'
+import { ref, } from 'vue'
 import { throttle } from '../../../utils/gFn'
 import { _search_suggest, _search_hot } from '@/api/Home'
 import { useRouter } from 'vue-router'
@@ -36,7 +36,7 @@ const searchSuggest = throttle(async (key: string) => {
   const { result } = await _search_suggest({ keywords: searchKey.value || Hot.value })
   result.order.forEach(el => {
     result[el].map(f => {
-      f['$$type']   = el
+      f['$$type'] = el
       return f
     })
   });
@@ -51,17 +51,17 @@ interface searchF {
 const searchFun: searchF = (Rows: string | object) => {
   if (typeof Rows === 'string') {
     const str = Rows || searchKey.value || Hot.value
-    router.push({ path: 'search', query: { searchKey: str } })
+    router.push({ path: '/Music/search', query: { searchKey: str } })
   } else {
     router.push({ path: Rows.$$type || 'search', query: { searchKey: Rows.id } })
     let Never: never
     console.log(Rows);
     switch (Rows.$$type) {
       case 'singles':
-        router.push({ path: 'search', query: { searchKey: Rows.name } })
-      break;
-      case 'artists'|| 'albums':
-        router.push({ path: `${Rows.$$type}/${Rows.id}`,} )
+        router.push({ path: '/Music/search', query: { searchKey: Rows.name } })
+        break;
+      case 'artists' || 'albums':
+        router.push({ path: `/Music/${Rows.$$type}/${Rows.id}`, })
         break;
       default:
         throw new Error("没有此类型");
@@ -95,7 +95,6 @@ function searchReset() {
 
 </script>
 <style scoped lang='scss'>
-
 .mycolor.mycolor {
   color: #3171ff;
   padding: 0.25rem 6px !important;
