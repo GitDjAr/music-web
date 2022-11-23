@@ -23,3 +23,23 @@ export function debounce(fn: Function, delay: number): Function {
     }, delay)
   }
 }
+
+/**
+ * 计算 img 比例
+ */
+export function ImgProportion(url: string, seep: number = 2): Promise<string> {
+  const { rendomImgurl } = window
+  const imgObj = new Image()
+  imgObj.src = url
+  return new Promise((resolve, reject) => {
+    imgObj.width
+    imgObj.onerror = function () {
+      resolve(rendomImgurl)
+    };
+    imgObj.onload = function () {
+      let c = imgObj.width / imgObj.height >= seep ? url : rendomImgurl
+      resolve(c)
+      imgObj.onload = null;//避免重复加载
+    }
+  })
+}
