@@ -13,7 +13,7 @@
         <Suspense>
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'fade'" mode="out-in">
-              <keep-alive :include="KeepAliveList">
+              <keep-alive :exclude="KeepAliveList">
                 <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined" />
               </keep-alive>
             </transition>
@@ -51,7 +51,7 @@ export default {
           deep(element)
         });
       } else {
-        if (params?.meta?.keepalive) {
+        if (!params?.meta?.keepalive) {
           that.KeepAliveList.push(params?.name)
         }
       }
