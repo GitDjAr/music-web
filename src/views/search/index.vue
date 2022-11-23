@@ -15,6 +15,9 @@
   </div>
 </template>
 
+<script>
+export default { name: 'search' }
+</script>
 <script lang='ts' setup>
 import albumVue from './component/album.vue';
 import singerVue from './component/singer.vue';

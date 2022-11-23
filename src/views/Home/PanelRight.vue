@@ -6,20 +6,20 @@
       <li class="ul-li t-lf flex fx-center-a" :alt="item.reason" :key="index" v-for="(item, index) in state.dayinPush"
         @click="palySong(item)">
         <img class="li-img" :src="`${item.al.picUrl}?param=100y100`" />
-        <section>
-          <span class="songName">{{ item.name }}</span>
-          <span class="songAr">{{ item.ar[0].name }}</span>
+        <section class=" w-full overflow-hidden">
+          <span class="songName truncate">{{ item.name }}</span>
+          <span class="songAr truncate">{{ item.ar[0].name }}</span>
         </section>
-        <icon-play-arrow />
+        <icon-play-arrow class="iconplay" />
       </li>
     </ul>
     <div class="mt-2 mx-4">
       <h2>{{ $t('home.recommendArtist') }}</h2>
       <div class="singer items-center justify-center">
-        <div class="singer-list mx-1.5" :alt="item.reason" :key="index" v-for="(item, index) in state.artistsList"
-          @click="Checksinger(item)">
-          <img class="rounded-full w-full" :src="`${item.img1v1Url}?param=200y200`" />
-          <p class="singer-name my-1">{{ item.name }}</p>
+        <div class="singer-list mx-1.5  truncate  " :alt="item.reason" :key="index"
+          v-for="(item, index) in state.artistsList" @click="Checksinger(item)">
+          <img class="rounded-full cursor-pointer " :src="`${item.img1v1Url}?param=100y100`" />
+          <p class="singer-name my-1  w-full  ">{{ item.name }}</p>
         </div>
       </div>
     </div>
@@ -74,8 +74,11 @@ async function getDayinPush() {
 }
 const palySong = async (song: Object) => {
   console.log(song);
-
   Store.dispatch('ToggleSong', { id: song.al.id })
+}
+// 去歌手主页
+function Checksinger(row: { id: number }) {
+  router.push(`/Music/singer/${row.id}`)
 }
 
 onMounted(() => {
@@ -100,7 +103,7 @@ onMounted(() => {
     border-radius: 10px;
 
     .ul-li {
-      padding: 5px;
+      padding: 10px 5px;
       margin: 2px 10px;
       cursor: pointer;
 
@@ -113,8 +116,8 @@ onMounted(() => {
       }
 
       .li-img {
-        width: 45px;
-        height: 45px;
+        width: 50px;
+        height: 50px;
         border-radius: 5px;
         margin-right: 5px;
       }
@@ -132,6 +135,8 @@ onMounted(() => {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
-  .newAlbum {}
+  .iconplay {
+    min-width: 40px;
+  }
 }
 </style>
