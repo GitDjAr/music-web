@@ -27,6 +27,7 @@ specifiers:
   vue: ^3.2.25
   vue-cli-plugin-electron-builder: ^2.1.1
   vue-i18n: ^9.2.0-beta.31
+  vue-play: ^3.2.1
   vue-router: '4'
   vue-starport: ^0.2.10
   vue-tsc: ^0.29.8
@@ -49,6 +50,7 @@ dependencies:
   vite: 2.5.10
   vue: 3.2.31
   vue-i18n: 9.2.0-beta.31_vue@3.2.31
+  vue-play: registry.npmmirror.com/vue-play/3.2.1_vue@3.2.31
   vue-router: 4.0.13_vue@3.2.31
   vue-starport: 0.2.10
   vuex: 4.0.2_vue@3.2.31
@@ -1235,7 +1237,7 @@ packages:
   /assert/1.5.0:
     resolution: {integrity: sha512-EDsgawzwoun2CZkCgtxJbv392v4nbk9XDD06zI+kQYoBM/3RBWLlEyJARDOmhAAosBjWACEkKL6S+lIZtcAubA==}
     dependencies:
-      object-assign: 4.1.1
+      object-assign: registry.npmmirror.com/object-assign/4.1.1
       util: 0.10.3
     dev: true
 
@@ -2998,7 +3000,7 @@ packages:
       aproba: 1.2.0
       console-control-strings: 1.1.0
       has-unicode: 2.0.1
-      object-assign: 4.1.1
+      object-assign: registry.npmmirror.com/object-assign/4.1.1
       signal-exit: 3.0.7
       string-width: 1.0.2
       strip-ansi: 3.0.1
@@ -3459,7 +3461,7 @@ packages:
     resolution: {integrity: sha512-zMIXX63sxzG3XrkHkrAPvm/OVZVSCPNkwMHU8oTX7/U3AL78I0QXCEICXUM13BIa8TYGZ68PiTKfQz3yaTNr4A==}
     dependencies:
       acorn: registry.npmmirror.com/acorn/7.4.1
-      object-assign: 4.1.1
+      object-assign: registry.npmmirror.com/object-assign/4.1.1
     dev: true
 
   /is-extendable/0.1.1:
@@ -4404,11 +4406,6 @@ packages:
     resolution: {integrity: sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==}
     dev: true
 
-  /object-assign/4.1.1:
-    resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
-    engines: {node: '>=0.10.0'}
-    dev: true
-
   /object-copy/0.1.0:
     resolution: {integrity: sha512-79LYn6VAb63zgtmAteVOWo9Vdj71ZVBy3Pbse+VqxDpEP83XuujMrGqHIwAXJ5I/aM0zU7dIyIAhifVTPrNItQ==}
     engines: {node: '>=0.10.0'}
@@ -4864,7 +4861,7 @@ packages:
   /pug-load/3.0.0:
     resolution: {integrity: sha512-OCjTEnhLWZBvS4zni/WUMjH2YSUosnsmjGBB1An7CsKQarYSWQ0GCVyd4eQPMFJqZ8w9xgs01QdiZXKVjk92EQ==}
     dependencies:
-      object-assign: 4.1.1
+      object-assign: registry.npmmirror.com/object-assign/4.1.1
       pug-walk: 2.0.0
     dev: true
 
@@ -6887,6 +6884,13 @@ packages:
     dev: true
     optional: true
 
+  registry.npmmirror.com/array-find-index/1.0.2:
+    resolution: {integrity: sha512-M1HQyIXcBGtVywBt8WVdim+lrNaK7VHp99Qt5pSNziXznKHViIBbXWtfRTpEFpF/c4FdfxNAsCCwPp5phBYJtw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/array-find-index/-/array-find-index-1.0.2.tgz}
+    name: array-find-index
+    version: 1.0.2
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   registry.npmmirror.com/assert-plus/1.0.0:
     resolution: {integrity: sha512-NfJ4UzBCcQGLDlQq7nHxH+tv3kyZ0hHQqF5BO6J7tNJeP5do1llPr8dZ8zHonfhAu0PHAdMkSo+8o0wxg9lZWw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/assert-plus/-/assert-plus-1.0.0.tgz}
     name: assert-plus
@@ -6904,6 +6908,12 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  registry.npmmirror.com/babel-helper-vue-jsx-merge-props/2.0.3:
+    resolution: {integrity: sha512-gsLiKK7Qrb7zYJNgiXKpXblxbV5ffSwR0f5whkPAaBAR4fhi6bwRZxX9wBlIc5M/v8CCkXUbXZL4N/nSE97cqg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-2.0.3.tgz}
+    name: babel-helper-vue-jsx-merge-props
+    version: 2.0.3
+    dev: false
 
   registry.npmmirror.com/base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/base64-js/-/base64-js-1.5.1.tgz}
@@ -7434,6 +7444,14 @@ packages:
       function-bind: registry.npmmirror.com/function-bind/1.1.1
     dev: true
 
+  registry.npmmirror.com/highlight.js/9.18.5:
+    resolution: {integrity: sha512-a5bFyofd/BHCX52/8i8uJkjr9DYwXIPnM/plwI6W7ezItLGqzt7X2G2nXuYSfsIJdkwwj/g9DG1LkcGJI/dDoA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/highlight.js/-/highlight.js-9.18.5.tgz}
+    name: highlight.js
+    version: 9.18.5
+    deprecated: Support has ended for 9.x series. Upgrade to @latest
+    requiresBuild: true
+    dev: false
+
   registry.npmmirror.com/http-cache-semantics/4.1.0:
     resolution: {integrity: sha512-carPklcUh7ROWRK7Cv27RPtdhYhUsela/ue5/jKzjegVvXDqM2ILE9Q2BGn9JZJh1g87cp56su/FgQSzcWS8cQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/http-cache-semantics/-/http-cache-semantics-4.1.0.tgz}
     name: http-cache-semantics
@@ -7613,6 +7631,12 @@ packages:
     dev: true
     optional: true
 
+  registry.npmmirror.com/object-assign/4.1.1:
+    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/object-assign/-/object-assign-4.1.1.tgz}
+    name: object-assign
+    version: 4.1.1
+    engines: {node: '>=0.10.0'}
+
   registry.npmmirror.com/object-keys/1.1.1:
     resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/object-keys/-/object-keys-1.1.1.tgz}
     name: object-keys
@@ -7717,6 +7741,16 @@ packages:
     dev: true
     optional: true
 
+  registry.npmmirror.com/query-string/4.3.4:
+    resolution: {integrity: sha512-O2XLNDBIg1DnTOa+2XrIwSiXEV8h2KImXUnjhhn2+UsvZ+Es2uyd5CCRTNQlDGbzUQOW3aYCBx9rVA6dzsiY7Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/query-string/-/query-string-4.3.4.tgz}
+    name: query-string
+    version: 4.3.4
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      object-assign: registry.npmmirror.com/object-assign/4.1.1
+      strict-uri-encode: registry.npmmirror.com/strict-uri-encode/1.1.0
+    dev: false
+
   registry.npmmirror.com/responselike/1.0.2:
     resolution: {integrity: sha512-/Fpe5guzJk1gPqdJLJR5u7eG/gNY4nImjbRDaVWVMRhne55TCmj2i9Q+54PBRfatRC8v/rIiv9BN0pMd9OV5EQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/responselike/-/responselike-1.0.2.tgz}
     name: responselike
@@ -7810,6 +7844,13 @@ packages:
     dev: true
     optional: true
 
+  registry.npmmirror.com/strict-uri-encode/1.1.0:
+    resolution: {integrity: sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz}
+    name: strict-uri-encode
+    version: 1.1.0
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   registry.npmmirror.com/string-width/4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/string-width/-/string-width-4.2.3.tgz}
     name: string-width
@@ -7874,6 +7915,13 @@ packages:
     dev: true
     optional: true
 
+  registry.npmmirror.com/uid/0.0.2:
+    resolution: {integrity: sha512-KerEqWSoUfzAYsB4RznGPygtEk1p04caicg8FxqzZ1VYI3GsYHPzouUO5jJvwwy4sg6B1jnSkSjYgGvE4CK6Gg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/uid/-/uid-0.0.2.tgz}
+    name: uid
+    version: 0.0.2
+    hasBin: true
+    dev: false
+
   registry.npmmirror.com/universalify/0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/universalify/-/universalify-0.1.2.tgz}
     name: universalify
@@ -7912,6 +7960,65 @@ packages:
       extsprintf: registry.npmmirror.com/extsprintf/1.3.0
     dev: true
     optional: true
+
+  registry.npmmirror.com/vue-play/3.2.1_vue@3.2.31:
+    resolution: {integrity: sha512-RulqMDRxWxd0vqMH/Y/Ielx1zpg7ARnO94q3KxgmhmdZ6WA6t/QOzrUF5Xa6No8MnwmzQLGwxqQxTLgPj/zDiw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-play/-/vue-play-3.2.1.tgz}
+    id: registry.npmmirror.com/vue-play/3.2.1
+    name: vue-play
+    version: 3.2.1
+    engines: {node: '>=4'}
+    dependencies:
+      array-find-index: registry.npmmirror.com/array-find-index/1.0.2
+      highlight.js: registry.npmmirror.com/highlight.js/9.18.5
+      query-string: registry.npmmirror.com/query-string/4.3.4
+      uid: registry.npmmirror.com/uid/0.0.2
+      vue-router: registry.npmmirror.com/vue-router/2.8.1_vue@3.2.31
+      vue-slim-modal: registry.npmmirror.com/vue-slim-modal/0.3.0
+      vuex: registry.npmmirror.com/vuex/2.5.0
+      vuex-router-sync: registry.npmmirror.com/vuex-router-sync/4.3.2_f75uu7j7xufccpoipsnmdohzoa
+    transitivePeerDependencies:
+      - vue
+    dev: false
+
+  registry.npmmirror.com/vue-router/2.8.1_vue@3.2.31:
+    resolution: {integrity: sha512-MC4jacHBhTPKtmcfzvaj2N7g6jgJ/Z/eIjZdt+yUaUOM1iKC0OUIlO/xCtz6OZFFTNUJs/1YNro2GN/lE+nOXA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-router/-/vue-router-2.8.1.tgz}
+    id: registry.npmmirror.com/vue-router/2.8.1
+    name: vue-router
+    version: 2.8.1
+    peerDependencies:
+      vue: ^2
+    dependencies:
+      vue: 3.2.31
+    dev: false
+
+  registry.npmmirror.com/vue-slim-modal/0.3.0:
+    resolution: {integrity: sha512-ALJndKCyLHUfMwiZNZRnHnbTs7sp+TtI+za+mNBLce4biDphcAK69SOefh1//LNUfSSIeqOTe0r7ZpEmrwXYcA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-slim-modal/-/vue-slim-modal-0.3.0.tgz}
+    name: vue-slim-modal
+    version: 0.3.0
+    engines: {node: '>=4'}
+    dependencies:
+      babel-helper-vue-jsx-merge-props: registry.npmmirror.com/babel-helper-vue-jsx-merge-props/2.0.3
+      object-assign: registry.npmmirror.com/object-assign/4.1.1
+    dev: false
+
+  registry.npmmirror.com/vuex-router-sync/4.3.2_f75uu7j7xufccpoipsnmdohzoa:
+    resolution: {integrity: sha512-Uwi1aPM1U9IOzEqJl8r3aCQm8l2H+IMm0lMQtznY7ENv8XK0w+6e+le6r06k0W9ud7qBJ4fDjbCcNpXBdnO3Xg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vuex-router-sync/-/vuex-router-sync-4.3.2.tgz}
+    id: registry.npmmirror.com/vuex-router-sync/4.3.2
+    name: vuex-router-sync
+    version: 4.3.2
+    peerDependencies:
+      vue-router: ^2.5.0
+      vuex: ^2.1.0
+    dependencies:
+      vue-router: registry.npmmirror.com/vue-router/2.8.1_vue@3.2.31
+      vuex: registry.npmmirror.com/vuex/2.5.0
+    dev: false
+
+  registry.npmmirror.com/vuex/2.5.0:
+    resolution: {integrity: sha512-5oJPOJySBgSgSzoeO+gZB/BbN/XsapgIF6tz34UwJqnGZMQurzIO3B4KIBf862gfc9ya+oduY5sSkq+5/oOilQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vuex/-/vuex-2.5.0.tgz}
+    name: vuex
+    version: 2.5.0
+    dev: false
 
   registry.npmmirror.com/watchpack-chokidar2/2.0.1:
     resolution: {integrity: sha512-nCFfBIPKr5Sh61s4LPpy1Wtfi0HE8isJ3d2Yb5/Ppw2P2B/3eVSEBjKfN0fmHJSK14+31KwMKmcrzs2GM4P0Ww==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/watchpack-chokidar2/-/watchpack-chokidar2-2.0.1.tgz}
