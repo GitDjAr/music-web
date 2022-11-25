@@ -1,5 +1,8 @@
 import request from "../utils/requiers"
 
+interface Idtype {
+  id: string | number
+}
 /**
  * 1. 二维码 key 生成接口
  * 说明: 调用此接口可生成一个 key
@@ -77,6 +80,33 @@ export function _artist_follow_count(params: string | number) {
 export function _follow(params: object = {}) {
   return request({
     url: '/follow',
+    method: 'get',
+    params
+  })
+}
+
+// 说明 : 调用此接口 , 传入歌手 id, 可获得相似歌手
+export function _simi_artist(params: Idtype) {
+  return request({
+    url: '/simi/artist',
+    method: 'get',
+    params
+  })
+}
+
+// 说明 : 调用此接口 , 传入歌曲 id, 可获得相似歌单
+export function _simi_playlist(params: Idtype) {
+  return request({
+    url: '/simi/playlist',
+    method: 'get',
+    params
+  })
+}
+
+// 说明 : 调用此接口 , 传入歌手 id, 可获得歌手部分信息和热门歌曲
+export function _artists(params: Idtype) {
+  return request({
+    url: '/artists',
     method: 'get',
     params
   })

@@ -6,7 +6,7 @@ export default {
   nav: {
     home: '首页',
     radio: '音乐库',
-    alboms: '专辑',
+    albums: '专辑',
     search: '搜索',
     about: '关于',
     collect: '收藏',

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import type { RouteComponent } from 'vue-router'
 
-// muisc
+// music
 const Page404 = () => import("../views/404/index.vue")
 const layout = () => import("../layout/default.vue")
 const Home = () => import("../views/Home/index.vue")
@@ -10,8 +10,9 @@ const radio = () => import("../views/Radio/index.vue")
 const setting = () => import("../views/settings/index.vue")
 const About = () => import("../views/About.vue")
 const TopCharts = () => import("../views/Home/TopCharts.vue")
-const alboms = () => import("../views/alboms/index.vue")
+const albums = () => import("../views/albums/index.vue")
 const singer = () => import("../views/singer/index.vue")
+const favorite = () => import("../views/favorite/index.vue")
 
 // Gutian
 const Gutian = () => import("../layout/G.vue")
@@ -41,10 +42,10 @@ const routes: Array<RouteRecordRaw> = [
         component: TopCharts
       },
       {
-        path: 'alboms/:id',
-        name: 'alboms',
+        path: 'albums/:id',
+        name: 'albums',
         meta: { title: '专辑', keepalive: true },
-        component: alboms,
+        component: albums,
         // children:[
         //   { path: '', component: Page404 },
         // ]
@@ -52,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'singer/:id',
         name: 'singer',
-        meta: { title: '歌手', keepalive: true },
+        meta: { title: '歌手', keepalive: false },
         component: singer,
         // children:[
         //   { path: '', component: Page404 },
@@ -63,6 +64,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'About',
         meta: { title: '关于', keepalive: true },
         component: About
+      },
+      {
+        path: 'favorite',
+        name: 'favorite',
+        meta: { title: '收藏', keepalive: true },
+        component: favorite
       },
       {
         path: 'settings',

@@ -17,6 +17,7 @@ import store from "./store/index"
 import PASS from './utils/$PASS'
 
 import Logo from "./components/logo.vue"
+import image from './components/image.vue'
 import "./style/index.scss"
 import "./style/threm.scss"
 import "./style/init.scss"
@@ -37,6 +38,7 @@ const app = createApp(App)
   .use(router)
   .use(I18n)
   .component('Logo', Logo)
+  .component('Image', image)
 
 app.config.globalProperties.$PASS = PASS.$PASS
 
