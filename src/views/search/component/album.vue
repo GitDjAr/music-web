@@ -32,18 +32,18 @@ import store from "@/store"
 
 const { Activated, params } = defineProps<{
   params: {
-    activetion: boolean,
+    activation: boolean,
     keysCode: string
   },
   Activated: boolean
 }>()
 const Emit = defineEmits<{
-  (e: 'update', activetion: boolean): void
+  (e: 'update', activation: boolean): void
 }>()
 
 // 激活周期
 watch(() => Activated, () => {
-  if (!params.activetion && Activated === true) {
+  if (!params.activation && Activated === true) {
     searchSuggest()
   }
 })

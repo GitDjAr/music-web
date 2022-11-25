@@ -20,7 +20,7 @@ import { useStore } from 'vuex';
 const NavList = ref([
   { to: "/Music/home", name: "nav.home" },
   { to: "/Music/radio", name: "nav.radio" },
-  { to: "/Music/alboms", name: "nav.alboms" },
+  { to: "/Music/albums", name: "nav.albums" },
   { to: "/Music/favorite", name: "nav.favorite" },
   { to: "/Music/history", name: "nav.history" },
   { to: "/Music/settings", name: "nav.settings" },

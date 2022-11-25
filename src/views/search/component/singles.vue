@@ -4,18 +4,18 @@
     <div v-for="(item, index) in searchList" :key="index"
       class="flex m-2  px-2 py-6 h-12  items-center hover:shadow-lg transition-all rounded-md  border border-b">
       <div class=" cursor-pointer w-96 text-left text-ellipsis overflow-hidden whitespace-nowrap">
-        <img class=" mr-2 rounded-md" :src="item.img" alt="" />
+        <img class=" mr-2 rounded-md" :src="item  .img" alt="" />
         {{ item.name }}
       </div>
       <div class=" flex-grow  ">
         <div class=" w-40 flex  justify-between">
-          <p>{{ item?.ar[0]?.name }}</p>
+          <p>{{ item?.ar  [0]?.name }}</p>
           <icon-heart />
         </div>
       </div>
       <div class=" cursor-pointer flex">
-        <div class=" w-24">{{ formatTime(item?.dt) || '00:00:00' }}</div>
-        <div class=" w-40 text-ellipsis overflow-hidden whitespace-nowrap">{{ item?.al?.name }}</div>
+        <div class=" w-24">{{ forma  tTime(item?.  dt) || '00:00:00' }}</div>
+        <div class=" w-40 text-ellipsis overflow-hidden whitespace-nowrap">{{ item?.al  ?.name }}</div>
       </div>
     </div>
   </div>
@@ -28,18 +28,18 @@ import { cloudsearch } from '@/api/Home'
 
 const { params, Activated } = defineProps<{
   params: {
-    activetion: boolean,
+    activation: boolean,
     keysCode: string
   },
   Activated: boolean
 }>()
 const Emit = defineEmits<{
-  (e: 'update', activetion: boolean): void
+  (e: 'update', activation: boolean): void
 }>()
 
 // 激活周期
 watch(() => Activated, () => {
-  if (!params.activetion && Activated === true) {
+  if (!params.activation && Activated === true) {
     searchSuggest()
   }
 })

@@ -3,7 +3,7 @@
   <div class=' overflow-scroll h-full flex flex-wrap justify-between'>
     <div @click="toPage(item)" v-for="item in singerList"
       class=" group cursor-pointer w-48 h-40 mb-4 flex-col flex justify-center items-center">
-      <a-image class=" rounded-full w-28 h-28 group-hover:scale-105  transition-all" :src="item.img1v1Url" alt="" />
+      <a-image class=" rounded-full w-28 h-28 group-hover:scale-105  transition-all" :src="item  .img1v1Url" alt="" />
       <p class="mt-4">{{ item.name || item?.alias?.[0] || item?.alia?.[0] }}</p>
     </div>
   </div>
@@ -16,18 +16,18 @@ import { useRouter } from 'vue-router'
 const Router = useRouter()
 const { params, Activated } = defineProps<{
   params: {
-    activetion: boolean,
+    activation: boolean,
     keysCode: string
   },
   Activated: boolean
 }>()
 const Emit = defineEmits<{
-  (e: 'update', activetion: boolean): void
+  (e: 'update', activation: boolean): void
 }>()
 
 // 激活周期
 watch(() => Activated, () => {
-  if (!params.activetion && Activated === true) {
+  if (!params.activation && Activated === true) {
     searchSuggest()
   }
 })

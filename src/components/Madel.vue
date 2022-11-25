@@ -15,7 +15,7 @@
         </div>
         <div class="body">
           <slot>
-            {{ context }}11
+            {{ context }}
           </slot>
         </div>
         <div class="footer">

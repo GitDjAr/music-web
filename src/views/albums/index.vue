@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class=''>
-    import alboms
+    import albums
   </div>
 </template>
 
