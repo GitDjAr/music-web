@@ -111,3 +111,20 @@ export function _artists(params: Idtype) {
     params
   })
 }
+
+// 歌手 mv
+export function _artist_mv(params: Idtype) {
+  return request({
+    url: '/artist/mv',
+    method: 'get',
+    params
+  })
+}
+// 歌手 mv
+export function _mv(params: Idtype) {
+  return request({
+    url: '/mv',
+    method: 'get',
+    params
+  })
+}
