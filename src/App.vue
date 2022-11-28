@@ -1,12 +1,11 @@
 
 <script setup lang="ts">
-import Cookes from 'js-cookie'
 
 import { reactive, ref } from 'vue';
-const first = ref(Cookes.get('info'))
-const user: string = 'Hello ' + Cookes.get('user')
+const first = ref(localStorage.getItem('info'))
+const user: string = 'Hello ' + localStorage.getItem('user')
 const firstF = () => {
-  Cookes.set('info','true')
+  localStorage.setItem('info', 'true')
   first.value = 'true'
 }
 
