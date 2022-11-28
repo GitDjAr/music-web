@@ -120,10 +120,11 @@ export function _artist_mv(params: Idtype) {
     params
   })
 }
-// 歌手 mv
-export function _mv(params: Idtype) {
+
+// 歌手 mv 地址
+export function _mv_url(params: Idtype) {
   return request({
-    url: '/mv',
+    url: '/mv/url',
     method: 'get',
     params
   })

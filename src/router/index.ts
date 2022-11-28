@@ -13,6 +13,7 @@ const TopCharts = () => import("../views/Home/TopCharts.vue")
 const albums = () => import("../views/albums/index.vue")
 const singer = () => import("../views/singer/index.vue")
 const favorite = () => import("../views/favorite/index.vue")
+const test = () => import("../views/zzz_test/index.vue")
 
 // Gutian
 const Gutian = () => import("../layout/G.vue")
@@ -82,6 +83,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'search',
         meta: { title: '搜索', keepalive: false },
         component: search
+      },
+      {
+        path: 'test',
+        name: 'test',
+        meta: { title: 'test', keepalive: false },
+        component: test
       },
     ]
   },
