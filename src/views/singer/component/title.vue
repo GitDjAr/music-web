@@ -2,7 +2,7 @@
 <template>
   <div class="flex flex-col relative p-2 box-border overflow-hidden">
     <img class="object-cover absolute  w-full -top-1/4 -z-10 " :src="Img" />
-    <MadelVue :title="singerInfo?.artist?.name" v-model:visible="visible">
+    <ModalVue :title="singerInfo?.artist?.name" v-model:visible="visible">
       <template #default>
         <p class="text-sm">{{ singerInfo?.artist?.briefDesc }}</p>
         <ul class="my-4">
@@ -13,7 +13,7 @@
           </li>
         </ul>
       </template>
-    </MadelVue>
+    </ModalVue>
     <div class=" text-lg text-left flex justify-around text-white mix-blend-normal py-10 ">
       <div class="mytitleBox relative w-full flex-1 overflow-hidden ml-24 p-2 my-8">
         <h1 class="select-none relative">
@@ -43,7 +43,7 @@
 
 <script lang='ts' setup>
 import { ImgProportion } from '@/utils/gFn';
-import MadelVue from '@/components/Madel.vue';
+import ModalVue from '@/components/Modal.vue';
 import { _artist_follow_count, _follow, _artist_detail } from '@/api/user';
 import { ref, computed, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';

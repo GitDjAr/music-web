@@ -4,10 +4,11 @@
     @change="searchFun" v-model="searchKey" @search="searchSuggest" @blur="searchReset" :filter-option="false"
     allow-clear allow-search>
     <template #empty>
-      <div class=" flex flex-wrap p-2">
+      <div v-if="firstHot?.length" class=" flex flex-wrap p-2">
         <p class="rounded-full bg-sky-100 curp m-1 mycolor " @click="searchFun(first)" v-for="({ first }) in firstHot">
           {{ first }}</p>
       </div>
+      <a-empty v-else />
     </template>
     <a-optgroup :label="group" :key="index" v-for="(group, index) in  searchList.order">
       <a-option v-for="item of searchList[group]" :value="item" class="flex justify-between">
