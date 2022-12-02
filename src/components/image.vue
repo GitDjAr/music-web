@@ -1,28 +1,31 @@
 <!--  -->
 <template>
   <div class=" overflow-hidden">
-    <img :src="Immure" :class='`w-full h-full  object-${fit}`' :alt="P.alt" />
+    <img ref="refImg" :class='`w-full h-full  ${objectify}`' :alt="P.alt" />
     <slot></slot>
   </div>
 </template>
 
 <script lang='ts' setup>
-import { computed, withDefaults } from 'vue';
+import { computed, ref, watchEffect, withDefaults } from 'vue';
 
 const P = withDefaults(defineProps<{
   src?: string
   alt?: string,
+  lazy: boolean,
   wh: Array<number>,
   slots: boolean
   unit?: string
-  fit?: string
+  fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down'
 }>(), {
   slots: false,
+  lazy: true,
   wh: [100, 100],
   unit: 'px',
-  fit: 'contain',
+  fit: 'cover',
 })
 
+const objectify = ref('object-' + P.fit)
 const Immure = computed(() => {
   if (P.src) {
     return P.src + (P.wh[0] ? `?param=${P.wh[0]}y${P.wh[1]}` : '')
@@ -30,6 +33,21 @@ const Immure = computed(() => {
     return window.rendomImgurl
   }
 })
+
+// 懒加载
+const isServerRendering = (() => {
+  try {
+    return !(typeof window !== 'undefined' && document !== undefined);
+  } catch (e) {
+    return true;
+  }
+})();
+
+const refImg = ref<HTMLImageElement | null>(null)
+watchEffect(() => {
+  if (isServerRendering || !refImg.value) return;
+  refImg.value.src = Immure?.value;
+});
 </script>
 <style scoped lang='scss'>
 
