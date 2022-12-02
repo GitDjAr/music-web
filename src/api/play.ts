@@ -49,3 +49,12 @@ export function _song_url_v1(params: {}) {
     }
   })
 }
+
+//获取歌词 id
+export function _lyric(params: object = {}) {
+  return request({
+    url: '/lyric',
+    method: 'get',
+    params
+  })
+}

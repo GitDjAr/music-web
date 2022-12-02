@@ -96,7 +96,7 @@ export function _playlist_detail(params: object = {}) {
   })
 }
 
-//获取歌单所有歌曲
+//获取歌单所有歌曲 id limit offset 
 export function _playlist_track_all(params: object = {}) {
   return request({
     url: '/playlist/track/all',

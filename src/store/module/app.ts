@@ -1,5 +1,5 @@
 import { Store, Commit } from "vuex"
-import { _song_url_v1, GetSongDetail, GetSong, CheckMusic } from "@/api/play"
+import { _song_url_v1, GetSongDetail, GetSong, _lyric, CheckMusic } from "@/api/play"
 import Player from "@/utils/player"
 import { reactive } from 'vue'
 import { Notification } from "@arco-design/web-vue"
@@ -8,16 +8,23 @@ import { Notification } from "@arco-design/web-vue"
 interface userInfoOption {
   [string: string]: Object
 }
-const appuser = localStorage.getItem("userInfo") || "{}"
-const cp = localStorage.getItem("CurPlaySong") || '{}'
+// const appuser = localStorage.getItem("userInfo") || "{}"
+// const cp = localStorage.getItem("CurPlaySong") || '{}'
+function parse(str: string, def: any) {
+  if (localStorage.getItem(str)) {
+    return JSON.parse(<string>localStorage.getItem(str))
+  }
+  return def
+}
 const state = {
   locale: localStorage.getItem("locale") || "zh-CN",
   musicLevel: localStorage.getItem('musicLevel') || 'lossless',
   tagColor: ['red', 'orangered', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'arcoblue', 'purple', 'pinkpurple', 'magenta'],
-  userInfo: JSON.parse(appuser) || {},
+  userInfo: parse('userInfo', {}),
 
   // 当前 or 上次播放历史
-  CurPlaySong: JSON.parse(cp) || {},
+  CurPlaySong: parse('CurPlaySong', {}),
+  playList: parse('playList', []),
   // CurPlaySong:{},
 }
 const mutations = {
@@ -50,22 +57,22 @@ const actions = {
     localStorage.setItem("userInfo", JSON.stringify(info))
   },
   // 切歌
-  async ToggleSong({ commit }: { commit: Commit }, { id }: { id: number }) {
+  async ToggleSong({ commit }: { commit: Commit }, id: { id: number }) {
     // 是否可用
-    // const { success, message } = await CheckMusic({ id })
-    // if (!success) {
-    //   Notification.info(message)
-    //   return
-    // }
-    const plist = [GetSong({ id }, true), GetSongDetail({ ids: id })]
-    const [{ data: SongUrl }, SongDetail] = await Promise.all(plist)
-    console.log(id, SongUrl, SongDetail)
+    const { success, message } = await CheckMusic({ id })
+    if (!success) {
+      Notification.info(message)
+      return
+    }
+    const plist = [_song_url_v1({ id }, true), _lyric({ id }), GetSongDetail({ ids: id })]
+    const [{ data: SongUrl }, ffff, SongDetail] = await Promise.all(plist)
+    const songs = SongDetail?.songs[0] || {}
+    console.log(id, SongUrl, ffff, songs)
     const data: any = {
-      song: SongDetail,
-      picUrl: SongDetail.al.picUrl,
-      songName: SongDetail.al.name,
-      duration: SongDetail.dt,
-      songsList: SongDetail,
+      song: songs,
+      picUrl: songs?.al?.picUrl,
+      songName: songs?.al?.name,
+      duration: songs?.dt,
       url: SongUrl[0]?.url,
     }
     localStorage.setItem("CurPlaySong", JSON.stringify(data))
