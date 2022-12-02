@@ -1,15 +1,15 @@
 <!--  -->
 <template>
-  <a-spin style="width: 100%" :loading="loading" tip="网络有点波动......">
-    <titleVue :props='Fprops' />
+  <div class=" h-full overflow-hidden" v-loading="loading">
+    <titleVue :props='Aprons' />
     <a-tabs class="My-space" position="right" @change="activeFun" justify :active-key="active" lazy-load animation>
       <a-tab-pane :key="item.id" :title="item.title" v-for="item in tabsList">
-        <component :ref="itemRef" :is="item.Com" :props="Fprops" :Activated="active === item.id"
-          @updateId="updateSinger">
+        <component class=" overflow-scroll h-full " :ref="itemRef" :is="item.Com" :props="Aprons"
+          :Activated="active === item.id" @updateId="updateSinger">
         </component>
       </a-tab-pane>
     </a-tabs>
-  </a-spin>
+  </div>
 </template>
 
 <script lang="ts">
@@ -18,7 +18,7 @@ export default { name: 'singer' }
 <script lang='ts' setup>
 import infoVue from './component/info.vue';
 import mvVue from './component/mv.vue'
-import albumVue from '../search/component/album.vue';
+import albumVue from './component/album.vue';
 import titleVue from './component/title.vue';
 import { _artist_follow_count, _follow, _artist_detail } from '@/api/user';
 import { onMounted, ref, Ref, reactive, markRaw, nextTick, onBeforeUpdate } from 'vue';
@@ -32,7 +32,7 @@ const route = useRoute();
 const router = useRouter();
 const id = <string>route.params.id;
 
-const Fprops = reactive({
+const Aprons = reactive({
   id,
   singerInfo: {},
   store,
@@ -45,7 +45,7 @@ onMounted(() => {
 });
 
 const updateSinger = (v: string) => {
-  Fprops.id = v
+  Aprons.id = v
   // (v: boolean) => item.params.activation = v
   tabsList.value = tabsList.value.map(e => {
     return {
@@ -67,7 +67,7 @@ const loading = ref(false)
 async function get_artist_detail() {
   loading.value = true
   const { data } = await _artist_detail({ id });
-  Fprops.singerInfo = data
+  Aprons.singerInfo = data
   loading.value = false
 }
 
@@ -82,7 +82,7 @@ onBeforeUpdate(() => {
 })
 
 // 激活 tabs
-const active = ref('1')
+const active = ref('2')
 const activeFun = (id: string) => {
   active.value = id
 }
@@ -94,5 +94,17 @@ const tabsList: Ref<tabsType[]> = ref([
 ])
 </script>
 <style scoped lang='scss'>
+.My-space {
+  padding-top: 6px;
+  overflow: hidden;
+  height: calc(100% - 324.22px);
 
+  :deep(.arco-tabs-content-list) {
+    .arco-tabs-pane {
+      height: 100%;
+    }
+
+    height: 100%;
+  }
+}
 </style>

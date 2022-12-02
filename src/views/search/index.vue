@@ -2,7 +2,7 @@
 <template>
   <div class='flex flex-col w-full h-full'>
     <div class=" h-1/10  max-h-72 overflow-hidden">
-      <img class=" h-full w-full  object-cover" :src="rendomImgurl" />
+      <Image class=" h-full w-full" />
     </div>
     <h1 class=" text-lg">根据<span class=" text-sky-300   inline-block px-1">{{ searchKey }}</span>搜索显示 </h1>
     <a-tabs class="My-space" position="right" @change="activeFun" justify :active-key="active" lazy-load animation>
@@ -15,17 +15,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default { name: 'search' }
 </script>
 <script lang='ts' setup>
 import albumVue from './component/album.vue';
 import singerVue from './component/singer.vue';
 import singlesVue from './component/singles.vue';
-import { ref, Ref, markRaw, onBeforeUpdate, nextTick, onMounted } from 'vue'
+import { ref, Ref, markRaw, onBeforeUpdate, nextTick, } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import type { Component } from 'vue'
-import { getImg } from '@/api/api-free/index'
 
 const route = useRoute()
 const router = useRouter()
@@ -86,13 +85,6 @@ const activeFun = (id: string) => {
   active.value = id
 }
 
-// 随机图片
-const rendomImgurl = ref('')
-const IMGFun = async () => {
-  const { imgurl } = await getImg()
-  rendomImgurl.value = imgurl
-}
-IMGFun()
 
 </script>
 <style scoped lang='scss'>
