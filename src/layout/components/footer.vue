@@ -4,25 +4,15 @@
     <div class="myclass h-full w-full grid select-none padding10" :class="visible ? 'absolute padding10' : ''">
       <div class="grid myname items-center justify-center" @click.stop>
         <img style="width: 50px" class="rounded-lg object-cover cursor-pointer" :disabled="true"
-          :src="CurPlaySong.song.al.picUrl" />
+          :src="CurPlaySong?.song?.al?.picUrl" />
         <div class="cursor-pointer">
-          <h2>{{ CurPlaySong.song.name }}</h2>
-          <p>{{ CurPlaySong.copywriter }}</p>
+          <h2>{{ CurPlaySong?.song?.name }}</h2>
+          <p>{{ CurPlaySong?.copywriter }}</p>
         </div>
         <icon-heart-fill class="hover:text-pink-500 cursor-pointer" extraProps="{color:red}" v-if="CurPlaySong.heart" />
         <icon-heart class="hover:text-pink-500 cursor-pointer" v-else />
       </div>
       <div class="grid">
-        <div class="flex justify-center items-center">
-          <icon-select-all class="hover:text-violet-300" />
-          <icon-backward />
-          <button @keydown.enter="Player.pause()">
-            <component @click.stop="Player.pause()" :is="`icon-${Player.playStatus ? 'pause' : 'play'}-circle-fill`"
-              class="text-2xl" />
-          </button>
-          <icon-forward />
-          <icon-sync />
-        </div>
         <div @click.stop class="flex items-center justify-between">
           <span class="w-12">{{ Player._progress }}</span>
           <div @mousedown.self="GoTime($event)" class="
@@ -48,6 +38,17 @@
           </div>
           <span class="w-12">{{ formatTime(CurPlaySong.duration) }}</span>
         </div>
+        <div class="flex justify-center items-center">
+          <icon-select-all class="hover:text-violet-300" />
+          <icon-backward />
+          <button @keydown.enter="Player.pause()">
+            <component @click.stop="Player.pause()" :is="`icon-${Player.playStatus ? 'pause' : 'play'}-circle-fill`"
+              class="text-2xl" />
+          </button>
+          <icon-forward />
+          <icon-sync />
+        </div>
+
       </div>
       <div>
         <icon-list />
