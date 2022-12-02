@@ -5,8 +5,8 @@
     <Transition name="modal">
       <div v-show="props.visible" @click.self="beforeClose"
         :class='`flex transition-all  justify-center overflow-hidden items-center top-0 left-0 right-0 bottom-0 absolute bg-black bg-opacity-30`'>
-        <div :style="{ width: props.width }"
-          :class="`modal-container bg-white p-${props.empty ? 0 : 5} overflow-hidden rounded-xl mt-${props.visible ? 50 : 0}`">
+        <div :style="{ width: props.width, maxHeight: '85vh' }" v-bind="$attrs"
+          :class="` ${classContext} modal-container flex flex-col  transition-all bg-white  overflow-hidden rounded-xl `">
           <template v-if="props.empty">
             <slot>空模板</slot>
           </template>
@@ -19,7 +19,7 @@
               </p>
               <icon-close @click="beforeClose" :style="{ fontSize: '26px' }" />
             </div>
-            <div class="body">
+            <div class="body leading-relaxed">
               <slot>
                 {{ context }}
               </slot>
@@ -39,7 +39,7 @@ import { ref, reactive, withDefaults, computed } from 'vue'
 interface PropsType {
   width?: string,
   title?: string | number,
-  visible?: boolean,
+  visible: boolean,
   center?: 'center' | 'left' | 'right',
   beforeClose?: Function | null,
   context: string,
@@ -73,6 +73,14 @@ function beforeClose() {
 function Close() {
   Emit('update:visible', false)
 }
+
+// 动态css
+const classContext = computed(() => {
+  return `
+  ${props.empty ? 'p-0' : 'p-5'} 
+  ${props.visible ? 'mt-50' : 'mt-0'} 
+  `
+})
 </script>
 <style scoped lang='scss'>
 .modal-container {
