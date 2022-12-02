@@ -73,8 +73,7 @@ async function getDayinPush() {
   // state.dayinPush = dailySongs
 }
 const palySong = async (song: Object) => {
-  console.log(song);
-  Store.dispatch('ToggleSong', { id: song.al.id })
+  Store.dispatch('ToggleSong', song?.al?.id)
 }
 // 去歌手主页
 function Checksinger(row: { id: number }) {

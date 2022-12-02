@@ -4,19 +4,15 @@
     <h2 class="t-lf pad-l-10">{{ $t("home.recommendMv") }}</h2>
     <a-carousel class="carousel" :auto-play="true" animation-name="fade" show-arrow="never" indicator-type="slider">
       <a-carousel-item v-for="(item, index) in state.personalized" :key="index">
-        <img :src="item.picUrl" :alt="item.copywriter" @click="GoPlay(item)" :style="{
-          width: '100%',
-          height: '100%',
-          'object-fit': 'cover',
-        }" />
+        <img :src="item.picUrl" :alt="item.copywriter" @click="GoPlay(item)" class="w-full h-full object-cover" />
       </a-carousel-item>
     </a-carousel>
     <h2 class="t-lf pad-l-10">{{ $t("home.recommendPlaylist") }}</h2>
     <div class="Nouvea">
       <div class="NouList" :key="index" v-for="(item, index) in state.recommendPlaylist">
         <div class="rounded-lg overflow-hidden relative curp group">
-          <img class="list-img group-hover:scale-110 group-hover:duration-500 transition-all"
-            :src="`${item.picUrl}?param=200y200`" :alt="item.copywriter" @click="albumOver(item)" />
+          <Image class="list-img group-hover:scale-110 group-hover:duration-500 transition-all" :src="item.picUrl"
+            :wh="[200, 200]" :alt="item.copywriter" @click="albumOver(item)" />
           <p
             class="z-10 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 opacity-0 flex group-hover:opacity-100 transition-all justify-center items-center bg-slate-300 bg-opacity-50 rounded-3xl scale-150">
             <icon-play-arrow />
@@ -73,9 +69,8 @@ const CheckDetails = (Details: any) => {
   // router.push()
 }
 const albumOver = ({ id }: IdOps) => {
-  router.push({
-    path: `/playlist/${id}`,
-  })
+
+  router.push({ name: 'albums', params: { id } })
 }
 const resourceColor = (v: string | number) => {
   return `#cdd${v.toString().slice(0, 3)}`
