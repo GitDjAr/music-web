@@ -1,51 +1,70 @@
-import { type } from "os"
+
+type VideoEvent =
+  | 'progress'  // 定期发送，以通知相关方下载媒体的进度。有关已下载的媒体的当前数量的信息可在媒体元素的属性中找到。buffered
+  | 'playing'  // 在媒体开始播放时发送（第一次、暂停后或结束然后重新启动后发送）。
+  | 'play'  // 暂停后开始播放媒体时发送;也就是说，当播放在先前事件后恢复时。pause
+  | 'pause'  // 播放暂停时发送。
+  | 'timeupdate'  // 元素属性指示的时间已更改。currentTime
+  | 'volumechange'  // 在音频音量更改时发送（设置音量和更改状态时）。muted
+  | 'seeking'  // 在查找操作开始时发送。
+  | 'seeked'  // 在查找操作完成时发送。
+  | 'ratechange'  // 播放速度更改时发送。
+  | 'ended'  // 播放完成后发送。注意：这不会触发 ifis true。autoplay
+  | 'enterfullscreen'  // 当播放器进入全屏模式（对于旧版浏览器，正确的全屏或全窗口回退）时发送。
+  | 'exitfullscreen'  // 在播放器退出全屏模式时发送。
+  | 'captionsenabled'  // 启用字幕时发送。
+  | 'captionsdisabled'  // 禁用字幕时发送。
+  | 'languagechange'  // 字幕语言更改时发送。
+  | 'controlshidden'  // 控件隐藏时发送。
+  | 'controlsshown'  // 显示控件时发送。
+  | 'ready'  // 在实例准备好进行 API 调用时触发。
+  | 'loadedmetadata' //加载第一帧时
 
 export interface VideoMethods {
-  play: () => boolean             //	-	开始播放。
-  pause: () => boolean             //	-	暂停播放。
-  togglePlay: (toggle: boolean) => boolean             //	布尔	切换播放，如果没有传递参数，它将根据当前状态进行切换。
-  stop: () => boolean             //	-	停止播放并重置以开始。
-  restart: () => boolean             //	-	重新开始播放。
-  rewind: (seekTime: number | undefined) => boolean             //	数	按指定的寻道时间倒回播放。如果未传递任何参数，则将使用默认寻道时间。
-  forward: (seekTime: number | undefined) => boolean             //	数	按指定的寻道时间快进。如果未传递任何参数，则将使用默认寻道时间。
-  increaseVolume: (step: number | undefined) => boolean             //	数	按指定步骤增加音量。如果未传递任何参数，则将使用默认步骤。
-  decreaseVolume: (step: number | undefined) => boolean             //	数	按指定步骤增加音量。如果未传递任何参数，则将使用默认步骤。
-  toggleCaptions: (toggle: boolean | undefined) => boolean             //	布尔	切换字幕显示。如果未传递任何参数，它将根据当前状态进行切换。
+  //	-	开始播放。
+  play: () => boolean
+  //	-	暂停播放。
+  pause: () => boolean
+  //	布尔	切换播放，如果没有传递参数，它将根据当前状态进行切换。
+  togglePlay: (toggle: boolean) => boolean
+  //	-	停止播放并重置以开始。
+  stop: () => boolean
+  //	-	重新开始播放。
+  restart: () => boolean
+  //	数	按指定的寻道时间倒回播放。如果未传递任何参数，则将使用默认寻道时间。
+  rewind: (seekTime: number | undefined) => boolean
+  //	数	按指定的寻道时间快进。如果未传递任何参数，则将使用默认寻道时间。
+  forward: (seekTime: number | undefined) => boolean
+  //	数	按指定步骤增加音量。如果未传递任何参数，则将使用默认步骤。
+  increaseVolume: (step: number | undefined) => boolean
+  //	数	按指定步骤增加音量。如果未传递任何参数，则将使用默认步骤。
+  decreaseVolume: (step: number | undefined) => boolean
+  //	布尔	切换字幕显示。如果未传递任何参数，它将根据当前状态进行切换。
+  toggleCaptions: (toggle: boolean | undefined) => boolean
   fullscreen: {
-    enter: () => boolean             //	-	进入全屏。如果不支持全屏，则改用回退“全窗口/视口”。
-    exit: () => boolean             //	-	退出全屏。
-    toggle: () => boolean             //	-	切换全屏。
+    //	-	进入全屏。如果不支持全屏，则改用回退“全窗口/视口”。
+    enter: () => boolean
+    //	-	退出全屏。
+    exit: () => boolean
+    //	-	切换全屏。
+    toggle: () => boolean
   }
-  airplay: () => boolean             //	-	在支持的设备上触发隔空播放对话框。
-  setPreviewThumbnails: (source: string) => void             //	-	设置当前源的预览缩略图。
-  toggleControls: (toggle: boolean) => boolean             //	布尔	切换控件（仅限视频）。采用可选的真值来强制打开/关闭它。
-  on: (event, function)=> boolean             //	字符串、函数	为指定事件添加事件侦听器。
-  once: (event, function)=> boolean             //	字符串、函数	为指定事件添加一次事件侦听器。
-  off: (event: string, function: (e:)=> {}:any)=> any             //	字符串、函数	删除指定事件的事件侦听器。
-supports: (type: string) => boolean             //	字符串	检查对 MIME 类型的支持。
-destroy: () => boolean             //	-	销毁实例并垃圾回收所有元素。
-}
-
-
-export interface VideoEvent {
-  progress: () => void, // 定期发送，以通知相关方下载媒体的进度。有关已下载的媒体的当前数量的信息可在媒体元素的属性中找到。buffered
-  playing: () => void, // 在媒体开始播放时发送（第一次、暂停后或结束然后重新启动后发送）。
-  play: () => void, // 暂停后开始播放媒体时发送;也就是说，当播放在先前事件后恢复时。pause
-  pause: () => void, // 播放暂停时发送。
-  timeupdate: () => void, // 元素属性指示的时间已更改。currentTime
-  volumechange: () => void, // 在音频音量更改时发送（设置音量和更改状态时）。muted
-  seeking: () => void, // 在查找操作开始时发送。
-  seeked: () => void, // 在查找操作完成时发送。
-  ratechange: () => void, // 播放速度更改时发送。
-  ended: () => void, // 播放完成后发送。注意：这不会触发 ifis true。autoplay
-  enterfullscreen: () => void, // 当播放器进入全屏模式（对于旧版浏览器，正确的全屏或全窗口回退）时发送。
-  exitfullscreen: () => void, // 在播放器退出全屏模式时发送。
-  captionsenabled: () => void, // 启用字幕时发送。
-  captionsdisabled: () => void, // 禁用字幕时发送。
-  languagechange: () => void, // 字幕语言更改时发送。
-  controlshidden: () => void, // 控件隐藏时发送。
-  controlsshown: () => void, // 显示控件时发送。
-  ready: () => void, // 在实例准备好进行 API 调用时触发。
+  //	-	在支持的设备上触发隔空播放对话框。
+  airplay: () => boolean
+  //	-	设置当前源的预览缩略图。
+  setPreviewThumbnails: (source: string) => void
+  //	布尔	切换控件（仅限视频）。采用可选的真值来强制打开/关闭它。
+  toggleControls: (toggle: boolean) => boolean
+  //	字符串、函数	为指定事件添加事件侦听器。
+  on: (event: VideoEvent, cb: (e: videoInstance) => void) => boolean
+  //	字符串、函数	为指定事件添加一次事件侦听器。
+  once: (event: VideoEvent, cb: (e: videoInstance) => void) => boolean
+  //	字符串、函数	删除指定事件的事件侦听器。
+  off: (event: VideoEvent, cb: (e: videoInstance) => void) => void
+  //	字符串	检查对 MIME 类型的支持。
+  supports: (type: string) => boolean
+  //	-	销毁实例并垃圾回收所有元素。
+  destroy: () => boolean
 }
 
 export interface videoAttribute {
