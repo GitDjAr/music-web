@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-  <div class="flex flex-col relative p-2 box-border overflow-hidden">
-    <img class="object-cover absolute  w-full -top-1/4 -z-10 " :src="Img" />
+  <div class="flex flex-col relative  box-border overflow-hidden">
+    <img class="  object-cover absolute  w-full -top-1/4 -z-10 " :src="Img" />
     <ModalVue :title="singerInfo?.artist?.name" v-model:visible="visible">
       <template #default>
         <p class="text-sm">{{ singerInfo?.artist?.briefDesc }}</p>
@@ -9,12 +9,12 @@
           {{ singerInfo?.imageDesc }}
           <li class="mr-2 inline-block cursor-pointer" :key="index"
             v-for="(item, index) in singerInfo?.imageDesc?.split('、')">
-            <a-tag :color="colorFun()"> {{ item }} </a-tag>
+            <a-tag :color="tagColor()"> {{ item }} </a-tag>
           </li>
         </ul>
       </template>
     </ModalVue>
-    <div class=" text-lg text-left flex justify-around text-white mix-blend-normal py-10 ">
+    <div class="myimg text-lg text-left flex justify-around text-white mix-blend-normal py-10 ">
       <div class="mytitleBox relative w-full flex-1 overflow-hidden ml-24 p-2 my-8">
         <h1 class="select-none relative">
           {{ singerInfo?.artist?.name }}
@@ -58,6 +58,10 @@ const P = defineProps<{
     // store: StoreOptions<typeof store>
   }
 }>()
+
+// 随机颜色
+let tagColor = () => store.getters.tagColor
+
 const store = useStore();
 let id = P.props.id;
 
@@ -100,39 +104,21 @@ const visible = ref(false);
 function openMadol() {
   visible.value = !visible.value;
 }
-
-// 随机颜色
-const color = computed(() => store?.state?.app?.tagColor);
-const colorFun = () => {
-  let i = Math.floor(Math.random() * 14);
-  return color.value[i];
-};
 </script>
 <style scoped lang='scss'>
-// .mytitleBox {
-//   width: 300px;
-
-//   &::after {
-//     content: "";
-//     position: absolute;
-//     z-index: 1;
-//     display: block;
-//     width: 100%;
-//     height: 100%;
-//     top: 0;
-//     left: 0;
-//     background: #fff url('https://img.2eka.cloud/api/random?type=pc') no-repeat fixed;
-//     position: absolute;
-//     filter: blur(5px);
-//     -webkit-filter: blur(5px);
-//     display: block;
-//     width: 100%;
-//     height: 100%;
-//     z-index: -1;
-//     top: 0;
-//     left: 0;
-//   }
-// }
+.myimg {
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    opacity: 0.3;
+  }
+}
 
 .iconcheck {
   position: absolute;
