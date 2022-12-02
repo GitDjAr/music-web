@@ -112,7 +112,7 @@ export function _artists(params: Idtype) {
   })
 }
 
-// 歌手 mv
+// 歌手 mv limit: 20 offset: 40
 export function _artist_mv(params: Idtype) {
   return request({
     url: '/artist/mv',
@@ -121,10 +121,18 @@ export function _artist_mv(params: Idtype) {
   })
 }
 
-// 歌手 mv 地址
+// 歌手 mv 地址 
 export function _mv_url(params: Idtype) {
   return request({
     url: '/mv/url',
+    method: 'get',
+    params
+  })
+}
+//传入歌手 id, 可获得歌手专辑内容  limit: 20 offset: 40
+export function _artist_album(params: object = {}) {
+  return request({
+    url: '/artist/album',
     method: 'get',
     params
   })

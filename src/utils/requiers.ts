@@ -15,6 +15,7 @@ interface ShowMessageOptions {
     msg?: string;
   }
   msg: string
+  message: string,
   code?: number
 }
 
@@ -65,10 +66,10 @@ servers.interceptors.response.use(
 // show Message
 function ShowMessage(data: ShowMessageOptions) {
   // console.log('data :>> ', data);
-  const msg = data.msg || data?.res?.msg || ''
+  const msg = data.message || data.msg || data?.res?.msg || ''
   if (!msg) return
   if (data.show && data.code === 200) {
-    Message.success(data.msg)
+    Message.success(msg)
   } else {
     Message.warning({ icon: () => h(IconRecord), content: msg })
   }

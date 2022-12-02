@@ -11,12 +11,6 @@ const loading: Directive = {
     el.instance = instance;
     el.style.position = 'relative';
     if (binding.value) {
-      console.log('el', app, instance);
-      setTimeout(() => {
-        console.log(instance);
-
-      }, 300);
-
       appendEl(el);
     }
   },
