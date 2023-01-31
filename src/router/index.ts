@@ -11,6 +11,7 @@ const setting = () => import("../views/settings/index.vue")
 const About = () => import("../views/About.vue")
 const TopCharts = () => import("../views/Home/TopCharts.vue")
 const albums = () => import("../views/albums/index.vue")
+const albumsList = () => import("../views/albums/albumsList.vue")
 const singer = () => import("../views/singer/index.vue")
 const favorite = () => import("../views/favorite/index.vue")
 const test = () => import("../views/zzz_test/index.vue")
@@ -43,13 +44,13 @@ const routes: Array<RouteRecordRaw> = [
         component: TopCharts
       },
       {
-        path: 'albums/:id',
+        path: 'albums',
         name: 'albums',
         meta: { title: '专辑', keepalive: true },
         component: albums,
-        // children:[
-        //   { path: '', component: Page404 },
-        // ]
+        children: [
+          { path: ':id', component: albumsList },
+        ]
       },
       {
         path: 'singer/:id',

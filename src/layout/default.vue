@@ -13,9 +13,11 @@
         <Suspense>
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'fade'" mode="out-in">
-              <keep-alive :exclude="KeepAliveList">
-                <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined" />
-              </keep-alive>
+              <div>
+                <keep-alive :exclude="KeepAliveList">
+                  <component :is="Component" :key="route.path" />
+                </keep-alive>
+              </div>
             </transition>
           </router-view>
         </Suspense>
@@ -28,38 +30,36 @@
 </template>
 
 <script lang="ts">
-import footerVue from './components/footer.vue';
-import titleVue from './components/title/index.vue';
-import navVue from './components/nav.vue';
-import { mapGetters } from 'vuex';
-import type { RouteRecordRaw } from 'vue-router'
+import footerVue from "./components/footer.vue";
+import titleVue from "./components/title/index.vue";
+import navVue from "./components/nav.vue";
+import { mapGetters } from "vuex";
+import type { RouteRecordRaw } from "vue-router";
 export default {
   components: { footerVue, titleVue, navVue },
   data() {
     return {
-      KeepAliveList: []
-    }
+      KeepAliveList: [],
+    };
   },
   computed: {
-    ...mapGetters(['userInfo', 'loginStatus']),
+    ...mapGetters(["userInfo", "loginStatus"]),
   },
   mounted() {
-    const that = this
+    const that = this;
     function deep(params: RouteRecordRaw) {
       if (params && params.children) {
-        params.children.forEach(element => {
-          deep(element)
+        params.children.forEach((element) => {
+          deep(element);
         });
       } else {
         if (!params?.meta?.keepalive) {
-          that.KeepAliveList.push(params?.name)
+          that.KeepAliveList.push(params?.name);
         }
       }
     }
-    deep(this.$route.matched[0] || {})
+    deep(this.$route.matched[0] || {});
     console.log(this.KeepAliveList);
-
-
   },
 };
 </script>

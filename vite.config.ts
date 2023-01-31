@@ -68,7 +68,7 @@ export default defineConfig({
     extensions: ['.ts', '.js', '.jsx', '.tsx', '.json'],
     alias: {
       'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
-      "@": path.resolve(__dirname, "src/"),
+      "@": path.resolve(__dirname, "src"),
       // "@components": path.resolve(__dirname, "src/components/"),
     },
   },

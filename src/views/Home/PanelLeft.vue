@@ -2,19 +2,40 @@
 <template>
   <div class="home-left">
     <h2 class="t-lf pad-l-10">{{ $t("home.recommendMv") }}</h2>
-    <a-carousel class="carousel" :auto-play="true" animation-name="fade" show-arrow="never" indicator-type="slider">
+    <a-carousel
+      class="carousel"
+      :auto-play="true"
+      animation-name="fade"
+      show-arrow="never"
+      indicator-type="slider"
+    >
       <a-carousel-item v-for="(item, index) in state.personalized" :key="index">
-        <img :src="item.picUrl" :alt="item.copywriter" @click="GoPlay(item)" class="w-full h-full object-cover" />
+        <img
+          :src="item.picUrl"
+          :alt="item.copywriter"
+          @click="GoPlay(item)"
+          class="w-full h-full object-cover"
+        />
       </a-carousel-item>
     </a-carousel>
     <h2 class="t-lf pad-l-10">{{ $t("home.recommendPlaylist") }}</h2>
     <div class="Nouvea">
-      <div class="NouList" :key="index" v-for="(item, index) in state.recommendPlaylist">
+      <div
+        class="NouList"
+        :key="index"
+        v-for="(item, index) in state.recommendPlaylist"
+      >
         <div class="rounded-lg overflow-hidden relative curp group">
-          <Image class="list-img group-hover:scale-110 group-hover:duration-500 transition-all" :src="item.picUrl"
-            :wh="[200, 200]" :alt="item.copywriter" @click="albumOver(item)" />
+          <Image
+            class="list-img group-hover:scale-110 group-hover:duration-500 transition-all"
+            :src="item.picUrl"
+            :wh="[200, 200]"
+            :alt="item.copywriter"
+            @click="albumOver(item)"
+          />
           <p
-            class="z-10 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 opacity-0 flex group-hover:opacity-100 transition-all justify-center items-center bg-slate-300 bg-opacity-50 rounded-3xl scale-150">
+            class="z-10 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 opacity-0 flex group-hover:opacity-100 transition-all justify-center items-center bg-slate-300 bg-opacity-50 rounded-3xl scale-150"
+          >
             <icon-play-arrow />
           </p>
         </div>
@@ -26,14 +47,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, onMounted } from "vue"
-import { useRouter } from "vue-router"
-import { personalizedMV, resource } from "@/api/Home"
-import { useStore } from "vuex"
-import type { IdOps } from "@/utils/type/id"
+import { reactive, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { personalizedMV, resource } from "@/api/Home";
+import { useStore } from "vuex";
+import type { IdOps } from "@/utils/type/id";
 
-const router = useRouter()
-const Store = useStore()
+const router = useRouter();
+const Store = useStore();
 const state = reactive({
   personalized: [{ picUrl: "" }, { copywriter: "" }],
   recommendPlaylist: [
@@ -44,44 +65,43 @@ const state = reactive({
       copywriter: "",
     },
   ],
-})
+});
 // 推薦mv
 async function getPersonalized() {
-  const { result } = await personalizedMV()
-  state.personalized = result.splice(0, 6)
+  const { result } = await personalizedMV();
+  state.personalized = result.splice(0, 6);
 }
 // 推荐歌单
 async function recommendPlaylist() {
-  const { recommend } = await resource({})
-  state.recommendPlaylist = recommend
+  const { recommend } = await resource({});
+  state.recommendPlaylist = recommend;
 }
 const palySong = async (song: Object) => {
-  Store.dispatch("ToggleSong", song)
-}
+  Store.dispatch("ToggleSong", song);
+};
 
 // 播放
 const GoPlay = (path: object) => {
-  console.log(path)
+  console.log(path);
   // router.push({path:path.to})
-}
+};
 // 查看明细
 const CheckDetails = (Details: any) => {
   // router.push()
-}
+};
 const albumOver = ({ id }: IdOps) => {
-
-  router.push({ name: 'albums', params: { id } })
-}
+  router.push({ name: "albums", params: { id } });
+};
 const resourceColor = (v: string | number) => {
-  return `#cdd${v.toString().slice(0, 3)}`
-}
+  return `#cdd${v.toString().slice(0, 3)}`;
+};
 const Checksinger = (singer: any) => {
   // router.push()
-}
+};
 onMounted(() => {
-  recommendPlaylist()
-  getPersonalized()
-})
+  recommendPlaylist();
+  getPersonalized();
+});
 </script>
 <style scoped lang="scss">
 .home-left {

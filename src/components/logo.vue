@@ -5,47 +5,45 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent, reactive, toRefs, onMounted } from 'vue'
-import palylogo from '../assets/play-logo.png'
-import logo from '../assets/logo.gif'
+<script lang="ts">
+import { defineComponent, reactive, toRefs, onMounted } from "vue";
+import palylogo from "../assets/play-logo.png";
+import logo from "../assets/logo.gif";
 export default defineComponent({
   components: {},
   props: {
-    width:String,
+    width: String,
     height: String,
-    logo:{
-      type:String,
-      default:'0'
-    }
+    logo: {
+      type: String,
+      default: "0",
+    },
   },
   setup(props) {
     const state = reactive({
       style: {
-        width: '100%',
-        height: '100%'
+        width: "100%",
+        height: "100%",
       },
-      src:''
-    })
+      src: "",
+    });
     interface srcMapOpt {
-      [key: string]: string
+      [key: string]: string;
     }
-    const srcMap:srcMapOpt = {
-      '0': palylogo,
-      '1': logo
-    }
-    let a = props.logo
-    state.src = srcMap[a]
-    
-    state.style.width = props?.width || '100%'
-    state.style.height = props?.height || '100%'
+    const srcMap: srcMapOpt = {
+      "0": palylogo,
+      "1": logo,
+    };
+    let a = props.logo;
+    state.src = srcMap[a];
+
+    state.style.width = props?.width || "100%";
+    state.style.height = props?.height || "100%";
 
     return {
-      ...toRefs(state)
-    }
-  }
-})
-
+      ...toRefs(state),
+    };
+  },
+});
 </script>
-<style scoped lang='scss'>
-</style>
+<style scoped lang="scss"></style>

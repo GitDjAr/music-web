@@ -9,12 +9,12 @@
   </div>
 </template>
 
-<script lang='ts' setup>
-import TopChartsVue from './TopCharts.vue';
-import PanelLeftVue from './PanelLeft.vue';
-import PanelRightVue from './PanelRight.vue';
+<script lang="ts" setup>
+import TopChartsVue from "./TopCharts.vue";
+import PanelLeftVue from "./PanelLeft.vue";
+import PanelRightVue from "./PanelRight.vue";
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .home-box {
   height: 100%;
   align-items: flex-start;

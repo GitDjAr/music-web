@@ -1,83 +1,106 @@
 <!--  -->
 <template>
-  <div class="flex flex-col relative  box-border overflow-hidden">
-    <img class="  object-cover absolute  w-full -top-1/4 -z-10 " :src="Img" />
+  <div class="flex flex-col relative box-border overflow-hidden">
+    <img class="object-cover absolute w-full -top-1/4 -z-10" :src="Img" />
     <ModalVue :title="singerInfo?.artist?.name" v-model:visible="visible">
       <template #default>
         <p class="text-sm">{{ singerInfo?.artist?.briefDesc }}</p>
         <ul class="my-4">
-          {{ singerInfo?.imageDesc }}
-          <li class="mr-2 inline-block cursor-pointer" :key="index"
-            v-for="(item, index) in singerInfo?.imageDesc?.split('、')">
+          {{
+            singerInfo?.imageDesc
+          }}
+          <li
+            class="mr-2 inline-block cursor-pointer"
+            :key="index"
+            v-for="(item, index) in singerInfo?.imageDesc?.split('、')"
+          >
             <a-tag :color="tagColor()"> {{ item }} </a-tag>
           </li>
         </ul>
       </template>
     </ModalVue>
-    <div class="myimg text-lg text-left flex justify-around text-white mix-blend-normal py-10 ">
-      <div class="mytitleBox relative w-full flex-1 overflow-hidden ml-24 p-2 my-8">
+    <div
+      class="myimg text-lg text-left flex justify-around text-white mix-blend-normal py-10"
+    >
+      <div
+        class="mytitleBox relative w-full flex-1 overflow-hidden ml-24 p-2 my-8"
+      >
         <h1 class="select-none relative">
           {{ singerInfo?.artist?.name }}
           <icon-check v-if="true" class="iconcheck" />
         </h1>
 
         <div class="flex cursor-pointer items-center">
-          <div @click="followSinger" class="py-1 px-12 m-2 rounded-full" :style="{ background: 'rgb(205, 216, 252)' }">
+          <div
+            @click="followSinger"
+            class="py-1 px-12 m-2 rounded-full"
+            :style="{ background: 'rgb(205, 216, 252)' }"
+          >
             <icon-heart v-if="follow.isFollow" />
             <icon-heart-fill v-else />
-            {{ follow.isFollow ? $t('artist.follow') : $t('artist.following') }}
+            {{ follow.isFollow ? $t("artist.follow") : $t("artist.following") }}
           </div>
-          <icon-more class="iconmore" :style="{ fontSize: '22px' }" @click="moreFun" />
+          <icon-more
+            class="iconmore"
+            :style="{ fontSize: '22px' }"
+            @click="moreFun"
+          />
         </div>
-        <p @click="openMadol" class="truncate w-2/3 text-sm mt-4 cursor-pointer">
+        <p
+          @click="openMadol"
+          class="truncate w-2/3 text-sm mt-4 cursor-pointer"
+        >
           {{ singerInfo?.artist?.briefDesc }}
         </p>
       </div>
       <div class="select-none mr-5 self-end mix-blend-hard-light">
-        {{ $t('artist.Attention') }}
+        {{ $t("artist.Attention") }}
         <p>{{ follow.fansCnt }}</p>
       </div>
     </div>
   </div>
 </template>
 
-<script lang='ts' setup>
-import { ImgProportion } from '@/utils/gFn';
-import ModalVue from '@/components/Modal.vue';
-import { _artist_follow_count, _follow, _artist_detail } from '@/api/user';
-import { ref, computed, watch, nextTick } from 'vue';
-import { useRoute } from 'vue-router';
-import { useStore } from 'vuex';
+<script lang="ts" setup>
+import { ImgProportion } from "@/utils/gFn";
+import ModalVue from "@/components/Modal.vue";
+import { _artist_follow_count, _follow, _artist_detail } from "@/api/user";
+import { ref, computed, watch, nextTick } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
 const P = defineProps<{
   props: {
-    id: string,
-    singerInfo: object,
+    id: string;
+    singerInfo: object;
     // router: Router,
     // route: RouteLocationNormalizedLoaded,
     // store: StoreOptions<typeof store>
-  }
-}>()
+  };
+}>();
 
 // 随机颜色
-let tagColor = () => store.getters.tagColor
+let tagColor = () => store.getters.tagColor;
 
 const store = useStore();
 let id = P.props.id;
 
-const resetImgFlag = ref(true)
-watch(() => P.props.id, () => {
-  id = P.props.id
-  init()
-  resetImgFlag.value = !resetImgFlag.value
-})
+const resetImgFlag = ref(true);
+watch(
+  () => P.props.id,
+  () => {
+    id = P.props.id;
+    init();
+    resetImgFlag.value = !resetImgFlag.value;
+  }
+);
 function init() {
   get_artist_follow_count();
   get_artist_detail();
 }
-init()
+init();
 // 歌手信息
-const Img = ref('')
+const Img = ref("");
 const singerInfo = ref({});
 async function get_artist_detail() {
   const { data } = await _artist_detail({ id });
@@ -97,7 +120,7 @@ async function get_artist_follow_count() {
 }
 
 // 更多
-function moreFun() { }
+function moreFun() {}
 
 // 弹框 visible
 const visible = ref(false);
@@ -105,7 +128,7 @@ function openMadol() {
   visible.value = !visible.value;
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .myimg {
   &::before {
     content: "";

@@ -86,7 +86,7 @@ export default {
     email: "Email address",
     password: "Password",
     login: "Login",
-    loginQRCode: "Login with Email",
+    loginWithEmail: "Login with Email",
     loginQRCode: "Login with QRCode",
     loginWithPhone: "Login with Phone",
     notice: `YesPlayMusic promises not to save any of your account information to the cloud.<br />
