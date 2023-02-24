@@ -1,7 +1,8 @@
 <!--  -->
 <template>
   <div class="">
-    <albumVue :item="item" v-for="item in albumList"></albumVue>
+    111
+    <albumVue :item="item" v-for="item in albumList"> 111</albumVue>
   </div>
 </template>
 

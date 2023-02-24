@@ -1,51 +1,68 @@
 <!--  -->
 <template>
   <div class="listBox">
-    <!-- {{ store.state }} -->
     <div class="listItem">
       <h2>设置语言:</h2>
-      <a-select :style="{ width: '160px' }" placeholder="Select" @change="I18nChange" v-model="$i18n.locale"
-        :trigger-props="{ autoFitPopupMinWidth: true }">
-        <a-option v-for="(item, index) in state.langList" :value="item.lang" :label="item.lang" :key="index"></a-option>
+      <a-select
+        :style="{ width: '160px' }"
+        placeholder="Select"
+        @change="I18nChange"
+        v-model="$i18n.locale"
+        :trigger-props="{ autoFitPopupMinWidth: true }"
+      >
+        <a-option
+          v-for="(item, index) in state.langList"
+          :value="item.lang"
+          :label="item.lang"
+          :key="index"
+        ></a-option>
       </a-select>
     </div>
     <div class="listItem">
       <h2>音乐品质:</h2>
-      <a-select :style="{ width: '160px' }" placeholder="Select"
-        @change="(v: string) => store.dispatch('setMusicLevel', v)" v-model="musicLevel"
-        :trigger-props="{ autoFitPopupMinWidth: true }">
-        <a-option v-for="(item, index) in level" :value="item.value" :label="item.label" :key="index"></a-option>
+      <a-select
+        :style="{ width: '160px' }"
+        placeholder="Select"
+        @change="(v: string) => store.dispatch('setMusicLevel', v)"
+        v-model="musicLevel"
+        :trigger-props="{ autoFitPopupMinWidth: true }"
+      >
+        <a-option
+          v-for="(item, index) in level"
+          :value="item.value"
+          :label="item.label"
+          :key="index"
+        ></a-option>
       </a-select>
     </div>
   </div>
 </template>
 
-<script lang='ts' setup>
-import { reactive, Ref, ref, computed } from 'vue';
-import store from '../../store';
-import type { levelEnum } from './type'
+<script lang="ts" setup>
+import { reactive, Ref, ref, computed } from "vue";
+import store from "../../store";
+import type { levelEnum } from "./type";
 
 const level: Ref<levelEnum> = ref([
-  { value: 'standard', label: ' 标准' },
-  { value: 'higher', label: ' 较高' },
-  { value: 'exhigh', label: '极高' },
-  { value: 'lossless', label: '无损' },
-  { value: 'hires', label: 'Hi-Res' },
-])
+  { value: "standard", label: " 标准" },
+  { value: "higher", label: " 较高" },
+  { value: "exhigh", label: "极高" },
+  { value: "lossless", label: "无损" },
+  { value: "hires", label: "Hi-Res" },
+]);
 const state = reactive({
-  langList: [{ lang: 'zh-CN' }, { lang: 'en' }],
+  langList: [{ lang: "zh-CN" }, { lang: "en" }],
 });
 
 const I18nChange = (v: string | Event) => {
-  store.dispatch('setLocale', v);
+  store.dispatch("setLocale", v);
 };
 
 const musicLevel = computed(() => {
-  return store.state?.app.musicLevel
-})
-
+  return store.state?.song.musicLevel;
+});
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .listBox {
   .listItem {
     display: flex;

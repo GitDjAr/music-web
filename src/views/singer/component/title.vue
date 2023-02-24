@@ -2,7 +2,11 @@
 <template>
   <div class="flex flex-col relative box-border overflow-hidden">
     <img class="object-cover absolute w-full -top-1/4 -z-10" :src="Img" />
-    <ModalVue :title="singerInfo?.artist?.name" v-model:visible="visible">
+    <ModalVue
+      :title="singerInfo?.artist?.name"
+      v-model:visible="visible"
+      to="body"
+    >
       <template #default>
         <p class="text-sm">{{ singerInfo?.artist?.briefDesc }}</p>
         <ul class="my-4">
@@ -19,6 +23,13 @@
         </ul>
       </template>
     </ModalVue>
+    <ModalVue title="提示" v-model:visible="visibleInfo">
+      <p>{{ visibleStr.blockText }} , 手机app打开连接</p>
+      <div class="flex">
+        <a-input v-model="visibleStr.url" allow-clear />
+        <a-button @click="copyText(visibleStr.url)">拷贝地址</a-button>
+      </div>
+    </ModalVue>
     <div
       class="myimg text-lg text-left flex justify-around text-white mix-blend-normal py-10"
     >
@@ -34,11 +45,11 @@
           <div
             @click="followSinger"
             class="py-1 px-12 m-2 rounded-full"
-            :style="{ background: 'rgb(205, 216, 252)' }"
+            :style="{ background: 'rgba(205, 216, 252,0.8)' }"
           >
-            <icon-heart v-if="follow.isFollow" />
-            <icon-heart-fill v-else />
-            {{ follow.isFollow ? $t("artist.follow") : $t("artist.following") }}
+            <MyLike v-if="follow.isFollow" style="color: red" />
+            <MyLike v-else />
+            {{ follow.isFollow ? $t("artist.following") : $t("artist.follow") }}
           </div>
           <icon-more
             class="iconmore"
@@ -63,11 +74,12 @@
 
 <script lang="ts" setup>
 import { ImgProportion } from "@/utils/gFn";
-import ModalVue from "@/components/Modal.vue";
 import { _artist_follow_count, _follow, _artist_detail } from "@/api/user";
-import { ref, computed, watch, nextTick } from "vue";
-import { useRoute } from "vue-router";
+import { ref, Ref, watch, nextTick } from "vue";
+import { copyText } from "../../../utils/gFn";
+import { Notification } from "@arco-design/web-vue";
 import { useStore } from "vuex";
+import { reactive } from "vue";
 
 const P = defineProps<{
   props: {
@@ -78,9 +90,6 @@ const P = defineProps<{
     // store: StoreOptions<typeof store>
   };
 }>();
-
-// 随机颜色
-let tagColor = () => store.getters.tagColor;
 
 const store = useStore();
 let id = P.props.id;
@@ -109,11 +118,31 @@ async function get_artist_detail() {
 }
 
 // 关注
-const follow = ref(false);
+let visibleInfo = ref(false);
+let visibleStr = ref({});
+let follow: Ref<{
+  isFollow?: boolean;
+  fansCnt?: number;
+  followCnt?: number;
+  followDay?: string;
+  follow?: boolean;
+}> = ref({ isFollow: false });
+
 async function followSinger() {
-  await _follow({ id: singerInfo.value.user.userId, t: follow.value ? 1 : 99 });
-  follow.value = !follow.value;
+  _follow({
+    id: singerInfo.value.user.userId,
+    t: follow.value.isFollow ? 99 : 1,
+  })
+    .then(({ followContent = "" }) => {
+      follow.value.isFollow = !follow.value.isFollow;
+      Notification.info(followContent || "取消关注");
+    })
+    .catch((e: any) => {
+      visibleStr.value = e.err.response.data.data;
+      visibleInfo.value = true;
+    });
 }
+//歌手粉丝数量
 async function get_artist_follow_count() {
   const { data } = await _artist_follow_count({ id });
   follow.value = data;
@@ -127,6 +156,9 @@ const visible = ref(false);
 function openMadol() {
   visible.value = !visible.value;
 }
+
+// 随机颜色
+let tagColor = () => store.getters.tagColor;
 </script>
 <style scoped lang="scss">
 .myimg {

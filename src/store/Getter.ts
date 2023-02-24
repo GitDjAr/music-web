@@ -6,8 +6,8 @@ const Getter = {
   userInfo: (store: any): object => {
     return store.app.userInfo
   },
-  CurPlaySong: (store: any) => {
-    return store.app.CurPlaySong
+  curPlaySong: (store: any) => {
+    return store.song.curPlaySong
   },
   tagColor: (store: any): string => {
     let i = Math.floor(Math.random() * 14)

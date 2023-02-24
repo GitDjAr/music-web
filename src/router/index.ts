@@ -48,9 +48,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'albums',
         meta: { title: '专辑', keepalive: true },
         component: albums,
-        children: [
-          { path: ':id', component: albumsList },
-        ]
+      },
+      {
+        path: 'albums/:id',
+        name: 'albums',
+        meta: { title: '专辑', keepalive: true },
+        component: albumsList,
       },
       {
         path: 'singer/:id',

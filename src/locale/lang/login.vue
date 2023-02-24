@@ -12,34 +12,53 @@
     <a-space direction="vertical" size="large" :style="{ width: '100%' }">
       <a-form :model="form" layout="vertical">
         <a-form-item field="phone" :label="$t('login.phone')">
-          <a-input v-model="form.phone" placeholder="please enter your phone..." />
+          <a-input
+            v-model="form.phone"
+            placeholder="please enter your phone..."
+          />
         </a-form-item>
         <a-form-item field="password" :label="$t('login.password')">
-          <a-input-password v-model="form.password"  placeholder="please enter your password..." />
+          <a-input-password
+            v-model="form.password"
+            placeholder="please enter your password..."
+          />
         </a-form-item>
-        <p class="login-way">{{ $t('login.loginQRCode') }}</p>
+        <p class="login-way">{{ $t("login.loginQRCode") }}</p>
         <a-form-item field="isRead">
-          <a-checkbox v-model="form.isRead">{{ $t('login.accessToAll') }}</a-checkbox>
+          <a-checkbox v-model="form.isRead">{{
+            $t("login.accessToAll")
+          }}</a-checkbox>
         </a-form-item>
-        <a-from-item>
+        <a-form-item>
           <a-button
             type="outline"
             size="large"
             class="button-login"
             @click="login"
-          >{{ $t('login.login') }}</a-button>
-        </a-from-item>
+            >{{ $t("login.login") }}</a-button
+          >
+        </a-form-item>
       </a-form>
       <p v-html="$t('login.notice')"></p>
     </a-space>
   </a-drawer>
 </template>
 
-<script lang="ts" >
-import * as Home from '@/api/Home'
-import { defineComponent, reactive, toRefs, onMounted, watchEffect, withCtx, watch, computed, getCurrentInstance } from "vue"
-import MD5 from 'md5'
-import store from '../../store';
+<script lang="ts">
+import * as Home from "@/api/Home";
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  onMounted,
+  watchEffect,
+  withCtx,
+  watch,
+  computed,
+  getCurrentInstance,
+} from "vue";
+import MD5 from "md5";
+import store from "../../store";
 // defineProps({
 //   visible:Boolean
 // })
@@ -47,12 +66,11 @@ export default defineComponent({
   components: {},
   props: {
     visible: {
-      type: Boolean
+      type: Boolean,
     },
   },
   mounted() {
-    console.log('aas');
-
+    console.log("aas");
   },
   setup(props, ctx) {
     const state = reactive({
@@ -63,36 +81,37 @@ export default defineComponent({
         password: "1414493820",
         isRead: false,
       },
-    })
-    const { proxy } = getCurrentInstance()
-    watch(() => props.visible, (v) => {
-      state.visible = v
-    })
-    const handleOk = () => {
-
-    }
+    });
+    const { proxy } = getCurrentInstance();
+    watch(
+      () => props.visible,
+      (v) => {
+        state.visible = v;
+      }
+    );
+    const handleOk = () => {};
     const handleCancel = () => {
-      ctx.emit('update:visible', !state.visible)
-    }
+      ctx.emit("update:visible", !state.visible);
+    };
     // 登录
     const login = async () => {
       const res = await Home.Login({
         phone: state.form.phone,
         md5_password: MD5(state.form.password),
-      })
+      });
       if (proxy.$PASS(res)) {
-        store.dispatch('UserLogin', res)
-        handleCancel()
+        store.dispatch("UserLogin", res);
+        handleCancel();
       }
-    }
+    };
     return {
       ...toRefs(state),
       handleCancel,
       handleOk,
-      login
-    }
+      login,
+    };
   },
-})
+});
 </script>
 <style scoped lang="scss">
 .Adrawer .arco-drawer-mask {

@@ -27,10 +27,10 @@
 </template>
 
 <script lang="ts" setup>
-import infoVue from "./component/info.vue";
-import mvVue from "./component/mv.vue";
-import albumVue from "./component/album.vue";
 import titleVue from "./component/title.vue";
+import infoVue from "./component/info.vue"; //歌手
+import mvVue from "./component/mv.vue";
+import albumVue from "./component/album.vue"; //专辑
 import { _artist_follow_count, _follow, _artist_detail } from "@/api/user";
 import {
   onMounted,
@@ -44,7 +44,7 @@ import {
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import type { Component } from "vue";
-import type { Props, tabsType } from "./type";
+import type { tabsType } from "./type";
 
 const store = useStore();
 const route = useRoute();
@@ -102,8 +102,8 @@ onBeforeUpdate(() => {
 
 // 激活 tabs
 const active = ref("2");
-const activeFun = (id: string) => {
-  active.value = id;
+const activeFun = (id: string | number) => {
+  active.value = "" + id;
 };
 
 const tabsList: Ref<tabsType[]> = ref([

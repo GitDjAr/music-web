@@ -1,14 +1,19 @@
-
 <script setup lang="ts">
-
-import { reactive, ref } from 'vue';
-const first = ref(localStorage.getItem('info'))
-const user: string = 'Hello ' + localStorage.getItem('user')
+import { ref } from "vue";
+import store from "./store";
+const first = ref(localStorage.getItem("info"));
+const user: string = "Hello " + localStorage.getItem("user");
 const firstF = () => {
-  localStorage.setItem('info', 'true')
-  first.value = 'true'
+  localStorage.setItem("info", "true");
+  first.value = "true";
+};
+// 初始化 数据请求
+function initQueryDate() {
+  if (!store.state.song.myLikeList.length) {
+    store.dispatch("getLikelist");
+  }
 }
-
+initQueryDate();
 </script>
 
 <template>

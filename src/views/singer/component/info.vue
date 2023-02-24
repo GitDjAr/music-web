@@ -14,6 +14,7 @@
             <icon-check v-else />
             收藏
           </div>
+          <UsesDesc></UsesDesc>
         </div>
       </div>
     </div>
@@ -21,17 +22,19 @@
       <h2>{{ "最多播放" }}</h2>
       <ul class="p-2 rounded-md bg-white">
         <li
-          class="flex mb-2 justify-between items-center"
+          class="flex mb-2 justify-between items-center text-ellipsis overflow-hidden leading-5"
           @click="Musicianly"
           :key="item.id"
           v-for="item in artistsSing"
         >
-          <Image class="rounded-sm w-14 h-14" :src="item?.al?.picUrl" alt="" />
-          <span class="inline-block w-1/3 px-2">{{ item?.name }}</span>
-          <p class="flex-1">{{ item?.privilege?.playMaxbr }}</p>
+          <Image class="rounded-t w-14 h-14" :src="item?.al?.picUrl" alt="" />
+          <span class="inline-block w-1/3 px-2 text-left">{{
+            item?.name
+          }}</span>
+          <p class="flex-1">{{ item?.privilege?.playMaxbr }}次</p>
           <icon-play-arrow />
           <!-- <div class="w-12">
-            <icon-heart />
+            <MyLike />
           </div> -->
         </li>
       </ul>
@@ -61,6 +64,7 @@ import type { Router, RouteLocationNormalizedLoaded } from "vue-router";
 // import type { StoreOptions } from 'vuex'
 // import store from 'src/store'
 import { _simi_artist, _artists, _simi_playlist } from "@/api/user";
+import UsesDesc from "../../uses_Desc/index.vue";
 type Idtype = string | number;
 
 const P = defineProps<{

@@ -13,7 +13,8 @@
         <Suspense>
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'fade'" mode="out-in">
-              <div>
+              <!-- http://localhost:4000/Music/search?searchKey=%E8%96%9B%E4%B9%8B%E8%B0%A6   h-full -->
+              <div class="h-full">
                 <keep-alive :exclude="KeepAliveList">
                   <component :is="Component" :key="route.path" />
                 </keep-alive>
@@ -30,10 +31,12 @@
 </template>
 
 <script lang="ts">
-import footerVue from "./components/footer.vue";
+import footerVue from "./components/footer/index.vue";
 import titleVue from "./components/title/index.vue";
 import navVue from "./components/nav.vue";
+import { diffDays } from "@/utils/format";
 import { mapGetters } from "vuex";
+import { useStore } from "vuex";
 import type { RouteRecordRaw } from "vue-router";
 export default {
   components: { footerVue, titleVue, navVue },
@@ -60,6 +63,10 @@ export default {
     }
     deep(this.$route.matched[0] || {});
     console.log(this.KeepAliveList);
+    // 超过5天重新获取token
+    if (diffDays(localStorage.getItem("loginTime")) > 5) {
+      this.$store.dispatch("UserRefresh");
+    }
   },
 };
 </script>

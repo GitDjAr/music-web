@@ -55,7 +55,6 @@ const searchSuggest = async (key?: string) => {
   singerList.value.push(...artists);
   // 更新激活标记
   Emit("update", true);
-  console.log(params);
 };
 searchSuggest();
 

@@ -120,7 +120,6 @@ const searchSuggest = async (id?: string) => {
   mvList.value.push(...mvs);
   // 更新激活标记
   // Emit('update', true)
-  // console.log(params);
 };
 const get_mv_url = async (row: { id: string }) => {
   const { data } = await _mv_url({ id: row.id });

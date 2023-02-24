@@ -45,7 +45,7 @@ export function _song_url_v1(params: {}) {
     method: 'get',
     params: {
       ...params,
-      level: store.state?.app.musicLevel
+      level: store.state?.song.musicLevel
     }
   })
 }

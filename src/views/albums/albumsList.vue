@@ -4,14 +4,14 @@
     class="myclass flex select-none overflow-hidden h-full relative"
     v-bind="$attrs"
   >
-    <div class="w-1/4">
-      <Image :src="Albums.coverImgUrl" class="rounded-lg" :wh="[500, 500]" />
+    <div class="w-1/5 pt-5" style="min-width: 160px">
+      <Image
+        :src="Albums.coverImgUrl"
+        class="rounded-lg ml-2"
+        :wh="[500, 500]"
+      />
     </div>
-    <div
-      v-infinite-scroll="scrollLoad"
-      class="flex-1 ml-5 overflow-scroll"
-      ref="refBox"
-    >
+    <div class="flex-1 ml-5" ref="refBox">
       <div
         :class="`text-left transition-all w-full flex flex-col justify-between  pb-4  h-52 `"
       >
@@ -33,9 +33,12 @@
           >
         </div>
       </div>
-      <div class="bg-white bg-opacity-90 backdrop-filter backdrop-blur-sm">
+      <div
+        class="hybull bg-white bg-opacity-90 backdrop-filter backdrop-blur-sm flex flex-col overflow-scroll"
+        v-infinite-scroll="scrollLoad"
+      >
         <div
-          v-for="(item, index) in AlbumsList"
+          v-for="item in AlbumsList"
           :key="item.id"
           @click="play(item)"
           class="flex justify-between items-center p-2 px-4 mb-3 hover:shadow-xl hover:border-gray-300 cursor-pointer transition-all rounded-md border border-b"
@@ -45,13 +48,12 @@
             :wh="[120, 120]"
             class="w-14 h-14 rounded-md"
           />
-          <!-- <span>{{ index + 1 }}</span> -->
           <span class="flex-1 mx-2 text-left inline-block truncate">
             {{ item.name }}</span
           >
           <div class="w-40 flex justify-around mr-2">
             <icon-play-arrow />
-            <icon-heart />
+            <MyLike :id="item.id" />
           </div>
           <span> {{ formatTime(item?.dt) || "00:00:00" }}</span>
         </div>
@@ -73,7 +75,6 @@
 <script lang="ts" setup>
 import ModalVue from "@/components/Modal.vue";
 import { ref, computed, reactive, watch } from "vue";
-import { useScroll } from "@vueuse/core";
 import { vInfiniteScroll } from "@vueuse/components";
 import { formatTime } from "@/utils/format";
 import { _playlist_detail, _playlist_track_all } from "@/api/Home";
@@ -93,18 +94,21 @@ const params = reactive({
   offset: 0,
 });
 const Albums = ref({});
-const AlbumsList = ref<object[]>([]);
 async function get_playlist_detail() {
   const { playlist } = await _playlist_detail(params);
   Albums.value = playlist;
 }
-async function get_playlist_track_all() {
+
+const AlbumsList = computed(() => {
+  return store.state.song.playList;
+});
+async function get_playlist_track_all(v?: boolean) {
   if (Albums.value.trackCount === AlbumsList.value.length) return;
   const { songs = [] } = await _playlist_track_all(params);
-  AlbumsList.value.push(...songs);
+  store.dispatch("SetPlayList", v ? songs : AlbumsList.value.concat(songs));
 }
 get_playlist_detail();
-get_playlist_track_all();
+get_playlist_track_all(true);
 
 // 滚动加载
 const playListEnd = computed(() => {
@@ -113,7 +117,7 @@ const playListEnd = computed(() => {
     Albums.value.trackCount === AlbumsList.value.length
   );
 });
-function scrollLoad({ pageNum: number }: { pageNum: 0 }) {
+function scrollLoad() {
   ++params.pageNum;
   params.offset = params.limit * params.pageNum;
   get_playlist_track_all();
@@ -121,9 +125,7 @@ function scrollLoad({ pageNum: number }: { pageNum: 0 }) {
 const refBox = ref<HTMLElement | null>(null);
 
 function play(item) {
-  console.log(item);
-
-  store.dispatch("ToggleSong", item.al.id);
+  store.dispatch("ToggleSong", item.id);
 }
 </script>
 <style scoped lang="scss">
@@ -131,5 +133,8 @@ function play(item) {
   background-image: url("../../assets/albums-bg.png");
   background-repeat: no-repeat;
   background-size: 105% auto;
+  .hybull {
+    height: calc(100% - 192px);
+  }
 }
 </style>

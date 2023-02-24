@@ -1,6 +1,6 @@
 import request from "../utils/requiers"
 
-interface Idtype {
+interface idType {
   id: string | number
 }
 /**
@@ -24,6 +24,18 @@ export function _login_qr_create(params: { key: string, qrimg?: string }) {
     url: '/login/qr/create',
     method: 'get',
     params
+  })
+}
+
+/**
+ * 刷新登录
+  说明 : 调用此接口 , 可刷新登录状态,返回内容包含新的cookie(不支持刷新二维码登录的cookie)
+  调用例子 : /login/refresh
+ */
+export function _login_refresh() {
+  return request({
+    url: '/login/refresh',
+    method: 'get'
   })
 }
 
@@ -77,16 +89,27 @@ export function _artist_follow_count(params: string | number) {
  * 说明 : 登录后调用此接口 , 传入用户 id, 和操作 t,可关注/取消关注用户
  * t : 1为关注,其他为取消关注
  */
-export function _follow(params: object = {}) {
+export function _follow(data: { id: number, t: number }) {
   return request({
     url: '/follow',
+    method: 'post',
+    data
+  })
+}
+
+// 喜欢音乐列表 必选参数 : uid: 用户 id
+export function likelist(params: idType) {
+  return request({
+    url: '/likelist',
     method: 'get',
     params
   })
 }
 
+
+
 // 说明 : 调用此接口 , 传入歌手 id, 可获得相似歌手
-export function _simi_artist(params: Idtype) {
+export function _simi_artist(params: idType) {
   return request({
     url: '/simi/artist',
     method: 'get',
@@ -95,7 +118,7 @@ export function _simi_artist(params: Idtype) {
 }
 
 // 说明 : 调用此接口 , 传入歌曲 id, 可获得相似歌单
-export function _simi_playlist(params: Idtype) {
+export function _simi_playlist(params: idType) {
   return request({
     url: '/simi/playlist',
     method: 'get',
@@ -104,7 +127,7 @@ export function _simi_playlist(params: Idtype) {
 }
 
 // 说明 : 调用此接口 , 传入歌手 id, 可获得歌手部分信息和热门歌曲
-export function _artists(params: Idtype) {
+export function _artists(params: idType) {
   return request({
     url: '/artists',
     method: 'get',
@@ -113,7 +136,7 @@ export function _artists(params: Idtype) {
 }
 
 // 歌手 mv limit: 20 offset: 40
-export function _artist_mv(params: Idtype) {
+export function _artist_mv(params: idType) {
   return request({
     url: '/artist/mv',
     method: 'get',
@@ -122,17 +145,32 @@ export function _artist_mv(params: Idtype) {
 }
 
 // 歌手 mv 地址 
-export function _mv_url(params: Idtype) {
+export function _mv_url(params: idType) {
   return request({
     url: '/mv/url',
     method: 'get',
     params
   })
 }
+
 //传入歌手 id, 可获得歌手专辑内容  limit: 20 offset: 40
 export function _artist_album(params: object = {}) {
   return request({
     url: '/artist/album',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 获取歌手描述
+  说明 : 调用此接口 , 传入歌手 id, 可获得歌手描述
+  必选参数 : id: 歌手 id
+  接口地址 : /artist/desc
+ */
+export function _artist_desc(params: object = {}) {
+  return request({
+    url: '/artist/desc',
     method: 'get',
     params
   })

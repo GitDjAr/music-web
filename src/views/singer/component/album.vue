@@ -26,16 +26,23 @@ const P = defineProps<{
 const offset = computed(() => params.limit * params.pageNum);
 const params = reactive({
   id: P.props.id,
-  limit: 15,
+  limit: 12,
   pageNum: 1,
 });
 const albumsList: Ref<object[]> = ref([]);
 async function get_artist_album() {
-  const { hotAlbums = [] } = await _artist_album({
-    ...params,
-    offset: offset.value,
-  });
-  albumsList.value.push(...hotAlbums);
+  try {
+    const { hotAlbums = [] } = await _artist_album({
+      ...params,
+      offset: offset.value,
+    });
+    albumsList.value.push(...hotAlbums);
+    if (hotAlbums.length == 0 && albumsList.value.length % 2 == 1) {
+      albumsList.value.push({});
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 get_artist_album();
 

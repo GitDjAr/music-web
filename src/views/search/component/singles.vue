@@ -16,7 +16,7 @@
       <div class="flex-grow">
         <div class="w-40 flex justify-between">
           <p>{{ item?.ar[0]?.name }}</p>
-          <icon-heart />
+          <MyLike :id="item.id"/>
         </div>
       </div>
       <div class="cursor-pointer flex">

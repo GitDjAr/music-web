@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Message } from "@arco-design/web-vue"
-import { AxiosRequestConfig } from "axios"
+import { AxiosRequestConfig, AxiosError } from "axios"
 import Cache from './cache'
 import { h } from 'vue'
 import { IconRecord } from '@arco-design/web-vue/es/icon'
@@ -27,14 +27,6 @@ const config = {
 const servers = axios.create(config)
 servers.interceptors.request.use(
   (cf) => {
-    // const cookie = store.getters.userInfo?.cookie
-    // console.log(cf, store.getters.userInfo);
-
-    // cf.headers = {
-    //   ...cf.headers,
-    //   cookie,
-    //   token: cookie
-    // }
     return cf
   },
   (err) => {
@@ -44,7 +36,7 @@ servers.interceptors.request.use(
 )
 
 servers.interceptors.response.use(
-  (res) => {
+  async (res) => {
 
     const { data = null } = res
     ShowMessage(data)
@@ -57,15 +49,17 @@ servers.interceptors.response.use(
     }
     return data || res
   },
-  (err) => {
-    ShowMessage({ msg: err.message, code: 500 })
+  async (err: AxiosError) => {
+    ShowMessage({
+      msg: '发生错误', code: 500,
+      message: err.message
+    })
     return Promise.reject({ data: {}, err })
   }
 )
 
 // show Message
 function ShowMessage(data: ShowMessageOptions) {
-  // console.log('data :>> ', data);
   const msg = data.message || data.msg || data?.res?.msg || ''
   if (!msg) return
   if (data.show && data.code === 200) {
@@ -74,6 +68,8 @@ function ShowMessage(data: ShowMessageOptions) {
     Message.warning({ icon: () => h(IconRecord), content: msg })
   }
 }
+
+
 // 其实接口服务 直接支持 post get
 //转换 object => string
 function ObjInStr(data: { [string: string]: string | number }): string {
