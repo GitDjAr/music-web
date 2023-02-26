@@ -1,26 +1,10 @@
 <!--  -->
 <template>
-  <div
-    style="height: 60px"
-    class="relative w-full overflow-hidden"
-    @click.stop="toggle(2)"
-    v-if="curPlaySong.song"
-  >
-    <div
-      class="myclass h-full w-full grid select-none padding10"
-      :class="visible ? 'absolute padding10' : ''"
-    >
-      <div
-        class="grid myname items-center justify-center"
-        style="grid-template-columns: 60px 3fr 1fr"
-        @click.stop
-      >
-        <Image
-          style="width: 50px"
-          class="rounded-lg object-cover cursor-pointer"
-          :wh="[100, 100]"
-          :src="curPlaySong.img"
-        />
+  <div style="height: 60px" class="relative w-full overflow-hidden" @click.stop="toggle(2)" v-if="curPlaySong.song">
+    <div class="myclass h-full w-full grid select-none padding10" :class="visible ? 'absolute padding10' : ''">
+      <div class="grid myname items-center justify-center" style="grid-template-columns: 60px 3fr 1fr" @click.stop>
+        <Image style="width: 50px" class="rounded-lg object-cover cursor-pointer" :wh="[100, 100]"
+          :src="curPlaySong.img" />
         <div class="cursor-pointer w-48">
           <h2 class="text-ellipsis whitespace-nowrap overflow-hidden">
             {{ curPlaySong?.songName }}
@@ -32,76 +16,46 @@
       <div class="grid">
         <div @click.stop class="flex items-center justify-between">
           <span class="w-12">{{ formatTime(Player._progress * 1000) }}</span>
-          <div
-            @mousedown.self="GoTime($event)"
-            class="flex-1 mx-4 border-white cursor-pointer _B2 rounded-md"
-            style="height: 6px"
-          >
-            <div
-              :style="{ width: CurTimeTack }"
-              class="progress-bar-inner relative pointer-events-none rounded-md bg-purple-300 h-full"
-            >
-              <span
-                class="h-3 w-3 -right-1.5 -top-2/4 rounded-2xl absolute _B3"
-              ></span>
+          <div @mousedown.self="GoTime($event)" class="flex-1 mx-4 border-white cursor-pointer _B2 rounded-md"
+            style="height: 6px">
+            <div :style="{ width: CurTimeTack }"
+              class="progress-bar-inner relative pointer-events-none rounded-md bg-purple-300 h-full">
+              <span class="h-3 w-3 -right-1.5 -top-2/4 rounded-2xl absolute _B3"></span>
             </div>
           </div>
           <span class="w-12">{{ formatTime(curPlaySong.duration) }}</span>
         </div>
         <div class="flex justify-center items-center transition-all">
-          <icon-select-all
-            @click.stop="toggle(1)"
-            :class="{ ' invisible': visible }"
-            class="hover:text-violet-300"
-          />
+          <icon-select-all @click.stop="toggle(1)" :class="{ ' invisible': visible }" class="hover:text-violet-300" />
           <icon-backward @click.stop="Player.prevSong" />
           <button @keydown.enter="Player.pause()">
-            <component
-              @click.stop="Player.pause()"
-              :is="`icon-${Player.playStatus ? 'pause' : 'play'}-circle-fill`"
-              style="font-size: 2rem"
-            />
+            <component @click.stop="Player.pause()" :is="`icon-${Player.playStatus ? 'pause' : 'play'}-circle-fill`"
+              style="font-size: 2rem" />
           </button>
           <icon-forward @click.stop="Player.nextSong" />
-          <component
-            @click.stop="Store.dispatch('SetPlaybackMode')"
-            :is="`icon-${mode}`"
-          />
+          <component @click.stop="Store.dispatch('SetPlaybackMode')" :is="`icon-${mode}`" />
         </div>
       </div>
       <div>
         <icon-list />
         <icon-mute v-if="true" />
         <icon-sound v-else />
-        <div
-          class="flex-1 mx-4 h-1 cursor-pointer bg-purple-300 relative"
-        ></div>
+        <div class="flex-1 mx-4 h-1 cursor-pointer bg-purple-300 relative"></div>
       </div>
     </div>
 
-    <a-drawer
-      class="drawer"
-      :visible="visible"
-      :closable="false"
-      :mask="true"
-      :mask-closable="true"
-      :render-to-body="true"
-      :footer="false"
-      :header="false"
-      height="100%"
-      :width="typeDrawer ? '100%' : '400px'"
-      :placement="placement"
-      :style="{ zIndex: typeDrawer ? '100' : '9999999' }"
-    >
+    <a-drawer class="drawer" :visible="visible" :closable="false" :mask="false" :mask-closable="false"
+      :render-to-body="true" :footer="false" :header="false" height="100%" :width="typeDrawer ? '100%' : '400px'"
+      :placement="placement" :style="{ zIndex: typeDrawer ? '100' : '9999999' }">
       <PlayPage @cancel="visible = false" v-if="typeDrawer" />
-      <playListVue @change="visible = false" v-else />
+      <playListVue @change="visible = false" :isCancel="typeDrawer" v-else />
     </a-drawer>
-  </div>
+</div>
 </template>
 
 <script lang="ts" setup>
 import playListVue from "./playList.vue";
-import PlayPage from "@/views/Home/PlayPage.vue";
+import PlayPage from "./PlayPage.vue";
 import { formatTime } from "@/utils/format";
 import { ref, computed, watch } from "vue";
 import { useStore } from "vuex";
@@ -166,7 +120,8 @@ const GoTime = (e: MouseEvent) => {
   };
 };
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>
 <style scoped lang="scss">
 .padding10 {
   padding: 0 10%;

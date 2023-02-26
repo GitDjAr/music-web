@@ -64,7 +64,7 @@ function ShowMessage(data: ShowMessageOptions) {
   if (!msg) return
   if (data.show && data.code === 200) {
     Message.success(msg)
-  } else {
+  } else if (data.show) {
     Message.warning({ icon: () => h(IconRecord), content: msg })
   }
 }

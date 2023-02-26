@@ -10,7 +10,7 @@
         class="pageh overflow-hidden h-full grid grid-cols-2 items-center md:px-4 xl:px-24 grid-flow-col justify-center"
       >
         <div class="flex justify-center items-center">
-          <img :src="curPlaySong.img" class="w-3/5 object-cover" />
+          <Image :src="curPlaySong.img" class="w-3/5 object-cover" />
         </div>
         <div class="lyricsItem overflow-scroll h-full mr-3" style="">
           <ul class="my-10" :style="styleImg">

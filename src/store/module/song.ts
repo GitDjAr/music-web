@@ -126,7 +126,7 @@ const actions = {
       duration: songs?.dt,
       url: SongUrl[0]?.url || PlayUrl,
       id,
-      img: songs.al?.picUrl,
+      img: songs.al?.picUrl + '?param=400y400',
       user: songs.ar[0].name,
       userId: songs.ar[0].id,
     }

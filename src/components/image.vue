@@ -3,7 +3,7 @@
   <div class="overflow-hidden">
     <img ref="refImg" :class="`w-full h-full  ${objectify}`" :alt="P.alt" />
     <slot></slot>
-  </div>
+</div>
 </template>
 
 <script lang="ts" setup>
@@ -14,7 +14,7 @@ const P = withDefaults(
     src?: string;
     alt?: string;
     lazy?: boolean;
-    wh?: Array<number>;
+    wh?: Array<number> | null;
     slots?: boolean;
     unit?: string;
     fit?: "contain" | "cover" | "fill" | "none" | "scale-down";
@@ -22,7 +22,7 @@ const P = withDefaults(
   {
     slots: false,
     lazy: true,
-    wh: [100, 100],
+    wh: null,
     unit: "px",
     fit: "cover",
   }
@@ -31,7 +31,9 @@ const P = withDefaults(
 const objectify = ref("object-" + P.fit);
 const Immure = computed(() => {
   if (P.src) {
-    return P.src + (P.wh[0] ? `?param=${P.wh[0]}y${P.wh[1]}` : "");
+    let key = P.src.includes('?param=') ? 'param=' : '?param='
+    let value = P.wh ? `${P.wh[0]}y${P.wh[1]}` : ''
+    return P.src + key + value
   } else {
     return window.rendomImgurl;
   }
@@ -52,4 +54,5 @@ watchEffect(() => {
   refImg.value.src = Immure?.value;
 });
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>
