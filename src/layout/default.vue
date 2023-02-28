@@ -36,7 +36,6 @@ import titleVue from "./components/title/index.vue";
 import navVue from "./components/nav.vue";
 import { diffDays } from "@/utils/format";
 import { mapGetters } from "vuex";
-import { useStore } from "vuex";
 import type { RouteRecordRaw } from "vue-router";
 export default {
   components: { footerVue, titleVue, navVue },
@@ -67,6 +66,7 @@ export default {
     if (diffDays(localStorage.getItem("loginTime")) > 5) {
       this.$store.dispatch("UserRefresh");
     }
+    window.store = this.$store
   },
 };
 </script>
