@@ -1,10 +1,10 @@
 import type { ActionContext, } from "vuex"
 import { _song_url_v1, GetSongDetail, GetSong, _lyric, CheckMusic } from "@/api/play"
-import { likelist } from '@/api/user'
+import { likelist, userPlaylist } from '@/api/user'
 import { useStorage, RemovableRef } from '@vueuse/core'
+import { shuffleArray } from '@/utils/gFn'
 import { Notification } from "@arco-design/web-vue"
 import MusicPlayer from "@/utils/player"
-// import type Song from '../types/song'
 
 enum mode {
   random = 'random',
@@ -13,6 +13,11 @@ enum mode {
   one = 'one',
 }
 
+interface paramType {
+  id: number,
+  playListId: string | number,
+  list?: Array<Object>
+}
 interface songType {
   curPlaySong: Object,
   playList: Array<Object>,
@@ -22,6 +27,8 @@ interface songType {
   musicLevel: string,
   playbackMode: 'random' | 'order',
   Player: Object,
+  collectList: Object,
+  playListId: string | number
 }
 
 const state = {
@@ -30,10 +37,12 @@ const state = {
   // 当前 or 上次播放历史
   curPlaySong: useStorage('curPlaySong', {}),
   playList: useStorage('playList', []),
+  playListId: useStorage('playListId', []),
   randomPlayList: useStorage('randomPlayList', []),
   playListIndex: useStorage('playListIndex', 0),
   playbackMode: useStorage('playbackMode', 'order'),
-  Player: {}
+  Player: {},
+  collectList: useStorage('collectList', []),
 }
 
 const actions = {
@@ -44,21 +53,38 @@ const actions = {
   async setMusicLevel({ state }: ActionContext<songType, unknown>, level: string) {
     state.musicLevel = level
   },
+  async getUserPlaylist({ state, rootState }: ActionContext<songType, unknown>, uid: number | null = null) {
+    uid ||= rootState?.app?.userInfo?.account?.id
+    console.log(rootState, rootState?.app?.userInfo?.account.id, uid);
+    // return
+    const { playlist } = await userPlaylist({ uid, limit: 9999, offset: 0 })
+    state.collectList = {
+      playlist,
+      total: playlist.length,
+      ids: playlist.map((item: any) => item.id),
+    }
+  },
   // 喜欢列表
   async getLikelist({ state }: ActionContext<songType, unknown>) {
     const { ids = [] } = await likelist({ timestamp: Date.now() })
     state.myLikeList = ids
   },
-  async SetPlayList({ state }: ActionContext<songType, unknown>, list: Array<Object>) {
-    state.playList = list
-    function shuffleArray<T>(array: T[]): T[] {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array
+  //  歌单 索引 id记录
+  async SetPlayList({ state }: ActionContext<songType, unknown>, param: Partial<paramType>) {
+    const { id, playListId, list: updateList = [] } = param
+    const { playbackMode } = state
+
+    // 是否切换了歌单
+    if (state.playListId != playListId) {
+      state.playListId = playListId || 'errId'
+      state.playList = updateList
+      state.randomPlayList = shuffleArray([...updateList])
     }
-    state.randomPlayList = shuffleArray([...list])
+    // 当前模式索引
+    if (id) {
+      const list = playbackMode === 'random' ? state.randomPlayList : state.playList
+      state.playListIndex = list.findIndex(item => item.id === id)
+    }
   },
   async SetPlaybackMode({ state }: ActionContext<songType, unknown>, str: songType['playbackMode'] | undefined) {
     const { playbackMode, randomPlayList, playList } = state
@@ -91,19 +117,17 @@ const actions = {
     const { playList, randomPlayList, playbackMode } = state
     const list = playbackMode === 'random' ? randomPlayList : playList
     const id = list[idx].id
-    state.playListIndex = list.findIndex(item => item.id === id)
     try {
-      dispatch('ToggleSong', id)
+      dispatch('ToggleSong', { id, playListId: state.playListId, list: [] })
     } catch (error) {
       Notification.error('你!干了什么,居然播放失败了...\n可恶的蜘蛛')
       console.log(error);
     }
   },
   // 切歌
-  async ToggleSong({ state, dispatch }: ActionContext<songType, unknown>, id: { id: number }) {
-    const { playList, randomPlayList, playbackMode } = state
-    const list = playbackMode === 'random' ? randomPlayList : playList
-    state.playListIndex = list.findIndex(item => item.id === id)
+  async ToggleSong({ state, dispatch }: ActionContext<songType, unknown>, param: paramType) {
+    const { id, } = param
+    dispatch('SetPlayList', param)
     // 是否可用
     const { success, message } = await CheckMusic({ id })
     if (success) {
@@ -121,7 +145,7 @@ const actions = {
       picUrl: songs?.al?.picUrl,
       songName: songs?.name,
       lrc: lrcArray(song_lyric.lrc.lyric),
-      tlrc: lrcArray(song_lyric.tlyric.lyric, 't'),//翻译版本
+      // tlrc: lrcArray(song_lyric.tlyric.lyric, 't'),//翻译版本
       curLrcIndex: 0,
       duration: songs?.dt,
       url: SongUrl[0]?.url || PlayUrl,

@@ -12,6 +12,7 @@ const About = () => import("../views/About.vue")
 const TopCharts = () => import("../views/Home/TopCharts.vue")
 const albums = () => import("../views/albums/index.vue")
 const albumsList = () => import("../views/albums/albumsList.vue")
+const playlist = () => import("../views/albums/playlist.vue")
 const singer = () => import("../views/singer/index.vue")
 const favorite = () => import("../views/favorite/index.vue")
 const test = () => import("../views/zzz_test/index.vue")
@@ -54,6 +55,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'albums',
         meta: { title: '专辑', keepalive: true },
         component: albumsList,
+      },
+      {
+        path: 'playlist/:id',
+        name: 'playlist',
+        meta: { title: '歌单', keepalive: true },
+        component: playlist,
       },
       {
         path: 'singer/:id',

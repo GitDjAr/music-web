@@ -135,6 +135,16 @@ class Player implements playerType {
   play() {
     this._currentTrack.playId = this._howler?.play()
     this._SetPlayStatus(true)
+    window.clearInterval(this._interval)
+    this._interval = window.setInterval(() => {
+      this.SetSeeks()
+    }, 1000)
+  }
+  stop() {
+    this._howler.pause()
+    this._SetPlayStatus(false)
+    this.SetSeeks()
+    window.clearInterval(this._interval)
   }
   // 设置播放 url
   _playAudioSource(source: string, autoplay = false, seek?: string | null) {
@@ -149,37 +159,25 @@ class Player implements playerType {
           this.nextSong();
         },
         onload: () => {
-          window.clearInterval(this._interval)
-          this._interval = window.setInterval(() => {
-            this.SetSeeks()
-          }, 1000)
         },
       });
+
+      setTitle(this._currentTrack)
+      seek && this.SetSeeks(+seek)
+
       if (!this._howler) {
         throw new Error('播放器构建失败')
       }
       if (autoplay) {
         this.play();
-        setTitle(this._currentTrack)
       }
-      seek && this._howler.seek(+seek)
     } catch (e) {
       console.log(e)
     }
   }
   // 暂停 or 播放
   pause() {
-    try {
-      if (this._playing) {
-        this._howler.pause()
-        this._SetPlayStatus(false)
-        this.SetSeeks()
-      } else {
-        this.play()
-      }
-    } catch (error) {
-      console.log(error)
-    }
+    this._playing ? this.stop() : this.play()
   }
 
   nextSong() {
@@ -189,6 +187,7 @@ class Player implements playerType {
     Store.dispatch('prevSong')
   }
   SetSeeks(val?: number) {
+    // debugger
     if (val) {
       this._howler.seek(val)
       this._progress = val

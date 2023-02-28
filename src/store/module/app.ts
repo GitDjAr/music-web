@@ -34,8 +34,9 @@ const actions = {
     commit("userLogin", {})
   },
   // 登录
-  async UserLogin({ commit }: ActionContext<stateType, unknown>, info: userInfo_T.RootObject) {
+  async UserLogin({ commit, dispatch }: ActionContext<stateType, unknown>, info: userInfo_T.RootObject) {
     commit("userLogin", info)
+    dispatch('getUserPlaylist', info.account.id)
   },
   // 刷新登录
   async UserRefresh({ commit, getters, state }: ActionContext<stateType, unknown>) {
