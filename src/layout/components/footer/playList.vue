@@ -21,13 +21,13 @@
           </p>
           <div class="flex items-center w-36 justify-between">
             <MyLike :id="item.id" class="none group-hover:opacity-100 group-hover:block" />
-            <icon-play-arrow />
+            <MyPlay :id="item.id" />
             <p>{{ formatTime(item?.dt) }}</p>
           </div>
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -51,7 +51,7 @@ const playCurrent = computed(() => {
 });
 
 const play = (id: number) => {
-  store.dispatch("ToggleSong", id);
+  store.dispatch("ToggleSong", { id, playListId: store.state.song.playListId });
   emit("change", false);
 };
 const pushpin = () => {

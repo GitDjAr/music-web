@@ -2,19 +2,19 @@
 <template>
   <div style="height: 60px" class="relative w-full overflow-hidden" @click.stop="toggle(2)" v-if="curPlaySong.song">
     <div class="myclass h-full w-full grid select-none padding10" :class="visible ? 'absolute padding10' : ''">
-      <div class="grid myname items-center justify-center" style="grid-template-columns: 60px 3fr 1fr" @click.stop>
+      <div class="grid items-center justify-center" style="grid-template-columns: 60px 3fr 1fr" @click.stop>
         <Image style="width: 50px" class="rounded-lg object-cover cursor-pointer" :wh="[100, 100]"
           :src="curPlaySong.img" />
-        <div class="cursor-pointer w-48">
-          <h2 class="text-ellipsis whitespace-nowrap overflow-hidden">
+        <div class=" w-48">
+          <h2 class="cursor-pointer text-ellipsis whitespace-nowrap overflow-hidden">
             {{ curPlaySong?.songName }}
           </h2>
-          <p class="pt-1">{{ curPlaySong?.user }}</p>
+          <p class="cursor-pointer pt-1">{{ curPlaySong?.user }}</p>
         </div>
         <MyLike :id="curPlaySong.id" />
       </div>
       <div class="grid">
-        <div @click.stop class="flex items-center justify-between">
+        <div @click.stop class="flex items-center justify-between" style="height:25px">
           <span class="w-12">{{ formatTime(Player._progress * 1000) }}</span>
           <div @mousedown.self="GoTime($event)" class="flex-1 mx-4 border-white cursor-pointer _B2 rounded-md"
             style="height: 6px">
@@ -25,7 +25,7 @@
           </div>
           <span class="w-12">{{ formatTime(curPlaySong.duration) }}</span>
         </div>
-        <div class="flex justify-center items-center transition-all">
+        <div class="flex justify-center items-center transition-all" style="height:35px">
           <icon-select-all @click.stop="toggle(1)" :class="{ ' invisible': visible }" class="hover:text-violet-300" />
           <icon-backward @click.stop="Player.prevSong" />
           <button @keydown.enter="Player.pause()">
@@ -50,14 +50,14 @@
       <PlayPage @cancel="visible = false" v-if="typeDrawer" />
       <playListVue @change="visible = false" :isCancel="typeDrawer" v-else />
     </a-drawer>
-</div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import playListVue from "./playList.vue";
 import PlayPage from "./PlayPage.vue";
 import { formatTime } from "@/utils/format";
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 const Store = useStore();
@@ -65,13 +65,9 @@ Store.dispatch("initializePlayer");
 let Player = computed(() => Store.state.song.Player);
 
 const curPlaySong = computed(() => Store.getters.curPlaySong);
-let CurTimeTack = ref<string>("0%");
-watch(
-  () => Player.value._progress,
-  (v) => {
-    CurTimeTack.value = `${((v * 1000) / curPlaySong.value.duration) * 100}%`;
-  }
-);
+let CurTimeTack = computed(() => {
+  return `${((Player.value._progress * 1000) / curPlaySong.value.duration) * 100}%`
+})
 
 // visible
 const visible = ref(false);
@@ -120,8 +116,7 @@ const GoTime = (e: MouseEvent) => {
   };
 };
 </script>
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
 <style scoped lang="scss">
 .padding10 {
   padding: 0 10%;
@@ -141,7 +136,7 @@ const GoTime = (e: MouseEvent) => {
   }
 
   .progress-bar-inner {
-    transition: width 0.1s ease-out;
+    transition: width 1s ease-in;
   }
 }
 </style>
