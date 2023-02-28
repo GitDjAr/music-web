@@ -21,33 +21,25 @@
     <div class="w-1/3">
       <h2>{{ "最多播放" }}</h2>
       <ul class="p-2 rounded-md bg-white">
-        <li
-          class="flex mb-2 justify-between items-center text-ellipsis overflow-hidden leading-5"
-          @click="Musicianly"
-          :key="item.id"
-          v-for="item in artistsSing"
-        >
+        <li class="flex mb-2 justify-between items-center text-ellipsis overflow-hidden leading-5" @click="Musicianly"
+          :key="item.id" v-for="item in artistsSing">
           <Image class="rounded-t w-14 h-14" :src="item?.al?.picUrl" alt="" />
           <span class="inline-block w-1/3 px-2 text-left">{{
             item?.name
           }}</span>
           <p class="flex-1">{{ item?.privilege?.playMaxbr }}次</p>
-          <icon-play-arrow />
-          <!-- <div class="w-12">
+          <MyPlay :id="item.id" />
+        <!-- <div class="w-12">
             <MyLike />
-          </div> -->
+              </div> -->
         </li>
       </ul>
     </div>
     <div>
       <h2>{{ "相关艺人" }}</h2>
       <ul>
-        <li
-          class="flex items-center mt-2"
-          @click="singerReps(item.id)"
-          :key="item.id"
-          v-for="(item, index) in simiartist"
-        >
+        <li class="flex items-center mt-2" @click="singerReps(item.id)" :key="item.id"
+          v-for="(item, index) in simiartist">
           <Image class="rounded-full w-16 h-16" :src="item?.img1v1Url" alt="" />
           <span class="inline-block flex-1 pl-2 box-border text-left">{{
             item?.name
@@ -80,7 +72,7 @@ const Emit = defineEmits<{
   (e: "updateId", v: string): void;
 }>();
 
-function Musicianly() {}
+function Musicianly() { }
 
 // 相似歌手
 const simiartist = ref([]);

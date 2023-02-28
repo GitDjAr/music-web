@@ -1,40 +1,20 @@
 <!-- 歌手 -->
 <template>
-  <div
-    class="overflow-scroll h-full flex flex-wrap justify-between"
-    v-infinite-scroll="scrollLoad"
-  >
-    <ModalVue
-      to="body"
-      :class="`${proportion ? 'h-full' : ''}`"
-      :empty="true"
-      v-model:visible="visible"
-    >
+  <div class="overflow-scroll h-full flex flex-wrap justify-between" v-infinite-scroll="scrollLoad">
+    <ModalVue to="body" :class="`${proportion ? 'h-full' : ''}`" :empty="true" v-model:visible="visible">
       <vue-plyr v-loading="loading" :options="VideoOptions" ref="videoRef">
         <video :src="videoSrc"></video>
       </vue-plyr>
     </ModalVue>
-    <div
-      @click="get_mv_url(item)"
-      v-for="item in mvList"
-      :key="item.id"
-      class="mybox relative cursor-pointer w-1/3 p-3 box-border overflow-hidden mb-4 flex-col flex justify-center items-center"
-    >
+    <div @click="get_mv_url(item)" v-for="item in mvList" :key="item.id"
+      class="mybox relative cursor-pointer w-1/3 p-3 box-border overflow-hidden mb-4 flex-col flex justify-center items-center">
       <div class="box-div w-full relative group overflow-hidden rounded-md">
-        <Image
-          class="h-48"
-          :src="item.imgurl"
-          :wh="[16 * 30, 12 * 30]"
-          :alt="item.publishTime"
-        />
-        <p
-          class="absolute top-1/3 left-1/2 -translate-x-1/2 opacity-0 transition-all group-hover:opacity-100"
-        >
-          <icon-play-arrow style="font-size: 34px; color: #fff" />
+        <Image class="h-48" :src="item.imgurl" :wh="[16 * 30, 12 * 30]" :alt="item.publishTime" />
+        <p class="absolute top-1/3 left-1/2 -translate-x-1/2 opacity-0 transition-all group-hover:opacity-100">
+          <MyPlay id="id" style="font-size: 34px; color: #fff" />
         </p>
         <p
-          class="absolute bottom-0 w-full flex p-3 transition-all justify-between text-white opacity-0 group-hover:opacity-100"
-        >
+          class="absolute bottom-0 w-full flex p-3 transition-all justify-between text-white opacity-0 group-hover:opacity-100">
           <span>{{ item.playCount }}</span>
           <span>{{ item.publishTime }}</span>
         </p>

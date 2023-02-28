@@ -1,18 +1,14 @@
 <!--  -->
 <template>
   <a-card class="w-4/5" :bordered="false">
-    <!-- <template #title>
+  <!-- <template #title>
       <h2 class="t-lf">{{ $t('home.charts') }}</h2>
-    </template> -->
-    <!-- <template #extra>
+          </template> -->
+  <!-- <template #extra>
       <a-button type="text" @click="showMore">{{ $t('artist.showMore') }}</a-button>
-    </template>-->
+          </template>-->
     <div class="charts">
-      <div
-        :class="{ 'ul-list': true, 'ul-list-model': ListModel }"
-        :key="index"
-        v-for="(item, index) in TopList"
-      >
+      <div :class="{ 'ul-list': true, 'ul-list-model': ListModel }" :key="index" v-for="(item, index) in TopList">
         <!-- <span>{{index.toString().padStart(2,'0')}}</span> -->
         <!-- <img :src="item.picUrl" @click="showMore(item)" alt="img" /> -->
         <a-divider :orientation="orientation[index]">
@@ -22,16 +18,11 @@
           <div class="flex">
             <a-image width="100" class="mr-2" :src="item.coverImgUrl"></a-image>
             <div class="w-full flex flex-col">
-              <div
-                :class="{ 'li-box': true }"
-                :key="first"
-                class="t-lf items-center flex-grow justify-between flex"
-                v-for="{ first, second } in item.tracks"
-                @dblclick="playMusic(first)"
-              >
+              <div :class="{ 'li-box': true }" :key="first" class="t-lf items-center flex-grow justify-between flex"
+                v-for="{ first, second, id } in item.tracks" @dblclick="playMusic(first)">
                 <p class="w-40">{{ first }}</p>
                 <span>{{ second }}</span>
-                <icon-play-arrow @click="playMusic(first)" />
+                <MyPlay :id="id" @click="playMusic(first)" />
               </div>
             </div>
           </div>
@@ -104,7 +95,6 @@ export default defineComponent({
 .charts {
   width: 100%;
 
-  .ul-list-model {
-  }
+  .ul-list-model {}
 }
 </style>

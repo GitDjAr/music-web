@@ -2,22 +2,25 @@
 <template>
   <div class="home-right flex fx-center-a fx-c">
     <h2>{{ $t('home.dayList') }}</h2>
-    <ul class="right-ul w-4/5 w-11/12 ">
-      <li class="ul-li t-lf flex fx-center-a" :alt="item.reason" :key="index" v-for="(item, index) in state.dayinPush"
-        @click="palySong(item)">
-        <img class="li-img" :src="`${item.al.picUrl}?param=100y100`" />
-        <section class=" w-full overflow-hidden">
-          <span class="songName truncate">{{ item.name }}</span>
-          <span class="songAr truncate">{{ item.ar[0].name }}</span>
-        </section>
-        <icon-play-arrow class="iconplay" />
-      </li>
+    <ul class="right-ul w-4/5 w-11/12  ">
+      <template v-for="(item, index) in state.darinPush">
+        <li class="ul-li t-lf flex fx-center-a" :alt="item.reason" :key="index" v-if="index < 6" @click="palySong(item)">
+          <img class="li-img" :src="`${item.al.picUrl}?param=100y100`" />
+          <section class=" w-full overflow-hidden">
+            <span class="songName truncate">{{ item.name }}</span>
+            <span @click.stop="CheckSinger(item.ar[0].id)" class="songAr truncate">{{ item.ar[0].name }}</span>
+          </section>
+          <MyPlay :id="item.id" class="iconplay" />
+          <MyLike :id="item.id" class="iconplay" />
+        </li>
+      </template>
+      <!-- <li class="cursor-pointer" @click.stop="() => { router.push({ path: '/Music/playlist', params: { id: state.playlistId } }) }"> 查看更多 > </li> -->
     </ul>
     <div class="mt-2 mx-4">
       <h2>{{ $t('home.recommendArtist') }}</h2>
       <div class="singer items-center justify-center">
         <div class="singer-list mx-1.5  truncate  " :alt="item.reason" :key="index"
-          v-for="(item, index) in state.artistsList" @click="Checksinger(item)">
+          v-for="(item, index) in state.artistsList" @click="CheckSinger(item.id)">
           <img class="rounded-full cursor-pointer " :src="`${item.img1v1Url}?param=100y100`" />
           <p class="singer-name my-1  w-full  ">{{ item.name }}</p>
         </div>
@@ -31,7 +34,7 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, ref, onMounted, } from 'vue';
+import { reactive, onMounted, } from 'vue';
 import { artists as Getartists, songs } from '@/api/Home'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -45,7 +48,7 @@ const state = reactive({
       img1v1Url: '',
     },
   ],
-  dayinPush: [
+  darinPush: [
     {
       name: '',
       ar: [
@@ -69,15 +72,14 @@ async function getArtists() {
 // 每日推薦
 async function getDayinPush() {
   const { data: { dailySongs } } = await songs({})
-  state.dayinPush = dailySongs.splice(0, 6)
-  // state.dayinPush = dailySongs
+  state.darinPush = dailySongs
 }
-const palySong = async (song: Object) => {
-  Store.dispatch('ToggleSong', song?.al?.id)
+const palySong = async (item: Object) => {
+  Store.dispatch("ToggleSong", { id: item.id, playListId: '推荐', list: state.darinPush });
 }
 // 去歌手主页
-function Checksinger(row: { id: number }) {
-  router.push(`/Music/singer/${row.id}`)
+function CheckSinger(id: number) {
+  router.push(`/Music/singer/${id}`)
 }
 
 onMounted(() => {
@@ -108,10 +110,6 @@ onMounted(() => {
 
       section {
         flex-grow: 1;
-      }
-
-      svg {
-        color: $T1;
       }
 
       .li-img {

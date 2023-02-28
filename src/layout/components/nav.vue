@@ -2,14 +2,11 @@
 <template>
   <Logo />
   <nav v-for="(item, index) in NavList" :key="index">
-    <p
-      :class="{
-        'Nav-list': true,
-        transtion: true,
-        NavActive: active === index,
-      }"
-      @click="NavPath(item, index)"
-    >
+    <p :class="{
+      'Nav-list': true,
+      transtion: true,
+      NavActive: active === index,
+    }" @click="NavPath(item, index)">
       <i class></i>
       {{ $t(item.name) }}
     </p>
@@ -23,7 +20,7 @@ import { useStore } from "vuex";
 const NavList = ref([
   { to: "/Music/home", name: "nav.home" },
   { to: "/Music/radio", name: "nav.radio" },
-  { to: "/Music/albums", name: "nav.albums" },
+  { to: "/Music/playlist", name: "nav.playlist" },
   { to: "/Music/favorite", name: "nav.favorite" },
   { to: "/Music/history", name: "nav.history" },
   { to: "/Music/settings", name: "nav.settings" },
