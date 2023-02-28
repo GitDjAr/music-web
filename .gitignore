@@ -16,7 +16,7 @@ dist-ssr
 *.local
 
 
-!.husky/*
+!.husky/**/
 # Editor directories and files
 .idea
 .DS_Store

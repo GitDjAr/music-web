@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request from "../utils/requiers"
 
 /**
  * 推荐歌单
@@ -111,7 +111,7 @@ export function toplists() {
  * @param {number} params.id
  */
 export interface CollectParams {
-  t: number;
+  t: 1 | 2;
   id: number;
 }
 export function subscribePlaylist(params: CollectParams) {

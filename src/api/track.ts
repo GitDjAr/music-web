@@ -1,5 +1,5 @@
 import store from '@/store';
-import request from '@/utils/request';
+import request from "../utils/requiers"
 import { mapTrackPlayableStatus } from '@/utils/common';
 
 

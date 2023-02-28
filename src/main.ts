@@ -23,6 +23,7 @@ import Logo from "./components/logo.vue"
 import image from './components/image.vue'
 import ModalVue from "@/components/Modal.vue";
 import MyLike from "@/components/like/index.vue";
+import MyPlay from "@/components/MyPlay/index.vue";
 
 import "./style/index.scss"
 import "./style/threm.scss"
@@ -50,6 +51,7 @@ const app = createApp(App)
   .component('Image', image)
   .component('ModalVue', ModalVue)
   .component('MyLike', MyLike)
+  .component('MyPlay', MyPlay)
   .directive('loading', loading)
 
 app.config.globalProperties.$PASS = PASS.$PASS

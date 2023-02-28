@@ -311,3 +311,15 @@ export function _artist_desc(params: object = {}) {
     params
   })
 }
+
+/**
+ * 获取用户信息 , 歌单，收藏，mv, dj 数量
+ * /user/subcount
+ */
+export function _user_subcount(params: object = {}) {
+  return request({
+    url: '/user/subcount',
+    method: 'get',
+    params
+  })
+}
