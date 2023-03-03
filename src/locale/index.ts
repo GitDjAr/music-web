@@ -13,3 +13,6 @@ const I18n = createI18n({
 })
 
 export default I18n
+export function t(str: string): string {
+  return I18n.global.t(str)
+}

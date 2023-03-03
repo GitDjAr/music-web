@@ -1,7 +1,9 @@
 import type { ActionContext, } from "vuex"
-import { _song_url_v1, GetSongDetail, GetSong, _lyric, CheckMusic } from "@/api/play"
-import { likelist, userPlaylist } from '@/api/user'
+import type { playerInstance } from "@/utils/player.js"
 import { useStorage, RemovableRef } from '@vueuse/core'
+import { _song_url_v1, GetSongDetail, GetSong, _lyric, CheckMusic } from "@/api/play"
+import { albumSublist } from "@/api/playlist"
+import { likelist, userPlaylist } from '@/api/user'
 import { shuffleArray } from '@/utils/gFn'
 import { Notification } from "@arco-design/web-vue"
 import MusicPlayer from "@/utils/player"
@@ -26,7 +28,7 @@ interface songType {
   myLikeList: Array<number>,
   musicLevel: string,
   playbackMode: 'random' | 'order',
-  Player: Object,
+  Player: playerInstance,
   collectList: Object,
   playListId: string | number
 }
@@ -49,10 +51,12 @@ const actions = {
   initializePlayer({ state }: ActionContext<songType, songType>, Player: Object) {
     state.Player = new MusicPlayer()
   },
+
   // 播放等级
   async setMusicLevel({ state }: ActionContext<songType, unknown>, level: string) {
     state.musicLevel = level
   },
+
   async getUserPlaylist({ state, rootState }: ActionContext<songType, unknown>, uid: number | null = null) {
     uid ||= rootState?.app?.userInfo?.account?.id
     console.log(rootState, rootState?.app?.userInfo?.account.id, uid);
@@ -64,11 +68,19 @@ const actions = {
       ids: playlist.map((item: any) => item.id),
     }
   },
+
   // 喜欢列表
   async getLikelist({ state }: ActionContext<songType, unknown>) {
     const { ids = [] } = await likelist({ timestamp: Date.now() })
     state.myLikeList = ids
   },
+
+  // 收藏专辑
+  async getAlbumSublist({ state }: ActionContext<songType, unknown>) {
+    const { ids = [] } = await albumSublist({ timestamp: Date.now() })
+    state.myLikeList = ids
+  },
+
   //  歌单 索引 id记录
   async SetPlayList({ state }: ActionContext<songType, unknown>, param: Partial<paramType>) {
     const { id, playListId, list: updateList = [] } = param
@@ -86,6 +98,7 @@ const actions = {
       state.playListIndex = list.findIndex(item => item.id === id)
     }
   },
+
   async SetPlaybackMode({ state }: ActionContext<songType, unknown>, str: songType['playbackMode'] | undefined) {
     const { playbackMode, randomPlayList, playList } = state
 
@@ -95,6 +108,7 @@ const actions = {
     const list = flag ? randomPlayList : playList
     state.playListIndex = list.findIndex(item => item.id === state.curPlaySong.id)
   },
+
   // 上一首
   async prevSong({ state, dispatch }: ActionContext<songType, unknown>) {
     const { playListIndex } = state
@@ -105,6 +119,7 @@ const actions = {
     state.playListIndex = playListIndex - 1
     dispatch('modeCat', state.playListIndex)
   },
+
   // 下一首
   async nextSong({ state, dispatch }: ActionContext<songType, unknown>) {
     state.playListIndex++
@@ -113,6 +128,7 @@ const actions = {
     }
     dispatch('modeCat', state.playListIndex)
   },
+
   modeCat({ dispatch, state }: ActionContext<songType, unknown>, idx: number) {
     const { playList, randomPlayList, playbackMode } = state
     const list = playbackMode === 'random' ? randomPlayList : playList
@@ -124,9 +140,19 @@ const actions = {
       console.log(error);
     }
   },
+
+  PlayStop({ state, dispatch }: ActionContext<songType, unknown>,) {
+    state.Player.stop()
+  },
+
   // 切歌
   async ToggleSong({ state, dispatch }: ActionContext<songType, unknown>, param: paramType) {
     const { id, } = param
+    if (!id) {
+      console.log(param);
+      Notification.info('播放错误' + '\n请检查参数是否正确')
+      return
+    }
     dispatch('SetPlayList', param)
     // 是否可用
     const { success, message } = await CheckMusic({ id })

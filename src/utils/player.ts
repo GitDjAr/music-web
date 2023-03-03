@@ -20,7 +20,7 @@ interface CurrentTrack {
   playId: number;
   // more details about current track
 }
-interface playerType {
+export interface playerInstance {
   _name: string;
   _playing: boolean;
   _progress: number;
@@ -42,8 +42,11 @@ interface playerType {
   _playNextList: any[];
   createdBlobRecords: string[];
   _howler: any;
+  _setvolume: Function,
+  _SetPlayStatus: Function
+  stop: Function
 }
-class Player implements playerType {
+class Player implements playerInstance {
   _name: string;
   _playing: boolean;
   _progress: number;
@@ -125,11 +128,14 @@ class Player implements playerType {
   _setvolume(val: number) {
     this._volume = val
     this._howler.volume(val)
+    localStorage.setItem('volume', val + '')
   }
   // 初始化
   initPlayer() {
     const curPlaySong = JSON.parse(localStorage.getItem('curPlaySong') || '{}')
     this._playAudioSource(curPlaySong?.url, false, localStorage.getItem('progress'))
+    const vo = localStorage.getItem('volume') || 0.8
+    this._setvolume(+vo)
   }
   // 播放
   play() {

@@ -1,4 +1,20 @@
 declare module SongInfo {
+    /**
+     * fee: enum,
+      0: 免费或无版权
+      1: VIP 歌曲
+      4: 购买专辑
+      8: 非会员可免费播放低音质，会员可播放高音质及下载
+      fee 为 1 或 8 的歌曲均可单独购买 2 元单曲
+     */
+
+    export enum fee {
+
+    }
+    //     originCoverType: enum
+    //   0: 未知
+    //   1: 原曲
+    //   2: 翻唱
 
     export interface Ar {
         id: number;

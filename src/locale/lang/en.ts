@@ -6,7 +6,8 @@ export default {
   nav: {
     home: "Home",
     radio: "Radio",
-    albums: "Alboms",
+    albums: "Albums",
+    playlist: "Playlist",
     search: "search",
     about: "About",
     collect: "Collect",

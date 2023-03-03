@@ -11,6 +11,7 @@ const setting = () => import("../views/settings/index.vue")
 const About = () => import("../views/About.vue")
 const TopCharts = () => import("../views/Home/TopCharts.vue")
 const albums = () => import("../views/albums/index.vue")
+const listPage = () => import("../views/listPage/index.vue")
 const albumsList = () => import("../views/albums/albumsList.vue")
 const playlist = () => import("../views/albums/playlist.vue")
 const singer = () => import("../views/singer/index.vue")
@@ -28,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: 'home',
-        name: 'Home',
+        name: 'home',
         meta: { title: '首页', keepalive: true },
         component: Home
       },
@@ -40,9 +41,15 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'topCharts',
-        name: 'TopCharts',
+        name: 'topCharts',
         meta: { title: '榜单', keepalive: true },
         component: TopCharts
+      },
+      {
+        path: 'listPage',
+        name: 'listPage',
+        meta: { title: '歌单列表', keepalive: true },
+        component: listPage,
       },
       {
         path: 'albums',
@@ -65,15 +72,15 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'singer/:id',
         name: 'singer',
-        meta: { title: '歌手', keepalive: false },
+        meta: { title: '歌手', keepalive: true },
         component: singer,
         // children:[
         //   { path: '', component: Page404 },
         // ]
       },
       {
-        path: 'About',
-        name: 'About',
+        path: 'about',
+        name: 'about',
         meta: { title: '关于', keepalive: true },
         component: About
       },
@@ -96,9 +103,9 @@ const routes: Array<RouteRecordRaw> = [
         component: search
       },
       {
-        path: 'test',
-        name: 'test',
-        meta: { title: 'test', keepalive: false },
+        path: 'playHistory',
+        name: 'playHistory',
+        meta: { title: 'playHistory', keepalive: false },
         component: test
       },
     ]
@@ -117,7 +124,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/",
-    redirect: "/Music/Home"
+    redirect: "/Music/home"
   },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: Page404 },
 ];

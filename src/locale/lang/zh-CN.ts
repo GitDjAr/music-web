@@ -7,6 +7,7 @@ export default {
     home: '首页',
     radio: '音乐库',
     albums: '专辑',
+    playlist: '歌单',
     search: '搜索',
     about: '关于',
     collect: '收藏',
