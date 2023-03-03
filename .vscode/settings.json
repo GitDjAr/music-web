@@ -41,6 +41,7 @@
     "gitee",
     "glup",
     "gridtemplatecolumns",
+    "gsap",
     "haoshiqi",
     "initconfig",
     "johnsoncodehk",
@@ -49,6 +50,7 @@
     "lintstagedrc",
     "miniapp",
     "monokai",
+    "nouislider",
     "nvue",
     "Persistedstate",
     "pinia",
@@ -58,12 +60,14 @@
     "riskgo",
     "scrolltolower",
     "sheight",
+    "simiartist",
     "smartblue",
     "solt",
     "splashscreen",
     "Strat",
     "stylelint",
     "stylelintrc",
+    "Sublist",
     "swidth",
     "toutiao",
     "uniapp",
@@ -71,7 +75,11 @@
     "unplugin",
     "vite",
     "vuedx",
+    "vueuse",
     "vuex",
     "weixin"
-  ]
+  ],
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

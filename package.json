@@ -1,5 +1,5 @@
 {
-  "name": "muise-web-vite-ts",
+  "name": "music-web-vite-ts",
   "private": true,
   "version": "1.0.0",
   "scripts": {
@@ -7,7 +7,7 @@
     "deploy": "vite build && 7z a dist/music.zip ./dist/** && curl http://www.xn--lg3a.top:82/update/file -F file=@dist/music.zip -F path=/html/music",
     "deploy:js": "vite build && config/deploy.js",
     "T-dep": "curl http://www.xn--lg3a.top:82/update/file -F file=@dist/music.zip -F path=/html/music",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite build ",
     "preview": "vite preview",
     "postinstall": "husky install",
     "cz": "git add . && cz",
@@ -46,7 +46,7 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.44.2",
+    "@arco-design/web-vue": "^2.39.1",
     "@commitlint/config-conventional": "16.2.1",
     "@types/js-cookie": "^3.0.1",
     "@types/node": "^17.0.21",
