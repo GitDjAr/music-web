@@ -23,6 +23,7 @@ import Logo from "./components/logo.vue"
 import image from './components/image.vue'
 import ModalVue from "@/components/Modal.vue";
 import MyLike from "@/components/like/index.vue";
+import MyVideo from "@/components/MyVideo/index.vue";
 import MyPlay from "@/components/MyPlay/index.vue";
 
 import "./style/index.scss"
@@ -31,7 +32,7 @@ import "./style/init.scss"
 import loading from './directives/loading/loading'
 // 图源
 
-window.rendomImgurl = 'https://img.2eka.cloud/api/random?type=pc'
+window.rendomImgurl = 'https://api.ixiaowai.cn/api/api2.php' || 'https://img.2eka.cloud/api/random?type=pc'
 // import './mock/mock'
 // // mock开关，设置是否引入文件
 // const mock = true
@@ -52,6 +53,7 @@ const app = createApp(App)
   .component('ModalVue', ModalVue)
   .component('MyLike', MyLike)
   .component('MyPlay', MyPlay)
+  .component('MyVideo', MyVideo)
   .directive('loading', loading)
 
 app.config.globalProperties.$PASS = PASS.$PASS

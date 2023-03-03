@@ -1,19 +1,81 @@
 <!--  -->
 <template>
-  <div class=''>
-    <vue-plyr v-loading="loading" class="" :options='VideoOptions' ref="videoRef">
-      <video class="w-fill" :src="videoSrc"></video>
+  <ModalVue to="body" :class="`${proportion ? 'h-full' : ''}`" :empty="true" :visible="P.show" @close="handleClose">
+    <vue-plyr v-loading="loading" :options="VideoOptions" ref="videoRef">
+      <video :src="videoSrc"></video>
     </vue-plyr>
-  </div>
+  </ModalVue>
 </template>
 
 <script lang='ts' setup>
-import { ref, reactive, } from 'vue'
-const state = reactive({
-  count: 0,
+import { _mv_url } from "@/api/user";
+import videoInstance from "@/components/MyVideo/type";
+import { onMounted } from "vue";
+import { watch, withDefaults, computed, ref, Ref, } from "vue";
+import Store from "@/store/index";
+
+const emit = defineEmits<{
+  (on: "open", flag: boolean): void;
+  (on: "close", flag: boolean): void;
+  (on: "update:show", flag: boolean): void;
+}>()
+
+const P = withDefaults(defineProps<{
+  id: number,
+  show: boolean,
+}>(), {
+  show: false,
 })
 
-</script>
-<style scoped lang='scss'>
+// 视频api
+const videoRef = ref<videoInstance>()
+const VideoOptions = {
+  quality: { default: "1080p" },
+  //https://github.com/sampotts/plyr/blob/master/src/js/config/defaults.js
+  i18n: {},
+};
+const player: Ref<videoInstance> = computed(() => {
+  return videoRef.value.player;
+});
+function VideoPlay() {
+  player.value.play();
+  Store.dispatch('PlayStop')
+}
 
-</style>
+watch(() => P.show, () => {
+  if (player?.value?.playing && !P.show) {
+    player.value.pause();
+  } else if (P.show) {
+    VideoPlay()
+  }
+});
+watch(() => P.id, () => {
+  get_mv_url()
+})
+
+// 计算 比例
+const proportion = ref(false);
+onMounted(() => {
+  player.value.on("loadedmetadata", () => {
+    const { videoWidth, videoHeight } = player.value.media;
+    let seep = videoWidth / videoHeight;
+    proportion.value = !(seep > 1.3 && seep < 2);
+  });
+})
+
+// 地址
+const videoSrc = ref('')
+const loading = ref(false)
+async function get_mv_url() {
+  loading.value = true
+  const { data } = await _mv_url({ id: P.id });
+  videoSrc.value = data.url;
+  loading.value = false
+};
+
+function handleClose() {
+  emit('close', false)
+  emit('update:show', false)
+}
+</script>
+<style scoped lang='scss'></style>

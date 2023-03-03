@@ -1,5 +1,10 @@
 import request from "../utils/requiers"
 
+export interface page {
+  limit?: number,
+  offset?: number
+}
+export type reqPage = Required<page>
 /**
  * 推荐歌单
  * 说明 : 调用此接口 , 可获取推荐歌单
@@ -31,6 +36,19 @@ export function dailyRecommendPlaylist(params: any) {
     },
   });
 }
+
+/**
+ * 精品歌单标签列表
+说明 : 调用此接口 , 可获取精品歌单标签列表
+接口地址 : /playlist/highquality/tags
+ */
+export function highQualityPlaylistTags() {
+  return request({
+    url: '/playlist/highquality/tags',
+    method: 'get',
+  });
+}
+
 /**
  * 获取精品歌单
  * 说明 : 调用此接口 , 可获取精品歌单
@@ -44,8 +62,8 @@ export function dailyRecommendPlaylist(params: any) {
  */
 export interface getPlaylistParams {
   cat: string,
-  limit: number,
-  before: number,
+  limit?: number,
+  before?: number,
 }
 export function highQualityPlaylist(params: getPlaylistParams) {
   return request({
@@ -202,6 +220,56 @@ export interface intelligencePlaylistType {
 export function intelligencePlaylist(params: intelligencePlaylistType) {
   return request({
     url: '/playmode/intelligence/list',
+    method: 'get',
+    params,
+  });
+}
+
+/**
+ * 获取专辑内容
+说明 : 调用此接口 , 传入专辑 id, 可获得专辑内容
+必选参数 : id: 专辑 id
+接口地址 : /album
+ */
+export interface albumContent {
+  id: number;
+}
+export function albumContent(params: albumContent) {
+  return request({
+    url: '/album',
+    method: 'get',
+    params,
+  });
+}
+
+/**
+ * 获取已收藏专辑列表
+说明 : 调用此接口 , 可获得已收藏专辑列表
+可选参数 :
+limit: 取出数量 , 默认为 25
+offset: 偏移数量 , 用于分页 , 如 :( 页数 -1)*25, 其中 25 为 limit 的值 , 默认 为 0
+接口地址 : /album/sublist
+ */
+
+export function albumSublist(params: reqPage) {
+  return request({
+    url: '/album/sublist',
+    method: 'get',
+    params,
+  });
+}
+
+/**
+ * 收藏/取消收藏专辑
+说明 : 调用此接口,可收藏/取消收藏专辑
+必选参数 :
+id : 专辑 id
+t : 1 为收藏,其他为取消收藏
+接口地址 : /album/sub
+ */
+export function albumSub(params: Object) {
+  return request({
+    url: '/album/sublist',
     method: 'get',
     params,
   });
