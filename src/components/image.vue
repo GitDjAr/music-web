@@ -3,7 +3,7 @@
   <div class="overflow-hidden">
     <img ref="refImg" :class="`w-full h-full  ${objectify}`" :alt="P.alt" />
     <slot></slot>
-</div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -15,12 +15,10 @@ const P = withDefaults(
     alt?: string;
     lazy?: boolean;
     wh?: Array<number> | null;
-    slots?: boolean;
     unit?: string;
     fit?: "contain" | "cover" | "fill" | "none" | "scale-down";
   }>(),
   {
-    slots: false,
     lazy: true,
     wh: null,
     unit: "px",
@@ -54,5 +52,4 @@ watchEffect(() => {
   refImg.value.src = Immure?.value;
 });
 </script>
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

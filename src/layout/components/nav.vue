@@ -2,11 +2,14 @@
 <template>
   <Logo />
   <nav v-for="(item, index) in NavList" :key="index">
-    <p :class="{
-      'Nav-list': true,
-      transtion: true,
-      NavActive: active === index,
-    }" @click="NavPath(item, index)">
+    <p
+      :class="{
+        'Nav-list': true,
+        transtion: true,
+        NavActive: active === index,
+      }"
+      @click="NavPath(item, index)"
+    >
       <i class></i>
       {{ $t(item.name) }}
     </p>
@@ -22,7 +25,7 @@ const NavList = ref([
   { to: "/Music/radio", name: "nav.radio" },
   { to: "/Music/playlist", name: "nav.playlist" },
   { to: "/Music/favorite", name: "nav.favorite" },
-  { to: "/Music/history", name: "nav.history" },
+  { to: "/Music/playHistory", name: "nav.history" },
   { to: "/Music/settings", name: "nav.settings" },
   { to: "/Gtp/Guitar", name: "nav.guitar" },
 ]);

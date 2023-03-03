@@ -34,7 +34,6 @@
 import footerVue from "./components/footer/index.vue";
 import titleVue from "./components/title/index.vue";
 import navVue from "./components/nav.vue";
-import { diffDays } from "@/utils/format";
 import { mapGetters } from "vuex";
 import type { RouteRecordRaw } from "vue-router";
 export default {
@@ -61,12 +60,6 @@ export default {
       }
     }
     deep(this.$route.matched[0] || {});
-    console.log(this.KeepAliveList);
-    // 超过5天重新获取token
-    if (diffDays(localStorage.getItem("loginTime")) > 5) {
-      this.$store.dispatch("UserRefresh");
-    }
-    window.store = this.$store
   },
 };
 </script>

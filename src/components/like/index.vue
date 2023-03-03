@@ -26,6 +26,11 @@ const P = withDefaults(
   {}
 );
 
+// 计算是否收藏
+const isLike = computed(() => {
+  return store.state.song.myLikeList.includes(P.id);
+});
+
 async function linkTo() {
   const { code } = await like({
     id: P.id,
@@ -40,9 +45,5 @@ async function linkTo() {
     );
   }
 }
-// 计算是否收藏
-const isLike = computed(() => {
-  return store.state.song.myLikeList.includes(P.id);
-});
 </script>
 <style scoped lang="scss"></style>

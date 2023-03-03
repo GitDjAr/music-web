@@ -15,8 +15,8 @@
 import { IconLoading } from '@arco-design/web-vue/es/icon';
 import { RendererElement, withDefaults } from 'vue'
 const prop = withDefaults(defineProps<{
-  to: string | RendererElement | null | undefined
-  text: string
+  to?: string | RendererElement | null | undefined
+  text?: string
 }>(), {
   to: null,
   text: '加载中....'
