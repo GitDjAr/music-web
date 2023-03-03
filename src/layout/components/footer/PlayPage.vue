@@ -57,7 +57,7 @@ onBeforeUnmount(() => {
 // 移动播放节点
 const active = useStorage("lrcActive", 0);
 onMounted(() => {
-  tickLyrics(undefined, active.value);
+  SetTickLyrics()
 });
 function tickLyrics(item: Object | undefined, index: number) {
   const el = document.querySelector(".lyricsItem");
@@ -72,6 +72,21 @@ function tickLyrics(item: Object | undefined, index: number) {
   active.value = index;
   item && Player.value.SetSeeks(item.time);
 }
+function SetTickLyrics() {
+  let acv = 0
+  let currentTime = Player.value?.SetSeeks()
+  curPlaySong.value.lrc.forEach(e => {
+    const lineTime = e.time;
+    if (lineTime && currentTime >= lineTime) {
+      acv++
+    }
+  });
+  tickLyrics(undefined, acv);
+}
+// 暴露方法  手动校验
+defineExpose({
+  SetTickLyrics,
+})
 </script>
 <style scoped lang="scss">
 svg.transform.myfont {

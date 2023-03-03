@@ -2,24 +2,10 @@
 <template>
   <div class="h-full overflow-hidden" v-loading="loading">
     <titleVue :props="Aprons" />
-    <a-tabs
-      class="My-space"
-      position="right"
-      @change="activeFun"
-      justify
-      :active-key="active"
-      lazy-load
-      animation
-    >
+    <a-tabs class="My-space" position="right" @change="activeFun" justify :active-key="active" lazy-load animation>
       <a-tab-pane :key="item.id" :title="item.title" v-for="item in tabsList">
-        <component
-          class="overflow-scroll h-full"
-          :ref="itemRef"
-          :is="item.Com"
-          :props="Aprons"
-          :Activated="active === item.id"
-          @updateId="updateSinger"
-        >
+        <component class="overflow-scroll h-full" :ref="itemRef" :is="item.Com" :props="Aprons"
+          :Activated="active === item.id" @updateId="updateSinger" :name="item.title">
         </component>
       </a-tab-pane>
     </a-tabs>
@@ -31,6 +17,7 @@ import titleVue from "./component/title.vue";
 import infoVue from "./component/info.vue"; //歌手
 import mvVue from "./component/mv.vue";
 import albumVue from "./component/album.vue"; //专辑
+import { t } from '@/locale/index'
 import { _artist_follow_count, _follow, _artist_detail } from "@/api/user";
 import {
   onMounted,
@@ -41,31 +28,40 @@ import {
   nextTick,
   onBeforeUpdate,
 } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useStore } from "vuex";
+import { useRoute, } from "vue-router";
 import type { Component } from "vue";
 import type { tabsType } from "./type";
 
-const store = useStore();
 const route = useRoute();
-const router = useRouter();
 const id = <string>route.params.id;
 
-const Aprons = reactive({
+const Aprons = reactive<{
+  id: string;
+  singerInfo?: Object
+}>({
   id,
   singerInfo: {},
-  store,
-  route,
-  router,
 });
 
 onMounted(() => {
   get_artist_detail();
 });
 
+// 激活 tabs
+const active = ref("1");
+const activeFun = (id: string | number) => {
+  active.value = "" + id;
+};
+
+
+const tabsList: Ref<tabsType[]> = ref([
+  { id: "1", title: t('library.playlists'), Com: markRaw(infoVue), activation: false },
+  { id: "2", title: t('library.albums'), Com: markRaw(albumVue), activation: false },
+  { id: "3", title: t('library.mvs'), Com: markRaw(mvVue), activation: false },
+]);
+
 const updateSinger = (v: string) => {
   Aprons.id = v;
-  // (v: boolean) => item.params.activation = v
   tabsList.value = tabsList.value.map((e) => {
     return {
       ...e,
@@ -73,7 +69,7 @@ const updateSinger = (v: string) => {
     };
   });
   if (active.value !== "1") {
-    activeFun("1");
+    activeFun("0");
   } else {
     nextTick(() => {
       // itemRefList.value[0].searchSuggest()
@@ -100,17 +96,6 @@ onBeforeUpdate(() => {
   itemRefList.value = [];
 });
 
-// 激活 tabs
-const active = ref("2");
-const activeFun = (id: string | number) => {
-  active.value = "" + id;
-};
-
-const tabsList: Ref<tabsType[]> = ref([
-  { id: "1", title: "歌手", Com: markRaw(infoVue), activation: false },
-  { id: "2", title: "专辑", Com: markRaw(albumVue), activation: false },
-  { id: "3", title: "MV", Com: markRaw(mvVue), activation: false },
-]);
 </script>
 <style scoped lang="scss">
 .My-space {

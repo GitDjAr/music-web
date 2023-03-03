@@ -6,21 +6,17 @@
       <div>{{ playlist.length }}首歌曲</div>
     </div>
     <div class="overflow-scroll relative" id="playId">
-      <p
-        class="fixed bottom-16 right-4 bg-sky-400 cursor-pointer w-10 h-10 rounded-full flex justify-center align-middle items-center">
-        <icon-pushpin @click.stop="pushpin" style="color: white" />
+      <p class="pushpinCss">
+        <icon-pushpin @click.stop="pushpin" />
       </p>
-      <div v-for="item in playlist" :key="item.id" @click="play(item.id)" :class="`${item.id === playCurrent.id ? 'text-yellow-400 bg-green-100' : ''
-        }`" class="group hover:bg-gray-100 cursor-pointer p-2">
+      <div v-for="item in playlist" :key="item.id" @click="play(item.id)" :class="`${item.id === playCurrent.id ? 'activeCss' : ''
+        }`" class="group  cursor-pointer p-2">
         <div class="overflow-ellipsis whitespace-nowrap overflow-hidden">
-          {{ item.name }}
+          {{ item.name }} - {{ item?.ar[0]?.name }}
         </div>
-        <div class="flex justify-between">
-          <p class="overflow-ellipsis whitespace-nowrap overflow-hidden">
-            {{ item.user }}
-          </p>
+        <div class="flex  justify-end px-4">
           <div class="flex items-center w-36 justify-between">
-            <MyLike :id="item.id" class="none group-hover:opacity-100 group-hover:block" />
+            <MyLike :id="item.id" class="" />
             <MyPlay :id="item.id" />
             <p>{{ formatTime(item?.dt) }}</p>
           </div>
@@ -32,14 +28,9 @@
 
 <script lang="ts" setup>
 import { formatTime } from "@/utils/format";
-import { computed, ref, onDeactivated, nextTick } from "vue";
+import { computed, ref, withDefaults } from "vue";
 import store from "@/store";
 
-const P = withDefaults(defineProps<{
-  isCancel: boolean
-}>(), {
-  isCancel: false
-})
 
 const emit = defineEmits(["change"]);
 
@@ -70,25 +61,18 @@ const pushpin = () => {
 };
 
 const playDom = ref<HTMLDivElement>();
-window.addEventListener("click", () => {
-  console.log(P);
 
-  P.isCancel && emit("change", false);
-});
-// nextTick(() => {
-//   playDom.value?.addEventListener("mouseenter", () => {
-//     playDom.value?.addEventListener("mouseleave", () => {
-//       emit("change", false);
-//     });
-//   });
-// });
-
-// onDeactivated(() => {
-//   playDom.value?.removeEventListener("mouseenter", () => {});
-//   playDom.value?.removeEventListener("mouseleave", () => {});
-// });
 </script>
 <style scoped lang="scss">
+.activeCss {
+  background: #99bfff1c;
+  color: #fbc2eb;
+}
+
+.playlistCss .group:hover {
+  background: #ebedee;
+}
+
 .playlistCss {
   border-left: 1px solid #e6e6e6;
   position: relative;
@@ -101,6 +85,40 @@ window.addEventListener("click", () => {
     right: 0;
     bottom: 0;
     filter: blur(50px);
+  }
+}
+
+.pushpinCss {
+  color: #fff;
+  position: fixed;
+  bottom: 60px;
+  right: 24px;
+  cursor: pointer;
+  width: 46px;
+  height: 46px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -2;
+  }
+
+  &::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #fbc2eb;
+    border-radius: 500px;
+    z-index: -1;
+    filter: blur(5px);
+
   }
 }
 </style>

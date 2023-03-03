@@ -4,10 +4,11 @@
     <h2 class="t-lf pad-l-10">{{ $t("home.recommendMv") }}</h2>
     <a-carousel class="carousel" :auto-play="true" animation-name="fade" show-arrow="never" indicator-type="slider">
       <a-carousel-item v-for="(item, index) in state.personalized" :key="index">
-        <img :src="item.picUrl" :alt="item.copywriter" @click="GoPlay(item)" class="w-full h-full object-cover" />
+        <Image :src="item.picUrl" :wh="[1000, 600]" :alt="item.copywriter" @click="GoPlay(item)"
+          class="w-full h-full object-cover" />
       </a-carousel-item>
     </a-carousel>
-    <h2 class="t-lf pad-l-10">{{ $t("home.recommendPlaylist") }}</h2>
+    <h1 class="text-xl  text-left   ">{{ $t("home.recommendPlaylist") }}</h1>
     <div class="Nouvea">
       <div class="NouList" :key="index" v-for="(item, index) in state.recommendPlaylist">
         <div class="rounded-lg overflow-hidden relative curp group">
@@ -18,22 +19,21 @@
             <MyPlay :id="item.id" />
           </p>
         </div>
-        <p>{{ item.name }}</p>
+        <p class=" mb-2">{{ item.name }}</p>
         <!-- <a-tag :color="resourceColor(item.id)" size="mini">{{item.creator.expertTags}}</a-tag> -->
       </div>
     </div>
+    <MyVideo :id="videoId" v-model:show="VideoShow"></MyVideo>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { personalizedMV, resource } from "@/api/Home";
-import { useStore } from "vuex";
 import type { IdOps } from "@/utils/type/id";
 
-const router = useRouter();
-const Store = useStore();
+const router = useRouter()
 const state = reactive({
   personalized: [{ picUrl: "" }, { copywriter: "" }],
   recommendPlaylist: [
@@ -45,6 +45,7 @@ const state = reactive({
     },
   ],
 });
+
 // 推薦mv
 async function getPersonalized() {
   const { result } = await personalizedMV();
@@ -53,15 +54,15 @@ async function getPersonalized() {
 // 推荐歌单
 async function recommendPlaylist() {
   const { recommend } = await resource({});
-  state.recommendPlaylist = recommend;
+  state.recommendPlaylist = recommend.splice(0, 8);
 }
-const palySong = async (song: Object) => {
-};
 
 // 播放
-const GoPlay = (path: object) => {
-  console.log(path);
-  // router.push({path:path.to})
+const videoId = ref("");
+const VideoShow = ref(false);
+const GoPlay = (item: object) => {
+  videoId.value = item.id
+  VideoShow.value = true
 };
 // 查看明细
 const CheckDetails = (Details: any) => {

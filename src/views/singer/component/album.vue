@@ -1,10 +1,7 @@
 <!--  -->
 <template>
-  <div
-    ref="rootRef"
-    v-infinite-scroll="scrollLoad"
-    class="MYroot flex flex-wrap h-full overflow-scroll box-border justify-around"
-  >
+  <div ref="rootRef" v-infinite-scroll="scrollLoad"
+    class="MYroot flex flex-wrap h-full overflow-scroll box-border justify-around">
     <template v-for="item in albumsList">
       <albumVue :item="item"></albumVue>
     </template>
@@ -19,10 +16,10 @@ import { ref, Ref, computed, reactive } from "vue";
 
 const P = defineProps<{
   props: {
-    id: number;
-  };
+    id: string,
+    singerInfo?: object,
+  }
 }>();
-
 const offset = computed(() => params.limit * params.pageNum);
 const params = reactive({
   id: P.props.id,
@@ -56,6 +53,7 @@ function scrollLoad({ pageNum: number }: { pageNum: 1 }) {
 .MYroot {
   height: 100%;
   overflow: scroll;
+  // transform: rotate(-90deg);
 
   &:hover p {
     display: block;

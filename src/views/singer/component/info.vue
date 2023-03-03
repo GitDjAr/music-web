@@ -4,7 +4,7 @@
     <div class="">
       <h2>{{ "最新专辑" }}</h2>
       <div class="flex items-center">
-        <Image class="w-32 h-32 rounded-md shadow-md" src="" alt="" />
+        <Image class="w-32 h-32 rounded-md shadow-md" src="" :wh="[220, 220]" alt="" />
         <div class="flex-1">
           <span>title</span>
           <p>content</p>
@@ -21,26 +21,25 @@
     <div class="w-1/3">
       <h2>{{ "最多播放" }}</h2>
       <ul class="p-2 rounded-md bg-white">
-        <li class="flex mb-2 justify-between items-center text-ellipsis overflow-hidden leading-5" @click="Musicianly"
-          :key="item.id" v-for="item in artistsSing">
-          <Image class="rounded-t w-14 h-14" :src="item?.al?.picUrl" alt="" />
-          <span class="inline-block w-1/3 px-2 text-left">{{
-            item?.name
-          }}</span>
-          <p class="flex-1">{{ item?.privilege?.playMaxbr }}次</p>
-          <MyPlay :id="item.id" />
-        <!-- <div class="w-12">
-            <MyLike />
-              </div> -->
-        </li>
+        <template v-for="(item, index) in artistsSing">
+          <li class="flex mb-2 justify-between items-center overflow-hidden cursor-pointer leading-5"
+            @click="Musicianly(item)" v-if="index < 6" :key="item.id">
+            <Image class="rounded-t w-14 h-14" :src="item?.al?.picUrl" :wh="[80, 80]" alt="" />
+            <span class="flex-1 inline-block  px-3  items-center truncate">{{
+              item?.name
+            }}</span>
+            <!-- <p class="flex-1">{{ item?.privilege?.playMaxbr }}次</p> -->
+            <MyPlay :id="item.id" class="mx-4" />
+            <MyLike :id="item.id" />
+          </li>
+        </template>
       </ul>
     </div>
     <div>
       <h2>{{ "相关艺人" }}</h2>
       <ul>
-        <li class="flex items-center mt-2" @click="singerReps(item.id)" :key="item.id"
-          v-for="(item, index) in simiartist">
-          <Image class="rounded-full w-16 h-16" :src="item?.img1v1Url" alt="" />
+        <li class="flex items-center mt-2" @click="singerReps(item.id)" v-for="item in simiartist" :key="item.id">
+          <Image class="rounded-full w-16 h-16" :src="item?.img1v1Url" :wh="[80, 80]" alt="" />
           <span class="inline-block flex-1 pl-2 box-border text-left">{{
             item?.name
           }}</span>
@@ -52,50 +51,52 @@
 
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import type { Router, RouteLocationNormalizedLoaded } from "vue-router";
-// import type { StoreOptions } from 'vuex'
-// import store from 'src/store'
+import Store from '@/store/index'
+import { useRouter } from "vue-router";
 import { _simi_artist, _artists, _simi_playlist } from "@/api/user";
+
 import UsesDesc from "../../uses_Desc/index.vue";
-type Idtype = string | number;
+type IdType = string | number;
+const router = useRouter()
 
 const P = defineProps<{
   props: {
-    id: string;
-    router: Router;
-    singerInfo: object;
-    route: RouteLocationNormalizedLoaded;
-    // store: StoreOptions<typeof store>
-  };
+    id: string,
+    singerInfo?: object,
+  }
 }>();
 const Emit = defineEmits<{
   (e: "updateId", v: string): void;
 }>();
 
-function Musicianly() { }
+function Musicianly(item) {
+  Store.dispatch("ToggleSong", { id: item.id, playListId: user.value + '-最多播放', list: artistsSing.value });
+}
 
 // 相似歌手
 const simiartist = ref([]);
-async function get_simi_artist(id: Idtype) {
+async function get_simi_artist(id: IdType) {
   const { artists } = await _simi_artist({ id });
   simiartist.value = artists.splice(0, 4);
 }
 function singerReps(id: string) {
-  P.props.router.push(`/Music/singer/${id}`);
+  router.push(`/Music/singer/${id}`);
   Emit("updateId", id);
 }
 
 // 相似歌单
 const simiplaylist = ref([]);
-async function get_simi_playlist(id: Idtype) {
+async function get_simi_playlist(id: IdType) {
   const { playlists } = await _simi_playlist({ id });
   simiplaylist.value = playlists;
 }
 // 部分信息和热门歌曲
 const artistsSing = ref([]);
-async function get_artists(id: Idtype) {
-  const { hotSongs, artist } = await _artists({ id });
-  artistsSing.value = hotSongs.splice(0, 6);
+const user = ref('')
+async function get_artists(id: IdType) {
+  const { hotSongs, artist: { name } } = await _artists({ id });
+  artistsSing.value = hotSongs;
+  user.value = name
 }
 
 watch(

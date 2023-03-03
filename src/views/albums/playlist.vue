@@ -3,8 +3,7 @@
   <div class="myclass  box-border flex select-none overflow-hidden h-full w-full relative" v-bind="$attrs">
     <div class="w-1/5 pt-5" style="min-width: 160px">
       <Image :src="Albums.coverImgUrl" class="rounded-lg ml-2" :wh="[500, 500]" />
-      <Button @click="collect">
-        <!-- {{ collectFlag ? $t('nav.collect') : '收藏歌单' }} -->
+      <Button @click="collect" class="mt-10">
         {{ $t('nav.collect') + $t('playlist.playlist') }}
         <icon-heart-fill v-if="collectFlag" :style="{ color: 'red' }" class="cursor-pointer" />
         <icon-heart v-else class="hover: text-pink - 500 cursor - pointer" />
@@ -24,7 +23,7 @@
             {{ item }}</a-tag>
         </div>
       </div>
-      <div class="hybull  pl-5 bg-white bg-opacity-90 backdrop-filter backdrop-blur-sm flex flex-col overflow-scroll"
+      <div class="hybull  pl-5 bg-white bg-opacity-90 backdrop-filter backdrop-blur-sm flex flex-col overflow-y-auto"
         v-infinite-scroll="scrollLoad">
         <div v-for="item in AlbumsList" :key="item.id" @click="play(item)"
           class="flex justify-between items-center p-2 px-4 mb-3 hover:shadow-xl hover:border-gray-300 cursor-pointer transition-all rounded-md border border-b">
@@ -48,6 +47,9 @@
     <p>{{ Albums.description }}</p>
   </ModalVue>
 </template>
+<script lang="ts">
+export default { name: 'playlist' }
+</script>
 
 <script lang="ts" setup>
 import Button from '@/components/button/index.vue'
