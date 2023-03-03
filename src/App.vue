@@ -1,32 +1,16 @@
-<script setup lang="ts">
-import { ref } from "vue";
-import store from "./store";
-const first = ref(localStorage.getItem("info"));
-const user: string = "Hello " + localStorage.getItem("user");
-const firstF = () => {
-  localStorage.setItem("info", "true");
-  first.value = "true";
-};
-// 初始化 数据请求
-function initQueryDate() {
-  if (!store.state.song.myLikeList.length) {
-    store.dispatch("getLikelist");
-  }
-}
-initQueryDate();
-</script>
+
 
 <template>
-  <div v-if="first" :msg="user">
-    <!-- <Suspense>
+  <div v-if="first" :msg="user" @contextmenu.prevent>
+  <!-- <Suspense>
       <router-view v-slot="{ Component, route }">
         <transition :name="route.meta.transition || 'fade'" mode="out-in">
           <keep-alive>
           <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined" />
           </keep-alive>
         </transition>
-      </router-view>
-    </Suspense> -->
+                  </router-view>
+                </Suspense> -->
     <router-view></router-view>
   </div>
   <div v-else class="h-full flex fx-center">
@@ -39,6 +23,20 @@ initQueryDate();
     </transition>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import store from "./store";
+const first = ref(localStorage.getItem("info"));
+const user: string = "Hello " + localStorage.getItem("user");
+const firstF = () => {
+  localStorage.setItem("info", "true");
+  first.value = "true";
+};
+
+store.dispatch('initQueryDate')
+window.$stroe = store
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@0;1&display=swap");
