@@ -25,8 +25,8 @@ export default {
     newAlbum: "Latest Albums",
     seeMore: "SEE MORE",
     charts: "Top Charts",
-    recommendMv: 'Recommend Mv',
-    dayList: 'Daily Single'
+    recommendMv: "Recommend Mv",
+    dayList: "Daily Single",
   },
   library: {
     sLibrary: "'s Library",
@@ -59,7 +59,7 @@ export default {
     videos: "Music Videos",
     following: "Following",
     follow: "Follow",
-    Attention: 'Attention',
+    Attention: "Attention",
     similarArtists: "Similar Artists",
     artistDesc: "Artist Description",
   },
@@ -87,6 +87,7 @@ export default {
     email: "Email address",
     password: "Password",
     login: "Login",
+    outing: "outing",
     loginWithEmail: "Login with Email",
     loginQRCode: "Login with QRCode",
     loginWithPhone: "Login with Phone",
@@ -205,4 +206,4 @@ export default {
     copyFailed: "Copy failed: ",
     needToLogin: "Need to log into netease account",
   },
-}
+};

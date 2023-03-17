@@ -1,4 +1,4 @@
-interface Account {
+export interface Account {
   id: number;
   userName: string;
   type: number;
@@ -12,7 +12,4 @@ interface Account {
   vipType: number;
   anonimousUser: boolean;
   paidFee: boolean;
-}
-export {
-  Account
 }

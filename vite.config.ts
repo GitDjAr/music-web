@@ -1,21 +1,55 @@
-import { defineConfig } from "vite"
+import { PluginOption, defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
 import * as path from "path"
+//pwa
+import { VitePWA } from 'vite-plugin-pwa';
+import { GenerateSW } from 'workbox-webpack-plugin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base:'./',d
+  base: '/',
 
-  plugins: [vue({
-    reactivityTransform: true,// 开启reactivityTransform $ref
-    template: {
-      compilerOptions: {
-        isCustomElement: (tag) => {
-          return tag.startsWith('ion-') // (return true)
+  plugins: [
+    vue({
+      reactivityTransform: false,// 开启reactivityTransform $ref
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => {
+            return tag.startsWith('ion-') // (return true)
+          }
         }
       }
-    }
-  })],
+    }),
+    VitePWA({
+      manifest: {
+        name: 'Example App',
+        short_name: 'Example PWA',
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: '/logo.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: '/logo.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+        ],
+      },
+    }),
+    {
+      name: 'workbox',
+      apply: 'build',
+      plugins: [
+        new GenerateSW({
+          swDest: "public/sw.js"
+        })
+      ]
+    } as PluginOption,
+
+  ],
 
   define: {
     //https://vue-i18n.intlify.dev/guide/advanced/optimization.html#reduce-bundle-size-with-feature-build-flags
@@ -73,6 +107,19 @@ export default defineConfig({
     },
   },
   build: {
-    target: 'es2020'
+    sourcemap: true,
+    assetsDir: 'assets',
+    outDir: 'dist',
+    target: 'es2015',
+    rollupOptions: {
+      input: 'src/main.ts',
+      output: {
+        // ensure the final bundle is a self-executing function
+        format: 'es',
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]',
+      },
+    },
   }
 })

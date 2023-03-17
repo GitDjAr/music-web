@@ -4,7 +4,12 @@
     <div class="">
       <h2>{{ "最新专辑" }}</h2>
       <div class="flex items-center">
-        <Image class="w-32 h-32 rounded-md shadow-md" src="" :wh="[220, 220]" alt="" />
+        <Image
+          class="w-32 h-32 rounded-md shadow-md"
+          src=""
+          :wh="[220, 220]"
+          alt=""
+        />
         <div class="flex-1">
           <span>title</span>
           <p>content</p>
@@ -22,10 +27,19 @@
       <h2>{{ "最多播放" }}</h2>
       <ul class="p-2 rounded-md bg-white">
         <template v-for="(item, index) in artistsSing">
-          <li class="flex mb-2 justify-between items-center overflow-hidden cursor-pointer leading-5"
-            @click="Musicianly(item)" v-if="index < 6" :key="item.id">
-            <Image class="rounded-t w-14 h-14" :src="item?.al?.picUrl" :wh="[80, 80]" alt="" />
-            <span class="flex-1 inline-block  px-3  items-center truncate">{{
+          <li
+            class="flex mb-2 justify-between items-center overflow-hidden cursor-pointer leading-5"
+            @click="Musicianly(item)"
+            v-if="index < 6"
+            :key="item.id"
+          >
+            <Image
+              class="rounded-t w-14 h-14"
+              :src="item?.al?.picUrl"
+              :wh="[80, 80]"
+              alt=""
+            />
+            <span class="flex-1 inline-block px-3 items-center truncate">{{
               item?.name
             }}</span>
             <!-- <p class="flex-1">{{ item?.privilege?.playMaxbr }}次</p> -->
@@ -38,8 +52,18 @@
     <div>
       <h2>{{ "相关艺人" }}</h2>
       <ul>
-        <li class="flex items-center mt-2" @click="singerReps(item.id)" v-for="item in simiartist" :key="item.id">
-          <Image class="rounded-full w-16 h-16" :src="item?.img1v1Url" :wh="[80, 80]" alt="" />
+        <li
+          class="flex items-center mt-2"
+          @click="singerReps(item.id)"
+          v-for="item in simiartist"
+          :key="item.id"
+        >
+          <Image
+            class="rounded-full w-16 h-16"
+            :src="item?.img1v1Url"
+            :wh="[80, 80]"
+            alt=""
+          />
           <span class="inline-block flex-1 pl-2 box-border text-left">{{
             item?.name
           }}</span>
@@ -51,26 +75,30 @@
 
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import Store from '@/store/index'
+import Store from "@/store";
 import { useRouter } from "vue-router";
 import { _simi_artist, _artists, _simi_playlist } from "@/api/user";
 
 import UsesDesc from "../../uses_Desc/index.vue";
 type IdType = string | number;
-const router = useRouter()
+const router = useRouter();
 
 const P = defineProps<{
   props: {
-    id: string,
-    singerInfo?: object,
-  }
+    id: string;
+    singerInfo?: object;
+  };
 }>();
 const Emit = defineEmits<{
   (e: "updateId", v: string): void;
 }>();
 
 function Musicianly(item) {
-  Store.dispatch("ToggleSong", { id: item.id, playListId: user.value + '-最多播放', list: artistsSing.value });
+  Store.dispatch("ToggleSong", {
+    id: item.id,
+    playListId: user.value + "-最多播放",
+    list: artistsSing.value,
+  });
 }
 
 // 相似歌手
@@ -92,11 +120,14 @@ async function get_simi_playlist(id: IdType) {
 }
 // 部分信息和热门歌曲
 const artistsSing = ref([]);
-const user = ref('')
+const user = ref("");
 async function get_artists(id: IdType) {
-  const { hotSongs, artist: { name } } = await _artists({ id });
+  const {
+    hotSongs,
+    artist: { name },
+  } = await _artists({ id });
   artistsSing.value = hotSongs;
-  user.value = name
+  user.value = name;
 }
 
 watch(

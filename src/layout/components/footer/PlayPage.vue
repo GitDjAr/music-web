@@ -11,7 +11,7 @@
           <ul class="my-10" :style="styleImg">
             <li
               class="transition-all text-xl mx-6 py-3 px-6 font-bold rounded-lg cursor-pointer select-none text-slate-300"
-              :class="{ line: index == active }" v-for="(item, index) in curPlaySong.lrc" :id="item.time"
+              :class="{ line: index == active }" v-for="(item, index) in curPlaySong.lrc" :id="item.time + ''"
               @click="tickLyrics(item, index)">
               {{ item.txt }}
             </li>
@@ -24,18 +24,18 @@
 
 <script lang="ts" setup>
 import { useStorage } from "@vueuse/core";
+import type { CurSongInfo } from '@/store/module/song'
 import { ref, onBeforeUnmount, computed, watch, onMounted } from "vue";
-import Store from '@/store/index'
-import { getImgeColor } from "@/utils/getImgeColor";
+import Store from "@/store";
+import { getImgsColor } from "@/utils/getImgsColor";
 
-const curPlaySong = computed(() => Store.getters.curPlaySong);
+const curPlaySong = computed<CurSongInfo>(() => Store.getters.curPlaySong);
 const Player = computed(() => Store.state.song.Player);
 const styleImg = ref("--ImgColor:#fff");
 // const $emit = defineEmits(["cancel"]);
 
-
 watch(curPlaySong, (v) => {
-  getImgeColor(v.picUrl, true).then((res: string) => {
+  getImgsColor(v.picUrl, true).then((res: string) => {
     styleImg.value = `--ImgColor:${res}`;
   });
   tickLyrics(undefined, 0);
@@ -57,9 +57,9 @@ onBeforeUnmount(() => {
 // 移动播放节点
 const active = useStorage("lrcActive", 0);
 onMounted(() => {
-  SetTickLyrics()
+  SetTickLyrics();
 });
-function tickLyrics(item: Object | undefined, index: number) {
+function tickLyrics(item: { time: any; } | undefined, index: number) {
   const el = document.querySelector(".lyricsItem");
   if (!el) return;
   el.scrollTo({
@@ -73,12 +73,12 @@ function tickLyrics(item: Object | undefined, index: number) {
   item && Player.value.SetSeeks(item.time);
 }
 function SetTickLyrics() {
-  let acv = 0
-  let currentTime = Player.value?.SetSeeks()
-  curPlaySong.value.lrc.forEach(e => {
+  let acv = 0;
+  let currentTime = Player.value?.SetSeeks();
+  curPlaySong.value.lrc.forEach((e) => {
     const lineTime = e.time;
     if (lineTime && currentTime >= lineTime) {
-      acv++
+      acv++;
     }
   });
   tickLyrics(undefined, acv);
@@ -86,7 +86,7 @@ function SetTickLyrics() {
 // 暴露方法  手动校验
 defineExpose({
   SetTickLyrics,
-})
+});
 </script>
 <style scoped lang="scss">
 svg.transform.myfont {

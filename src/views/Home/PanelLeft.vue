@@ -8,10 +8,10 @@
           class="w-full h-full object-cover" />
       </a-carousel-item>
     </a-carousel>
-    <h1 class="text-xl  text-left   ">{{ $t("home.recommendPlaylist") }}</h1>
+    <h1 class="text-xl text-left">{{ $t("home.recommendPlaylist") }}</h1>
     <div class="Nouvea">
       <div class="NouList" :key="index" v-for="(item, index) in state.recommendPlaylist">
-        <div class="rounded-lg overflow-hidden relative curp group">
+        <div class="rounded-lg overflow-hidden relative cursor-pointer group">
           <Image class="list-img group-hover:scale-110 group-hover:duration-500 transition-all" :src="item.picUrl"
             :wh="[200, 200]" :alt="item.copywriter" @click="albumOver(item)" />
           <p
@@ -19,7 +19,7 @@
             <MyPlay :id="item.id" />
           </p>
         </div>
-        <p class=" mb-2">{{ item.name }}</p>
+        <p class="mb-2">{{ item.name }}</p>
         <!-- <a-tag :color="resourceColor(item.id)" size="mini">{{item.creator.expertTags}}</a-tag> -->
       </div>
     </div>
@@ -31,15 +31,16 @@
 import { reactive, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { personalizedMV, resource } from "@/api/Home";
-import type { IdOps } from "@/utils/type/id";
 
-const router = useRouter()
+const router = useRouter();
 const state = reactive({
-  personalized: [{ picUrl: "" }, { copywriter: "" }],
+  personalized: [
+    { picUrl: "", id: 0, copywriter: "" }
+  ],
   recommendPlaylist: [
     {
       name: "",
-      id: "",
+      id: 0,
       picUrl: "",
       copywriter: "",
     },
@@ -60,22 +61,13 @@ async function recommendPlaylist() {
 // 播放
 const videoId = ref("");
 const VideoShow = ref(false);
-const GoPlay = (item: object) => {
-  videoId.value = item.id
-  VideoShow.value = true
+const GoPlay = (item: { id: number }) => {
+  videoId.value = item.id + '';
+  VideoShow.value = true;
 };
-// 查看明细
-const CheckDetails = (Details: any) => {
-  // router.push()
-};
-const albumOver = ({ id }: IdOps) => {
+
+const albumOver = ({ id }: { id: number }) => {
   router.push({ name: "playlist", params: { id } });
-};
-const resourceColor = (v: string | number) => {
-  return `#cdd${v.toString().slice(0, 3)}`;
-};
-const Checksinger = (singer: any) => {
-  // router.push()
 };
 onMounted(() => {
   recommendPlaylist();

@@ -1,12 +1,13 @@
 <!--  -->
 <template>
-  <div class="home-right flex fx-center-a fx-c">
-    <h2>{{ $t('home.dayList') }}</h2>
-    <ul class="right-ul w-4/5 w-11/12  ">
+  <div class="home-right flex  items-center  flex-col">
+    <h2>{{ $t("home.dayList") }}</h2>
+    <ul class="right-ul w-11/12">
       <template v-for="(item, index) in state.darinPush">
-        <li class="ul-li t-lf flex fx-center-a" :alt="item.reason" :key="index" v-if="index < 6" @click="palySong(item)">
+        <li class="ul-li  text-left flex items-center" :alt="item.reason" :key="index" v-if="index < 6"
+          @click="palySong(item)">
           <img class="li-img" :src="`${item.al.picUrl}?param=100y100`" />
-          <section class=" w-full overflow-hidden">
+          <section class="w-full overflow-hidden">
             <span class="songName truncate">{{ item.name }}</span>
             <span @click.stop="CheckSinger(item.ar[0].id)" class="songAr truncate">{{ item.ar[0].name }}</span>
           </section>
@@ -17,78 +18,83 @@
       <!-- <li class="cursor-pointer" @click.stop="() => { router.push({ path: '/Music/playlist', params: { id: state.playlistId } }) }"> 查看更多 > </li> -->
     </ul>
     <div class="mt-2 mx-4">
-      <h2>{{ $t('home.recommendArtist') }}</h2>
+      <h2>{{ $t("home.recommendArtist") }}</h2>
       <div class="singer items-center justify-center">
-        <div class="singer-list mx-1.5  truncate  " :alt="item.reason" :key="index"
+        <div class="singer-list mx-1.5 truncate" :alt="item.reason" :key="index"
           v-for="(item, index) in state.artistsList" @click="CheckSinger(item.id)">
-          <img class="rounded-full cursor-pointer " :src="`${item.img1v1Url}?param=100y100`" />
-          <p class="singer-name my-1  w-full  ">{{ item.name }}</p>
+          <img class="rounded-full cursor-pointer" :src="`${item.img1v1Url}?param=100y100`" />
+          <p class="singer-name my-1 w-full">{{ item.name }}</p>
         </div>
       </div>
     </div>
-    <div class="newAlbum">
-      <h2>{{ $t('home.newAlbum') }}</h2>
+  <!-- <div class="newAlbum">
+      <h2>{{ $t("home.newAlbum") }}</h2>
       <div class="newAlbum-list" v-for="item in 10"></div>
-    </div>
+      </div> -->
   </div>
 </template>
 
-<script lang='ts' setup>
-import { reactive, onMounted, } from 'vue';
-import { artists as Getartists, songs } from '@/api/Home'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
-const router = useRouter()
-const Store = useStore()
+<script lang="ts" setup>
+import { reactive, onMounted } from "vue";
+import { artists as Getartists, songs } from "@/api/Home";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+const router = useRouter();
+const Store = useStore();
 const state = reactive({
   artistsList: [
     {
-      reason: '',
-      name: '',
-      img1v1Url: '',
+      reason: "",
+      name: "",
+      img1v1Url: "",
     },
   ],
   darinPush: [
     {
-      name: '',
+      name: "",
       ar: [
         {
-          name: '',
+          name: "",
         },
       ],
-      reason: '',
+      reason: "",
       al: {
-        picUrl: ''
-      }
-    }
+        picUrl: "",
+      },
+    },
   ],
-})
+});
 
 // 热门歌手
 async function getArtists() {
-  const { artists } = await Getartists({})
-  state.artistsList = artists.splice(0, 8)
+  const { artists } = await Getartists({});
+  state.artistsList = artists.splice(0, 8);
 }
 // 每日推薦
 async function getDayinPush() {
-  const { data: { dailySongs } } = await songs({})
-  state.darinPush = dailySongs
+  const {
+    data: { dailySongs },
+  } = await songs({});
+  state.darinPush = dailySongs;
 }
 const palySong = async (item: Object) => {
-  Store.dispatch("ToggleSong", { id: item.id, playListId: '推荐', list: state.darinPush });
-}
+  Store.dispatch("ToggleSong", {
+    id: item.id,
+    playListId: "推荐",
+    list: state.darinPush,
+  });
+};
 // 去歌手主页
 function CheckSinger(id: number) {
-  router.push(`/Music/singer/${id}`)
+  router.push(`/Music/singer/${id}`);
 }
 
 onMounted(() => {
-  getArtists()
-  getDayinPush()
-})
-
+  getArtists();
+  getDayinPush();
+});
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .home-right {
   h2 {
     font-size: 1rem;

@@ -5,55 +5,50 @@
       @click="item.on"></li>
   </ul>
   <div class="flex">
-    <seachVue />
+    <searchVue />
     <div class="ml-3">
-      <a-button type='text' v-if="!loginStatus" @click="loginPage">{{ $t('login.login') }}</a-button>
+      <a-button type="text" v-if="!loginStatus" @click="loginPage">{{
+        $t("login.login")
+      }}</a-button>
       <a-popover v-else trigger="click">
-        <a-avatar shape="square">
-          <img alt="avatar" :src="userInfo?.profile?.avatarUrl" />
-        </a-avatar>
+        <Image :src="userInfo.title" style="width: 40px ;height: 40px;" class=" rounded-md" :wh="[80, 80]"></Image>
         <template #content>
-          <p @click="outin">{{ $t('login.outin') }}</p>
+          <p @click="Putin">{{ $t("login.outing") }}</p>
         </template>
       </a-popover>
     </div>
   </div>
-  <loginVue v-model:visible='state.visible' />
+  <loginVue v-model:visible="state.visible" />
 </template>
 
-<script lang='ts' setup>
-import { useStore } from 'vuex';
-import { ref, reactive, onMounted, computed } from 'vue'
-// import { mapGetter } from '@/utils/StoreUtils'
-import seachVue from './seach.vue';
-import loginVue from "@/layout/components/login.vue"
+<script lang="ts" setup>
+import { useStore } from "vuex";
+import { ref, reactive, computed } from "vue";
+import searchVue from "./seach.vue";
+import loginVue from "@/layout/components/login.vue";
 
-const store = useStore()
-let userInfo = computed(() => store.getters.userInfo)
-let loginStatus = computed(() => store.getters.loginStatus)
+const store = useStore();
+let userInfo = computed(() => store.getters.userInfo);
+let loginStatus = computed(() => store.getters.loginStatus);
 
-// let loginStatus = ref('')
-// onMounted(() => {
-//   [userInfo.value, loginStatus.value] = mapGetter(['userInfo', 'loginStatus'])
-// })
 
 const state = reactive({
   visible: false,
-})
+});
 const titleList = ref([
   { c: "#CDD8FC", on: () => { } },
   { c: "#DED5FC", on: () => { } },
   { c: "#E3E9FC", on: () => { } },
-])
+]);
 
 const loginPage = () => {
-  state.visible = !state.visible
-}
-const outin = () => {
-  store.dispatch('UserOutin')
-}
+  state.visible = !state.visible;
+};
+const Putin = () => {
+  store.dispatch("UserOuting");
+};
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .title-nav-ul {
   .title-nav {
     height: 10px;

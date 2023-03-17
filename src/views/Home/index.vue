@@ -5,7 +5,7 @@
       <PanelLeftVue />
       <PanelRightVue />
     </div>
-    <TopChartsVue />
+    <TopChartsVue :id="1" />
   </div>
 </template>
 

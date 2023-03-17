@@ -1,9 +1,6 @@
 <!--专辑 -->
 <template>
-  <div
-    ref="rootRef"
-    class="MYroot flex h-full flex-col flex-wrap overflow-scroll box-border justify-around"
-  >
+  <div ref="rootRef" class="MYroot flex h-full flex-col flex-wrap overflow-scroll box-border justify-around">
     <template v-for="item in searchList">
       <albumVue :item="item"></albumVue>
     </template>

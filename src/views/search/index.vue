@@ -5,26 +5,13 @@
       <Image class="h-full w-full" />
     </div>
     <h1 class="text-lg">
-      根据<span class="text-sky-300 inline-block px-1">{{ searchKey }}</span
-      >搜索显示
+      根据<span class="text-sky-300 inline-block px-1">{{ searchKey }}</span>搜索显示
     </h1>
-    <a-tabs
-      class="My-space"
-      position="right"
-      @change="activeFun"
-      justify
-      :active-key="active"
-      lazy-load
-      animation
-    >
+    <a-tabs class="My-space" position="right" @change="(v) => activeFun(v || 1)" justify :active-key="active" lazy-load
+      animation>
       <a-tab-pane :key="item.id" :title="item.title" v-for="item in searchList">
-        <component
-          :ref="itemRef"
-          :is="item.Com"
-          :params="item.params"
-          :Activated="active === item.id"
-          @update="(v: boolean) => item.params.activation = v"
-        >
+        <component :ref="itemRef" :is="item.Com" :params="item.params" :Activated="active === item.id"
+          @update="(v: boolean) => item.params.activation = v">
         </component>
       </a-tab-pane>
     </a-tabs>
@@ -108,8 +95,8 @@ onBeforeUpdate(() => {
 
 // 激活 tabs
 const active = ref("1");
-const activeFun = (id: string) => {
-  active.value = id;
+const activeFun = (id: string | number) => {
+  active.value = id + '';
 };
 </script>
 <style scoped lang="scss">

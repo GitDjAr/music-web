@@ -1,38 +1,52 @@
-import { DateObj, DateFormat } from './type/funType'
+import { DateFormat } from "./type/funType";
+import * as DateT from "./type/funType";
+export { DateT };
 
 // 时间格式化
 export function formatTime(time: number, format: DateFormat = DateFormat.ms) {
-  const date = new Date(time)
-  const min = date.getMinutes()
-  const sec = date.getSeconds()
-  return format.replace('mm', `${min < 10 ? '0' + min : min}`).replace('ss', `${sec < 10 ? '0' + sec : sec}`)
+  const date = new Date(time);
+  const min = date.getMinutes();
+  const sec = date.getSeconds();
+  return format
+    .replace("mm", `${min < 10 ? "0" + min : min}`)
+    .replace("ss", `${sec < 10 ? "0" + sec : sec}`);
 }
 
 // 年月日
-export function formatformat(date?: string | number | Date, fmt: DateFormat = DateFormat.year) {
-  date = new Date(date || new Date())
-  var obj: DateObj = {
-    y: date.getFullYear(), // 年份，注意必须用getFullYear
-    M: date.getMonth() + 1, // 月份，注意是从0-11
-    d: date.getDate(), // 日期
-    q: Math.floor((date.getMonth() + 3) / 3), // 季度
-    w: date.getDay(), // 星期，注意是0-6
-    H: date.getHours(), // 24小时制
-    h: date.getHours() % 12 === 0 ? 12 : date.getHours() % 12, // 12小时制
-    m: date.getMinutes(), // 分钟
-    s: date.getSeconds(), // 秒
-    S: date.getMilliseconds() // 毫秒
+interface DateObj {
+  [key: string]: number;
+}
+
+export function formatformat(
+  date?: string | number | Date,
+  fmt: string = "yyyy-MM-dd"
+): string {
+  const d = new Date(date || new Date());
+  const obj: DateObj = {
+    y: d.getFullYear(),
+    M: d.getMonth() + 1,
+    d: d.getDate(),
+    q: Math.floor((d.getMonth() + 3) / 3),
+    w: d.getDay(),
+    H: d.getHours(),
+    h: d.getHours() % 12 === 0 ? 12 : d.getHours() % 12,
+    m: d.getMinutes(),
+    s: d.getSeconds(),
+    S: d.getMilliseconds(),
+  };
+  const week = ["日", "一", "二", "三", "四", "五", "六"];
+  const pad = (val: number, len: number): string =>
+    val.toString().padStart(len, "0");
+  for (const i in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, i)) {
+      fmt = fmt.replace(new RegExp(`${i}+`, "g"), (m) => {
+        const val = obj[i];
+        if (i === "w") return (m.length > 2 ? "星期" : "周") + week[val];
+        return m.length === 1 ? val.toString() : pad(val, m.length);
+      });
+    }
   }
-  var week = ['天', '一', '二', '三', '四', '五', '六']
-  for (var i in obj) {
-    fmt = <DateFormat>fmt.replace(new RegExp(i + '+', 'g'), function (m) {
-      var val = obj[i] + ''
-      if (i === 'w') return (m.length > 2 ? '星期' : '周') + week[val]
-      for (var j = 0, len = val.length; j < m.length - len; j++) val = '0' + val
-      return m.length === 1 ? val : val.substring(val.length - m.length)
-    })
-  }
-  return fmt
+  return fmt;
 }
 
 /**

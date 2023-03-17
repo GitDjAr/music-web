@@ -20,11 +20,7 @@ const loading: Directive = {
     }
   },
 };
-interface elType {
-  appendChild(arg0: any): void
-  removeChild(arg0: any): void
-  instance: { $el: any; }
-}
+
 const appendEl = (el: { appendChild: (arg0: any) => void; instance: { $el: any; }; }) => {
   el.appendChild(el.instance.$el);
 };

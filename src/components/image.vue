@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="overflow-hidden">
-    <img ref="refImg" :class="`w-full h-full  ${objectify}`" :alt="P.alt" />
+    <img ref="refImg" :class="`w-full h-full  ${objectify}`" :alt="P.alt" loading='lazy' decoding='async' />
     <slot></slot>
   </div>
 </template>
@@ -29,11 +29,11 @@ const P = withDefaults(
 const objectify = ref("object-" + P.fit);
 const Immure = computed(() => {
   if (P.src) {
-    let key = P.src.includes('?param=') ? 'param=' : '?param='
-    let value = P.wh ? `${P.wh[0]}y${P.wh[1]}` : ''
-    return P.src + key + value
+    let key = P.src.includes("?param=") ? "param=" : "?param=";
+    let value = P.wh ? `${P.wh[0]}y${P.wh[1]}` : "";
+    return P.src + key + value;
   } else {
-    return window.rendomImgurl;
+    return window.rendomImgUrl;
   }
 });
 

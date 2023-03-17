@@ -43,10 +43,13 @@
     "gridtemplatecolumns",
     "gsap",
     "haoshiqi",
+    "Imgurl",
     "initconfig",
     "johnsoncodehk",
     "juejin",
     "kuaishou",
+    "lasttime",
+    "likelist",
     "lintstagedrc",
     "miniapp",
     "monokai",
@@ -54,6 +57,7 @@
     "nvue",
     "Persistedstate",
     "pinia",
+    "plyr",
     "Prefinem",
     "prettierignore",
     "quickapp",
@@ -69,6 +73,7 @@
     "stylelintrc",
     "Sublist",
     "swidth",
+    "tlrc",
     "toutiao",
     "uniapp",
     "unocss",
@@ -80,6 +85,9 @@
     "weixin"
   ],
   "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

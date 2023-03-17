@@ -1,17 +1,17 @@
 <!--  -->
 <template>
   <div @click="toPage"
-    class="mybox cursor-pointer group hover:bg-sky-50 hover:shadow-lg transition-all flex w-96 h-36 px-3 m-2 text-center shadow rounded-md items-center">
-    <div class="relative w-32 h-32 ">
+    class="mybox select-none cursor-pointer group hover:bg-sky-50 hover:shadow-lg transition-all flex w-96 h-36 px-3 m-2 text-center shadow rounded-md items-center">
+    <div class="relative w-32 h-32">
       <Image :wh="[200, 200]" :src="P.item?.blurPicUrl" alt=""
         class="rounded-md w-32 h-32 absolute -translate-y-1/2 top-1/2 z-10" />
       <div class="group-hover:translate-x-14 -translate-y-1/2 top-1/2 transition-all absolute">
         <img class="changping w-28 h-28" src="../../assets/changpian.png" alt="" />
       </div>
     </div>
-    <div class="h-4/5 text-left ml-14 flex flex-col justify-around">
-      <p>{{ P.item?.name }}</p>
-      <span>{{ P.item?.artist?.name }}</span>
+    <div class="h-4/5 text-left ml-14 flex flex-1 flex-col justify-around  overflow-hidden">
+      <p class="truncate ">{{ P.item?.name }}</p>
+      <span class="truncate  inline-block">{{ P.item?.artist?.name }}</span>
       <li>发布时间:{{ formatformat(P.item?.publishTime, "yyyy-MM-dd") }}</li>
       <li class="flex items-center">
         <a-tag :color="tagColor()">{{ P.item.type }}</a-tag>

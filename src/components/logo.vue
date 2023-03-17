@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from "vue";
+import { defineComponent, reactive, toRefs, } from "vue";
 import palylogo from "../assets/play-logo.png";
 import logo from "../assets/logo.gif";
 export default defineComponent({

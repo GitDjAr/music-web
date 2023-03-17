@@ -27,18 +27,12 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  ref,
-  watch,
-  reactive,
-  computed,
-} from "vue";
+import { ref, watch, reactive, computed } from "vue";
 import { vInfiniteScroll } from "@vueuse/components";
 import { _artist_mv } from "@/api/user";
-import { Props } from '../type'
 
 const P = defineProps<{
-  props: Props
+  props: { id: number };
   Activated: boolean;
 }>();
 
@@ -55,11 +49,10 @@ watch(
 );
 
 // 滚动加载
-function scrollLoad({ pageNum: number }: { pageNum: 1 }) {
+function scrollLoad() {
   ++query.pageNum;
   searchSuggest();
 }
-
 
 // mv
 const mvList = ref<Array<any>>([]);
@@ -79,11 +72,9 @@ const searchSuggest = async (id?: string) => {
 const videoId = ref("");
 const VideoShow = ref(false);
 function handleVideo({ id }: any) {
-  videoId.value = id
-  VideoShow.value = true
+  videoId.value = id;
+  VideoShow.value = true;
 }
-
-
 </script>
 <style scoped lang="scss">
 .mybox .box-div {

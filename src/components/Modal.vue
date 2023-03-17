@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { withDefaults, computed, watch } from "vue";
+import { withDefaults, computed, } from "vue";
 import { RendererElement } from "vue";
 interface PropsType {
   width?: string;

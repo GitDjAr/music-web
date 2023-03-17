@@ -1,33 +1,32 @@
 <!--  -->
 <template>
-  <div class="flex flex-col relative box-border overflow-hidden">
-    <img class="object-cover absolute w-full -top-1/4 -z-10" :src="Img" />
-    <ModalVue :title="singerInfo?.artist?.name" v-model:visible="visible" to="body">
-      <template #default>
-        <p class="text-sm">{{ singerInfo?.artist?.briefDesc }}</p>
-        <ul class="my-4">
-          {{
-            singerInfo?.imageDesc
-          }}
-          <li class="mr-2 inline-block cursor-pointer" :key="index"
-            v-for="(item, index) in singerInfo?.imageDesc?.split('、')">
-            <a-tag :color="tagColor()"> {{ item }} </a-tag>
-          </li>
-        </ul>
-      </template>
-    </ModalVue>
-    <ModalVue title="提示" v-model:visible="visibleInfo">
-      <p>{{ visibleStr.blockText }} , 手机app打开连接</p>
-      <div class="flex">
-        <a-input v-model="visibleStr.url" allow-clear />
-        <a-button @click="copyText(visibleStr.url)">拷贝地址</a-button>
-      </div>
-    </ModalVue>
-    <div class="myimg text-lg text-left flex justify-around text-white mix-blend-normal py-10">
-      <div class="mytitleBox relative w-full flex-1 overflow-hidden ml-24 p-2 my-8">
+  <ModalVue :title="singerInfo?.artist?.name" v-model:visible="visible" to="body">
+    <template #default>
+      <p class="text-sm">{{ singerInfo?.artist?.briefDesc }}</p>
+      <ul class="my-4">
+        {{
+          singerInfo?.identify?.imageDesc
+        }}
+        <li class="mr-2 inline-block cursor-pointer" :key="index"
+          v-for="(item, index) in singerInfo?.identify?.imageDesc?.split('、')">
+          <ATag :color="tagColor()"> {{ item }} </ATag>
+        </li>
+      </ul>
+    </template>
+  </ModalVue>
+  <ModalVue title="提示" v-model:visible="visibleInfo">
+    <p>{{ visibleStr.blockText }} , 手机app打开连接</p>
+    <div class="flex">
+      <AInput v-model="visibleStr.url" allow-clear />
+      <AButton @click="copyText(visibleStr.url || '')">拷贝地址</AButton>
+    </div>
+  </ModalVue>
+  <div class="flex flex-col relative h-80 box-border overflow-hidden" v-bind="$attrs">
+    <Image class="object-cover absolute  h-1/2 right-0 top-0  z-10 " :src="singerInfo?.user.avatarUrl" :wh="[500, 500]" />
+    <div class="myimg text-lg text-left flex h-full justify-around text-white mix-blend-normal p-10 ">
+      <div class="mytitleBox relative  flex-1 overflow-hidden ">
         <h1 class="select-none relative">
           {{ singerInfo?.artist?.name }}
-          <icon-check v-if="true" class="iconcheck" />
         </h1>
 
         <div class="flex cursor-pointer items-center">
@@ -37,7 +36,7 @@
             <MyLike v-else />
             {{ follow.isFollow ? $t("artist.following") : $t("artist.follow") }}
           </div>
-          <icon-more class="iconmore" :style="{ fontSize: '22px' }" @click="moreFun" />
+          <IconMore class="iconmore" :style="{ fontSize: '22px' }" @click="moreFun" />
         </div>
         <p @click="openMadol" class="truncate w-2/3 text-sm mt-4 cursor-pointer">
           {{ singerInfo?.artist?.briefDesc }}
@@ -53,17 +52,17 @@
 
 <script lang="ts" setup>
 import { ImgProportion } from "@/utils/gFn";
-import { _artist_follow_count, _follow, _artist_detail } from "@/api/user";
-import { ref, Ref, watch, } from "vue";
+import { _artist_follow_count, _follow, _artist_detail, userT } from "@/api/user";
+import { ref, Ref, watch } from "vue";
 import { copyText } from "../../../utils/gFn";
 import { Notification } from "@arco-design/web-vue";
 import { useStore } from "vuex";
 
 const P = defineProps<{
   props: {
-    id: string,
-    singerInfo?: object,
-  }
+    id: string;
+    singerInfo?: object;
+  };
 }>();
 
 const store = useStore();
@@ -87,16 +86,18 @@ function init() {
 init();
 // 歌手信息
 const Img = ref("");
-const singerInfo = ref({});
+const singerInfo = ref<userT.RootUser>();
 async function get_artist_detail() {
   const { data } = await _artist_detail({ id });
-  Img.value = await ImgProportion(data?.user?.backgroundUrl);
   singerInfo.value = data;
+  console.log(singerInfo);
+  Img.value = await ImgProportion(data?.user?.backgroundUrl);
+
 }
 
 // 关注
 let visibleInfo = ref(false);
-let visibleStr = ref({});
+let visibleStr = ref<{ blockText?: string, url?: string }>({});
 let follow: Ref<{
   isFollow?: boolean;
   fansCnt?: number;
@@ -107,7 +108,7 @@ let follow: Ref<{
 
 async function followSinger() {
   _follow({
-    id: singerInfo.value.user.userId,
+    id: singerInfo.value!.user.userId,
     t: follow.value.isFollow ? 99 : 1,
   })
     .then(({ followContent = "" }) => {
@@ -147,8 +148,8 @@ let tagColor = () => store.getters.tagColor;
     left: 0;
     right: 0;
     bottom: 0;
-    background: #000;
-    opacity: 0.3;
+    // background: #829cf8;
+    // opacity: 0.3;
   }
 }
 

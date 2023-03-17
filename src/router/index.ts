@@ -11,12 +11,13 @@ const setting = () => import("../views/settings/index.vue")
 const About = () => import("../views/About.vue")
 const TopCharts = () => import("../views/Home/TopCharts.vue")
 const albums = () => import("../views/albums/index.vue")
-const listPage = () => import("../views/listPage/index.vue")
+const playListPage = () => import("../views/playListPage/index.vue")
 const albumsList = () => import("../views/albums/albumsList.vue")
 const playlist = () => import("../views/albums/playlist.vue")
 const singer = () => import("../views/singer/index.vue")
 const favorite = () => import("../views/favorite/index.vue")
 const test = () => import("../views/zzz_test/index.vue")
+const chatGPT = () => import("../views/chatGPT/index.vue")
 
 // Gutian
 const Gutian = () => import("../layout/G.vue")
@@ -46,10 +47,10 @@ const routes: Array<RouteRecordRaw> = [
         component: TopCharts
       },
       {
-        path: 'listPage',
-        name: 'listPage',
+        path: 'playListPage',
+        name: 'playListPage',
         meta: { title: '歌单列表', keepalive: true },
-        component: listPage,
+        component: playListPage,
       },
       {
         path: 'albums',
@@ -108,6 +109,12 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: 'playHistory', keepalive: false },
         component: test
       },
+      {
+        path: 'chatGPT',
+        name: 'chatGPT',
+        meta: { title: 'chatGPT', keepalive: false },
+        component: chatGPT
+      },
     ]
   },
   {
@@ -119,9 +126,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'Guitar',
         name: 'Guitar',
         component: GuitarHome
-      }
+      },
     ]
+
   },
+
   {
     path: "/",
     redirect: "/Music/home"

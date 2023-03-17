@@ -161,5 +161,9 @@ declare module SongInfo {
         code: number;
     }
 }
+
+
+
+
 export default SongInfo
 

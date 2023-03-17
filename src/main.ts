@@ -10,13 +10,12 @@ import "./style/tailwind.css"
 import "./style/reset-arco.scss"
 
 import ArcoVue from "@arco-design/web-vue"// 
-import vueplyr from 'vue-plyr'
+import vuePlyer from 'vue-plyr'
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';//额外引入图标库
 import "@arco-design/web-vue/dist/arco.css"
 import I18n from './locale/index'
 import store from "./store/index"
 
-import AxiosError from './axiosErrorCatch'
 import PASS from './utils/$PASS'
 
 import Logo from "./components/logo.vue"
@@ -27,24 +26,19 @@ import MyVideo from "@/components/MyVideo/index.vue";
 import MyPlay from "@/components/MyPlay/index.vue";
 
 import "./style/index.scss"
-import "./style/threm.scss"
+import "./style/therm.scss"
 import "./style/init.scss"
 import loading from './directives/loading/loading'
 // 图源
 
-window.rendomImgurl = 'https://api.ixiaowai.cn/api/api2.php' || 'https://img.2eka.cloud/api/random?type=pc'
-// import './mock/mock'
-// // mock开关，设置是否引入文件
-// const mock = true
-// if (mock) {
-//   // require('./mock/mock') // 注意使用require，不用import，在需要的时使用。
-// }
+window.rendomImgUrl = 'https://api.ixiaowai.cn/api/api2.php' || 'https://img.2eka.cloud/api/random?type=pc'
+
 
 
 const app = createApp(App)
   .use(ArcoVue)
   .use(ArcoVueIcon)
-  .use(vueplyr, { play: {} })
+  .use(vuePlyer, { play: {} })
   .use(store)
   .use(router)
   .use(I18n)
@@ -60,12 +54,11 @@ app.config.globalProperties.$PASS = PASS.$PASS
 
 app.mount("#app")
 
-
-// 注册全局请求错误捕获
-window.addEventListener('error', (e) => {
-
-  if (e.target instanceof XMLHttpRequest) {
-    AxiosError(e)
-  }
-})
-throw new Error('11')
+// pwa
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker.register('/dist/sw.js')
+//       .then(registration => console.log('Service Worker registered'))
+//       .catch(error => console.log('Service Worker registration failed:', error));
+//   });
+// }

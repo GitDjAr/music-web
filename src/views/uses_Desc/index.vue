@@ -10,8 +10,7 @@
             <div>{{ item.txt }}</div>
           </div>
         </div>
-        <div>
-        </div>
+        <div></div>
       </div>
     </template>
   </ModalVue>

@@ -1,43 +1,19 @@
 <!--  -->
 <template>
-  <a-select
-    :loading="loading"
-    :style="{ width: '320px' }"
-    @keyup.enter="searchFun('')"
-    :placeholder="Hot"
-    @change="searchFun"
-    v-model="selectSong"
-    @search="searchSuggest"
-    @blur="searchReset"
-    :filter-option="false"
-    :default-active-first-option="false"
-    value-key="id"
-    allow-clear
-    allow-search
-  >
+  <a-select :loading="loading" :style="{ width: '320px' }" @keyup.enter="searchFun('')" :placeholder="Hot"
+    @change="searchFun(undefined)" v-model="selectSong" @search="searchSuggest" @blur="searchReset" :filter-option="false"
+    :default-active-first-option="false" value-key="id" allow-clear allow-search>
     <template #empty>
       <div v-if="firstHot?.length" class="flex flex-wrap p-2">
-        <p
-          class="rounded-full bg-sky-100 curp m-1 mycolor"
-          @click="searchFun(first)"
-          v-for="{ first } in firstHot"
-        >
+        <p class="rounded-full bg-sky-100  cursor-pointer m-1 mycolor" @click="searchFun(first)"
+          v-for="{ first } in firstHot">
           {{ first }}
         </p>
       </div>
       <a-empty v-else />
     </template>
-    <a-optgroup
-      :label="group"
-      :key="index"
-      v-for="(group, index) in searchList.order"
-    >
-      <a-option
-        v-for="item of searchList[group]"
-        :value="item"
-        :key="item.id"
-        class="flex justify-between"
-      >
+    <a-optgroup :label="group" :key="index" v-for="(group, index) in searchList.order">
+      <a-option v-for="item of searchList[group]" :value="item" :key="item.id" class="flex justify-between">
         {{ item.name }}
         <span>{{ item?.artists?.[0].name || item?.artist?.name }}</span>
       </a-option>
@@ -76,7 +52,7 @@ const searchSuggest = async (key: string) => {
 // 搜索跳转
 type Key = string | song;
 interface searchF {
-  (key: Key): void;
+  (key?: Key): void;
 }
 const searchFun: searchF = (Rows) => {
   const str = Rows || searchKey.value || Hot.value;

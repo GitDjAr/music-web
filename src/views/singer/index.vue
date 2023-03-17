@@ -2,10 +2,25 @@
 <template>
   <div class="h-full overflow-hidden" v-loading="loading">
     <titleVue :props="Aprons" />
-    <a-tabs class="My-space" position="right" @change="activeFun" justify :active-key="active" lazy-load animation>
+    <a-tabs
+      class="My-space"
+      position="right"
+      @change="activeFun"
+      justify
+      :active-key="active"
+      lazy-load
+      animation
+    >
       <a-tab-pane :key="item.id" :title="item.title" v-for="item in tabsList">
-        <component class="overflow-scroll h-full" :ref="itemRef" :is="item.Com" :props="Aprons"
-          :Activated="active === item.id" @updateId="updateSinger" :name="item.title">
+        <component
+          class="overflow-scroll h-full"
+          :ref="itemRef"
+          :is="item.Com"
+          :props="Aprons"
+          :Activated="active === item.id"
+          @updateId="updateSinger"
+          :name="item.title"
+        >
         </component>
       </a-tab-pane>
     </a-tabs>
@@ -17,7 +32,7 @@ import titleVue from "./component/title.vue";
 import infoVue from "./component/info.vue"; //歌手
 import mvVue from "./component/mv.vue";
 import albumVue from "./component/album.vue"; //专辑
-import { t } from '@/locale/index'
+import { t } from "@/locale/index";
 import { _artist_follow_count, _follow, _artist_detail } from "@/api/user";
 import {
   onMounted,
@@ -28,7 +43,7 @@ import {
   nextTick,
   onBeforeUpdate,
 } from "vue";
-import { useRoute, } from "vue-router";
+import { useRoute } from "vue-router";
 import type { Component } from "vue";
 import type { tabsType } from "./type";
 
@@ -37,7 +52,7 @@ const id = <string>route.params.id;
 
 const Aprons = reactive<{
   id: string;
-  singerInfo?: Object
+  singerInfo?: Object;
 }>({
   id,
   singerInfo: {},
@@ -53,11 +68,20 @@ const activeFun = (id: string | number) => {
   active.value = "" + id;
 };
 
-
 const tabsList: Ref<tabsType[]> = ref([
-  { id: "1", title: t('library.playlists'), Com: markRaw(infoVue), activation: false },
-  { id: "2", title: t('library.albums'), Com: markRaw(albumVue), activation: false },
-  { id: "3", title: t('library.mvs'), Com: markRaw(mvVue), activation: false },
+  {
+    id: "1",
+    title: t("library.playlists"),
+    Com: markRaw(infoVue),
+    activation: false,
+  },
+  {
+    id: "2",
+    title: t("library.albums"),
+    Com: markRaw(albumVue),
+    activation: false,
+  },
+  { id: "3", title: t("library.mvs"), Com: markRaw(mvVue), activation: false },
 ]);
 
 const updateSinger = (v: string) => {
@@ -95,7 +119,6 @@ const itemRef = (ref: Component) => {
 onBeforeUpdate(() => {
   itemRefList.value = [];
 });
-
 </script>
 <style scoped lang="scss">
 .My-space {

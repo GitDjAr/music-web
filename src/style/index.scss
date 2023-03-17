@@ -1,23 +1,13 @@
-.flex {
-  display: flex;
-}
-.fx-c {
-  flex-direction: column;
-}
 .fx-r {
   flex-direction: row;
 }
-.fx-wrap{
+
+.fx-wrap {
   flex-wrap: wrap;
 }
+
 .fx-center {
   justify-content: center;
-  align-items: center;
-}
-.fx-center-j {
-  justify-content: center;
-}
-.fx-center-a {
   align-items: center;
 }
 
@@ -29,28 +19,39 @@
 .bgwhite {
   background: #fff;
 }
+
 .transition {
   transition: cubic-bezier(0.17, 0.67, 0.83, 0.67);
 }
+
 .tcenter {
   text-align: center;
 }
+
 .wh100 {
   height: 100%;
   width: 100%;
 }
-.t-lf{
+
+.t-lf {
   text-align: left;
 }
-.t-rg{
+
+.t-rg {
   text-align: right;
 }
-.t-w{
+
+.t-w {
   // white-space: ;
 }
-.pad-l-10{
-  padding:0 10px;
+
+.pad-l-10 {
+  padding: 0 10px;
 }
-.curp{
-  cursor: pointer;
+
+
+.scroll-none {
+  & ::-webkit-scrollbar {
+    display: none;
+  }
 }

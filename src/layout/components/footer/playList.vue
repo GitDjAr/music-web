@@ -9,16 +9,20 @@
       <p class="pushpinCss">
         <icon-pushpin @click.stop="pushpin" />
       </p>
-      <div v-for="item in playlist" :key="item.id" @click="play(item.id)" :class="`${item.id === playCurrent.id ? 'activeCss' : ''
-        }`" class="group  cursor-pointer p-2">
-        <div class="overflow-ellipsis whitespace-nowrap overflow-hidden">
+      <div v-for="item in playlist" :key="item.id" @click="play(item.id)"
+        :class="`${item.id === playCurrent.id ? 'activeCss' : ''}`" class="group cursor-pointer p-2 ">
+        <div class="overflow-ellipsis whitespace-nowrap w-4/5 overflow-hidden">
           {{ item.name }} - {{ item?.ar[0]?.name }}
         </div>
-        <div class="flex  justify-end px-4">
+        <div class="flex justify-end px-4">
           <div class="flex items-center w-36 justify-between">
             <MyLike :id="item.id" class="" />
             <MyPlay :id="item.id" />
             <p>{{ formatTime(item?.dt) }}</p>
+          </div>
+          <div class="w-6 group-hover:w-10 transition-all">
+            <icon-close @click.stop="() => Store.dispatch('deleteSong', item.id)"
+              class=" scale-110 group-hover:-translate-y-3 -translate-y-14 translate-x-7  group-hover:opacity-100 opacity-0 transition-all " />
           </div>
         </div>
       </div>
@@ -28,21 +32,22 @@
 
 <script lang="ts" setup>
 import { formatTime } from "@/utils/format";
-import { computed, ref, withDefaults } from "vue";
-import store from "@/store";
+import { computed, ref, } from "vue";
+import { useStore } from "vuex";
 
+const Store = useStore()
 
 const emit = defineEmits(["change"]);
 
 const playlist = computed(() => {
-  return store.state.song.playList;
+  return Store.state.song.playList;
 });
 const playCurrent = computed(() => {
-  return store.state.song.curPlaySong;
+  return Store.state.song.curPlaySong;
 });
 
 const play = (id: number) => {
-  store.dispatch("ToggleSong", { id, playListId: store.state.song.playListId });
+  Store.dispatch("ToggleSong", { id, playListId: Store.state.song.playListId });
   emit("change", false);
 };
 const pushpin = () => {
@@ -52,7 +57,7 @@ const pushpin = () => {
     el.scrollTo({
       top:
         (el.scrollHeight / playlist.value.length) *
-        playlist.value.findIndex((e) => e.id === playCurrent.value.id) -
+        playlist.value.findIndex((e: any) => e.id === playCurrent.value.id) -
         el.clientHeight / 2 +
         50,
       behavior: "smooth",
@@ -61,7 +66,6 @@ const pushpin = () => {
 };
 
 const playDom = ref<HTMLDivElement>();
-
 </script>
 <style scoped lang="scss">
 .activeCss {
@@ -102,7 +106,7 @@ const playDom = ref<HTMLDivElement>();
   align-items: center;
 
   &::after {
-    content: '';
+    content: "";
     width: 100%;
     height: 100%;
     position: absolute;
@@ -110,7 +114,7 @@ const playDom = ref<HTMLDivElement>();
   }
 
   &::before {
-    content: '';
+    content: "";
     width: 100%;
     height: 100%;
     position: absolute;
@@ -118,7 +122,6 @@ const playDom = ref<HTMLDivElement>();
     border-radius: 500px;
     z-index: -1;
     filter: blur(5px);
-
   }
 }
 </style>

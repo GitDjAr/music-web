@@ -1,28 +1,28 @@
-import { Notification } from '@arco-design/web-vue'
+import { Notification } from "@arco-design/web-vue";
 /**
  * 节流
  */
 export function throttle(fn: Function, delay: number): Function {
   let timer: any;
-  return function () {
+  return () => {
     if (!timer) {
-      fn.apply(this, arguments)
+      fn.apply(window, arguments);
       timer = setTimeout(() => {
-        clearTimeout(timer)
-        timer = null
-      }, delay)
+        clearTimeout(timer);
+        timer = null;
+      }, delay);
     }
-  }
+  };
 }
 // 定义一个防抖函数
 export function debounce(fn: Function, delay: number): Function {
   let timeout: any;
-  return function () {
-    clearTimeout(timeout)
+  return () => {
+    clearTimeout(timeout);
     timeout = setTimeout(() => {
-      fn.apply(this, arguments)
-    }, delay)
-  }
+      fn.apply(window, arguments);
+    }, delay);
+  };
 }
 
 /**
@@ -32,10 +32,10 @@ export function debounce(fn: Function, delay: number): Function {
  */
 export function copyText(text: string) {
   // 创建一个textarea元素，并将文本内容赋值给它
-  const textarea = document.createElement('textarea');
+  const textarea = document.createElement("textarea");
   textarea.value = text;
-  textarea.style.position = 'fixed';
-  textarea.style.top = '-9999px';
+  textarea.style.position = "fixed";
+  textarea.style.top = "-9999px";
   document.body.appendChild(textarea);
   textarea.focus();
   textarea.select();
@@ -43,10 +43,10 @@ export function copyText(text: string) {
   // 执行复制操作
   let successful = false;
   try {
-    successful = document.execCommand('copy');
-    Notification.success('复制成功')
+    successful = document.execCommand("copy");
+    Notification.success("复制成功");
   } catch (err) {
-    console.error('Unable to copy text: ', err);
+    console.error("Unable to copy text: ", err);
   }
 
   // 移除创建的textarea元素
@@ -56,43 +56,42 @@ export function copyText(text: string) {
   return successful;
 }
 
-
 /**
  * 计算 img 比例
  */
 export function ImgProportion(url: string, seep: number = 2): Promise<string> {
-  const { rendomImgurl = '' } = window
-  const imgObj = new Image()
-  imgObj.src = url
+  const { rendomImgurl = "" }: any = window;
+  const imgObj = new Image();
+  imgObj.src = url;
   return new Promise((resolve, reject) => {
-    imgObj.width
+    imgObj.width;
     imgObj.onerror = function () {
-      resolve(rendomImgurl)
+      resolve(rendomImgurl);
     };
     imgObj.onload = function () {
-      let c = imgObj.width / imgObj.height >= seep ? url : rendomImgurl
-      resolve(c)
-      imgObj.onload = null;//避免重复加载
-    }
-  })
+      let c = imgObj.width / imgObj.height >= seep ? url : rendomImgurl;
+      resolve(c);
+      imgObj.onload = null; //避免重复加载
+    };
+  });
 }
 /**
  * 计算 video 比例
  */
 export function Vproportion(url: string, seep: number = 2): Promise<string> {
-  const imgObj = new Image()
-  imgObj.src = url
+  const imgObj = new Image();
+  imgObj.src = url;
   return new Promise((resolve, reject) => {
-    imgObj.width
+    imgObj.width;
     imgObj.onerror = function () {
-      resolve('rendomImgurl')
+      resolve("rendomImgurl");
     };
     imgObj.onload = function () {
-      let c = imgObj.width / imgObj.height >= seep ? url : 'rendomImgurl'
-      resolve(c)
-      imgObj.onload = null;//避免重复加载
-    }
-  })
+      let c = imgObj.width / imgObj.height >= seep ? url : "rendomImgurl";
+      resolve(c);
+      imgObj.onload = null; //避免重复加载
+    };
+  });
 }
 
 /**
@@ -103,5 +102,5 @@ export function shuffleArray<T>(array: T[]): T[] {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-  return array
+  return array;
 }

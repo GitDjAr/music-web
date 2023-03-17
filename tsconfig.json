@@ -2,19 +2,24 @@
   "compilerOptions": {
     "target": "esnext",
     "useDefineForClassFields": true,
+    "isolatedModules": true,
     "module": "CommonJS",
     "checkJs": true,
     "moduleResolution": "node",
-    "baseUrl": "./",
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/env.d.tsd.tssrc/env.d.tsenv.d.ts"],
+  "include": ["src/**/*.ts",  "./global.d.ts","/*.d.ts","src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/env.d.tsd.tssrc/env.d.tsenv.d.ts"],
   "references": [{
     "path": "./tsconfig.node.json"
   }]

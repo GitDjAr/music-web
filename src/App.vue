@@ -9,15 +9,15 @@
           <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined" />
           </keep-alive>
         </transition>
-                  </router-view>
-                </Suspense> -->
+      </router-view>
+    </Suspense> -->
     <router-view></router-view>
   </div>
   <div v-else class="h-full flex fx-center">
     <transition name="slide-fade">
       <div class="fx-center">
         <Logo />
-        <h1 class="tcenter">新一代 音乐播放器</h1>
+        <h1 class=" text-center">新一代 音乐播放器</h1>
         <a-button type="primary" @click="firstF">Let's Go!</a-button>
       </div>
     </transition>
@@ -35,7 +35,7 @@ const firstF = () => {
 };
 
 store.dispatch('initQueryDate')
-window.$stroe = store
+window.$store = store
 </script>
 
 <style>

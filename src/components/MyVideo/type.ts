@@ -97,6 +97,11 @@ export interface videoAttribute {
   pip: boolean,                 //	 获取或设置播放器的画中画状态。二传手接受布尔值。目前仅在Safari 10+（MacOS Sierra+和iOS 10+上）和Chrome 70+上支持此功能。
   ratio: string,                 //	 获取或设置视频纵横比。二传手接受与选项格式相同的字符串。ratio
   download: string,                 //	 获取或设置下载按钮的 URL。资源库接受包含有效绝对 URL 的字符串。
+  media: {
+    videoWidth: number,
+    videoHeight: number
+  },
+  player: videoInstance
 }
 
 type videoInstance = videoAttribute & VideoMethods

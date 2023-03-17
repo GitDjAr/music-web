@@ -1,5 +1,5 @@
-import request from "../utils/requiers"
-import { mapTrackPlayableStatus } from '@/utils/common';
+import request from "../utils/requiers";
+import { mapTrackPlayableStatus } from "@/utils/common";
 
 /**
  * 搜索
@@ -17,17 +17,17 @@ import { mapTrackPlayableStatus } from '@/utils/common';
  * @param {number=} params.type
  */
 export interface search {
-  keywords: string,
-  limit: number,
-  offset: number,
-  type: number,
+  keywords: string;
+  limit: number;
+  offset: number;
+  type: number;
 }
 export function search(params: search) {
   return request({
-    url: '/search',
-    method: 'get',
+    url: "/search",
+    method: "get",
     params,
-  }).then(data => {
+  }).then((data) => {
     if (data.result?.song !== undefined)
       data.result.song.songs = mapTrackPlayableStatus(data.result.song.songs);
     return data;
@@ -36,18 +36,18 @@ export function search(params: search) {
 
 export function personalFM() {
   return request({
-    url: '/personal_fm',
-    method: 'get',
+    url: "/personal_fm",
+    method: "get",
     params: {
       timestamp: new Date().getTime(),
     },
   });
 }
 
-export function fmTrash(id) {
+export function fmTrash(id: number) {
   return request({
-    url: '/fm_trash',
-    method: 'post',
+    url: "/fm_trash",
+    method: "post",
     params: {
       timestamp: new Date().getTime(),
       id,

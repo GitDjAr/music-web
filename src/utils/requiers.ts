@@ -1,89 +1,89 @@
-import axios from "axios"
-import { Message } from "@arco-design/web-vue"
-import { AxiosRequestConfig, AxiosError } from "axios"
-import Cache from './cache'
-import { h } from 'vue'
-import { IconRecord } from '@arco-design/web-vue/es/icon'
-
+import axios from "axios";
+import { Message } from "@arco-design/web-vue";
+import { AxiosRequestConfig, AxiosError } from "axios";
+import Cache from "./cache";
+import { h } from "vue";
+import { IconRecord } from "@arco-design/web-vue/es/icon";
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
-  show?: boolean
+  show?: boolean;
+  timestamp?: number;
 }
 interface ShowMessageOptions {
-  show?: boolean,
+  show?: boolean;
   res?: {
     msg?: string;
-  }
-  msg: string
-  message: string,
-  code?: number
+  };
+  msg: string;
+  message: string;
+  code?: number;
 }
 
 const config = {
   // 默认配置
   baseURL: "/api",
   timeout: 20000,
-}
-const servers = axios.create(config)
+};
+const servers = axios.create(config);
 servers.interceptors.request.use(
   (cf) => {
-    return cf
+    return cf;
   },
   (err) => {
-    Message.error(`request err: ${err}`)
-    return Promise.reject(err)
+    Message.error(`request err: ${err}`);
+    return Promise.reject(err);
   }
-)
+);
 
 servers.interceptors.response.use(
   async (res) => {
-
-    const { data = null } = res
-    ShowMessage(data)
+    const { data = null } = res;
+    ShowMessage(data);
     // 进行缓存
     if (data.code === 200) {
-      const CacheName = res.config.method?.toLowerCase() === "get"
-        ? res.config.url
-        : JSON.stringify(res.config.data)
-      Cache.set(CacheName, data || res)
+      const CacheName =
+        res.config.method?.toLowerCase() === "get"
+          ? res.config.url
+          : JSON.stringify(res.config.data);
+      Cache.set(CacheName, data || res);
     }
-    return data || res
+    return data || res;
   },
   async (err: AxiosError) => {
     ShowMessage({
-      msg: '发生错误', code: 500,
-      message: err.message
-    })
-    return Promise.reject({ data: {}, err })
+      msg: "发生错误",
+      code: 500,
+      message: err.message,
+    });
+    return Promise.reject({ data: {}, err });
   }
-)
+);
 
 // show Message
 function ShowMessage(data: ShowMessageOptions) {
-  const msg = data.message || data.msg || data?.res?.msg || ''
-  if (!msg) return
+  const msg = data.message || data.msg || data?.res?.msg || "";
+  if (!msg) return;
   if (data.show && data.code === 200) {
-    Message.success(msg)
+    Message.success(msg);
   } else if (data.show) {
-    Message.warning({ icon: () => h(IconRecord), content: msg })
+    Message.warning({ icon: () => h(IconRecord), content: msg });
   }
 }
-
 
 // 其实接口服务 直接支持 post get
 //转换 object => string
-function ObjInStr(data: { [string: string]: string | number }): string {
-  if (!data || JSON.stringify(data) === '{}') return ''
-  let str = "?"
-  for (const key in data) {
-    if (Object.prototype.hasOwnProperty.call(data, key)) {
-      str += `${key}=${data[key]}&`
-    }
-  }
-  return str
-}
+// function ObjInStr(data: { [string: string]: string | number }): string {
+//   if (!data || JSON.stringify(data) === '{}') return ''
+//   let str = "?"
+//   for (const key in data) {
+//     if (Object.prototype.hasOwnProperty.call(data, key)) {
+//       str += `${key}=${data[key]}&`
+//     }
+//   }
+//   return str
+// }
 
-const apprequire = (RqConfig: MyAxiosRequestConfig) => {
+function apprentice<T = any>(RqConfig: MyAxiosRequestConfig): Promise<T> {
   // const { data, method, url } = RqConfig
   // const type = method?.toLowerCase()
   // if (type === "get") {
@@ -102,8 +102,6 @@ const apprequire = (RqConfig: MyAxiosRequestConfig) => {
   //   return Promise.resolve(Cache.get(CacheName))
   // }
   // const cookie = JSON.parse(localStorage.getItem("userInfo") || "{}")?.cookie
-  return servers(RqConfig)
+  return servers(RqConfig) as unknown as Promise<T>;
 }
-export default apprequire
-
-
+export default apprentice;

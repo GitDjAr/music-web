@@ -1,5 +1,3 @@
-import requier from "@/utils/requiers"
-
 // 随机图片 二刺螈
 // 重定向没解决
 // export async function getImg() {

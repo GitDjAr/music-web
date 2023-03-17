@@ -1,7 +1,6 @@
-import store from '@/store';
-import request from "../utils/requiers"
-import { mapTrackPlayableStatus } from '@/utils/common';
-
+// import store from '@/store';
+import request from "../utils/requiers";
+// import { mapTrackPlayableStatus } from '@/utils/common';
 
 /**
  * 新歌速递
@@ -10,8 +9,8 @@ import { mapTrackPlayableStatus } from '@/utils/common';
  */
 export function topSong(type: number | null = null) {
   return request({
-    url: '/top/song',
-    method: 'get',
+    url: "/top/song",
+    method: "get",
     params: {
       type,
     },
@@ -30,16 +29,16 @@ export function topSong(type: number | null = null) {
  * @param {number=} params.time
  */
 export interface toplistOfSong {
-  id: number,
-  sourceid: number,
-  time: number,
-  timestamp?: number,
+  id: number;
+  sourceid: number;
+  time: number;
+  timestamp?: number;
 }
 export function scrobble(params: toplistOfSong) {
   params.timestamp = new Date().getTime();
   return request({
-    url: '/scrobble',
-    method: 'get',
+    url: "/scrobble",
+    method: "get",
     params,
   });
 }

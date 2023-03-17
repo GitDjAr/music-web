@@ -1,20 +1,23 @@
 // Last.fm API documents 👉 https://www.last.fm/api
 
-import axios from 'axios';
-import md5 from 'crypto-js/md5';
+import axios from "axios";
+import md5 from "md5";
 
 const apiKey = process.env.VUE_APP_LASTFM_API_KEY;
 const apiSharedSecret = process.env.VUE_APP_LASTFM_API_SHARED_SECRET;
 const baseUrl = window.location.origin;
-const url = 'https://ws.audioscrobbler.com/2.0/';
+const url = "https://ws.audioscrobbler.com/2.0/";
 
-const sign = params => {
+interface f {
+  [x: string]: any;
+}
+const sign = (params: f) => {
   const sortParamsKeys = Object.keys(params).sort();
-  const sortedParams = sortParamsKeys.reduce((acc, key) => {
+  const sortedParams = sortParamsKeys.reduce((acc: f, key) => {
     acc[key] = params[key];
     return acc;
   }, {});
-  let signature = '';
+  let signature = "";
   for (const [key, value] of Object.entries(sortedParams)) {
     signature += `${key}${value}`;
   }
@@ -28,16 +31,16 @@ export function auth() {
   window.open(url);
 }
 
-export function authGetSession(token) {
+export function authGetSession(token: string) {
   const signature = md5(
     `api_key${apiKey}methodauth.getSessiontoken${token}${apiSharedSecret}`
   ).toString();
   return axios({
     url,
-    method: 'GET',
+    method: "GET",
     params: {
-      method: 'auth.getSession',
-      format: 'json',
+      method: "auth.getSession",
+      format: "json",
       api_key: apiKey,
       api_sig: signature,
       token,
@@ -45,36 +48,44 @@ export function authGetSession(token) {
   });
 }
 
-export function trackUpdateNowPlaying(params) {
+export function trackUpdateNowPlaying(params: {
+  api_key: string | undefined;
+  method: string;
+  sk: any;
+}) {
   params.api_key = apiKey;
-  params.method = 'track.updateNowPlaying';
-  params.sk = JSON.parse(localStorage.getItem('lastfm'))['key'];
+  params.method = "track.updateNowPlaying";
+  params.sk = JSON.parse(localStorage.getItem("lastfm") || "")["key"];
   const signature = sign(params);
 
   return axios({
     url,
-    method: 'POST',
+    method: "POST",
     params: {
       ...params,
       api_sig: signature,
-      format: 'json',
+      format: "json",
     },
   });
 }
 
-export function trackScrobble(params) {
+export function trackScrobble(params: {
+  api_key: string | undefined;
+  method: string;
+  sk: any;
+}) {
   params.api_key = apiKey;
-  params.method = 'track.scrobble';
-  params.sk = JSON.parse(localStorage.getItem('lastfm'))['key'];
+  params.method = "track.scrobble";
+  params.sk = JSON.parse(localStorage.getItem("lastfm") || "")["key"];
   const signature = sign(params);
 
   return axios({
     url,
-    method: 'POST',
+    method: "POST",
     params: {
       ...params,
       api_sig: signature,
-      format: 'json',
+      format: "json",
     },
   });
 }

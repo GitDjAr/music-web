@@ -1,10 +1,17 @@
-import request from "../utils/requiers"
+import request from "../utils/requiers";
+import { often } from "./types/all";
+import type * as T from "./types/playList";
+export type { T };
 
-export interface page {
-  limit?: number,
-  offset?: number
-}
-export type reqPage = Required<page>
+type And<T = any> = {
+  code: number;
+  lasttime?: number;
+  total?: number;
+  more?: boolean;
+} & T;
+
+export type reqPage = Required<often>;
+
 /**
  * 推荐歌单
  * 说明 : 调用此接口 , 可获取推荐歌单
@@ -14,9 +21,9 @@ export type reqPage = Required<page>
  * @param {number=} params.limit
  */
 export function recommendPlaylist(params: any) {
-  return request({
-    url: '/personalized',
-    method: 'get',
+  return request<And<any>>({
+    url: "/personalized",
+    method: "get",
     params,
   });
 }
@@ -27,9 +34,9 @@ export function recommendPlaylist(params: any) {
  * @param {number=} params.limit
  */
 export function dailyRecommendPlaylist(params: any) {
-  return request({
-    url: '/recommend/resource',
-    method: 'get',
+  return request<And<any>>({
+    url: "/recommend/resource",
+    method: "get",
     params: {
       params,
       timestamp: Date.now(),
@@ -42,10 +49,11 @@ export function dailyRecommendPlaylist(params: any) {
 说明 : 调用此接口 , 可获取精品歌单标签列表
 接口地址 : /playlist/highquality/tags
  */
+
 export function highQualityPlaylistTags() {
-  return request({
-    url: '/playlist/highquality/tags',
-    method: 'get',
+  return request<And<{ tags: T.tags[] }>>({
+    url: "/playlist/highquality/tags",
+    method: "get",
   });
 }
 
@@ -61,14 +69,14 @@ export function highQualityPlaylistTags() {
  * @param {number} params.before
  */
 export interface getPlaylistParams {
-  cat: string,
-  limit?: number,
-  before?: number,
+  cat?: string;
+  limit?: number;
+  before?: number;
 }
-export function highQualityPlaylist(params: getPlaylistParams) {
-  return request({
-    url: '/top/playlist/highquality',
-    method: 'get',
+export function highQualityPlaylist(params?: getPlaylistParams) {
+  return request<And<{ playlists: T.MusicPlayList[] }>>({
+    url: "/top/playlist/highquality",
+    method: "get",
     params,
   });
 }
@@ -85,14 +93,38 @@ export function highQualityPlaylist(params: getPlaylistParams) {
  * @param {number=} params.limit
  */
 export interface internetUsersSelectDish {
-  order: string,
-  cat: string,
-  limit: number,
+  order?: string;
+  cat?: string;
+  limit?: number;
 }
 export function topPlaylist(params: internetUsersSelectDish) {
-  return request({
-    url: '/top/playlist',
-    method: 'get',
+  return request<And<{ playlists: T.MusicPlayList[] }>>({
+    url: "/top/playlist",
+    method: "get",
+    params,
+  });
+}
+
+/**
+ * 获取用户歌单
+ * 说明 : 登录后调用此接口 , 传入用户 id, 可以获取用户歌单
+ * - uid : 用户 id
+ * - limit : 返回数量 , 默认为 30
+ * - offset : 偏移数量，用于分页 , 如 :( 页数 -1)*30, 其中 30 为 limit 的值 , 默认为 0
+ * @param {Object} params
+ * @param {number} params.uid
+ * @param {number} params.limit
+ * @param {number=} params.offset
+ */
+export interface userPlaylist {
+  limit?: number;
+  offset?: number;
+  uid: number;
+}
+export function userPlaylist(params: userPlaylist) {
+  return request<And<{ playlists: T.MusicPlayList[] }>>({
+    url: "/user/playlist",
+    method: "get",
     params,
   });
 }
@@ -102,9 +134,9 @@ export function topPlaylist(params: internetUsersSelectDish) {
  * 说明 : 调用此接口,可获取歌单分类,包含 category 信息
  */
 export function playlistCatlist() {
-  return request({
-    url: '/playlist/catlist',
-    method: 'get',
+  return request<And<any>>({
+    url: "/playlist/catlist",
+    method: "get",
   });
 }
 
@@ -113,9 +145,9 @@ export function playlistCatlist() {
  * 说明 : 调用此接口,可获取所有榜单 接口地址 : /toplist
  */
 export function toplists() {
-  return request({
-    url: '/toplist',
-    method: 'get',
+  return request<And<any>>({
+    url: "/toplist",
+    method: "get",
   });
 }
 
@@ -133,9 +165,34 @@ export interface CollectParams {
   id: number;
 }
 export function subscribePlaylist(params: CollectParams) {
-  return request({
-    url: '/playlist/subscribe',
-    method: 'post',
+  return request<And<any>>({
+    url: "/playlist/subscribe",
+    method: "post",
+    params,
+  });
+}
+
+// 获取歌单详情
+// 说明 : 歌单能看到歌单名字, 但看不到具体歌单内容 , 调用此接口 , 传入歌单 id, 可 以获取对应歌单内的所有的音乐(未登录状态只能获取不完整的歌单,登录后是完整的)，但是返回的 trackIds 是完整的，tracks 则是不完整的，可拿全部 trackIds 请求一次 song/detail 接口获取所有歌曲的详情 (https://github.com/Binaryify/NeteaseCloudMusicApi/issues/452)
+// 必选参数 : id : 歌单 id
+// 可选参数 : s : 歌单最近的 s 个收藏者,默认为 8
+export interface _playlist_detail {
+  id: number;
+  s?: number;
+}
+export function _playlist_detail(params: _playlist_detail) {
+  return request<And<{ playlist: T.PlayObj }>>({
+    url: "/playlist/detail",
+    method: "get",
+    params,
+  });
+}
+
+//获取歌单所有歌曲 id limit offset
+export function _playlist_track_all(params: object = {}) {
+  return request<And<{ songs: T.MusicPlayList[] }>>({
+    url: "/playlist/track/all",
+    method: "get",
     params,
   });
 }
@@ -147,9 +204,9 @@ export function subscribePlaylist(params: CollectParams) {
  *  * @param {number} id
  */
 export function deletePlaylist(id: string) {
-  return request({
-    url: '/playlist/delete',
-    method: 'post',
+  return request<And<any>>({
+    url: "/playlist/delete",
+    method: "post",
     params: { id },
   });
 }
@@ -169,13 +226,13 @@ export interface CreateParams {
   name: string;
   privacy?: number;
   type?: string;
-  timestamp?: number
+  timestamp?: number;
 }
 export function createPlaylist(params: CreateParams) {
   params.timestamp = new Date().getTime();
-  return request({
-    url: '/playlist/create',
-    method: 'post',
+  return request<And<any>>({
+    url: "/playlist/create",
+    method: "post",
     params,
   });
 }
@@ -195,9 +252,9 @@ export interface playListEdit {
   tracks: string[];
 }
 export function addOrRemoveTrackFromPlaylist(params: playListEdit) {
-  return request({
-    url: '/playlist/tracks',
-    method: 'post',
+  return request<And<any>>({
+    url: "/playlist/tracks",
+    method: "post",
     params,
   });
 }
@@ -218,9 +275,9 @@ export interface intelligencePlaylistType {
   sid?: number;
 }
 export function intelligencePlaylist(params: intelligencePlaylistType) {
-  return request({
-    url: '/playmode/intelligence/list',
-    method: 'get',
+  return request<And<any>>({
+    url: "/playmode/intelligence/list",
+    method: "get",
     params,
   });
 }
@@ -235,9 +292,9 @@ export interface albumContent {
   id: number;
 }
 export function albumContent(params: albumContent) {
-  return request({
-    url: '/album',
-    method: 'get',
+  return request<And<any>>({
+    url: "/album",
+    method: "get",
     params,
   });
 }
@@ -251,10 +308,10 @@ offset: 偏移数量 , 用于分页 , 如 :( 页数 -1)*25, 其中 25 为 limit 
 接口地址 : /album/sublist
  */
 
-export function albumSublist(params: reqPage) {
-  return request({
-    url: '/album/sublist',
-    method: 'get',
+export function albumSublist(params: often) {
+  return request<And<any>>({
+    url: "/album/sublist",
+    method: "get",
     params,
   });
 }
@@ -268,9 +325,9 @@ t : 1 为收藏,其他为取消收藏
 接口地址 : /album/sub
  */
 export function albumSub(params: Object) {
-  return request({
-    url: '/album/sublist',
-    method: 'get',
+  return request<And<any>>({
+    url: "/album/sublist",
+    method: "get",
     params,
   });
 }

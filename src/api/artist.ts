@@ -1,5 +1,5 @@
-import request from "../utils/requiers"
-import { mapTrackPlayableStatus } from '@/utils/common';
+import request from "../utils/requiers";
+import { mapTrackPlayableStatus } from "@/utils/common";
 
 /**
  * 获取歌手单曲
@@ -8,8 +8,8 @@ import { mapTrackPlayableStatus } from '@/utils/common';
  */
 export function getArtist(id: number) {
   return request({
-    url: '/artists',
-    method: 'get',
+    url: "/artists",
+    method: "get",
     params: {
       id,
       timestamp: new Date().getTime(),
@@ -32,14 +32,14 @@ export function getArtist(id: number) {
  * @param {number=} params.offset
  */
 export interface artistAlbum {
-  id: number,
-  limit: number,
-  offset: number,
+  id: number;
+  limit: number;
+  offset: number;
 }
 export function getArtistAlbum(params: artistAlbum) {
   return request({
-    url: '/artist/album',
-    method: 'get',
+    url: "/artist/album",
+    method: "get",
     params,
   });
 }
@@ -55,13 +55,13 @@ export function getArtistAlbum(params: artistAlbum) {
  * @param {number=} type
  */
 export function toplistOfArtists(type: number | null = null) {
-  let params = {};
+  let params: { type?: number } = {};
   if (type) {
     params.type = type;
   }
   return request({
-    url: '/toplist/artist',
-    method: 'get',
+    url: "/toplist/artist",
+    method: "get",
     params,
   });
 }
@@ -73,14 +73,14 @@ export function toplistOfArtists(type: number | null = null) {
  * @param {number} params.limit
  */
 export interface artistMv {
-  id: number,
-  offset: number,
-  limit: number,
+  id: number;
+  offset: number;
+  limit: number;
 }
 export function artistMv(params: artistMv) {
   return request({
-    url: '/artist/mv',
-    method: 'get',
+    url: "/artist/mv",
+    method: "get",
     params,
   });
 }
@@ -95,13 +95,13 @@ export function artistMv(params: artistMv) {
  * @param {number} params.t
  */
 export interface artistCollect {
-  id: number,
-  t: number,
+  id: number;
+  t: number;
 }
 export function followAArtist(params: artistCollect) {
   return request({
-    url: '/artist/sub',
-    method: 'post',
+    url: "/artist/sub",
+    method: "post",
     params,
   });
 }
@@ -114,8 +114,8 @@ export function followAArtist(params: artistCollect) {
  */
 export function similarArtists(id: number) {
   return request({
-    url: '/simi/artist',
-    method: 'post',
+    url: "/simi/artist",
+    method: "post",
     params: { id },
   });
 }
