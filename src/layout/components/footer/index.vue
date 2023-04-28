@@ -142,6 +142,7 @@ import { nextTick } from "vue";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { RendererElement } from "vue";
 
 const router = useRouter();
 const Store = useStore();
@@ -163,6 +164,7 @@ const typeDrawer = computed(() => placement.value === "top");
 const toggle = (v: number) => {
   placement.value = v === 1 ? "right" : "top";
   visible.value = !visible.value;
+  playPageRef?.value?.SetTickLyrics();
 };
 document.body.addEventListener("click", () => {
   // playList 面板
@@ -182,13 +184,14 @@ const map = {
   loop: "循环播放",
   one: "单曲循环",
 };
-const mode = computed(() => map[Store.state.song.playbackMode]);
+let key = Store.state.song.playbackMode as unknown as string;
+const mode = computed(() => map[key]);
 
-const playPageRef = ref("");
+const playPageRef = ref<RendererElement>();
 const drag = (e: MouseEvent, id: string) => {
   const { clientX, target } = e || window.event || event;
-  const { left } = target?.getBoundingClientRect();
-  const width = target?.offsetWidth;
+  const { left } = (target as HTMLDivElement)?.getBoundingClientRect();
+  const width = (target as HTMLDivElement)?.offsetWidth;
   const move = clientX - left;
   let wff: number = +((move / width) * 100).toFixed(2);
   // 拖动
@@ -210,10 +213,9 @@ const drag = (e: MouseEvent, id: string) => {
   document.onmouseup = () => {
     if (id === "progress") {
       let seek = (wff / 100) * curPlaySong.value.duration;
+
       Player.value.SetSeeks(seek / 1000);
-      nextTick(() => {
-        playPageRef.value && playPageRef.value.SetTickLyrics();
-      });
+      playPageRef?.value?.SetTickLyrics();
     } else if (id === "volume") {
       Player.value?._setvolume(wff / 100);
     }
@@ -223,7 +225,6 @@ const drag = (e: MouseEvent, id: string) => {
   };
 };
 </script>
-<style scoped lang="scss"></style>
 <style scoped lang="scss">
 .padding10 {
   padding: 0 10%;

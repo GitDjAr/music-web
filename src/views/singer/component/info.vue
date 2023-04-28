@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="flex justify-between">
-    <div class="">
+    <div class="w-1/4">
       <h2>{{ "最新专辑" }}</h2>
       <div class="flex items-center">
         <Image
@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div class="w-1/3">
+    <div class="flex-1 max-w-1/2 px-20 overflow-hidden">
       <h2>{{ "最多播放" }}</h2>
       <ul class="p-2 rounded-md bg-white">
         <template v-for="(item, index) in artistsSing">
@@ -49,7 +49,7 @@
         </template>
       </ul>
     </div>
-    <div>
+    <div class="w-1/4">
       <h2>{{ "相关艺人" }}</h2>
       <ul>
         <li
@@ -93,7 +93,7 @@ const Emit = defineEmits<{
   (e: "updateId", v: string): void;
 }>();
 
-function Musicianly(item) {
+function Musicianly(item: { id: number }) {
   Store.dispatch("ToggleSong", {
     id: item.id,
     playListId: user.value + "-最多播放",
@@ -119,7 +119,7 @@ async function get_simi_playlist(id: IdType) {
   simiplaylist.value = playlists;
 }
 // 部分信息和热门歌曲
-const artistsSing = ref([]);
+const artistsSing = ref<RT<_artists>>();
 const user = ref("");
 async function get_artists(id: IdType) {
   const {

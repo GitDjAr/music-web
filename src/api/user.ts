@@ -1,6 +1,7 @@
 import request from "../utils/requiers";
 
 import type { RootUser } from "./types/user";
+import type * as T from "./types/playList";
 import * as userT from "./types/user";
 export { userT };
 import { often } from "./types/all";
@@ -241,8 +242,13 @@ export function _simi_playlist(params: idType) {
 }
 
 // 说明 : 调用此接口 , 传入歌手 id, 可获得歌手部分信息和热门歌曲
+export interface artists {
+  artist: userT.artistsType;
+  hotSongs: T.MusicPlayList[];
+}
+export type _artists = (params: idType) => Promise<artists>;
 export function _artists(params: idType) {
-  return request({
+  return request<artists>({
     url: "/artists",
     method: "get",
     params,

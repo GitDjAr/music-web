@@ -25,13 +25,12 @@ export interface CurSongInfo {
   user: string;
   userId: number;
 }
-
-// enum mode {
-//   random = 'random',
-//   order = 'order',
-//   loop = 'loop',
-//   one = 'one',
-// }
+export enum PlaybackMode {
+  Random = "random",
+  Order = "order",
+  Loop = "loop",
+  One = "one",
+}
 
 export interface paramType {
   id: number;

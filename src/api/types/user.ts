@@ -108,3 +108,25 @@ export interface RightsInfoDetailDtoList {
   signIapDeduct: boolean;
   sign: boolean;
 }
+
+// 歌手信息
+export interface artistsType {
+  img1v1Id: number;
+  topicPerson: number;
+  alias: any[];
+  picId: number;
+  briefDesc: string;
+  musicSize: number;
+  albumSize: number;
+  picUrl: string;
+  img1v1Url: string;
+  followed: boolean;
+  trans: string;
+  name: string;
+  id: number;
+  publishTime: number;
+  accountId: number;
+  picId_str: string;
+  img1v1Id_str: string;
+  mvSize: number;
+}

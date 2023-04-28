@@ -27,6 +27,8 @@
     ]
   },
   "dependencies": {
+    "@sentry/tracing": "^7.45.0",
+    "@sentry/vue": "^7.45.0",
     "@vueuse/components": "^9.6.0",
     "@vueuse/core": "^7.7.0",
     "autoprefixer": "10.0.2",

@@ -11,7 +11,11 @@ declare interface Window {
   $store: any;
 }
 
-declare type RT<T extends () => any> = ReturnType<T>;
+declare type RT<T extends () => any> = T extends Promise<infer U>
+  ? U
+  : T extends (arg: any) => infer R
+  ? R
+  : never;
 
 declare module "howler";
 declare module "vite";

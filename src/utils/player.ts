@@ -160,7 +160,7 @@ class Player implements PlayerInstance {
   _playAudioSource(source: string, autoplay = false, seek?: string | null) {
     this._currentTrack = Store.state?.song?.curPlaySong;
     try {
-      Howler.unload();
+      Howler && Howler.unload();
       this._howler = new Howl({
         src: [source],
         html5: true,
@@ -196,7 +196,6 @@ class Player implements PlayerInstance {
     Store.dispatch("prevSong");
   }
   SetSeeks(val?: number) {
-    // debugger
     if (val) {
       this._howler.seek(val);
       this._progress = val;
