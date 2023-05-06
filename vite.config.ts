@@ -1,54 +1,53 @@
-import { PluginOption, defineConfig } from "vite"
-import vue from "@vitejs/plugin-vue"
-import * as path from "path"
+import { PluginOption, defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import * as path from "path";
 //pwa
-import { VitePWA } from 'vite-plugin-pwa';
-import { GenerateSW } from 'workbox-webpack-plugin'
+import { VitePWA } from "vite-plugin-pwa";
+import { GenerateSW } from "workbox-webpack-plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  base: "/",
 
   plugins: [
     vue({
-      reactivityTransform: false,// 开启reactivityTransform $ref
+      reactivityTransform: false, // 开启reactivityTransform $ref
       template: {
         compilerOptions: {
           isCustomElement: (tag) => {
-            return tag.startsWith('ion-') // (return true)
-          }
-        }
-      }
+            return tag.startsWith("ion-"); // (return true)
+          },
+        },
+      },
     }),
     VitePWA({
       manifest: {
-        name: 'Example App',
-        short_name: 'Example PWA',
-        theme_color: '#ffffff',
+        name: "Example App",
+        short_name: "Example PWA",
+        theme_color: "#ffffff",
         icons: [
           {
-            src: '/logo.png',
-            sizes: '192x192',
-            type: 'image/png',
+            src: "/logo.png",
+            sizes: "192x192",
+            type: "image/png",
           },
           {
-            src: '/logo.png',
-            sizes: '512x512',
-            type: 'image/png',
+            src: "/logo.png",
+            sizes: "512x512",
+            type: "image/png",
           },
         ],
       },
     }),
     {
-      name: 'workbox',
-      apply: 'build',
+      name: "workbox",
+      apply: "build",
       plugins: [
         new GenerateSW({
-          swDest: "public/sw.js"
-        })
-      ]
+          swDest: "public/sw.js",
+        }),
+      ],
     } as PluginOption,
-
   ],
 
   define: {
@@ -67,27 +66,29 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api\//, ""),
       },
       "/img/": {
-        target: 'https://img.2eka.cloud/',
+        target: "https://img.2eka.cloud/",
         // target: 'https://img.2eka.cloud/api/random?type=pc',
         // target: 'https://api.ixiaowai.cn',
         // // target: 'https://api.ixiaowai.cn/api/api.php',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/img\//, ""),
       },
-      "/apiG/": {//gitee
+      "/apiG/": {
+        //gitee
         target: "http://xn--lg3a.top:83",
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/apiG\//, ""),
       },
-      "/apiG2/": {//gtpso.com
+      "/apiG2/": {
+        //gtpso.com
         target: "http://xn--lg3a.top:84",
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/apiG2\//, ""),
-      }
+      },
     },
-    cors: true
+    cors: true,
   },
   css: {
     preprocessorOptions: {
@@ -99,27 +100,29 @@ export default defineConfig({
     },
   },
   resolve: {
-    extensions: ['.ts', '.js', '.jsx', '.tsx', '.json'],
+    extensions: [".ts", ".js", ".jsx", ".tsx", ".json"],
     alias: {
-      'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
+      "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js",
       "@": path.resolve(__dirname, "src"),
       // "@components": path.resolve(__dirname, "src/components/"),
     },
   },
   build: {
     sourcemap: true,
-    assetsDir: 'assets',
-    outDir: 'dist',
-    target: 'es2015',
+    assetsDir: "assets",
+    outDir: "dist",
+    target: "es2015",
     rollupOptions: {
-      input: 'src/main.ts',
+      input: {
+        main: path.resolve(__dirname, "index.html"),
+      },
       output: {
         // ensure the final bundle is a self-executing function
-        format: 'es',
-        entryFileNames: 'assets/[name].[hash].js',
-        chunkFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]',
+        format: "es",
+        entryFileNames: "assets/[name].[hash].js",
+        chunkFileNames: "assets/[name].[hash].js",
+        assetFileNames: "assets/[name].[hash].[ext]",
       },
     },
-  }
-})
+  },
+});
