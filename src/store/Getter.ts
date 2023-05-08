@@ -1,6 +1,6 @@
 const Getter = {
   loginStatus: (store: any): boolean => {
-    return JSON.stringify(store.app.userInfo) !== "{}";
+    return !!store.app.cookie;
   },
   userInfo: (store: any): object => {
     return {

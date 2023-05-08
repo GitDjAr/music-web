@@ -1,32 +1,27 @@
 <!--  -->
 <template>
   <div class="home-left">
-    <template>
-      <h2 class="t-lf pad-l-10">{{ $t("home.recommendMv") }}</h2>
-      <a-carousel
-        class="carousel"
-        :auto-play="true"
-        animation-name="fade"
-        show-arrow="never"
-        indicator-type="slider"
-      >
-        <a-carousel-item
-          v-for="(item, index) in state.personalized"
-          :key="index"
-        >
-          <Image
-            :src="item.picUrl"
-            :wh="[1000, 600]"
-            :alt="item.copywriter"
-            @click="GoPlay(item)"
-            class="w-full h-full object-cover"
-          />
-        </a-carousel-item>
-      </a-carousel>
-      <MyVideo :id="videoId" v-model:show="VideoShow"></MyVideo>
-    </template>
+    <h2 class="t-lf pad-l-10">{{ $t("home.recommendMv") }}</h2>
+    <a-carousel
+      class="carousel"
+      :auto-play="true"
+      animation-name="fade"
+      show-arrow="never"
+      indicator-type="slider"
+    >
+      <a-carousel-item v-for="(item, index) in state.personalized" :key="index">
+        <Image
+          :src="item.picUrl"
+          :wh="[1000, 600]"
+          :alt="item.copywriter"
+          @click="GoPlay(item)"
+          class="w-full h-full object-cover"
+        />
+      </a-carousel-item>
+    </a-carousel>
+    <MyVideo :id="videoId" v-model:show="VideoShow"></MyVideo>
 
-    <template v-if="Store.getters.loginStatus">
+    <template v-if="!Store.getters.loginStatus">
       <h1 class="text-xl text-left">{{ $t("home.recommendPlaylist") }}</h1>
       <div class="Nouvea">
         <div
@@ -60,7 +55,9 @@
 import { reactive, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { personalizedMV, resource } from "@/api/Home";
+import { useStore } from "vuex";
 
+const Store = useStore();
 const router = useRouter();
 const state = reactive({
   personalized: [{ picUrl: "", id: 0, copywriter: "" }],

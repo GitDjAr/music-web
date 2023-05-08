@@ -1,35 +1,52 @@
 <!--  -->
 <template>
-  <div class="home-right flex  items-center  flex-col">
-   <template v-if="Store.getters.loginStatus">
-    <h2>{{ $t("home.dayList") }}</h2>
-    <ul class="right-ul w-11/12">
-      <template v-for="(item, index) in state.darinPush">
-        <li class="ul-li  text-left flex items-center" :alt="item.reason" :key="index" v-if="index < 6"
-          @click="palySong(item)">
-          <img class="li-img" :src="`${item.al.picUrl}?param=100y100`" />
-          <section class="w-full overflow-hidden">
-            <span class="songName truncate">{{ item.name }}</span>
-            <span @click.stop="CheckSinger(item.ar[0].id)" class="songAr truncate">{{ item.ar[0].name }}</span>
-          </section>
-          <MyPlay :id="item.id" class="iconplay" />
-          <MyLike :id="item.id" class="iconplay" />
-        </li>
-      </template>
-      <!-- <li class="cursor-pointer" @click.stop="() => { router.push({ path: '/Music/playlist', params: { id: state.playlistId } }) }"> 查看更多 > </li> -->
-    </ul>
-  </template>
+  <div class="home-right flex items-center flex-col">
+    <template v-if="!Store.getters.loginStatus">
+      <h2>{{ $t("home.dayList") }}</h2>
+      <ul class="right-ul w-11/12">
+        <template v-for="(item, index) in state.darinPush">
+          <li
+            class="ul-li text-left flex items-center"
+            :alt="item.reason"
+            :key="index"
+            v-if="index < 6"
+            @click="palySong(item)"
+          >
+            <img class="li-img" :src="`${item.al.picUrl}?param=100y100`" />
+            <section class="w-full overflow-hidden">
+              <span class="songName truncate">{{ item.name }}</span>
+              <span
+                @click.stop="CheckSinger(item.ar[0].id)"
+                class="songAr truncate"
+                >{{ item.ar[0].name }}</span
+              >
+            </section>
+            <MyPlay :id="item.id" class="iconplay" />
+            <MyLike :id="item.id" class="iconplay" />
+          </li>
+        </template>
+        <!-- <li class="cursor-pointer" @click.stop="() => { router.push({ path: '/Music/playlist', params: { id: state.playlistId } }) }"> 查看更多 > </li> -->
+      </ul>
+    </template>
     <div class="mt-2 mx-4">
       <h2>{{ $t("home.recommendArtist") }}</h2>
       <div class="singer items-center justify-center">
-        <div class="singer-list mx-1.5 truncate" :alt="item.reason" :key="index"
-          v-for="(item, index) in state.artistsList" @click="CheckSinger(item.id)">
-          <img class="rounded-full cursor-pointer" :src="`${item.img1v1Url}?param=100y100`" />
+        <div
+          class="singer-list mx-1.5 truncate"
+          :alt="item.reason"
+          :key="index"
+          v-for="(item, index) in state.artistsList"
+          @click="CheckSinger(item.id)"
+        >
+          <img
+            class="rounded-full cursor-pointer"
+            :src="`${item.img1v1Url}?param=100y100`"
+          />
           <p class="singer-name my-1 w-full">{{ item.name }}</p>
         </div>
       </div>
     </div>
-  <!-- <div class="newAlbum">
+    <!-- <div class="newAlbum">
       <h2>{{ $t("home.newAlbum") }}</h2>
       <div class="newAlbum-list" v-for="item in 10"></div>
       </div> -->
@@ -54,6 +71,7 @@ const state = reactive({
   darinPush: [
     {
       name: "",
+      id: "",
       ar: [
         {
           name: "",
@@ -79,7 +97,7 @@ async function getDayinPush() {
   } = await songs({});
   state.darinPush = dailySongs;
 }
-const palySong = async (item: Object) => {
+const palySong = async (item: any) => {
   Store.dispatch("ToggleSong", {
     id: item.id,
     playListId: "推荐",

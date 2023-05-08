@@ -66,7 +66,7 @@ export default defineConfig({
     host: "0.0.0.0",
     proxy: {
       "/api/": {
-        target: "http://localhost:3000",
+        target: "http://124.222.62.70:3000",
         // target: "https://music.qier222.com/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\//, ""),

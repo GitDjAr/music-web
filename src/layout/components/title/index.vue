@@ -1,8 +1,13 @@
 <!--  -->
 <template>
   <ul class="title-nav-ul flex fx-center">
-    <li class="title-nav" v-for="(item, index) in titleList" :key="index" :style="{ background: item.c }"
-      @click="item.on"></li>
+    <li
+      class="title-nav"
+      v-for="(item, index) in titleList"
+      :key="index"
+      :style="{ background: item.c }"
+      @click="item.on"
+    ></li>
   </ul>
   <div class="flex">
     <searchVue />
@@ -11,7 +16,12 @@
         $t("login.login")
       }}</a-button>
       <a-popover v-else trigger="click">
-        <Image :src="userInfo.title" style="width: 40px ;height: 40px;" class=" rounded-md" :wh="[80, 80]"></Image>
+        <Image
+          :src="userInfo.title"
+          style="width: 40px; height: 40px"
+          class="rounded-md"
+          :wh="[80, 80]"
+        ></Image>
         <template #content>
           <p @click="Putin">{{ $t("login.outing") }}</p>
         </template>
@@ -31,14 +41,13 @@ const store = useStore();
 let userInfo = computed(() => store.getters.userInfo);
 let loginStatus = computed(() => store.getters.loginStatus);
 
-
 const state = reactive({
   visible: false,
 });
 const titleList = ref([
-  { c: "#CDD8FC", on: () => { } },
-  { c: "#DED5FC", on: () => { } },
-  { c: "#E3E9FC", on: () => { } },
+  { c: "#CDD8FC", on: () => {} },
+  { c: "#DED5FC", on: () => {} },
+  { c: "#E3E9FC", on: () => {} },
 ]);
 
 const loginPage = () => {
