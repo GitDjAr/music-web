@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "deploy": "vite build && 7z a dist/music.zip ./dist/** && curl http://www.xn--lg3a.top:82/update/file -F file=@dist/music.zip -F path=/html/music",
+    "deploy": "vite build && 7z a dist/music.zip ./dist/** && curl http://124.222.62.70:82/update/file -F file=@dist/music.zip -F path=/myServer/music-web/",
     "deploy:js": "vite build && config/deploy.js",
-    "T-dep": "curl http://www.xn--lg3a.top:82/update/file -F file=@dist/music.zip -F path=/html/music",
+    "T-dep": "curl http://124.222.62.70:82/update/file -F file=@dist/music.zip -F path=/html/music",
     "build": "vue-tsc --noEmit && vite build ",
     "b": "vite build",
     "preview": "vite preview",
