@@ -21,7 +21,7 @@
     </a-carousel>
     <MyVideo :id="videoId" v-model:show="VideoShow"></MyVideo>
 
-    <template v-if="!Store.getters.loginStatus">
+    <template v-if="Store.getters.loginStatus">
       <h1 class="text-xl text-left">{{ $t("home.recommendPlaylist") }}</h1>
       <div class="Nouvea">
         <div

@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="home-right flex items-center flex-col">
-    <template v-if="!Store.getters.loginStatus">
+    <template v-if="Store.getters.loginStatus">
       <h2>{{ $t("home.dayList") }}</h2>
       <ul class="right-ul w-11/12">
         <template v-for="(item, index) in state.darinPush">

@@ -84,10 +84,11 @@ const actions = {
     getters,
     state,
   }: ActionContext<AppType, RootState>) {
-    if (!getters.loginStatus) return;
-    const { cookie } = await _login_refresh();
-    state.cookie = cookie;
-    state.loginTime = new Date().getTime();
+    if (state.userInfo?.account?.id) {
+      const { cookie } = await _login_refresh();
+      state.cookie = cookie;
+      state.loginTime = new Date().getTime();
+    }
   },
 
   // 初始化
