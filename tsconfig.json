@@ -3,7 +3,7 @@
     "target": "esnext",
     "useDefineForClassFields": true,
     "isolatedModules": true,
-    "module": "CommonJS",
+    "module": "es2020",
     "checkJs": true,
     "moduleResolution": "node",
     "strict": true,

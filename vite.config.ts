@@ -4,6 +4,8 @@ import * as path from "path";
 //pwa
 import { VitePWA } from "vite-plugin-pwa";
 import { GenerateSW } from "workbox-webpack-plugin";
+//zip
+import zip from "vite-plugin-zip";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -48,6 +50,9 @@ export default defineConfig({
         }),
       ],
     } as PluginOption,
+    zip({
+      outputName: "music",
+    }),
   ],
 
   define: {
@@ -58,7 +63,7 @@ export default defineConfig({
   },
   server: {
     port: 4000,
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     proxy: {
       "/api/": {
         target: "http://localhost:3000",
@@ -109,7 +114,8 @@ export default defineConfig({
     },
   },
   build: {
-    sourcemap: true,
+    minify: true, //代码压缩功能
+    sourcemap: true, //源代码映射
     assetsDir: "assets",
     outDir: "dist",
     target: "es2015",

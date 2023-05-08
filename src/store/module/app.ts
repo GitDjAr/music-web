@@ -74,8 +74,9 @@ const actions = {
     info: userInfo_T
   ) {
     commit("userLogin", info);
+    dispatch("UserRefresh");
     dispatch("getUserPlaylist", info.account.id);
-    dispatch("initQueryDate");
+    dispatch("initQueryDataa");
   },
   // 刷新登录
   async UserRefresh({
@@ -90,7 +91,7 @@ const actions = {
   },
 
   // 初始化
-  async initQueryDate(
+  async initQueryDataa(
     {
       rootState,
       state,

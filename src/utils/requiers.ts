@@ -21,7 +21,7 @@ interface ShowMessageOptions {
 
 const config = {
   // 默认配置
-  baseURL: "/api",
+  baseURL: import.meta.env.VITE_APP_api,
   timeout: 20000,
 };
 const servers = axios.create(config);

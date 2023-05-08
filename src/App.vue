@@ -1,8 +1,6 @@
-
-
 <template>
   <div v-if="first" :msg="user" @contextmenu.prevent>
-  <!-- <Suspense>
+    <!-- <Suspense>
       <router-view v-slot="{ Component, route }">
         <transition :name="route.meta.transition || 'fade'" mode="out-in">
           <keep-alive>
@@ -17,7 +15,7 @@
     <transition name="slide-fade">
       <div class="fx-center">
         <Logo />
-        <h1 class=" text-center">新一代 音乐播放器</h1>
+        <h1 class="text-center">新一代 音乐播放器</h1>
         <a-button type="primary" @click="firstF">Let's Go!</a-button>
       </div>
     </transition>
@@ -34,8 +32,8 @@ const firstF = () => {
   first.value = "true";
 };
 
-store.dispatch('initQueryDate')
-window.$store = store
+store.dispatch("initQueryDataa");
+window.$store = store;
 </script>
 
 <style>

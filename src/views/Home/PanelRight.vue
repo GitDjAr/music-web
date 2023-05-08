@@ -1,6 +1,7 @@
 <!--  -->
 <template>
   <div class="home-right flex  items-center  flex-col">
+   <template v-if="Store.getters.loginStatus">
     <h2>{{ $t("home.dayList") }}</h2>
     <ul class="right-ul w-11/12">
       <template v-for="(item, index) in state.darinPush">
@@ -17,6 +18,7 @@
       </template>
       <!-- <li class="cursor-pointer" @click.stop="() => { router.push({ path: '/Music/playlist', params: { id: state.playlistId } }) }"> 查看更多 > </li> -->
     </ul>
+  </template>
     <div class="mt-2 mx-4">
       <h2>{{ $t("home.recommendArtist") }}</h2>
       <div class="singer items-center justify-center">
