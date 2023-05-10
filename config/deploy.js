@@ -9,8 +9,8 @@
  * docker container run \
   --rm \
   --name mynginx \
-  --volume "/myServe/music-web/music":/usr/share/nginx/html \
-  --volume "/myServe/nginx":/etc/nginx \
+  --volume "/myServer/music-web/music":/usr/share/nginx/html \
+  --volume "/myServer/nginx/conf":/etc/nginx \
   -p 0.0.0.0:9527:80 \
   -d \
   nginx
