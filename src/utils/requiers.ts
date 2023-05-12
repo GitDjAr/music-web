@@ -29,6 +29,7 @@ servers.interceptors.request.use(
   (cf) => {
     console.log("request cf: ", cf);
     cf.headers["token"] = localStorage.getItem("token") || "";
+    cf.headers["cookie"] = localStorage.getItem("token") || "";
 
     return cf;
   },
