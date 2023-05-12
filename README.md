@@ -10,31 +10,26 @@
 
 Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
 
-## 项目说明:
+## 目录结构说明:
 
-目录解释
--husky: 校验 commit 提交钩子
--commitlint.config:校验 commit 提交钩子
--config:打包钩子
--.git/hooks/post-commit: Git 推送成功后执行钩子脚本
--.github
---workflows
----main.yml:打包钩子,服务器拉跨,目前没用
-
--electron:桌面文件
--service:pwd 渐进式-缓存
--src
--- api:api
--- assets:静态目录
--- components:全局组件
--- directives:自定义指令
--- hooks:一些函数钩子
--- layout:主题-样式
--- locale:语言国际化
--- router:路由
--- utils:工具函数
--- views:页面文件
-
--.editorconfig:缩进风格配置
--.eslintrc.js:编码风格
--.stylelintrc:css 风格
+* husky/: 校验 commit 提交钩子
+* commitlint.config: 校验 commit 提交钩子
+* config/: 打包钩子
+* .git/hooks/post-commit: Git 推送成功后执行的钩子脚本（如果钩子没有触发，可能是因为钩子文件没有执行权限，请确保钩子文件具有执行权限。你可以使用 chmod +x post-commit 命令来添加执行权限。）
+* .github/workflows/main.yml: 打包钩子，服务器拉跨，目前未使用
+* electron/: 桌面应用文件
+* service/: 渐进式缓存
+* src/
+* api/: API
+* assets/: 静态资源目录
+* components/: 全局组件
+* directives/: 自定义指令
+* hooks/: 一些函数钩子
+* layout/: 主题和样式
+* locale/: 语言国际化
+* router/: 路由
+* utils/: 工具函数
+* views/: 页面文件
+* .editorconfig: 缩进风格配置
+* .eslintrc.js: 编码风格
+* .stylelintrc: CSS 风格
