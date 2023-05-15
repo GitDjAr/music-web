@@ -11,9 +11,9 @@
     </Suspense> -->
     <router-view></router-view>
   </div>
-  <div v-else class="h-full flex fx-center">
+  <div v-else class="h-full flex justify-center items-center">
     <transition name="slide-fade">
-      <div class="fx-center">
+      <div class="justify-center items-center">
         <Logo />
         <h1 class="text-center">新一代 音乐播放器</h1>
         <a-button type="primary" @click="firstF">Let's Go!</a-button>

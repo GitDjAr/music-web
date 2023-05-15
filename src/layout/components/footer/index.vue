@@ -226,9 +226,7 @@ const drag = (e: MouseEvent, id: string) => {
 };
 </script>
 <style scoped lang="scss">
-.padding10 {
-  padding: 0 10%;
-}
+
 
 .myclass {
   grid-template-columns: 2fr 7fr 1fr;

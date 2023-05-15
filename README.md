@@ -13,9 +13,9 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 ## 目录结构说明:
 
 * husky/: 校验 commit 提交钩子
+** post-commit: 加入自定义Git 推送成功后执行的钩子脚本（如果钩子没有触发，可能是因为钩子文件没有执行权限,执行`npm run postinstall `）
 * commitlint.config: 校验 commit 提交钩子
 * config/: 打包钩子
-* .git/hooks/post-commit: Git 推送成功后执行的钩子脚本（如果钩子没有触发，可能是因为钩子文件没有执行权限，请确保钩子文件具有执行权限。你可以使用 chmod +x post-commit 命令来添加执行权限。）
 * .github/workflows/main.yml: 打包钩子，服务器拉跨，目前未使用
 * electron/: 桌面应用文件
 * service/: 渐进式缓存

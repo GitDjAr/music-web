@@ -104,3 +104,26 @@ export function shuffleArray<T>(array: T[]): T[] {
   }
   return array;
 }
+
+/**
+ * 检查给定 HTTP URL 的可访问性的函数。
+ *
+ * @param {string} url -检查可访问性的 URL。
+ */
+export function checkHTTP(url: string): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    var http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.onreadystatechange = function () {
+      if (http.readyState == 4) {
+        if (http.status == 200) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }
+    };
+    http.send(null);
+  })
+
+}

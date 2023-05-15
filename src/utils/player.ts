@@ -6,7 +6,7 @@ import type { CurSongInfo } from "@/store/module/song";
 // const Store = useStore()
 
 function setTitle(track: Partial<CurSongInfo>) {
-  document.title = track
+  document.title = track.songName
     ? `${track.songName} · ${track.user} - Music-PlaySound`
     : "Music-PlaySound";
 }

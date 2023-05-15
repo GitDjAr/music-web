@@ -9,7 +9,7 @@ import type { RootState } from "../index";
 
 export interface AppType {
   userInfo: userInfo_T;
-  locale: string;
+  locale?: string;
   tagColor: [
     "red",
     "orangered",
@@ -24,8 +24,8 @@ export interface AppType {
     "pinkpurple",
     "magenta"
   ];
-  cookie: string;
-  loginTime: number;
+  cookie?: string;
+  loginTime?: number;
 }
 const tagColor = [
   "red",
@@ -63,10 +63,14 @@ const actions = {
   },
   // user退出
   async UserOuting(
-    { commit }: ActionContext<AppType, RootState>,
+    { commit,dispatch,state,rootState }: ActionContext<AppType, RootState>,
     status: boolean = false
   ) {
+    state.loginTime = 0
+    state.cookie = ''
+    rootState.song.myLikeList = []
     commit("userLogin", {});
+
   },
   // 登录
   async UserLogin(
@@ -75,7 +79,7 @@ const actions = {
   ) {
     commit("userLogin", info);
     dispatch("UserRefresh");
-    dispatch("getUserPlaylist", info.account.id);
+    dispatch("song/getUserPlaylist", info.account.id);
     dispatch("initQueryDataa");
   },
   // 刷新登录

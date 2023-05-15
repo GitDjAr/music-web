@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="home-left">
-    <h2 class="t-lf pad-l-10">{{ $t("home.recommendMv") }}</h2>
+    <h2 class="text-left px-3">{{ $t("home.recommendMv") }}</h2>
     <a-carousel
       class="carousel"
       :auto-play="true"
@@ -25,7 +25,7 @@
       <h1 class="text-xl text-left">{{ $t("home.recommendPlaylist") }}</h1>
       <div class="Nouvea">
         <div
-          class="NouList"
+          class="NouList mb-2"
           :key="index"
           v-for="(item, index) in state.recommendPlaylist"
         >
@@ -43,7 +43,9 @@
               <MyPlay :id="item.id" />
             </p>
           </div>
-          <p class="mb-2">{{ item.name }}</p>
+          <p class="line-clamp-3 leading-tight text-base">
+            {{ item.name }}
+          </p>
           <!-- <a-tag :color="resourceColor(item.id)" size="mini">{{item.creator.expertTags}}</a-tag> -->
         </div>
       </div>
@@ -126,7 +128,7 @@ onMounted(() => {
       width: 85%;
 
       p {
-        padding: 5px 0;
+        margin: 5px 0;
         text-align: left;
       }
     }

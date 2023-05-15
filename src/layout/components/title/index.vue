@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <ul class="title-nav-ul flex fx-center">
+  <ul class="title-nav-ul flex justify-center items-center">
     <li
       class="title-nav"
       v-for="(item, index) in titleList"

@@ -2,7 +2,8 @@
 <template>
   <div class="overflow-hidden">
     <img ref="refImg" :class="`w-full h-full  ${objectify}`" :alt="P.alt" loading='lazy' decoding='async' />
-    <slot></slot>
+    <slot>
+    </slot>
   </div>
 </template>
 

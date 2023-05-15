@@ -22,7 +22,7 @@
     </div>
   </ModalVue>
   <div class="flex flex-col relative h-80 box-border overflow-hidden" v-bind="$attrs">
-    <Image class="object-cover absolute  h-1/2 right-0 top-0  z-10 " :src="singerInfo?.user.avatarUrl" :wh="[500, 500]" />
+    <Image class="object-cover absolute  h-1/2 right-0 top-0  z-10 " :src="singerInfo?.user?.avatarUrl" :wh="[500, 500]" />
     <div class="myimg text-lg text-left flex h-full justify-around text-white mix-blend-normal p-10 ">
       <div class="mytitleBox relative  flex-1 overflow-hidden ">
         <h1 class="select-none relative">

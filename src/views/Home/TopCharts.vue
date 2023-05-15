@@ -2,19 +2,31 @@
 <template>
   <div class="w-full">
     <div class="px-2 mb-4" :key="index" v-for="(item, index) in state.TopList">
-      <a-divider :orientation="(orientation[index] as OrientationType)" :margin="20">
+      <a-divider
+        :orientation="(orientation[index] as OrientationType)"
+        :margin="20"
+      >
         {{ item.name }}
       </a-divider>
       <template v-if="item.tracks.length > 0">
         <div class="flex px-2">
-          <Image :wh="[130, 130]" class="mr-2 w-28 cursor-pointer" :src="item.coverImgUrl" @click="
-            () => router.push({ name: 'playlist', params: { id: item.id } })
-          " />
+          <Image
+            :wh="[130, 130]"
+            class="mr-2 w-28 cursor-pointer"
+            :src="item.coverImgUrl"
+            @click="
+              () => router.push({ name: 'playlist', params: { id: item.id } })
+            "
+          />
           <div class="w-full flex flex-col">
-            <div :class="{ 'li-box': true }" :key="index" class="t-lf items-center flex-grow justify-between flex"
-              v-for="(tms, index) in item.tracks">
-              <p class="w-40">{{ tms.first }}</p>
-              <span>{{ tms.second }}</span>
+            <div
+              :class="{ 'li-box': true }"
+              :key="index"
+              class="text-left items-center flex-grow justify-between flex"
+              v-for="(tms, index) in item.tracks"
+            >
+              <p class="w-40 flex-1">{{ tms.first }}</p>
+              <p class="truncate">{{ tms.second }}</p>
               <!-- <MyPlay class="w-10" :id="id" @click="playMusic(first, item)" /> -->
             </div>
           </div>
@@ -30,7 +42,7 @@ import { reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { toplist } from "@/api/Home";
 
-type OrientationType = "left" | "right" | "center"
+type OrientationType = "left" | "right" | "center";
 
 interface First {
   name: string;
@@ -50,7 +62,7 @@ interface RootObject {
   coverImgUrl: string;
 }
 const state = reactive<{ TopList: Array<RootObject> }>({
-  TopList: []
+  TopList: [],
 });
 const router = useRouter();
 // 获取榜单信息

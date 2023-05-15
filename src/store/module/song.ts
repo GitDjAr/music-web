@@ -94,7 +94,7 @@ const actions = {
     });
     state.collectList = {
       playlist: playlists,
-      total: playlists.length,
+      total: playlists?.length || 0,
       ids: playlists.map((item: any) => item.id),
     };
   },

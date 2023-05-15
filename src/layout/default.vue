@@ -1,10 +1,10 @@
 <!--  -->
 <template>
-  <div class="parent" v-bind="$attrs">
-    <header class="title-play flex">
+  <div class="parent padding10" v-bind="$attrs">
+    <header class="title-play flex ">
       <titleVue />
     </header>
-    <main class="layout-content padding10">
+    <main class="layout-content ">
       <div class="left-list">
         <navVue />
       </div>
@@ -73,12 +73,7 @@ export default {
   height: 100vh;
 }
 
-.padding10 {
-  padding: 0 10%;
-}
-
 .title-play {
-  padding: 10px 10%;
   height: 60px;
   justify-content: space-between;
   align-items: center;

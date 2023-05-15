@@ -1,12 +1,12 @@
 <!--  -->
 <template>
-  <div class="flex fx-center">
+  <div class="flex justify-center items-center">
     <img alt="muisc play logo" :style="style" :src="src" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
 import palylogo from "../assets/play-logo.png";
 import logo from "../assets/logo.gif";
 export default defineComponent({

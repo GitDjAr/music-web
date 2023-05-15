@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="geter-box flex fx-r" :class="{ 'justify-center items-center': isActive }">
+  <div class="geter-box flex flex-row" :class="{ 'justify-center items-center': isActive }">
     <div :class="`${isActive ? 'w-3/5 ' : 'w-2/5'} `"
       class="right flex pt-2 flex-col transition-all h-screen overflow-hidden">
       <a-space class="rg-apace w-full">
