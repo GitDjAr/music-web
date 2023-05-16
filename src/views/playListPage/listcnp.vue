@@ -1,5 +1,5 @@
 <template>
-  <div class="items-center justify-center flex group">
+  <div class="items-center justify-center flex group scroll-none pr-1">
     <IconDoubleRight
       @click="pageChange(-1)"
       class="group-hover:opacity-100 opacity-0 group-hover:scale-150 w-12 transition-all rotate-180"
@@ -11,9 +11,9 @@
         class="relative transition-all overflow-hidden"
       >
         <div
-          class="w-1/4 ccc relative inline-block overflow-hidden"
-          :key="item.id"
           v-for="item in playlistItems"
+          :key="item.id"
+          class="w-1/4 ccc relative inline-block overflow-hidden"
         >
           <div class="content p-5">
             <Image

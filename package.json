@@ -45,13 +45,14 @@
     "vue-i18n": "^9.2.0-beta.31",
     "vue-plyr": "^7.0.0",
     "vue-router": "^4.0.13",
-    "vue-starport": "^0.2.10",
+    "vue-starport": "^0.2.11",
     "vuex": "^4.0.2",
     "workbox-build": "^6.5.4"
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.39.1",
     "@commitlint/config-conventional": "16.2.1",
+    "vite-plugin-svg-icons": "^2.0.1",
     "@types/howler": "^2.2.7",
     "@types/js-cookie": "^3.0.1",
     "@types/node": "^17.0.21",

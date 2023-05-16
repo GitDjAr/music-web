@@ -9,7 +9,7 @@
       show-arrow="never"
       indicator-type="slider"
     >
-      <a-carousel-item v-for="(item, index) in state.personalized" :key="index">
+      <a-carousel-item v-for="(item, index) in state.personalizedMV" :key="index">
         <Image
           :src="item.picUrl"
           :wh="[1000, 600]"
@@ -62,7 +62,7 @@ import { useStore } from "vuex";
 const Store = useStore();
 const router = useRouter();
 const state = reactive({
-  personalized: [{ picUrl: "", id: 0, copywriter: "" }],
+  personalizedMV: [{ picUrl: "", id: 0, copywriter: "" }],
   recommendPlaylist: [
     {
       name: "",
@@ -76,7 +76,7 @@ const state = reactive({
 // 推薦mv
 async function getPersonalized() {
   const { result } = await personalizedMV();
-  state.personalized = result?.splice(0, 6);
+  state.personalizedMV = result?.splice(0, 6);
 }
 // 推荐歌单
 async function recommendPlaylist() {

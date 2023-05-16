@@ -138,7 +138,6 @@
 import playListVue from "./playList.vue";
 import PlayPage from "./PlayPage.vue";
 import { formatTime } from "@/utils/format";
-import { nextTick } from "vue";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -226,14 +225,13 @@ const drag = (e: MouseEvent, id: string) => {
 };
 </script>
 <style scoped lang="scss">
-
-
 .myclass {
   grid-template-columns: 2fr 7fr 1fr;
   background: rgba(255, 255, 255, 0.6);
   grid-gap: 0px 10px;
   z-index: 10000;
   overflow: hidden;
+  border-radius: 8px;
 
   svg {
     cursor: pointer;

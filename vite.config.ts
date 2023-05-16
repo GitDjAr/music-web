@@ -4,6 +4,9 @@ import * as path from "path";
 //pwa
 import { VitePWA } from "vite-plugin-pwa";
 import { GenerateSW } from "workbox-webpack-plugin";
+
+//icons
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 //zip
 import zip from "vite-plugin-zip";
 
@@ -52,6 +55,12 @@ export default defineConfig({
     } as PluginOption,
     zip({
       outputName: "music",
+    }),
+    createSvgIconsPlugin({
+      // 指定需要缓存的图标文件夹
+      iconDirs: [path.resolve(process.cwd(), "src/assets/svg")],
+      // 指定symbolId格式
+      symbolId: "icon-[dir]-[name]",
     }),
   ],
 

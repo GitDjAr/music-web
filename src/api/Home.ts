@@ -17,7 +17,6 @@ export function MailLogin(data: Data = {}, method?: any) {
     show: true,
   });
 }
-export function Outin() {}
 
 // 获取每日推荐歌单
 // 说明 : 调用此接口 , 可获得每日推荐歌单 ( 需要登录 )

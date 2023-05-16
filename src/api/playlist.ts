@@ -20,7 +20,7 @@ export type reqPage = Required<often>;
  * @param {Object} params
  * @param {number=} params.limit
  */
-export function recommendPlaylist(params: any) {
+export function recommendPlaylist(params?: { limit?: number }) {
   return request<And<any>>({
     url: "/personalized",
     method: "get",

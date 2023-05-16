@@ -32,6 +32,9 @@ import loading from "./directives/loading/loading";
 
 import { BrowserTracing } from "@sentry/tracing";
 import * as Sentry from "@sentry/vue";
+
+import "virtual:svg-icons-register";
+import SvgIcon from "@/components/svg/index.vue";
 // 图源
 
 window.rendomImgUrl =
@@ -77,6 +80,7 @@ app
   .component("MyLike", MyLike)
   .component("MyPlay", MyPlay)
   .component("MyVideo", MyVideo)
+  .component("MyIcon", SvgIcon)
   .directive("loading", loading)
   .mount("#app");
 

@@ -1,16 +1,17 @@
 <!--  -->
 <template>
   <div class="parent padding10" v-bind="$attrs">
-    <header class="title-play flex ">
+    <header class="title-play flex">
       <titleVue />
     </header>
-    <main class="layout-content ">
+    <main class="layout-content">
       <div class="left-list">
         <navVue />
       </div>
       <div class="right-box w-full h-full">
         <!-- <router-view></router-view> -->
-        <Suspense>
+        <StarportCarrier>
+          <!-- <Suspense> -->
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'fade'" mode="out-in">
               <!-- http://localhost:4000/Music/search?searchKey=%E8%96%9B%E4%B9%8B%E8%B0%A6   h-full -->
@@ -21,7 +22,8 @@
               </div>
             </transition>
           </router-view>
-        </Suspense>
+          <!-- </Suspense> -->
+        </StarportCarrier>
       </div>
     </main>
     <footer>
@@ -31,6 +33,7 @@
 </template>
 
 <script lang="ts">
+import { StarportCarrier } from "vue-starport";
 import footerVue from "./components/footer/index.vue";
 import titleVue from "./components/title/index.vue";
 import navVue from "./components/nav.vue";

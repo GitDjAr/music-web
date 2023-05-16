@@ -117,9 +117,9 @@ export interface AvatarDetail {
 export interface tags {
   id: number;
   name: string;
-  type: number;
-  category: number;
-  hot: boolean;
+  type?: number;
+  category?: number;
+  hot?: boolean;
 }
 
 // PlayObj

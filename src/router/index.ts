@@ -16,6 +16,7 @@ const albumsList = () => import("../views/albums/albumsList.vue");
 const playlist = () => import("../views/albums/playlist.vue");
 const singer = () => import("../views/singer/index.vue");
 const favorite = () => import("../views/favorite/index.vue");
+const t = () => import("../views/favorite/t.vue");
 const playHistroy = () => import("../views/playHistroy/index.vue");
 const test = () => import("../views/zzz_test/index.vue");
 const chatGPT = () => import("../views/chatGPT/index.vue");
@@ -91,6 +92,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "favorite",
         meta: { title: "收藏", keepalive: true },
         component: favorite,
+        children: [{ path: "/t", component: t }],
       },
       {
         path: "settings",
