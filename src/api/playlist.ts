@@ -318,15 +318,28 @@ export function albumSublist(params: often) {
 
 /**
  * 收藏/取消收藏专辑
-说明 : 调用此接口,可收藏/取消收藏专辑
-必选参数 :
-id : 专辑 id
-t : 1 为收藏,其他为取消收藏
-接口地址 : /album/sub
+  说明 : 调用此接口,可收藏/取消收藏专辑
+  必选参数 :
+  id : 专辑 id
+  t : 1 为收藏,其他为取消收藏
+  接口地址 : /album/sublist
  */
 export function albumSub(params: Object) {
   return request<And<any>>({
     url: "/album/sublist",
+    method: "get",
+    params,
+  });
+}
+
+/**
+ * 最近播放-歌曲
+  说明 : 调用此接口 , 可获得最近播放-歌曲
+  可选参数 : limit : 返回数量 , 默认为 100
+ */
+export function songHistory(params: Object) {
+  return request<And<any>>({
+    url: "/record/recent/song",
     method: "get",
     params,
   });

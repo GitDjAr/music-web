@@ -1,6 +1,10 @@
 <!--  -->
 <template>
-  <div @click.stop ref="playDom" class="playlistCss overflow-hidden h-full flex flex-col select-none">
+  <div
+    @click.stop
+    ref="playDom"
+    class="playlistCss overflow-hidden h-full flex flex-col select-none"
+  >
     <div class="p-2">
       <h3>播放队列:</h3>
       <div>{{ playlist.length }}首歌曲</div>
@@ -9,10 +13,15 @@
       <p class="pushpinCss">
         <icon-pushpin @click.stop="pushpin" />
       </p>
-      <div v-for="item in playlist" :key="item.id" @click="play(item.id)"
-        :class="`${item.id === playCurrent.id ? 'activeCss' : ''}`" class="group cursor-pointer p-2 ">
+      <div
+        v-for="item in playlist"
+        :key="item.id"
+        @click="play(item.id)"
+        :class="`${item.id === playCurrent.id ? 'activeCss' : ''}`"
+        class="group cursor-pointer p-2"
+      >
         <div class="overflow-ellipsis whitespace-nowrap w-4/5 overflow-hidden">
-          {{ item.name }} - {{ item?.ar[0]?.name }}
+          {{ item.name }} - {{ item?.ar?.[0]?.name }}
         </div>
         <div class="flex justify-end px-4">
           <div class="flex items-center w-36 justify-between">
@@ -21,8 +30,10 @@
             <p>{{ formatTime(item?.dt) }}</p>
           </div>
           <div class="w-6 group-hover:w-10 transition-all">
-            <icon-close @click.stop="() => Store.dispatch('deleteSong', item.id)"
-              class=" scale-110 group-hover:-translate-y-3 -translate-y-14 translate-x-7  group-hover:opacity-100 opacity-0 transition-all " />
+            <icon-close
+              @click.stop="() => Store.dispatch('deleteSong', item.id)"
+              class="scale-110 group-hover:-translate-y-3 -translate-y-14 translate-x-7 group-hover:opacity-100 opacity-0 transition-all"
+            />
           </div>
         </div>
       </div>
@@ -32,10 +43,10 @@
 
 <script lang="ts" setup>
 import { formatTime } from "@/utils/format";
-import { computed, ref, } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 
-const Store = useStore()
+const Store = useStore();
 
 const emit = defineEmits(["change"]);
 
@@ -57,7 +68,7 @@ const pushpin = () => {
     el.scrollTo({
       top:
         (el.scrollHeight / playlist.value.length) *
-        playlist.value.findIndex((e: any) => e.id === playCurrent.value.id) -
+          playlist.value.findIndex((e: any) => e.id === playCurrent.value.id) -
         el.clientHeight / 2 +
         50,
       behavior: "smooth",

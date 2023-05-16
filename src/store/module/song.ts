@@ -72,7 +72,7 @@ const actions = {
     state.Player = new MusicPlayer();
   },
 
-  // 播放等级
+  // 设置播放等级
   async setMusicLevel(
     { state }: ActionContext<songType, RootState>,
     level: string
@@ -99,7 +99,7 @@ const actions = {
     };
   },
 
-  // 喜欢列表
+  // 获取喜欢列表
   async getLikelist(
     { rootState, state }: ActionContext<songType, RootState>,
     uid: number | null = null
@@ -145,6 +145,7 @@ const actions = {
     }
   },
 
+  //设置播放模式
   async SetPlaybackMode(
     { state }: ActionContext<songType, RootState>,
     str: songType["playbackMode"] | undefined
