@@ -1,70 +1,254 @@
 <!--  -->
 <template>
-  <button class="custom-btn btn-16 flex" v-bind="$attrs">
+  <button
+    class="play-pause-button flex"
+    :class="p.collectFlag ? 'paused' : 'playing'"
+  >
     <slot>按钮</slot>
   </button>
 </template>
 
-<script lang='ts' setup>
-
+<script lang="ts" setup>
+const p = defineProps<{collectFlag:boolean}>();
 </script>
-<style scoped lang='scss'>
-.custom-btn {
-  width: 130px;
-  height: 40px;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 25px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 500;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
-    7px 7px 20px 0px rgba(0, 0, 0, .1),
-    4px 4px 5px 0px rgba(0, 0, 0, .1);
-  outline: none;
-}
-
-button {
-  margin: 20px;
-}
-
-.btn-16 {
+<style scoped lang="scss">
+.play-pause-button {
+  --play: #6d58ff;
+  --play-shadow: #{rgba(#6d58ff, 0.24)};
+  --pause: #2b3044;
+  --pause-shadow: #{rgba(#2b3044, 0.24)};
+  --color: #fff;
+  --icon: var(--color);
+  margin: 0;
+  line-height: 20px;
+  font-size: 14px;
+  padding: 11px 12px 11px 36px;
+  border-radius: 22px;
   border: none;
-  color: #000;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  backface-visibility: hidden;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transform: translateY(var(--y, 0)) translateZ(0);
+  color: var(--color);
+  box-shadow: 0 var(--shadow-y, 6px) var(--shadow-b, 16px)
+    var(--shadow, var(--pause-shadow));
+  background: radial-gradient(
+    circle,
+    var(--play) 0%,
+    var(--play) 50%,
+    var(--pause) 50.5%,
+    var(--pause) 100%
+  );
+  background-size: 400% 400%;
+  background-position: 0% 0%;
+  transition: background 0.8s, box-shadow 0.3s, transform 0.3s;
+  &:hover {
+    --y: -1px;
+    --shadow-y: 8px;
+    --shadow-b: 20px;
+  }
+  &:active {
+    --y: 1px;
+    --shadow-y: 4px;
+    --shadow-b: 12px;
+  }
+  &:before,
+  &:after {
+    content: "";
+    background: var(--icon);
+    width: var(--width, 16px);
+    height: 12px;
+    position: absolute;
+    left: 18px;
+    top: 15px;
+    backface-visibility: hidden;
+    transform-origin: 50% 100%;
+    transform: translateX(var(--x, 0)) translateZ(0);
+    -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+    clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+    transition: clip-path 0.6s ease;
+  }
+  &:after {
+    --width: 3px;
+    --x: 6px;
+  }
+  i {
+    display: block;
+    font-weight: bold;
+    font-style: normal;
+    backface-visibility: hidden;
+    opacity: var(--o, 1);
+    transform: translateX(var(--x, 0));
+    transition: transform 0.6s, opacity 0.6s;
+    &:nth-child(2) {
+      --o: 0;
+      --x: 0;
+    }
+    &:nth-child(3) {
+      --x: -50%;
+    }
+    &:nth-child(4) {
+      --o: 0;
+    }
+    &:last-child {
+      --x: -50%;
+    }
+  }
+  &.paused {
+    --shadow: var(--play-shadow);
+    animation: var(--name, background-paused) 0.8s ease forwards;
+    i {
+      &:first-child {
+        --x: 40%;
+      }
+      &:nth-child(2) {
+        --o: 1;
+        --x: 100%;
+      }
+      &:nth-child(3) {
+        --x: 50%;
+      }
+      &:nth-child(4) {
+        --o: 1;
+        --x: 50%;
+      }
+      &:last-child {
+        --x: 0;
+        --o: 0;
+      }
+    }
+    &:before {
+      -webkit-clip-path: polygon(0 0, 11px 6px, 11px 6px, 0 12px);
+      clip-path: polygon(0 0, 11px 6px, 11px 6px, 0 12px);
+      transition-delay: 0.9s;
+    }
+    &:after {
+      animation: to-play 0.9s ease forwards;
+    }
+    &.playing {
+      --shadow: var(--pause-shadow);
+      --name: background-playing;
+      &:before {
+        -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+        clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+        transition-delay: 0s;
+      }
+      &:after {
+        animation: to-pause 1.3s ease forwards;
+      }
+      i {
+        &:first-child {
+          --x: 0;
+        }
+        &:nth-child(2) {
+          --o: 0;
+          --x: 0;
+        }
+        &:nth-child(3) {
+          --x: -50%;
+          --o: 1;
+        }
+        &:nth-child(4) {
+          --o: 0;
+          --x: 0;
+        }
+        &:last-child {
+          --x: -50%;
+          --o: 1;
+        }
+      }
+    }
+  }
 }
 
-.btn-16:after {
-  position: absolute;
-  content: "";
-  width: 0;
-  height: 100%;
-  top: 0;
-  left: 0;
-  direction: rtl;
-  z-index: -1;
-  box-shadow:
-    -7px -7px 20px 0px #fff9,
-    -4px -4px 5px 0px #fff9,
-    7px 7px 20px 0px #0002,
-    4px 4px 5px 0px #0001;
-  transition: all 0.3s ease;
+@keyframes to-play {
+  15% {
+    transform: translateX(6px) scaleY(1.1);
+  }
+  30% {
+    transform: translateX(6px) scaleY(0.9);
+  }
+  45% {
+    transform: translateX(6px) scaleY(1.15);
+    -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+    clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+    transform-origin: 50% 100%;
+  }
+  60%,
+  100% {
+    -webkit-clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
+    clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
+    transform-origin: 50% 10.5px;
+  }
+  60% {
+    transform: translateX(6px);
+  }
+  99% {
+    transform: translateX(0) rotate(-270deg);
+  }
+  100% {
+    transform: translateX(0) rotate(-270deg) scale(0);
+  }
 }
 
-.btn-16:hover {
-  color: #000;
+@keyframes to-pause {
+  0%,
+  50% {
+    -webkit-clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
+    clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
+    transform-origin: 50% 10.5px;
+  }
+  0%,
+  39% {
+    transform: translateX(0) rotate(-270deg) scale(0);
+  }
+  40% {
+    transform: translateX(0) rotate(-270deg);
+  }
+  50% {
+    transform: translateX(6px) rotate(0deg);
+  }
+  60%,
+  100% {
+    transform: translateX(6px);
+    -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+    clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+    transform-origin: 50% 100%;
+  }
+  70% {
+    transform: translateX(6px) scaleY(1.15);
+  }
+  80% {
+    transform: translateX(6px) scaleY(0.9);
+  }
+  90% {
+    transform: translateX(6px) scaleY(1.05);
+  }
+  100% {
+    transform: translateX(6px);
+  }
 }
 
-.btn-16:hover:after {
-  left: auto;
-  right: 0;
-  width: 100%;
+@keyframes background-paused {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 50% 50%;
+  }
 }
 
-.btn-16:active {
-  top: 2px;
+@keyframes background-playing {
+  from {
+    background-position: 50% 50%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
 }
 </style>

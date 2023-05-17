@@ -10,7 +10,7 @@
         class="rounded-lg ml-2"
         :wh="[500, 500]"
       />
-      <Button @click="collect" class="mt-10">
+      <Button @click="collect" :collectFlag="collectFlag" class="mt-10">
         {{ $t("nav.collect") + $t("playlist.playlist") }}
         <icon-heart-fill
           v-if="collectFlag"
@@ -156,9 +156,11 @@ async function scrollLoad() {
 const refBox = ref<HTMLElement | null>(null);
 
 function play(item: { id: any }) {
+  const inTheDay =
+    new Date().toISOString().split("T")[0].split("-").at(-1) + "";
   store.dispatch("ToggleSong", {
     id: item.id,
-    playListId: id,
+    playListId: id + inTheDay,
     list: AlbumsList.value,
   });
 }

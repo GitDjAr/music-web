@@ -55,7 +55,7 @@ export default {
         });
       } else {
         if (!params?.meta?.keepalive) {
-          that.KeepAliveList.push(params?.name);
+          that.KeepAliveList.push(params?.name );
         }
       }
     }

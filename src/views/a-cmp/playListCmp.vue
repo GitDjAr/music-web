@@ -170,7 +170,7 @@ function play(item: { id: any }) {
   background-size: 105% auto;
 
   .hybull {
-    height: calc(100% - 192px);
+    height: calc(100% - 208px);
   }
 }
 </style>
