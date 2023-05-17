@@ -5,13 +5,11 @@
     v-bind="$attrs"
   >
     <div class="w-1/5 pt-5" style="min-width: 160px">
-      <Starport port="my-id">
-        <Image
-          :src="Albums.coverImgUrl"
-          class="rounded-lg ml-2"
-          :wh="[500, 500]"
-        />
-      </Starport>
+      <Image
+        :src="Albums.coverImgUrl"
+        class="rounded-lg ml-2"
+        :wh="[500, 500]"
+      />
       <Button @click="collect" class="mt-10">
         {{ $t("nav.collect") + $t("playlist.playlist") }}
         <icon-heart-fill
@@ -85,7 +83,6 @@ export default { name: "playlist" };
 </script>
 
 <script lang="ts" setup>
-import { Starport } from "vue-starport";
 import Button from "@/components/button/index.vue";
 import ModalVue from "@/components/Modal.vue";
 

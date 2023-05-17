@@ -92,7 +92,12 @@ const routes: Array<RouteRecordRaw> = [
         name: "favorite",
         meta: { title: "收藏", keepalive: true },
         component: favorite,
-        children: [{ path: "/t", component: t }],
+      },
+      {
+        path: "favorite/t",
+        name: "t",
+        meta: { title: "收藏", keepalive: true },
+        component: t,
       },
       {
         path: "settings",

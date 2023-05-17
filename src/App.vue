@@ -32,8 +32,10 @@ const firstF = () => {
   first.value = "true";
 };
 
-store.dispatch("initQueryDataa");
-window.$store = store;
+if (first.value) {
+  store.dispatch("initQueryDataa");
+  window.$store = store;
+}
 </script>
 
 <style>

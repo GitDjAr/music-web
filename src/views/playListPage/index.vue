@@ -58,14 +58,12 @@
           :style="{ '--stagger': index }"
         >
           <div class="content p-4">
-            <Starport port="my-id">
-              <Image
-                @click="() => router.push(`/Music/playlist/${item.id}`)"
-                class="rounded-md cursor-pointer h-full w-full"
-                :alt="item.name"
-                :src="`${item.picUrl || item.coverImgUrl}?param=300y300`"
-              />
-            </Starport>
+            <Image
+              @click="() => router.push(`/Music/playlist/${item.id}`)"
+              class="rounded-md cursor-pointer h-full w-full"
+              :alt="item.name"
+              :src="`${item.picUrl || item.coverImgUrl}?param=300y300`"
+            />
             <p class="my-1 w-full truncate">{{ item.name }}</p>
           </div>
         </div>
@@ -76,7 +74,6 @@
 </template>
 
 <script lang="ts" setup>
-import { Starport } from "vue-starport";
 import PlayList from "./listcnp.vue";
 import { useStorage } from "@vueuse/core";
 import { ref } from "vue";
