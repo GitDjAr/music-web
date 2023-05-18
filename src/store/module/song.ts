@@ -8,7 +8,7 @@ import { useStorage } from "@vueuse/core";
 import { _song_url_v1, GetSongDetail, _lyric, CheckMusic } from "@/api/play";
 import { albumSublist, userPlaylist, T } from "@/api/playlist";
 import { likelist } from "@/api/user";
-import { shuffleArray } from "@/utils/gFn";
+import { shuffleArray, throttle } from "@/utils/gFn";
 import { checkUrl } from "@/utils/common";
 import { Notification } from "@arco-design/web-vue";
 export interface CurSongInfo {
@@ -33,7 +33,7 @@ export enum PlaybackMode {
 }
 
 export interface paramType {
-  id: number;
+  id: number; //歌曲id
   playListId: string | number;
   list?: T.MusicPlayList[];
 }
@@ -132,12 +132,13 @@ const actions = {
     const { playbackMode } = state;
 
     // 是否切换了歌单
-    if (state.playListId != playListId) {
+    let len = state.playList.length == updateList.length;
+    if (state.playListId != playListId || len) {
       state.playListId = playListId || "errId";
       state.playList = updateList;
       state.randomPlayList = shuffleArray([...updateList]);
     }
-    // 歌曲id - 当前模式索引
+    // 当前播放 歌曲id - 当前模式索引
     if (id) {
       const list =
         playbackMode === "random" ? state.randomPlayList : state.playList;
@@ -189,7 +190,11 @@ const actions = {
     const list = playbackMode === "random" ? randomPlayList : playList;
     const id = list[idx].id;
     try {
-      dispatch("ToggleSong", { id, playListId: state.playListId, list: [] });
+      dispatch("ToggleSong", {
+        id,
+        playListId: state.playListId,
+        list: [],
+      });
     } catch (error) {
       Notification.error("你!干了什么,居然播放失败了...\n可恶的蜘蛛");
       console.log(error);
@@ -201,7 +206,16 @@ const actions = {
   },
 
   // 切歌
-  async ToggleSong(
+  ToggleSong: throttle(
+    (
+      { state, dispatch }: ActionContext<songType, RootState>,
+      param: paramType
+    ) => {
+      dispatch("tog", param);
+    },
+    200
+  ),
+  async tog(
     { state, dispatch }: ActionContext<songType, RootState>,
     param: paramType
   ) {
@@ -222,7 +236,7 @@ const actions = {
       PlayUrl = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
       if (!(await checkUrl(PlayUrl))) {
         Notification.info(message + " >> 即将播放下一首");
-        setTimeout(() => dispatch("nextSong"), 500);
+        setTimeout(() => dispatch("nextSong"), 1500);
         return;
       }
       Notification.info(message + "\n正在使用黑科技...");

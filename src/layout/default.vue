@@ -55,7 +55,7 @@ export default {
         });
       } else {
         if (!params?.meta?.keepalive) {
-          that.KeepAliveList.push(params?.name );
+          that.KeepAliveList.push(params?.name);
         }
       }
     }
@@ -98,7 +98,7 @@ export default {
 
   .right-box {
     height: 100%;
-    padding: 5px 10px;
+    padding: 5px 0px 5px 10px;
     overflow: hidden auto;
     border-radius: 5px;
   }

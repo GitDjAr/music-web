@@ -4,9 +4,15 @@ import { Notification } from "@arco-design/web-vue";
  */
 export function throttle(fn: Function, delay: number): Function {
   let timer: any;
-  return () => {
+  let args: any;
+  return (...params: any) => {
+    args = params; // 缓存函数的参数
+
     if (!timer) {
-      fn.apply(window, arguments);
+      if (args) {
+        fn.apply(window, args); // 在定时器结束后再次调用函数，确保所有参数都被处理
+        args = null;
+      }
       timer = setTimeout(() => {
         clearTimeout(timer);
         timer = null;
@@ -17,10 +23,15 @@ export function throttle(fn: Function, delay: number): Function {
 // 定义一个防抖函数
 export function debounce(fn: Function, delay: number): Function {
   let timeout: any;
-  return () => {
+  let args: any;
+  return (...params: any) => {
+    args = params; // 缓存函数的参数
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      fn.apply(window, arguments);
+      if (args) {
+        fn.apply(window, args); // 在定时器结束后再次调用函数，确保所有参数都被处理
+        args = null;
+      }
     }, delay);
   };
 }
@@ -124,6 +135,5 @@ export function checkHTTP(url: string): Promise<boolean> {
       }
     };
     http.send(null);
-  })
-
+  });
 }

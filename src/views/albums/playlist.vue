@@ -20,7 +20,7 @@
         <icon-heart v-else class="hover: text-pink - 500 cursor - pointer" />
       </Button>
     </div>
-    <div class="w-4/5" ref="refBox">
+    <div class="flex-1 w-0" ref="refBox">
       <div
         :class="`text-left  pl-5  pb-4  transition-all w-full flex flex-col justify-between  h-52 `"
       >
@@ -106,7 +106,7 @@ const id: number = +route.params?.id;
 
 const visible = ref(false);
 
-const params = reactive({ id, limit: 35, pageNum: 0, offset: 0 });
+const params = reactive({ id, limit: 100, pageNum: 0, offset: 0 });
 const Albums = ref<Partial<T.PlayObj>>({});
 async function get_playlist_detail() {
   const { playlist } = await _playlist_detail({ id });
@@ -143,7 +143,7 @@ const collect = async () => {
 // 滚动加载
 const playListEnd = computed(() => {
   return (
-    AlbumsList.value.length > 35 &&
+    AlbumsList.value.length > 100 &&
     Albums.value?.trackCount === AlbumsList.value.length
   );
 });

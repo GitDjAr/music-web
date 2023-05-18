@@ -27,7 +27,7 @@ const config = {
 const servers = axios.create(config);
 servers.interceptors.request.use(
   (cf) => {
-    console.log("request cf: ", cf);
+    // console.log("request cf: ", cf);
     // cf.headers["token"] = localStorage.getItem("token") || "";
     // cf.headers["cookie"] = localStorage.getItem("token") || "";
 

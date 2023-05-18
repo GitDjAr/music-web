@@ -1,12 +1,22 @@
 <!--  -->
 <template>
-  <div class="w-10 h-10">
-    <RouterLink :to="`/Music/favorite/t`">
-        <Image
-          class="rounded-md cursor-pointer h-full w-full"
-          :src="`http://p1.music.126.net/Av80q6vSEPaOIei6JJGkiw==/109951164851214848.jpg?param=80y80`"
-        />
-    </RouterLink>
+  <div class="w-full h-52 flex">
+    <div class="container-1">Container 1</div>
+    <div class="flex-1 bg-slate-500">
+      <!-- <div
+        class="text-left pl-5 pb-4 transition-all w-full flex flex-col justify-between h-52"
+      >
+        asdfasd
+      </div> -->
+      <div class="hybull container-2 flex">
+        <div>Div 1</div>
+        <div>Div 2</div>
+        <div>Div 3</div>
+        <div class="long-text">
+          This is a very long text that should be hidden if it overflows.
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,4 +30,24 @@ const state = reactive({
   count: 0,
 });
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.hybull div {
+  margin: 5px 10px;
+}
+
+.container-2 {
+  flex: 1;
+  background-color: lightgreen;
+  overflow: hidden;
+}
+.container-1 {
+  width: 20%;
+  min-width: 160px;
+  background-color: lightblue;
+}
+.long-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
