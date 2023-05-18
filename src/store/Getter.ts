@@ -2,15 +2,19 @@ const Getter = {
   loginStatus: (store: any): boolean => {
     return !!store.app.cookie;
   },
-  userInfo: (store: any): object => {
+  userInfo: (store: any) => {
+    const { userInfo } = store.app;
+    const { account, profile } = userInfo;
+
     return {
-      ...store.app.userInfo.account,
-      title: store.app.userInfo.profile.avatarUrl,
-      backgroundUrl: store.app.userInfo.profile.backgroundUrl,
-      name: store.app.userInfo.profile.nickname,
-      uid: store.app.userInfo.profile.userId,
+      ...account,
+      title: profile?.avatarUrl,
+      backgroundUrl: profile?.backgroundUrl,
+      name: profile?.nickname,
+      uid: profile?.userId,
     };
   },
+
   curPlaySong: (store: any) => {
     return store.song.curPlaySong;
   },

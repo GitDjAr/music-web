@@ -84,8 +84,8 @@ const actions = {
     { state, rootState }: ActionContext<songType, RootState>,
     uid: number | null = null
   ) {
-    uid ||= rootState?.app?.userInfo?.account?.id;
-    console.log(rootState, rootState?.app?.userInfo?.account.id, uid);
+    uid ??= rootState?.app?.userInfo?.profile?.userId;
+    console.log(rootState, rootState?.app?.userInfo?.profile.userId, uid);
     // return
     const { playlists } = await userPlaylist({
       uid: uid!,
@@ -104,7 +104,7 @@ const actions = {
     { rootState, state }: ActionContext<songType, RootState>,
     uid: number | null = null
   ) {
-    uid ||= rootState?.app?.userInfo?.account?.id;
+    uid ||= rootState?.app?.userInfo?.profile?.userId;
     const { ids = [] } = await likelist({ uid: 12, timestamp: Date.now() });
     state.myLikeList = ids;
   },

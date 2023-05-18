@@ -64,6 +64,7 @@ import {
   _login_qr_key,
   _login_qr_create,
   _login_qr_check,
+  userDetail,
   _user_account,
 } from "@/api/user";
 import { defineComponent, reactive, toRefs, watch } from "vue";
@@ -149,7 +150,10 @@ export default defineComponent({
         });
         if (code === 803) {
           clearInterval(timeToken);
-          checkRes(await _user_account());
+          let acc = await _user_account()
+          checkRes(acc);
+          const user = await userDetail(acc.account.id);
+          console.log('user',user);
         }
       }, 2000);
     };

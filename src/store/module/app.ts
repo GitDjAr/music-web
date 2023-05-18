@@ -63,14 +63,13 @@ const actions = {
   },
   // user退出
   async UserOuting(
-    { commit,dispatch,state,rootState }: ActionContext<AppType, RootState>,
+    { commit, dispatch, state, rootState }: ActionContext<AppType, RootState>,
     status: boolean = false
   ) {
-    state.loginTime = 0
-    state.cookie = ''
-    rootState.song.myLikeList = []
+    state.loginTime = 0;
+    state.cookie = "";
+    rootState.song.myLikeList = [];
     commit("userLogin", {});
-
   },
   // 登录
   async UserLogin(
@@ -79,7 +78,7 @@ const actions = {
   ) {
     commit("userLogin", info);
     dispatch("UserRefresh");
-    dispatch("song/getUserPlaylist", info.account.id);
+    dispatch("song/getUserPlaylist");
     dispatch("initQueryDataa");
   },
   // 刷新登录
@@ -88,7 +87,7 @@ const actions = {
     getters,
     state,
   }: ActionContext<AppType, RootState>) {
-    if (state.userInfo?.account?.id) {
+    if (state.userInfo?.profile?.userId) {
       const { cookie } = await _login_refresh();
       state.cookie = cookie;
       state.loginTime = new Date().getTime();
