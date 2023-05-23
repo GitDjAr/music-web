@@ -124,7 +124,7 @@ onBeforeUpdate(() => {
 .My-space {
   padding-top: 6px;
   overflow: hidden;
-  height: calc(100% - 324.22px);
+  height: calc(100% - 200px);
 
   :deep(.arco-tabs-content-list) {
     .arco-tabs-pane {

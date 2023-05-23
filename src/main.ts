@@ -20,6 +20,7 @@ import PASS from "./utils/$PASS";
 
 import Logo from "./components/logo.vue";
 import image from "./components/image.vue";
+import level from "./components/level.vue";
 import ModalVue from "@/components/Modal.vue";
 import MyLike from "@/components/like/index.vue";
 import MyVideo from "@/components/MyVideo/index.vue";
@@ -83,6 +84,7 @@ app
   .component("MyPlay", MyPlay)
   .component("MyVideo", MyVideo)
   .component("MyIcon", SvgIcon)
+  .component("level", level)
   .directive("loading", loading)
   .mount("#app");
 

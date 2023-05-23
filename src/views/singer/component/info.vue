@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="flex justify-between">
-    <div class="w-1/4">
+    <!-- <div class="w-1/4">
       <h2>{{ "最新专辑" }}</h2>
       <div class="flex items-center">
         <Image
@@ -22,7 +22,7 @@
           <UsesDesc></UsesDesc>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="flex-1 max-w-1/2 px-20 overflow-hidden">
       <h2>{{ "最多播放" }}</h2>
       <ul class="p-2 rounded-md bg-white">
