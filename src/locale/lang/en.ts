@@ -15,6 +15,7 @@ export default {
     history: "History",
     settings: "Settings",
     guitar: "Guitar",
+    polymerization: "Polymerization",
   },
   footer: {
     settings: "Settings",

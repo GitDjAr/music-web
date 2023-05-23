@@ -2,11 +2,14 @@
 <template>
   <Logo />
   <nav v-for="(item, index) in NavList" :key="index">
-    <p :class="{
-      'Nav-list': true,
-      transtion: true,
-      NavActive: active === index,
-    }" @click="NavPath(item, index)">
+    <p
+      :class="{
+        'Nav-list': true,
+        transtion: true,
+        NavActive: active === index,
+      }"
+      @click="NavPath(item, index)"
+    >
       <i class></i>
       {{ $t(item.name) }}
     </p>
@@ -14,14 +17,15 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
-import { ref, watch } from 'vue'
+import { onMounted } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 const Router = useRouter();
 
 interface NavItem {
-  to: string, name: string
+  to: string;
+  name: string;
 }
 const NavList = ref<Array<NavItem>>([
   { to: "/Music/home", name: "nav.home" },
@@ -31,20 +35,23 @@ const NavList = ref<Array<NavItem>>([
   { to: "/Music/playHistory", name: "nav.history" },
   { to: "/Music/settings", name: "nav.settings" },
   { to: "/Gtp/Guitar", name: "nav.guitar" },
-  { to: "/Music/chatGPT", name: "chatGPT" },
+  { to: "/Music/polymerization", name: "nav.polymerization" },
 ]);
 
 // 导航
-const active = ref(-1)
+const active = ref(-1);
 const NavPath = (path: NavItem, index: number) => {
   Router.push({ path: path.to });
 };
 onMounted(() => {
-  NavMatch(Router.currentRoute.value.path)
-})
-watch(() => Router.currentRoute.value.path, (newVal) => {
-  NavMatch(newVal);
-})
+  NavMatch(Router.currentRoute.value.path);
+});
+watch(
+  () => Router.currentRoute.value.path,
+  (newVal) => {
+    NavMatch(newVal);
+  }
+);
 
 // 匹配路由索引
 function NavMatch(path: string) {

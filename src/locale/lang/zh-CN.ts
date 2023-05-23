@@ -15,6 +15,7 @@ export default {
     settings: "设置",
     history: "播放历史",
     guitar: "吉他谱",
+    polymerization: "聚合工具",
   },
   home: {
     recommendPlaylist: "推荐歌单",

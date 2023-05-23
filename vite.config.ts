@@ -102,6 +102,12 @@ export default defineConfig({
         secure: true,
         rewrite: (path) => path.replace(/^\/apiG2\//, ""),
       },
+      "/tran/": {
+        target: "http://124.222.62.70:1188",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/tran\//, ""),
+      },
     },
     cors: true,
   },

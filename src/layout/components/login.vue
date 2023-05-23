@@ -150,10 +150,11 @@ export default defineComponent({
         });
         if (code === 803) {
           clearInterval(timeToken);
-          let acc = await _user_account()
-          checkRes(acc);
+          let acc = await _user_account();
+          // checkRes(acc);
           const user = await userDetail(acc.account.id);
-          console.log('user',user);
+          checkRes(user);
+          console.log("user", user);
         }
       }, 2000);
     };

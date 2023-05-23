@@ -14,7 +14,7 @@ interface ShowMessageOptions {
   res?: {
     msg?: string;
   };
-  msg: string;
+  msg?: string;
   message: string;
   code?: number;
 }
@@ -41,23 +41,27 @@ servers.interceptors.request.use(
 
 servers.interceptors.response.use(
   async (res) => {
-    const { data = null } = res;
+    const { data = {} } = res;
     ShowMessage(data);
+    let co = data.code;
     // 进行缓存
-    if (data.code === 200) {
+    if (co === 200) {
       const CacheName =
         res.config.method?.toLowerCase() === "get"
           ? res.config.url
           : JSON.stringify(res.config.data);
       Cache.set(CacheName, data || res);
     }
+    if ([404, 500, 502, 503].includes(co)) {
+      return Promise.reject(data);
+    }
     return data || res;
   },
   async (err: AxiosError) => {
     ShowMessage({
-      msg: "发生错误",
+      show: true,
       code: 500,
-      message: err.message,
+      message: err.message || err.response?.statusText || "未知错误",
     });
     return Promise.reject({ data: {}, err });
   }
@@ -66,6 +70,7 @@ servers.interceptors.response.use(
 // show Message
 function ShowMessage(data: ShowMessageOptions) {
   const msg = data.message || data.msg || data?.res?.msg || "";
+
   if (!msg) return;
   if (data.show && data.code === 200) {
     Message.success(msg);
