@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import { cloudsearch } from "@/api/Home";
+import { cloudsearch } from "@/api/playlist";
 import { useRouter } from "vue-router";
 const Router = useRouter();
 const { params, Activated } = defineProps<{
@@ -46,7 +46,7 @@ watch(
 );
 
 // 歌手 搜索
-const singerList = ref([]);
+const singerList = ref<any>([]);
 const searchSuggest = async (key?: string) => {
   const {
     result: { artists },

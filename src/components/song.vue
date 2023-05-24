@@ -13,6 +13,12 @@
       <MyLike :id="songInfo.id" />
     </div>
     <span> {{ formatTime(songInfo.dt) }}</span>
+    <div
+      v-if="songInfo?.orgin"
+      class="w-40 truncate overflow-hidden whitespace-nowrap"
+    >
+      {{ songInfo?.orgin }}
+    </div>
   </div>
 </template>
 
@@ -26,6 +32,7 @@ const songInfo = withDefaults(
     songName?: string;
     id: number;
     dt?: number;
+    orgin?: string;
   }>(),
   {
     url: "",

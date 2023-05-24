@@ -247,8 +247,18 @@ export interface OriginSongSimpleDatum {
 }
 
 export interface Artist {
-  id: number;
   name: string;
+  id: number;
+  picId: number;
+  img1v1Id: number;
+  briefDesc: string;
+  picUrl: string;
+  img1v1Url: string;
+  albumSize: number;
+  alias: any[];
+  trans: string;
+  musicSize: number;
+  picId_str: string;
 }
 
 export interface H {
@@ -275,36 +285,29 @@ export interface Ar {
   alias: any[];
 }
 
-export interface Subscriber {
-  defaultAvatar: boolean;
-  province: number;
-  authStatus: number;
-  followed: boolean;
-  avatarUrl: string;
-  accountStatus: number;
-  gender: number;
-  city: number;
-  birthday: number;
-  userId: number;
-  userType: number;
-  nickname: string;
-  signature: string;
+//专辑
+export interface Album {
+  name: string;
+  id: number;
+  idStr: string;
+  type: string;
+  size: number;
+  picId: number;
+  blurPicUrl: string;
+  companyId: number;
+  pic: number;
+  picUrl: string;
+  publishTime: number;
   description: string;
-  detailDescription: string;
-  avatarImgId: number;
-  backgroundImgId: number;
-  backgroundUrl: string;
-  authority: number;
-  mutual: boolean;
-  expertTags?: any;
-  experts?: any;
-  djStatus: number;
-  vipType: number;
-  remarkName?: any;
-  authenticationTypes: number;
-  avatarDetail?: any;
-  anchor: boolean;
-  backgroundImgIdStr: string;
-  avatarImgIdStr: string;
-  avatarImgId_str: string;
+  tags: string;
+  company: string;
+  briefDesc: string;
+  artist: Artist;
+  songs: any[];
+  alias: any[];
+  status: number;
+  copyrightId: number;
+  commentThreadId: string;
+  artists: any[];
+  isSub: boolean;
 }

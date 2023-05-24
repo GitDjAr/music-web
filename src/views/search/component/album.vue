@@ -2,12 +2,12 @@
 <template>
   <div
     ref="rootRef"
-    class="MYroot flex h-full flex-col flex-wrap overflow-y-scroll box-border justify-around"
+    class="MYroot flex h-full flex-col flex-wrap box-border justify-around"
   >
     <template v-for="item in searchList">
       <albumVue :item="item"></albumVue>
     </template>
-    <p class="absolute bottom-0 left-0 hidden">
+    <p class="absolute bottom-0 left-0 hidden pointer-events-none">
       试试:<span class="text-sky-500">shift+滚轮</span>
     </p>
   </div>
@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 import albumVue from "@/components/album/index.vue";
 import { ref, watch } from "vue";
-import { cloudsearch } from "@/api/Home";
+import { cloudsearch, T } from "@/api/playlist";
 
 const { Activated, params } = defineProps<{
   params: {
@@ -41,7 +41,7 @@ watch(
 const arr = ref([]);
 arr.value = Array.from({ length: 8 });
 // 专辑 搜索
-const searchList = ref([]);
+const searchList = ref<T.Album[]>([]);
 const searchSuggest = async (key?: string) => {
   const {
     result: { albums },
@@ -55,7 +55,7 @@ searchSuggest();
 <style scoped lang="scss">
 .MYroot {
   height: 100%;
-  overflow: scroll;
+  overflow-x: scroll;
 
   &:hover p {
     display: block;

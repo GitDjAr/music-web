@@ -1,38 +1,25 @@
 <!-- 单曲 -->
 <template>
   <div class="singlesBox select-none h-full overflow-y-scroll">
-    <div
-      v-for="(item, index) in searchList"
-      :key="index"
-      @click="play(item)"
-      class="flex m-2 px-2 py-6 h-12 items-center hover:shadow-lg transition-all rounded-md border border-b"
-    >
-      <div
-        class="cursor-pointer w-96 text-left text-ellipsis overflow-hidden whitespace-nowrap"
-      >
-        <img class="mr-2 rounded-md" :src="item.img" alt="" />
-        {{ item.name }}
-      </div>
-      <div class="flex-grow">
-        <div class="w-40 flex justify-between">
-          <p>{{ item?.ar[0]?.name }}</p>
-          <MyLike :id="item.id" />
-        </div>
-      </div>
-      <div class="cursor-pointer flex">
-        <div class="w-24">{{ formatTime(item?.dt) || "00:00:00" }}</div>
-        <div class="w-40 text-ellipsis overflow-hidden whitespace-nowrap">
-          {{ item?.al?.name }}
-        </div>
-      </div>
-    </div>
+    <template v-for="(item, index) in searchList" :key="item.id">
+      <song
+        :id="item.id"
+        :dt="item.dt"
+        :songName="item.name"
+        :singer="item?.ar?.[0]?.name"
+        :orgin="item?.al?.name"
+        :url="item?.al?.picUrl"
+        data-animate
+        :style="{ '--stagger': index }"
+        @click="play(item)"
+      />
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { formatTime } from "@/utils/format";
 import { ref, watch } from "vue";
-import { cloudsearch } from "@/api/Home";
+import { cloudsearch, T } from "@/api/playlist";
 import { useStore } from "vuex";
 const store = useStore();
 
@@ -57,13 +44,15 @@ watch(
   }
 );
 
-function play(item) {
-  console.log(item);
-
-  store.dispatch("ToggleSong", item.al.id);
+function play(item: { id: any }) {
+  store.dispatch("ToggleSong", {
+    id: item.id,
+    playListId: params.keysCode,
+    list: searchList.value,
+  });
 }
 // 单曲 搜索
-const searchList = ref([]);
+const searchList = ref<T.Track[] &  T.MusicPlayList[]>([]);
 const searchSuggest = async (key?: string) => {
   const {
     result: { songs },

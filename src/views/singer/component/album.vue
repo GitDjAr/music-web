@@ -55,7 +55,8 @@ function scrollLoad() {
 <style scoped lang="scss">
 .MYroot {
   height: 100%;
-  overflow: scroll;
+
+  overflow-x: scroll;
   // transform: rotate(-90deg);
 
   &:hover p {
