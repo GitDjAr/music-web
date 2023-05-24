@@ -39,40 +39,34 @@ if (first.value) {
   store.dispatch("initQueryDataa");
   window.$store = store;
 }
-//监听快捷键 方向键 ArrowUp, ArrowDown, ArrowLeft 和 ArrowRight 来表示
-const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight } =
-  useMagicKeys();
-watch(space, (v) => {
-  if (v) {
-    store.dispatch("PlayStop");
-  }
-});
-watch(ArrowUp, (v) => {
-  if (v) {
-    let vol = store.state.song.Player._volume + 0.1;
-    store.state.song.Player._setvolume(vol);
-  }
-});
-watch(ArrowDown, (v) => {
-  if (v) {
-    let vol = store.state.song.Player._volume - 0.1;
-    store.state.song?.Player?._setvolume(vol);
-  }
-});
-watch(Ctrl_ArrowLeft, (v) => {
-  if (v) {
-    store.state.song?.Player?.prevSong();
-  }
-});
-watch(Ctrl_ArrowRight, (v) => {
-  if (v) {
-    store.state.song?.Player?.nextSong();
-  }
-});
 
 // 主题
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+
+//监听快捷键 方向键 ArrowUp, ArrowDown, ArrowLeft 和 ArrowRight 来表示
+const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight } =
+  useMagicKeys();
+
+watch(space, (v) => {
+  if (v) {
+    store.state.song.Player.pause();
+  }
+});
+watch(Ctrl_ArrowLeft, (v) => {
+  v && store.state.song?.Player?.prevSong();
+});
+watch(Ctrl_ArrowRight, (v) => {
+  v && store.state.song?.Player?.nextSong();
+});
+watch(ArrowUp, (v) => {
+  v &&
+    store.state.song.Player._setvolume(store.state.song.Player._volume + 0.1);
+});
+watch(ArrowDown, (v) => {
+  v &&
+    store.state.song?.Player?._setvolume(store.state.song.Player._volume - 0.1);
+});
 </script>
 
 <style>
@@ -80,14 +74,17 @@ const toggleDark = useToggle(isDark);
 body {
   transition: all 0.5s;
   --my-white: var($Bcolor);
-  --image-url:url("./assets/albums-bg.png")
+  --my-color: #2c3e50;
+  --image-url: url("./assets/albums-bg.png");
 }
 html.dark body {
-  --image-url:url(''),
+  --my-color: #fff !important;
+  --image-url: url("");
   --color-fill-2: rgba(255, 255, 255, 0.35);
   --my-white: #ffffff29;
   --color-bg-2: #ffffff7a;
   --color-fill-2: #ffffff7a;
+
   background-image: linear-gradient(
     -20deg,
     #ddd6f3 0%,

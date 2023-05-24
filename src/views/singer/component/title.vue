@@ -30,7 +30,7 @@
     v-bind="$attrs"
   >
     <Image
-      class="object-cover h-full"
+      class="object-cover h-full rounded-xl t-2"
       :src="singerInfo?.user?.avatarUrl"
       :wh="[320, 320]"
     />
@@ -50,8 +50,8 @@
           class="py-1 px-12 m-2 rounded-full"
           :style="{ background: 'rgba(205, 216, 252,0.8)' }"
         >
-          <MyLike v-if="follow.isFollow" style="color: red" />
-          <MyLike v-else />
+          <icon-heart-fill v-if="follow.isFollow" style="color: red" />
+          <icon-heart v-else />
           {{ follow.fansCnt }}
           <!-- {{ follow.isFollow ? $t("artist.following") : $t("artist.follow") }} -->
         </div>

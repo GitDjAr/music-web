@@ -62,6 +62,9 @@ watch(
     }
   }
 );
+const Emit = defineEmits<{
+  (e: "updateId", v: string): void;
+}>();
 
 // 滚动加载
 function scrollLoad() {
@@ -81,7 +84,7 @@ const searchSuggest = async (id?: string) => {
   const { mvs = [] } = await _artist_mv({ ...query, offset: offset.value });
   mvList.value.push(...mvs);
   // 更新激活标记
-  // Emit('update', true)
+  Emit("update", true);
 };
 
 const videoId = ref("");

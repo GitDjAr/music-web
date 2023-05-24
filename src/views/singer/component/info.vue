@@ -1,31 +1,10 @@
 <!--  -->
 <template>
   <div class="flex justify-between">
-    <!-- <div class="w-1/4">
-      <h2>{{ "最新专辑" }}</h2>
-      <div class="flex items-center">
-        <Image
-          class="w-32 h-32 rounded-md shadow-md"
-          src=""
-          :wh="[220, 220]"
-          alt=""
-        />
-        <div class="flex-1">
-          <span>title</span>
-          <p>content</p>
-          <p>mo</p>
-          <div>
-            <icon-plus v-if="true" />
-            <icon-check v-else />
-            收藏
-          </div>
-          <UsesDesc></UsesDesc>
-        </div>
-      </div>
-    </div> -->
+    <!-- <div class="w-1/4"> <h2>{{ "最新专辑" }}</h2> <div class="flex items-center"> <Image class="w-32 h-32 rounded-md shadow-md" src="" :wh="[220, 220]" alt="" /> <div class="flex-1"> <span>title</span> <p>content</p> <p>mo</p> <div> <icon-plus v-if="true" /> <icon-check v-else /> 收藏 </div> <UsesDesc></UsesDesc> </div> </div> </div> -->
     <div class="flex-1 max-w-1/2 px-20 overflow-hidden">
       <h2>{{ "最多播放" }}</h2>
-      <ul class="p-2 rounded-md bg-white">
+      <ul class="p-2 rounded-md">
         <template v-for="(item, index) in artistsSing">
           <li
             class="flex mb-2 justify-between items-center overflow-hidden cursor-pointer leading-5"
@@ -42,7 +21,6 @@
             <span class="flex-1 inline-block px-3 items-center truncate">{{
               item?.name
             }}</span>
-            <!-- <p class="flex-1">{{ item?.privilege?.playMaxbr }}次</p> -->
             <MyPlay :id="item.id" class="mx-4" />
             <MyLike :id="item.id" />
           </li>
@@ -75,11 +53,10 @@
 
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import Store from "@/store";
 import { useRouter } from "vue-router";
 import { _simi_artist, _artists, _simi_playlist } from "@/api/user";
+import Store from "@/store";
 
-import UsesDesc from "../../uses_Desc/index.vue";
 type IdType = string | number;
 const router = useRouter();
 
@@ -113,13 +90,13 @@ function singerReps(id: string) {
 }
 
 // 相似歌单
-const simiplaylist = ref([]);
-async function get_simi_playlist(id: IdType) {
-  const { playlists } = await _simi_playlist({ id });
-  simiplaylist.value = playlists;
-}
+// const simiplaylist = ref([]);
+// async function get_simi_playlist(id: IdType) {
+//   const { playlists } = await _simi_playlist({ id });
+//   simiplaylist.value = playlists;
+// }
 // 部分信息和热门歌曲
-const artistsSing = ref<RT<_artists>>();
+const artistsSing = ref<any>();
 const user = ref("");
 async function get_artists(id: IdType) {
   const {
@@ -138,7 +115,6 @@ watch(
 );
 function init() {
   get_simi_artist(P.props.id);
-  get_simi_playlist(P.props.id);
   get_artists(P.props.id);
 }
 init();

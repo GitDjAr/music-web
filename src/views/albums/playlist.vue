@@ -23,6 +23,7 @@
     <div class="flex-1 w-0" ref="refBox">
       <div
         :class="`text-left   pb-4  transition-all w-full flex flex-col justify-between  h-52 `"
+        style="color: var(--my-color)"
       >
         <h1 class="font-bold">{{ Albums.name }}</h1>
         <p>创建日期: {{ formatformat(Albums.createTime, DateFormat.ymd) }}</p>

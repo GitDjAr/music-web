@@ -73,6 +73,7 @@ function NavMatch(path: string) {
 </script>
 <style scoped lang="scss">
 .Nav-list {
+  color: var(--my-color);
   display: flex;
   align-items: center;
   font-size: 1.2rem;
