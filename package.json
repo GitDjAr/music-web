@@ -10,7 +10,7 @@
     "build": "vue-tsc --noEmit && vite build ",
     "b": " vite build",
     "preview": "vite preview",
-    "electron": "electron .",
+    "electron": "electron ./src/electron.ts",
     "postinstall": "husky install",
     "cz": "git add . && cz",
     "tag": "npm version patch && git push && git push origin --tags"

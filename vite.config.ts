@@ -12,7 +12,8 @@ import zip from "vite-plugin-zip";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/",
+  base: "/", //nginx -- history-mode
+  // base: path.resolve(__dirname, "./dist/"), //electron
 
   plugins: [
     vue({
