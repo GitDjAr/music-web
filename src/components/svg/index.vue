@@ -1,5 +1,10 @@
 <template>
-  <svg :class="svgClass" v-bind="$attrs" :style="{ color: color }">
+  <svg
+    :class="svgClass"
+    class="inline-block"
+    v-bind="$attrs"
+    :style="{ color: color }"
+  >
     <use :xlink:href="iconName"></use>
   </svg>
 </template>
@@ -15,10 +20,13 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  class: {
+    type: String,
+  },
 });
 const iconName = computed(() => `#icon-${props.name}`);
 const svgClass = computed(() => {
-  if (props.name) return `svg-icon icon-${props.name}`;
+  if (props.name) return `svg-icon icon-${props.name} ${props.class}`;
   return "svg-icon";
 });
 </script>

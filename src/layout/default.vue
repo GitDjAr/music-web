@@ -23,6 +23,7 @@
           </router-view>
         </Suspense>
       </div>
+      <div class="h-[10px]"></div>
     </main>
     <footer>
       <footerVue />
@@ -77,7 +78,7 @@ export default {
   height: 60px;
   justify-content: space-between;
   align-items: center;
-  background: $Bcolor;
+  // background: $Bcolor;
 }
 
 .layout-content {
@@ -89,7 +90,8 @@ export default {
 
   .left-list {
     padding: 10px 0;
-    background: $Bcolor;
+    margin-right: 10px;
+    // background: $Bcolor;
 
     .flex-cancer {
       padding: 0 10px;
@@ -98,9 +100,10 @@ export default {
 
   .right-box {
     height: 100%;
-    padding: 5px 0px 5px 10px;
+    padding: 0 10px;
     overflow: hidden auto;
     border-radius: 5px;
+    background: var(--my-white);
   }
 }
 </style>

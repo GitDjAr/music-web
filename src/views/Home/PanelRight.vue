@@ -126,7 +126,7 @@ onMounted(() => {
   .right-ul {
     max-width: 600px;
     padding: 8px 0;
-    background: rgb(242 243 245);
+    // background: var(--color-fill-2);
     border-radius: 10px;
 
     .ul-li {

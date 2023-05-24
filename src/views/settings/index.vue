@@ -35,10 +35,15 @@
         ></a-option>
       </a-select>
     </div>
+    <div class="listItem">
+      <h2>播放器样式:</h2>
+      <a-switch type="round" v-model="isDark" @change="toggleDark" />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useDark, useToggle } from "@vueuse/core";
 import { reactive, Ref, ref, computed } from "vue";
 import store from "../../store";
 import type { levelEnum } from "./type";
@@ -61,6 +66,9 @@ const I18nChange = (v: string | Event) => {
 const musicLevel = computed(() => {
   return store.state?.song.musicLevel;
 });
+
+const isDark = ref(useDark());
+const toggleDark = useToggle(isDark);
 </script>
 <style scoped lang="scss">
 .listBox {

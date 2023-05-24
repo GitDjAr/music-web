@@ -18,9 +18,13 @@ import store from "./store/index";
 
 import PASS from "./utils/$PASS";
 
+//svg
+import "virtual:svg-icons-register";
+import SvgIcon from "@/components/svg/index.vue";
 import Logo from "./components/logo.vue";
 import image from "./components/image.vue";
 import level from "./components/level.vue";
+import song from "./components/song.vue";
 import ModalVue from "@/components/Modal.vue";
 import MyLike from "@/components/like/index.vue";
 import MyVideo from "@/components/MyVideo/index.vue";
@@ -33,10 +37,6 @@ import loading from "./directives/loading/loading";
 
 import { BrowserTracing } from "@sentry/tracing";
 import * as Sentry from "@sentry/vue";
-
-//svg
-import "virtual:svg-icons-register";
-import SvgIcon from "@/components/svg/index.vue";
 
 // 图源
 
@@ -85,6 +85,7 @@ app
   .component("MyVideo", MyVideo)
   .component("MyIcon", SvgIcon)
   .component("level", level)
+  .component("song", song)
   .directive("loading", loading)
   .mount("#app");
 

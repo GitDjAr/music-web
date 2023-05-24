@@ -1,8 +1,7 @@
 <!--  -->
 <template>
-  <Logo />
   <nav v-for="(item, index) in NavList" :key="index">
-    <p
+    <div
       :class="{
         'Nav-list': true,
         transtion: true,
@@ -10,9 +9,9 @@
       }"
       @click="NavPath(item, index)"
     >
-      <i class></i>
+      <MyIcon :name="item.icon" class="mr-2" />
       {{ $t(item.name) }}
-    </p>
+    </div>
   </nav>
 </template>
 
@@ -26,16 +25,17 @@ const Router = useRouter();
 interface NavItem {
   to: string;
   name: string;
+  icon: string;
 }
 const NavList = ref<Array<NavItem>>([
-  { to: "/Music/home", name: "nav.home" },
-  { to: "/Music/radio", name: "nav.radio" },
-  { to: "/Music/playListPage", name: "nav.playlist" },
-  { to: "/Music/favorite", name: "nav.favorite" },
-  { to: "/Music/playHistory", name: "nav.history" },
-  { to: "/Music/settings", name: "nav.settings" },
-  { to: "/Gtp/Guitar", name: "nav.guitar" },
-  { to: "/Music/polymerization", name: "nav.polymerization" },
+  { to: "/Music/home", name: "nav.home", icon: "home-simple" },
+  { to: "/Music/radio", name: "nav.radio", icon: "" },
+  { to: "/Music/playListPage", name: "nav.playlist", icon: "" },
+  { to: "/Music/favorite", name: "nav.favorite", icon: "" },
+  { to: "/Music/playHistory", name: "nav.history", icon: "" },
+  { to: "/Music/settings", name: "nav.settings", icon: "" },
+  { to: "/Gtp/Guitar", name: "nav.guitar", icon: "" },
+  { to: "/Music/polymerization", name: "nav.polymerization", icon: "" },
 ]);
 
 // 导航
@@ -62,16 +62,20 @@ function NavMatch(path: string) {
 </script>
 <style scoped lang="scss">
 .Nav-list {
+  display: flex;
+  align-items: center;
   font-size: 1.2rem;
-  padding: 5px 0;
+  padding: 5px 10px;
   line-height: 26px;
   margin: 10px 0;
   cursor: pointer;
+  text-align: left;
 }
 
 .NavActive {
   color: $T3;
-  background: rgb(245, 246, 248);
+  background: var(--color-fill-2);
   font-weight: bold;
+  border-radius: 4px;
 }
 </style>
