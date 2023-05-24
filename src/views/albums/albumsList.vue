@@ -1,35 +1,61 @@
 <!--  -->
 <template>
-  <div class="myclass box-border flex flex-col select-none overflow-hidden h-full w-full relative" v-bind="$attrs">
+  <div
+    class="myclass box-border flex flex-col select-none overflow-hidden h-full w-full relative"
+    v-bind="$attrs"
+  >
     <div class="flex h-52 w-full mb-3">
-      <Image class="h-52 w-52 rounded-lg" :src="albumInfo?.album?.picUrl" :wh="[500, 500]" />
-      <div class="text-left pl-5 pb-4 flex flex-1 flex-col justify-between w-full overflow-hidden">
+      <Image
+        class="h-52 w-52 rounded-lg"
+        :src="albumInfo?.album?.picUrl"
+        :wh="[500, 500]"
+      />
+      <div
+        class="text-left pl-5 pb-4 flex flex-1 flex-col justify-between w-full overflow-hidden"
+      >
         <h1 class="font-bold">
           {{ albumInfo.album.name }} - {{ albumInfo.album.company }}
         </h1>
-        <p>发布时间: {{ formatformat(albumInfo.publishTime, DateFormat.ymd) }}</p>
+        <p>
+          发布时间: {{ formatformat(albumInfo.publishTime, DateFormat.ymd) }}
+        </p>
         <p>播放次数:{{ albumInfo.playCount }}</p>
 
         <p>
           是否收藏:
-          <component :is="`icon-heart${albumInfo?.album?.info?.liked ? '-fill' : ''}`" :class="`cursor-pointer text-4xl ${albumInfo?.album?.info?.liked
-            ? ' bg-red-900'
-            : 'hover:text-pink-500'
-            }`" @click.stop="linkTo" />
+          <component
+            :is="`icon-heart${albumInfo?.album?.info?.liked ? '-fill' : ''}`"
+            :class="`cursor-pointer text-4xl ${
+              albumInfo?.album?.info?.liked
+                ? ' bg-red-900'
+                : 'hover:text-pink-500'
+            }`"
+            @click.stop="linkTo"
+          />
         </p>
         <p @click="visible = true" class="cursor-pointer truncate">
           {{ albumInfo.album.description }}
         </p>
         <div>
-          <a-tag :color="tagColor()" :checked="true" :default-checked="true" v-for="item in albumInfo.tags"
-            :style="{ marginRight: '10px' }">
-            {{ item }}</a-tag>
+          <a-tag
+            :color="tagColor()"
+            :checked="true"
+            :default-checked="true"
+            v-for="item in albumInfo.tags"
+            :style="{ marginRight: '10px' }"
+          >
+            {{ item }}</a-tag
+          >
         </div>
       </div>
     </div>
-    <div class="overflow-scroll hybull bg-white">
-      <div v-for="item in albumInfo.songs" :key="item.id" @click="play(item)"
-        class="flex h-14 my-1 px-4 mx-40 justify-between bg-white bg-opacity-50 backdrop-filter backdrop-blur-sm items-center hover:shadow-xl hover:border-gray-300 cursor-pointer transition-all rounded-md border border-b">
+    <div class="overflow-y-scroll hybull bg-white">
+      <div
+        v-for="item in albumInfo.songs"
+        :key="item.id"
+        @click="play(item)"
+        class="flex h-14 my-1 px-4 mx-40 justify-between bg-white bg-opacity-50 backdrop-filter backdrop-blur-sm items-center hover:shadow-xl hover:border-gray-300 cursor-pointer transition-all rounded-md border border-b"
+      >
         <div class="flex-1 mx-2 text-left inline-block truncate">
           {{ item.name }}
         </div>
@@ -48,18 +74,17 @@
 
 <script lang="ts" setup>
 import ModalVue from "@/components/Modal.vue";
-import { ref, } from "vue";
+import { ref } from "vue";
 import { formatTime, formatformat } from "@/utils/format";
-import { albumContent, } from "@/api/playlist";
+import { albumContent } from "@/api/playlist";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { DateFormat } from "@/utils/type/funType";
 
-
 const store = useStore();
 const route = useRoute();
 const tagColor = () => store.getters.tagColor;
-const id: number = + route.params?.id;
+const id: number = +route.params?.id;
 
 // 详情
 const visible = ref(false);
@@ -70,7 +95,7 @@ async function getAlbumContent() {
 getAlbumContent();
 
 // 播放
-function play(item: { id: any; }) {
+function play(item: { id: any }) {
   store.dispatch("ToggleSong", {
     id: item.id,
     playListId: id,
@@ -78,7 +103,7 @@ function play(item: { id: any; }) {
   });
 }
 // like
-async function linkTo() { }
+async function linkTo() {}
 </script>
 <style scoped lang="scss">
 .myclass::before {

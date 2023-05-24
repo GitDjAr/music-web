@@ -1,9 +1,15 @@
 <!-- 单曲 -->
 <template>
-  <div class="singlesBox select-none h-full overflow-scroll">
-    <div v-for="(item, index) in searchList" :key="index" @click="play(item)"
-      class="flex m-2 px-2 py-6 h-12 items-center hover:shadow-lg transition-all rounded-md border border-b">
-      <div class="cursor-pointer w-96 text-left text-ellipsis overflow-hidden whitespace-nowrap">
+  <div class="singlesBox select-none h-full overflow-y-scroll">
+    <div
+      v-for="(item, index) in searchList"
+      :key="index"
+      @click="play(item)"
+      class="flex m-2 px-2 py-6 h-12 items-center hover:shadow-lg transition-all rounded-md border border-b"
+    >
+      <div
+        class="cursor-pointer w-96 text-left text-ellipsis overflow-hidden whitespace-nowrap"
+      >
         <img class="mr-2 rounded-md" :src="item.img" alt="" />
         {{ item.name }}
       </div>

@@ -9,7 +9,7 @@
       <h3>播放队列:</h3>
       <div>{{ playlist.length }}首歌曲</div>
     </div>
-    <div class="overflow-scroll relative" id="playId">
+    <div class="overflow-y-scroll relative" id="playId">
       <p class="pushpinCss">
         <icon-pushpin @click.stop="pushpin" />
       </p>

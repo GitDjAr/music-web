@@ -13,7 +13,7 @@
     >
       <a-tab-pane :key="item.id" :title="item.title" v-for="item in tabsList">
         <component
-          class="overflow-scroll h-full"
+          class="overflow-y-scroll h-full"
           :ref="itemRef"
           :is="item.Com"
           :props="Aprons"

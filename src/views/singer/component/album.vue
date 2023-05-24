@@ -3,7 +3,7 @@
   <div
     ref="rootRef"
     v-infinite-scroll="scrollLoad"
-    class="MYroot flex flex-wrap h-full overflow-scroll box-border justify-around"
+    class="MYroot flex flex-wrap h-full overflow-y-scroll box-border justify-around"
   >
     <template v-for="item in albumsList">
       <albumVue :item="item"></albumVue>
