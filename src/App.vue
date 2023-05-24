@@ -24,8 +24,9 @@
 </template>
 
 <script setup lang="ts">
+import { useMagicKeys } from "@vueuse/core";
 import { useDark, useToggle } from "@vueuse/core";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import store from "./store";
 const first = ref(localStorage.getItem("info"));
 const user: string = "Hello " + localStorage.getItem("user");
@@ -38,7 +39,38 @@ if (first.value) {
   store.dispatch("initQueryDataa");
   window.$store = store;
 }
+//监听快捷键 方向键 ArrowUp, ArrowDown, ArrowLeft 和 ArrowRight 来表示
+const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight } =
+  useMagicKeys();
+watch(space, (v) => {
+  if (v) {
+    store.dispatch("PlayStop");
+  }
+});
+watch(ArrowUp, (v) => {
+  if (v) {
+    let vol = store.state.song.Player._volume + 0.1;
+    store.state.song.Player._setvolume(vol);
+  }
+});
+watch(ArrowDown, (v) => {
+  if (v) {
+    let vol = store.state.song.Player._volume - 0.1;
+    store.state.song?.Player?._setvolume(vol);
+  }
+});
+watch(Ctrl_ArrowLeft, (v) => {
+  if (v) {
+    store.state.song?.Player?.prevSong();
+  }
+});
+watch(Ctrl_ArrowRight, (v) => {
+  if (v) {
+    store.state.song?.Player?.nextSong();
+  }
+});
 
+// 主题
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 </script>

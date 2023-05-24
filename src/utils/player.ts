@@ -45,6 +45,7 @@ export interface PlayerInstance {
   _setvolume: Function;
   _SetPlayStatus: Function;
   stop: Function;
+  pause: Function;
   _playAudioSource: Function;
 }
 class Player implements PlayerInstance {
@@ -126,6 +127,7 @@ class Player implements PlayerInstance {
     return this._volume;
   }
   _setvolume(val: number) {
+    val = val > 1 ? 1 : val < 0 ? 0 : val;
     this._volume = val;
     this._howler.volume(val);
     localStorage.setItem("volume", val + "");

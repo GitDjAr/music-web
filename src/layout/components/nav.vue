@@ -27,16 +27,27 @@ interface NavItem {
   name: string;
   icon: string;
 }
-const NavList = ref<Array<NavItem>>([
+const NavList = ref<NavItem[]>([
   { to: "/Music/home", name: "nav.home", icon: "home-simple" },
-  { to: "/Music/radio", name: "nav.radio", icon: "" },
-  { to: "/Music/playListPage", name: "nav.playlist", icon: "" },
-  { to: "/Music/favorite", name: "nav.favorite", icon: "" },
-  { to: "/Music/playHistory", name: "nav.history", icon: "" },
-  { to: "/Music/settings", name: "nav.settings", icon: "" },
-  { to: "/Gtp/Guitar", name: "nav.guitar", icon: "" },
-  { to: "/Music/polymerization", name: "nav.polymerization", icon: "" },
+  { to: "/Music/radio", name: "nav.radio", icon: "voice-ok" },
+  { to: "/Music/playListPage", name: "nav.playlist", icon: "activity" },
+  { to: "/Music/favorite", name: "nav.favorite", icon: "bright-crown" },
+  { to: "/Music/playHistory", name: "nav.history", icon: "emoji" },
+  { to: "/Music/settings", name: "nav.settings", icon: "settings" },
+  { to: "/Gtp/Guitar", name: "nav.guitar", icon: "guitar" },
+  {
+    to: "/Music/polymerization",
+    name: "nav.polymerization",
+    icon: "frame-tool",
+  },
 ]);
+if (import.meta.env.MODE === "development") {
+  NavList.value.push({
+    to: "/Music/test",
+    name: "测试工具",
+    icon: "report-columns",
+  });
+}
 
 // 导航
 const active = ref(-1);

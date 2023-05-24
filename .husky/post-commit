@@ -5,4 +5,4 @@
 # To enable this hook, rename this file to "post-commit".
 echo "Deploying..."
 cd $PWD
-npm run deploy  # 执行 npm run deploy
+# npm run deploy  # 执行 npm run deploy

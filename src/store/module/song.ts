@@ -202,7 +202,7 @@ const actions = {
   },
 
   PlayStop({ state, dispatch }: ActionContext<songType, RootState>) {
-    state.Player.stop();
+    state.Player.pause();
   },
 
   // 切歌
