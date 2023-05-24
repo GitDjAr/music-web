@@ -2,7 +2,6 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import type { RouteComponent } from "vue-router";
 
 // music
-const Page404 = () => import("../views/404/index.vue");
 const layout = () => import("../layout/default.vue");
 const Home = () => import("../views/Home/index.vue");
 const search = () => import("../views/search/index.vue");
@@ -16,8 +15,11 @@ const albumsList = () => import("../views/albums/albumsList.vue");
 const playlist = () => import("../views/albums/playlist.vue");
 const singer = () => import("../views/singer/index.vue");
 const favorite = () => import("../views/favorite/index.vue");
-const t = () => import("../views/favorite/t.vue");
 const playHistroy = () => import("../views/playHistroy/index.vue");
+
+// test page
+const test = () => import("../views/test/index.vue");
+const Page404 = () => import("../views/404/index.vue");
 
 // 工具
 const polymerization = () => import("../views/polymerization/index.vue");
@@ -97,12 +99,6 @@ export const routes: Array<RouteRecordRaw> = [
         component: favorite,
       },
       {
-        path: "favorite/t",
-        name: "t",
-        meta: { title: "收藏", keepalive: true },
-        component: t,
-      },
-      {
         path: "settings",
         name: "settings",
         meta: { title: "设置", keepalive: true },
@@ -113,6 +109,12 @@ export const routes: Array<RouteRecordRaw> = [
         name: "search",
         meta: { title: "搜索", keepalive: false },
         component: search,
+      },
+      {
+        path: "test",
+        name: "test",
+        meta: { title: "test", keepalive: false },
+        component: test,
       },
       {
         path: "playHistory",
