@@ -11,7 +11,8 @@ import { albumSublist, userPlaylist, T } from "@/api/playlist";
 import { likelist } from "@/api/user";
 import { shuffleArray, throttle } from "@/utils/gFn";
 import { checkUrl } from "@/utils/common";
-import { Notification } from "@arco-design/web-vue";
+// import { Notification } from "@arco-design/web-vue";
+import { Notification } from "@/utils/voice";
 export interface CurSongInfo {
   song: SongInfo.Song;
   picUrl: string;
@@ -38,9 +39,12 @@ export interface paramType {
   playListId: string | number;
   list?: T.MusicPlayList[];
 }
+type playListType = {
+  isPlay?: 0 | 1;
+} & T.MusicPlayList;
 export interface songType {
   curPlaySong: CurSongInfo;
-  playList: T.MusicPlayList[];
+  playList: playListType[];
   randomPlayList: T.MusicPlayList[];
   recommendPlaylist: T.MusicPlayList[];
   recommendSong: T.MusicPlayList[];
@@ -52,12 +56,11 @@ export interface songType {
   collectList: Object;
   playListId: string | number;
 }
-
 const state = {
   myLikeList: useStorage("myLikeList", []), //喜欢 列表
   musicLevel: useStorage("musicLevel", "lossless"), //等级
   curPlaySong: useStorage("curPlaySong", {}), // 当前 or 上次播放历史
-  playList: useStorage<T.MusicPlayList[]>("playList", []), //歌单
+  playList: useStorage<T.MusicPlayList[]>("playList", []), //当前播放-歌单
   playListId: useStorage("playListId", []), //当前播放列表 唯一标识
   randomPlayList: useStorage("randomPlayList", []), // 随机列表
   playListIndex: useStorage("playListIndex", 0), //当前播放的歌曲索引
@@ -157,11 +160,13 @@ const actions = {
     const { playbackMode } = state;
 
     // 是否切换了歌单
-    let len = state.playList.length == updateList.length;
+    const up: playListType[] = updateList.map((e) => ({ ...e, isPlay: 1 }));
+
+    let len = state.playList.length == up.length;
     if (state.playListId != playListId || len) {
       state.playListId = playListId || "errId";
-      state.playList = updateList;
-      state.randomPlayList = shuffleArray([...updateList]);
+      state.playList = up;
+      state.randomPlayList = shuffleArray([...up]);
     }
     // 当前播放 歌曲id - 当前模式索引
     if (id) {
@@ -240,6 +245,14 @@ const actions = {
     },
     200
   ),
+
+  // 设置不可播放
+  SetNotPlayable(
+    { state, dispatch }: ActionContext<songType, RootState>,
+    SongId: number
+  ) {
+    state.playList[state.playListIndex].isPlay = 0;
+  },
   async tog(
     { state, dispatch }: ActionContext<songType, RootState>,
     param: paramType
@@ -260,8 +273,13 @@ const actions = {
       //  https://music.163.com/song/media/outer/url?id={加上id即可播放}.mp3
       PlayUrl = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
       if (!(await checkUrl(PlayUrl))) {
-        Notification.info(message + " >> 即将播放下一首");
-        setTimeout(() => dispatch("nextSong"), 1500);
+        if (state.playList.filter((item) => item.isPlay === 1).length) {
+          dispatch("SetNotPlayable");
+          Notification.info(message + " >> 即将播放下一首");
+          setTimeout(() => dispatch("nextSong"), 1500);
+        } else {
+          Notification.info("哦豁,当前没有可播放的歌曲了");
+        }
         return;
       }
       Notification.info(message + "\n正在使用黑科技...");
