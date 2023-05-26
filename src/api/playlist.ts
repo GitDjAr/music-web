@@ -149,7 +149,7 @@ export interface userPlaylist {
   uid: number;
 }
 export function userPlaylist(params: userPlaylist) {
-  return request<And<{ playlists: T.MusicPlayList[] }>>({
+  return request<And<{ playlist: T.MusicPlayList[] }>>({
     url: "/user/playlist",
     method: "get",
     params,

@@ -6,6 +6,7 @@ import type { RootState } from "../index";
 import MusicPlayer from "@/utils/player";
 import { useStorage } from "@vueuse/core";
 import { _song_url_v1, GetSongDetail, _lyric, CheckMusic } from "@/api/play";
+import { resource, songs } from "@/api/Home";
 import { albumSublist, userPlaylist, T } from "@/api/playlist";
 import { likelist } from "@/api/user";
 import { shuffleArray, throttle } from "@/utils/gFn";
@@ -41,6 +42,8 @@ export interface songType {
   curPlaySong: CurSongInfo;
   playList: T.MusicPlayList[];
   randomPlayList: T.MusicPlayList[];
+  recommendPlaylist: T.MusicPlayList[];
+  recommendSong: T.MusicPlayList[];
   playListIndex: number;
   myLikeList: Array<number>;
   musicLevel: string;
@@ -51,17 +54,18 @@ export interface songType {
 }
 
 const state = {
-  myLikeList: useStorage("myLikeList", []),
-  musicLevel: useStorage("musicLevel", "lossless"),
-  // 当前 or 上次播放历史
-  curPlaySong: useStorage("curPlaySong", {}),
-  playList: useStorage<T.MusicPlayList[]>("playList", []),
-  playListId: useStorage("playListId", []),
-  randomPlayList: useStorage("randomPlayList", []),
-  playListIndex: useStorage("playListIndex", 0),
-  playbackMode: useStorage("playbackMode", "order"),
+  myLikeList: useStorage("myLikeList", []), //喜欢 列表
+  musicLevel: useStorage("musicLevel", "lossless"), //等级
+  curPlaySong: useStorage("curPlaySong", {}), // 当前 or 上次播放历史
+  playList: useStorage<T.MusicPlayList[]>("playList", []), //歌单
+  playListId: useStorage("playListId", []), //当前播放列表 唯一标识
+  randomPlayList: useStorage("randomPlayList", []), // 随机列表
+  playListIndex: useStorage("playListIndex", 0), //当前播放的歌曲索引
+  playbackMode: useStorage("playbackMode", "order"), //播放模式
   Player: {},
-  collectList: useStorage("collectList", []),
+  collectList: useStorage("collectList", []), //收藏
+  recommendPlaylist: useStorage("recommendPlaylist", []), //每日推荐-歌单
+  recommendSong: useStorage("recommendSong", []), //每日推荐-单曲
 };
 
 const actions = {
@@ -87,15 +91,15 @@ const actions = {
     uid ??= rootState?.app?.userInfo?.profile?.userId;
     console.log(rootState, rootState?.app?.userInfo?.profile.userId, uid);
     // return
-    const { playlists } = await userPlaylist({
+    const { playlist } = await userPlaylist({
       uid: uid!,
       limit: 9999,
       offset: 0,
     });
     state.collectList = {
-      playlist: playlists,
-      total: playlists?.length || 0,
-      ids: playlists.map((item: any) => item.id),
+      playlist,
+      total: playlist?.length || 0,
+      ids: playlist?.map((item: any) => item.id),
     };
   },
 
@@ -105,8 +109,10 @@ const actions = {
     uid: number | null = null
   ) {
     uid ||= rootState?.app?.userInfo?.profile?.userId;
-    const { ids = [] } = await likelist({ uid: 12, timestamp: Date.now() });
-    state.myLikeList = ids;
+    if (uid) {
+      const { ids = [] } = await likelist({ uid, timestamp: Date.now() });
+      state.myLikeList = ids;
+    }
   },
 
   // 播放列表 删除歌曲
@@ -115,6 +121,25 @@ const actions = {
     id: number
   ) {
     state.playList = state.playList.filter((item) => item.id !== id);
+  },
+
+  //推荐歌单
+  async recommendPlaylist({
+    state,
+    rootState,
+  }: ActionContext<songType, RootState>) {
+    const { recommend } = await resource({});
+    state.recommendPlaylist = recommend;
+  },
+  // 推荐歌曲
+  async recommendSong({
+    state,
+    rootState,
+  }: ActionContext<songType, RootState>) {
+    const {
+      data: { dailySongs },
+    } = await songs({});
+    state.recommendSong = dailySongs;
   },
 
   // 收藏专辑

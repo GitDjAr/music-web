@@ -36,7 +36,7 @@ const firstF = () => {
 };
 
 if (first.value) {
-  store.dispatch("initQueryDataa");
+  store.dispatch("initQueryData");
   window.$store = store;
 }
 

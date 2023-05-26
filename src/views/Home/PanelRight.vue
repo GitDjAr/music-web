@@ -4,7 +4,7 @@
     <template v-if="Store.getters.loginStatus">
       <h2>{{ $t("home.dayList") }}</h2>
       <ul class="right-ul w-11/12">
-        <template v-for="(item, index) in state.darinPush">
+        <template v-for="(item, index) in recommendSong">
           <li
             class="ul-li text-left flex items-center"
             :alt="item.reason"
@@ -54,8 +54,8 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, onMounted } from "vue";
-import { artists as Getartists, songs } from "@/api/Home";
+import { reactive, onMounted ,computed} from "vue";
+import { artists as Getartists,  } from "@/api/Home";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 const router = useRouter();
@@ -68,21 +68,6 @@ const state = reactive({
       img1v1Url: "",
     },
   ],
-  darinPush: [
-    {
-      name: "",
-      id: "",
-      ar: [
-        {
-          name: "",
-        },
-      ],
-      reason: "",
-      al: {
-        picUrl: "",
-      },
-    },
-  ],
 });
 
 // 热门歌手
@@ -91,17 +76,15 @@ async function getArtists() {
   state.artistsList = artists.splice(0, 8);
 }
 // 每日推薦
-async function getDayinPush() {
-  const {
-    data: { dailySongs },
-  } = await songs({});
-  state.darinPush = dailySongs;
-}
+const recommendSong = computed(() => {
+  return Store.state.song.recommendSong;
+});
+
 const palySong = async (item: any) => {
   Store.dispatch("ToggleSong", {
     id: item.id,
     playListId: "推荐",
-    list: state.darinPush,
+    list: recommendSong.value,
   });
 };
 // 去歌手主页
@@ -111,7 +94,6 @@ function CheckSinger(id: number) {
 
 onMounted(() => {
   getArtists();
-  getDayinPush();
 });
 </script>
 <style scoped lang="scss">

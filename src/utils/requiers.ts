@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Message } from "@arco-design/web-vue";
+import { Message, Notification } from "@arco-design/web-vue";
 import { AxiosRequestConfig, AxiosError } from "axios";
 import Cache from "./cache";
 import { h } from "vue";
@@ -28,8 +28,8 @@ const servers = axios.create(config);
 servers.interceptors.request.use(
   (cf) => {
     // console.log("request cf: ", cf);
-    cf.headers["token"] = localStorage.getItem("token") || "";
-    cf.headers["cookie"] = localStorage.getItem("token") || "";
+    // cf.headers["token"] = localStorage.getItem("token") || "";
+    // cf.headers["cookie"] = localStorage.getItem("token") || "";
 
     return cf;
   },
@@ -51,8 +51,9 @@ servers.interceptors.response.use(
           ? res.config.url
           : JSON.stringify(res.config.data);
       Cache.set(CacheName, data || res);
-    }
-    if ([404, 500, 502, 503].includes(co)) {
+    } else if (co === 301) {
+      Notification.warning(res.data.msg);
+    } else if ([404, 500, 502, 503].includes(co)) {
       return Promise.reject(data);
     }
     return data || res;

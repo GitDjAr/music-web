@@ -52,10 +52,10 @@ watch(curPlaySong, (v) => {
 // 歌词滚动
 let Timer = setInterval(() => {
   const currentTime = Player.value?.getHow()?.seek();
-  const lineTime = curPlaySong.value.lrc[active.value + 1]?.time;
+  const lineTime = curPlaySong?.value?.lrc[active?.value + 1]?.time;
 
   if (lineTime && currentTime >= lineTime) {
-    tickLyrics(undefined, active.value + 1);
+    tickLyrics(undefined, active?.value + 1);
   }
 }, 100);
 onBeforeUnmount(() => {

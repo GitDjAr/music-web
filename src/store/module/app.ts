@@ -78,8 +78,9 @@ const actions = {
   ) {
     commit("userLogin", info);
     dispatch("UserRefresh");
-    dispatch("song/getUserPlaylist");
-    dispatch("initQueryDataa");
+    dispatch("recommendPlaylist");
+    dispatch("recommendSong");
+    dispatch("getUserPlaylist");
   },
   // 刷新登录
   async UserRefresh({
@@ -94,8 +95,8 @@ const actions = {
     }
   },
 
-  // 初始化
-  async initQueryDataa(
+  // 初始化  每天刷新
+  async initQueryData(
     {
       rootState,
       state,
@@ -104,13 +105,6 @@ const actions = {
     }: ActionContext<AppType, RootState>,
     info: userInfo_T
   ) {
-    // console.log(rootState);
-
-    if (!rootState.song.myLikeList.length) {
-      dispatch("getLikelist");
-      // dispatch("getLikelist");
-      // dispatch("getAlbumSublist");
-    }
     if (
       rootGetters.loginStatus &&
       diffDays(localStorage.getItem("loginTime") || "") > 1

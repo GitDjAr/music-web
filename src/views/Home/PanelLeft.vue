@@ -30,7 +30,7 @@
         <div
           class="NouList mb-2"
           :key="index"
-          v-for="(item, index) in state.recommendPlaylist"
+          v-for="(item, index) in recommendPlaylist"
         >
           <div class="rounded-lg overflow-hidden relative cursor-pointer group">
             <Image
@@ -45,7 +45,7 @@
               </div>
             </Image>
           </div>
-          <p class="line-clamp-3 leading-tight text-base">
+          <p class="line-clamp-2 leading-tight text-base">
             {{ item.name }}
           </p>
           <!-- <a-tag :color="resourceColor(item.id)" size="mini">{{item.creator.expertTags}}</a-tag> -->
@@ -58,21 +58,18 @@
 <script lang="ts" setup>
 import { reactive, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { personalizedMV, resource } from "@/api/Home";
+import { personalizedMV } from "@/api/Home";
 import { useStore } from "vuex";
+import { computed } from "vue";
 
 const Store = useStore();
 const router = useRouter();
 const state = reactive({
   personalizedMV: [{ picUrl: "", id: 0, copywriter: "" }],
-  recommendPlaylist: [
-    {
-      name: "",
-      id: 0,
-      picUrl: "",
-      copywriter: "",
-    },
-  ],
+});
+
+const recommendPlaylist = computed(() => {
+  return Store.state.song.recommendPlaylist;
 });
 
 // 推薦mv
@@ -81,10 +78,6 @@ async function getPersonalized() {
   state.personalizedMV = result?.splice(0, 6);
 }
 // 推荐歌单
-async function recommendPlaylist() {
-  const { recommend } = await resource({});
-  state.recommendPlaylist = recommend?.splice(0, 8);
-}
 
 // 播放
 const videoId = ref("");
@@ -98,7 +91,6 @@ const albumOver = ({ id }: { id: number }) => {
   router.push({ name: "playlist", params: { id } });
 };
 onMounted(() => {
-  recommendPlaylist();
   getPersonalized();
 });
 </script>
