@@ -11,8 +11,8 @@ import { albumSublist, userPlaylist, T } from "@/api/playlist";
 import { likelist } from "@/api/user";
 import { shuffleArray, throttle } from "@/utils/gFn";
 import { checkUrl } from "@/utils/common";
-// import { Notification } from "@arco-design/web-vue";
-import { Notification } from "@/utils/voice";
+import { Notification } from "@arco-design/web-vue";
+// import { Notification } from "@/utils/voice";
 export interface CurSongInfo {
   song: SongInfo.Song;
   picUrl: string;

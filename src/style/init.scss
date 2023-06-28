@@ -3,11 +3,18 @@ html {
 }
 
 body {
+  font-family: "my-font", "Nunito Sans", sans-serif, Avenir, Helvetica, Arial, sans-serif;
   height: auto;
   width: 100%;
   height: 100%;
   font-size: 14px;
   box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "my-font";
+  src: url(../assets/fonts/NotoSansSC-Bold.ttf);
+  font-display: swap;
 }
 
 div {

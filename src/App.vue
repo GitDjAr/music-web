@@ -96,7 +96,6 @@ html.dark body {
   }
 }
 #app {
-  font-family: "Nunito Sans", sans-serif, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
