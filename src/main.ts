@@ -34,6 +34,7 @@ import "./style/index.scss";
 import "./style/therm.scss";
 import "./style/init.scss";
 import loading from "./directives/loading/loading";
+import hoverTitle from "./directives/hoverTitle";
 
 import { BrowserTracing } from "@sentry/tracing";
 import * as Sentry from "@sentry/vue";
@@ -87,6 +88,7 @@ app
   .component("level", level)
   .component("song", song)
   .directive("loading", loading)
+  .directive("hover", hoverTitle)
   .mount("#app");
 
 // pwa

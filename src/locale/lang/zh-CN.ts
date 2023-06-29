@@ -16,6 +16,11 @@ export default {
     history: "播放历史",
     guitar: "吉他谱",
     polymerization: "聚合工具",
+    tools:{
+      nextPage: "前进",
+      prevPage: "后退",
+      theme: "主题",
+    },
   },
   home: {
     recommendPlaylist: "推荐歌单",

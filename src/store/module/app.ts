@@ -73,14 +73,12 @@ const actions = {
   },
   // 登录
   async UserLogin(
-    { commit, dispatch }: ActionContext<AppType, RootState>,
+    { commit, dispatch, state }: ActionContext<AppType, RootState>,
     info: userInfo_T
   ) {
     commit("userLogin", info);
-    dispatch("UserRefresh");
-    dispatch("recommendPlaylist");
-    dispatch("recommendSong");
-    dispatch("getUserPlaylist");
+    state.loginTime = new Date().getTime() - 2 * 60 * 60 * 1000;
+    dispatch("initQueryData");
   },
   // 刷新登录
   async UserRefresh({
@@ -105,13 +103,13 @@ const actions = {
     }: ActionContext<AppType, RootState>,
     info: userInfo_T
   ) {
-    if (
-      rootGetters.loginStatus &&
-      diffDays(localStorage.getItem("loginTime") || "") > 1
-    ) {
+    if (rootGetters.loginStatus && diffDays(state.loginTime + "") > 1) {
       // console.log("超过1天重新获取token", diffDays(localStorage.getItem("loginTime")), 5);
       dispatch("UserRefresh");
       dispatch("getLikelist");
+      dispatch("recommendPlaylist");
+      dispatch("recommendSong");
+      dispatch("getUserPlaylist");
     }
   },
 };

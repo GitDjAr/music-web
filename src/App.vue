@@ -1,5 +1,4 @@
 <template>
-  <div @click="toggleDark">toggleDark</div>
   <div v-if="first" :msg="user" @contextmenu.prevent>
     <!-- <Suspense>
       <router-view v-slot="{ Component, route }">
@@ -25,7 +24,6 @@
 
 <script setup lang="ts">
 import { useMagicKeys } from "@vueuse/core";
-import { useDark, useToggle } from "@vueuse/core";
 import { ref, watch } from "vue";
 import store from "./store";
 const first = ref(localStorage.getItem("info"));
@@ -39,10 +37,6 @@ if (first.value) {
   store.dispatch("initQueryData");
   window.$store = store;
 }
-
-// 主题
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
 
 //监听快捷键 方向键 ArrowUp, ArrowDown, ArrowLeft 和 ArrowRight 来表示
 const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight } =
