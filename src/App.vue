@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { useMagicKeys } from "@vueuse/core";
+import { useMagicKeys, useFullscreen } from "@vueuse/core";
 import { ref, watch } from "vue";
 import store from "./store";
 const first = ref(localStorage.getItem("info"));
@@ -38,10 +38,18 @@ if (first.value) {
   window.$store = store;
 }
 
+const { toggle } = useFullscreen();
+
 //监听快捷键 方向键 ArrowUp, ArrowDown, ArrowLeft 和 ArrowRight 来表示
-const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight } =
+const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight, F, M } =
   useMagicKeys();
 
+watch(M, (v) => {
+  v && toggle();
+});
+watch(F, (v) => {
+  v && toggle();
+});
 watch(space, (v) => {
   if (v) {
     store.state.song.Player.pause();
