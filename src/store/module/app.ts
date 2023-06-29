@@ -78,7 +78,11 @@ const actions = {
   ) {
     commit("userLogin", info);
     state.loginTime = new Date().getTime() - 2 * 60 * 60 * 1000;
-    dispatch("initQueryData");
+    dispatch("UserRefresh");
+    dispatch("getLikelist");
+    dispatch("recommendPlaylist");
+    dispatch("recommendSong");
+    dispatch("getUserPlaylist");
   },
   // 刷新登录
   async UserRefresh({
