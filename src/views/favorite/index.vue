@@ -1,53 +1,115 @@
 <!--  -->
 <template>
-  <div class="w-full h-52 flex">
-    <div class="container-1">Container 1</div>
-    <div class="flex-1 bg-slate-500">
-      <!-- <div
-        class="text-left pl-5 pb-4 transition-all w-full flex flex-col justify-between h-52"
+  <div class="w-full h-52">
+    <div class="w-full flex justify-between mb-3">
+      <div
+        :class="`w-1/3 mx-4 p-2 rounded-md h-52 overflow-hidden relative bg-gradient-to-r from-[${randomColor()}] text-white text-left text-xl`"
+        v-for="item in titleList"
+        :key="item.id"
       >
-        asdfasd
-      </div> -->
-      <div class="hybull container-2 flex">
-        <div>Div 1</div>
-        <div>Div 2</div>
-        <div>Div 3</div>
-        <div class="long-text">
-          This is a very long text that should be hidden if it overflows.
+        <div class="">
+          <div class="mb-8">{{ item.name }}</div>
+          <div v-if="typeof item.content === 'string'" class="text-2xl">
+            {{ item.content }}
+          </div>
+          <div v-else class="flex">
+            <Image :src="item.img" :wh="[300, 300]"></Image>
+            <div class="ml-2">
+              <p>{{ item.content.songName }}</p>
+              <span>{{ item.content.singer }}</span>
+            </div>
+          </div>
+        </div>
+        <Image
+          :src="item.url"
+          :wh="[300, 300]"
+          class="absolute top-0 right-0 bottom-0 -z-10"
+        ></Image>
+        <!-- <div>{{ item. }}</div> -->
+      </div>
+    </div>
+    <div class="flex h-96">
+      <div class="w-2/3 mx-4 rounded-md bg-[#f2f3f5]">
+        <h3 class="text-xl mb-2">推荐新音乐</h3>
+        <div v-for="(item, index) in newSongList">
+          <Song
+            class="border-none"
+            :id="item.id"
+            :dt="item.dt"
+            :songName="item.name"
+            :singer="item?.song?.artists.map((e) => e.name).join('/')"
+            :url="item?.picUrl"
+            @click="play(item)"
+            :style="{ '--stagger': index }"
+            data-animate
+          />
         </div>
       </div>
+      <echartsVue class="w-1/3 mx-4" :randomColor="randomColor" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { RouterLink, useRouter } from "vue-router";
-import { ref, getCurrentInstance, reactive, inject } from "vue";
-console.log(inject("InjectionState"), getCurrentInstance());
+import echartsVue from "./echarts.vue";
+import Song from "@/components/song.vue";
+import { newSong } from "@/api/playlist";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+import { useStore } from "vuex";
+import { rgbToHex } from "@/utils/getImgsColor";
 
 const router = useRouter();
-const state = reactive({
-  count: 0,
-});
-</script>
-<style scoped lang="scss">
-.hybull div {
-  margin: 5px 10px;
-}
+const store = useStore();
 
-.container-2 {
-  flex: 1;
-  background-color: lightgreen;
-  overflow: hidden;
+const randomColor = () => {
+  let color = getComputedStyle(document.body)
+    .getPropertyValue(`--${store.getters?.tagColor}-6`)
+    ?.split(",")
+    .map((e) => +e);
+  return rgbToHex(color[0], color[1], color[2]);
+};
+const titleList = ref<{}>([
+  {
+    id: 1,
+    name: "歌曲",
+    color: randomColor(),
+    content: "30044",
+    url: "https://imgapi.cn/api.php",
+  },
+  {
+    id: 2,
+    name: "喜欢",
+    color: randomColor(),
+    content: {
+      songName: "songName",
+      singer: "singer",
+      img: "https://imgapi.cn/api.php",
+    },
+    url: "https://imgapi.cn/api.php",
+  },
+  {
+    id: 3,
+    name: "艺术家",
+    color: randomColor(),
+    content: "周杰伦",
+    url: "https://imgapi.cn/api.php",
+  },
+]);
+
+const newSongList = ref<any>([]);
+async function getNewSong() {
+  const { result } = await newSong();
+  newSongList.value = result.splice(0, 6);
 }
-.container-1 {
-  width: 20%;
-  min-width: 160px;
-  background-color: lightblue;
+getNewSong();
+
+function play(item: { id: any }) {
+  store.dispatch("ToggleSong", {
+    id: item.id,
+    playListId: "推荐新音乐",
+    list: newSongList.value,
+  });
 }
-.long-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>
+</script>
+<style scoped lang="scss"></style>

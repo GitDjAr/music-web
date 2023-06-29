@@ -371,3 +371,30 @@ export function songHistory(params: Object) {
     params,
   });
 }
+
+/**
+ * 推荐新音乐
+说明 : 调用此接口 , 可获取推荐新音乐
+可选参数 : limit: 取出数量 , 默认为 10 (不支持 offset)
+接口地址 : /personalized/newsong
+ */
+export function newSong(params?: Object) {
+  return request<And<any>>({
+    url: "/personalized/newsong",
+    method: "get",
+    params,
+  });
+}
+
+
+/**
+ * 曲风偏好
+说明: 登录后调用此接口获取我的曲风偏好
+接口地址: /style/preference
+ */
+export function preference() {
+  return request<And<any>>({
+    url: "/style/preference",
+    method: "get",
+  });
+}
