@@ -45,13 +45,13 @@
           />
         </div>
       </div>
-      <echartsVue class="w-1/3 mx-4" :randomColor="randomColor" />
+      <proportionVue class="w-1/3 mx-4" :randomColor="randomColor" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import echartsVue from "./echarts.vue";
+import proportionVue from "./echarts/proportion.vue";
 import Song from "@/components/song.vue";
 import { newSong } from "@/api/playlist";
 import { useRouter } from "vue-router";
