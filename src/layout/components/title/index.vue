@@ -9,7 +9,7 @@
         :key="index"
         :style="{ background: item.c }"
         @click="item.handler"
-        v-hover="item.tip"
+        v-hover:300="item.tip"
       ></li>
     </ul>
   </div>

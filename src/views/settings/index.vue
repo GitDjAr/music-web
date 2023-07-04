@@ -35,10 +35,11 @@
         ></a-option>
       </a-select>
     </div>
-    <div class="listItem">
+    <!-- <div class="listItem">
       <h2>播放器样式:</h2>
+      {{ isDark }}
       <a-switch type="round" v-model="isDark" @change="toggleDark" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -47,6 +48,7 @@ import { useDark, useToggle } from "@vueuse/core";
 import { reactive, Ref, ref, computed } from "vue";
 import store from "../../store";
 import type { levelEnum } from "./type";
+import { watch } from "vue";
 
 const level: Ref<levelEnum> = ref([
   { value: "standard", label: " 标准" },
@@ -67,8 +69,8 @@ const musicLevel = computed(() => {
   return store.state?.song.musicLevel;
 });
 
-const isDark = ref(useDark());
-const toggleDark = useToggle(isDark);
+// const isDark = ref(useDark());
+// const toggleDark = useToggle(isDark);
 </script>
 <style scoped lang="scss">
 .listBox {
