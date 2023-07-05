@@ -14,12 +14,35 @@
     </ul>
   </div>
   <div class="flex">
+    <div class="flex mx-3 h-[40px] items-center">
+      <a-popover position="bottom">
+        <a-badge :count="9" dot :offset="[2, -2]">
+          <IconNotification
+            :style="{ color: '#888', fontSize: '18px', verticalAlign: '-3px' }"
+          />
+        </a-badge>
+        <template #content>
+          <a-card
+            :style="{ width: '500px', marginLeft: '24px' }"
+            title="消息"
+            hoverable
+            :bordered="false"
+          >
+            <template #extra>
+              <!-- <a-link>全部已读</a-link> -->
+            </template>
+            <meMsg />
+          </a-card>
+        </template>
+      </a-popover>
+    </div>
     <searchVue />
     <div class="ml-3">
       <a-button type="text" v-if="!loginStatus" @click="loginPage">{{
         $t("login.login")
       }}</a-button>
-      <a-popover v-else trigger="click">
+
+      <a-popover>
         <Image
           :src="userInfo.title"
           style="width: 40px; height: 40px"
@@ -36,6 +59,7 @@
 </template>
 
 <script lang="ts" setup>
+import meMsg from "@/views/me/index.vue";
 import { useDark, useToggle } from "@vueuse/core";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";

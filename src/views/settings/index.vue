@@ -48,7 +48,6 @@ import { useDark, useToggle } from "@vueuse/core";
 import { reactive, Ref, ref, computed } from "vue";
 import store from "../../store";
 import type { levelEnum } from "./type";
-import { watch } from "vue";
 
 const level: Ref<levelEnum> = ref([
   { value: "standard", label: " 标准" },

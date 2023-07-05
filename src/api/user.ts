@@ -317,3 +317,20 @@ export function _user_subcount(params: object = {}) {
     params,
   });
 }
+
+
+/**
+ * 通知 - 通知
+说明 : 登录后调用此接口 ,可获取通知
+可选参数 :
+limit : 返回数量 , 默认为 30
+lasttime : 返回数据的 time ,默认-1,传入上一次返回结果的 time,将会返回下一页的数据
+接口地址 : /msg/notices
+ */
+export function _notice(params: object = {}) {
+  return request({
+    url: "/msg/notices",
+    method: "get",
+    params,
+  });
+}
