@@ -49,7 +49,7 @@ watch([curPlaySong, lyricColor], ([curV, curO]) => {
       lyricColor.value ? findClosestColor(res) : "#FDCF41"
     }`;
   });
-  curV.img !== curV.img && tickLyrics(undefined, 0);
+  curV.img !== curO.img && tickLyrics(undefined, 0);
 });
 
 // 歌词滚动
