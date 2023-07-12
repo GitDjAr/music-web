@@ -318,7 +318,7 @@ const actions = {
 
 function lrcArray(
   str: string,
-  flag: string = "id"
+  flag: string = "id" //版本
 ): Array<{ time: number; txt: string }> {
   const f = (e: string) => {
     let time = e.split("]")[0].slice(1, -1);

@@ -29,10 +29,11 @@
       </div>
     </div>
     <div class="flex h-96">
-      <div class="w-2/3 mx-4 rounded-md bg-[#f2f3f5]">
+      <div class="w-2/3 mx-4">
         <h3 class="text-xl mb-2">推荐新音乐</h3>
-        <div v-for="(item, index) in newSongList">
+        <div class="bg-[#f2f3f5] rounded-md px-2">
           <Song
+            v-for="(item, index) in newSongList"
             class="border-none"
             :id="item.id"
             :dt="item.dt"
@@ -45,13 +46,13 @@
           />
         </div>
       </div>
-      <echartsVue class="w-1/3 mx-4" :randomColor="randomColor" />
+      <echarts class="w-1/3 mx-4" :randomColor="randomColor" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import echartsVue from "./echarts.vue";
+import echarts from "./echarts/index.vue";
 import Song from "@/components/song.vue";
 import { newSong } from "@/api/playlist";
 import { useRouter } from "vue-router";

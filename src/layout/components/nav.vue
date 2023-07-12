@@ -73,6 +73,7 @@ function NavMatch(path: string) {
 </script>
 <style scoped lang="scss">
 .Nav-list {
+  transition: all 0.5s ease-in-out;
   color: var(--my-color);
   display: flex;
   align-items: center;
@@ -85,6 +86,7 @@ function NavMatch(path: string) {
 }
 
 .NavActive {
+  transition: all 0.5s ease-in-out;
   color: $T3;
   background: var(--color-fill-2);
   font-weight: bold;

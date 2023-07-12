@@ -12,17 +12,26 @@ const hoverTitle: Directive = {
         $dom = h(
           "div",
           {
-            id: "test",
-            class: `p-1 rounded-sm text-sm text-white leading-3 bg-gray-500 font-light absolute transition-all duration-200 z-10`,
             style: {
-              top: `${y.value + 15}px`,
-              left: `${x.value + 15}px`,
+              top: `${y.value + 10}px`,
+              left: `${x.value + 10}px`,
+              position: "absolute",
+              zIndex: "10",
+              padding: "0.375rem",
+              backgroundColor: "#6B7280",
+              transitionProperty: "all",
+              transitionDuration: "200ms",
+              color: "#ffffff",
+              fontSize: "0.875rem",
+              fontWeight: "300",
+              lineHeight: ".75rem",
+              borderRadius: "0.125rem",
             },
           },
           binding.value
         );
         render($dom, document.body);
-      }, +(binding?.arg || 0) || 1000);
+      }, +(binding?.arg || 0) || 500);
     }
     el.addEventListener("mouseover", renderDom);
     el.addEventListener("mouseout", () => {
@@ -32,7 +41,6 @@ const hoverTitle: Directive = {
       //当第一个参数为 null 时，render 函数会将容器中的 vnode 节点移除，并销毁其对应的实例
       $dom = null;
       render($dom, document.body);
-
     });
   },
 };

@@ -17,14 +17,16 @@
 </template>
 
 <script lang="ts" setup>
+// import { delay } from "@/utils/delay";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { songHistory, T } from "@/api/playlist";
 
 const store = useStore();
 
-const playList = ref<Partial<T.PlayObj>>({});
+const playList = ref<Partial<T.PlayObj>[]>(Array(12).fill({ data: {} }));
 async function getList() {
+  // await delay(2000);
   playList.value = (await songHistory({})).data.list;
 }
 getList();
