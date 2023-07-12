@@ -15,7 +15,7 @@
   </div>
   <div class="flex">
     <div class="flex mx-3 h-[40px] items-center">
-      <a-popover position="bottom">
+      <a-popover position="bottom" trigger="click">
         <a-badge :count="9" dot :offset="[2, -2]">
           <IconNotification
             :style="{ color: '#888', fontSize: '18px', verticalAlign: '-3px' }"

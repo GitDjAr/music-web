@@ -2,22 +2,14 @@
 <template>
   <a-list :max-height="500" @reach-bottom="get_notice">
     <a-list-item v-for="(item, idx) in User_notices" :key="idx">
-      <!-- @click="showModel(item)" -->
       <a-list-item-meta
+        @click="showModel(item)"
         :title="
           item.notice?.user?.nickname +
-          +' ' +
           typeMap[item?.type] +
           ' 你的 ' +
           trackMap[item.notice?.type]
         "
-        :description="`[${
-          item?.notice?.track?.song?.name ||
-          item?.notice?.track?.video?.title ||
-          item?.notice?.track?.album?.title ||
-          item?.notice?.track?.playlist?.name ||
-          item?.notice?.track?.comment?.content
-        } ] - ${item?.notice?.track?.msg}`"
       >
         <template #avatar>
           <Image
@@ -25,6 +17,19 @@
             :src="item.notice?.user?.avatarUrl"
             :wh="[50, 50]"
           />
+        </template>
+        <template #description>
+          <div class="truncate w-[370px] overflow-hidden">
+            {{
+              `${
+                item?.notice?.track?.song?.name ||
+                item?.notice?.track?.video?.title ||
+                item?.notice?.track?.album?.title ||
+                item?.notice?.playlist?.name ||
+                item?.notice?.comment?.content
+              }  - ${item?.notice?.track?.msg ? item?.notice?.track?.msg : ""}`
+            }}
+          </div>
         </template>
       </a-list-item-meta>
     </a-list-item>
@@ -34,6 +39,10 @@
 <script lang="ts" setup>
 import { _notice } from "@/api/user";
 import { ref, onMounted, reactive } from "vue";
+
+function showModel() {
+  console.log("showModel-开发中");
+}
 
 const User_notices = ref([]);
 

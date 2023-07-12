@@ -22,6 +22,7 @@
     </div>
     <div class="flex-1 w-0" ref="refBox">
       <div
+        v-if="Albums.name"
         :class="`text-left   pb-4  transition-all w-full flex flex-col justify-between  h-52 `"
         style="color: var(--my-color)"
       >
@@ -43,6 +44,17 @@
           >
         </div>
       </div>
+
+      <a-skeleton v-else :animation="true" class="h-52 pt-5">
+        <div class="mb-5">
+          <a-skeleton-line :rows="1" :widths="['90%']" :line-height="35" />
+        </div>
+        <a-skeleton-line
+          :rows="3"
+          :widths="['40%', '50%', '80%']"
+          :line-height="22"
+        />
+      </a-skeleton>
       <div
         class="hybull bg-opacity-90 backdrop-filter backdrop-blur-sm flex flex-col overflow-y-auto"
         v-infinite-scroll="scrollLoad"
@@ -73,6 +85,7 @@ export default { name: "playlist" };
 </script>
 
 <script lang="ts" setup>
+// import { delay } from "@/utils/delay";
 import Button from "@/components/button/index.vue";
 import ModalVue from "@/components/Modal.vue";
 
@@ -96,7 +109,7 @@ const id: number = +route.params?.id;
 
 const visible = ref(false);
 
-const params = reactive({ id, limit: 100, pageNum: 0, offset: 0 });
+const params = reactive({ id, limit: 50, pageNum: 0, offset: 0 });
 const Albums = ref<Partial<T.PlayObj>>({});
 async function get_playlist_detail() {
   const { playlist } = await _playlist_detail({ id });
@@ -108,11 +121,13 @@ type alb = T.MusicPlayList & {
   al?: { picUrl: string };
   dt: number;
 };
-const AlbumsList = ref<alb[]>([]);
+const AlbumsList = ref<alb[]>(Array(8).fill({}));
 
 async function get_playlist_track_all() {
   if (Albums.value?.trackCount === AlbumsList.value.length) return;
   const { songs = [] } = await _playlist_track_all(params);
+  // await delay(3000);
+  AlbumsList.value = AlbumsList.value.filter((e) => e.id);
   AlbumsList.value.push(...(songs as alb[]));
 }
 get_playlist_detail();

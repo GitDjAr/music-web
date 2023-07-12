@@ -18,7 +18,6 @@
         <Image
           style="width: 50px"
           class="rounded-lg object-cover cursor-pointer"
-          :wh="[100, 100]"
           :src="curPlaySong.img"
         />
         <div class="w-48">
