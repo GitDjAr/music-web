@@ -35,18 +35,21 @@ import { useStorage } from "@vueuse/core";
 import type { CurSongInfo } from "@/store/module/song";
 import { ref, onBeforeUnmount, computed, watch, onMounted } from "vue";
 import Store from "@/store";
-import { getImgsColor } from "@/utils/getImgsColor";
+import { getImgsColor, findClosestColor } from "@/utils/getImgsColor";
 
 const curPlaySong = computed<CurSongInfo>(() => Store.getters.curPlaySong);
 const Player = computed(() => Store.state?.song?.Player);
-const styleImg = ref("--ImgColor:#fff");
+const lyricColor = computed(() => Store.state?.app?.lyricColor);
+const styleImg = ref("--ImgColor:#FDCF41");
 // const $emit = defineEmits(["cancel"]);
 
-watch(curPlaySong, (v) => {
-  getImgsColor(v.picUrl, true).then((res: string) => {
-    styleImg.value = `--ImgColor:${res}`;
+watch([curPlaySong, lyricColor], ([curV, curO]) => {
+  getImgsColor(curV.img).then((res: string) => {
+    styleImg.value = `--ImgColor:${
+      lyricColor.value ? findClosestColor(res) : "#FDCF41"
+    }`;
   });
-  tickLyrics(undefined, 0);
+  curV.img !== curV.img && tickLyrics(undefined, 0);
 });
 
 // 歌词滚动
@@ -106,7 +109,6 @@ svg.transform.myfont {
   transform: scale(1.1);
   transform: translateX(-10px);
   transition: all;
-  color: #cbcb86;
   font-size: 1.7rem;
 
   span {
@@ -127,6 +129,7 @@ svg.transform.myfont {
   position: relative;
   height: 100%;
   width: 100%;
+  transition: background-image 1s;
 
   background-color: rgba(0, 0, 0, 0.4);
 

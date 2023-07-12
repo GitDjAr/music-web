@@ -10,6 +10,7 @@ import type { RootState } from "../index";
 export interface AppType {
   userInfo: userInfo_T;
   locale?: string;
+  lyricColor?: boolean;
   tagColor: [
     "red",
     "orangered",
@@ -43,6 +44,7 @@ const tagColor = [
 ];
 const state = {
   locale: useStorage("locale", "zh-CN"), //语言
+  lyricColor: useStorage("lyricColor", true), //语言
   cookie: useStorage("cookie", ""),
   loginTime: useStorage("loginTime", ""), // 记录登录时间
   tagColor,
@@ -54,6 +56,11 @@ const mutations = {
   },
   userLogin: (state: AppType, status: userInfo_T): void => {
     state.userInfo = status;
+  },
+  setLyricColor: (state: AppType, status: boolean): void => {
+    console.log("setLyricColor", status);
+
+    state.lyricColor = status;
   },
 };
 const actions = {
