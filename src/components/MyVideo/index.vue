@@ -1,7 +1,18 @@
 <!--  -->
 <template>
-  <ModalVue to="body" :class="`${proportion ? 'h-full' : ''}`" :empty="true" :visible="P.show" @close="handleClose">
-    <vue-plyr v-loading="loading" :options="VideoOptions" ref="videoRef">
+  <ModalVue
+    to="body"
+    :class="`${proportion ? 'h-full' : ''} transition-all`"
+    :empty="true"
+    :visible="P.show"
+    @close="handleClose"
+  >
+    <vue-plyr
+      v-loading="loading"
+      :options="VideoOptions"
+      ref="videoRef"
+      class="transition-all"
+    >
       <video :src="videoSrc"></video>
     </vue-plyr>
   </ModalVue>
@@ -9,6 +20,7 @@
 
 <script lang="ts" setup>
 import { _mv_url } from "@/api/user";
+import vuePlyr from "@/components/playVideo/index.vue";
 import videoInstance from "@/components/MyVideo/type";
 import { onMounted } from "vue";
 import { watch, withDefaults, computed, ref, Ref } from "vue";
@@ -27,7 +39,7 @@ const P = withDefaults(
   }>(),
   {
     show: false,
-  }
+  },
 );
 
 // 视频api
@@ -53,13 +65,13 @@ watch(
     } else if (P.show) {
       VideoPlay();
     }
-  }
+  },
 );
 watch(
   () => P.id,
   () => {
     get_mv_url();
-  }
+  },
 );
 
 // 计算 比例
@@ -68,7 +80,7 @@ onMounted(() => {
   player.value.on("loadedmetadata", () => {
     const { videoWidth, videoHeight } = player.value.media;
     let seep = videoWidth / videoHeight;
-    proportion.value = !(seep > 1.3 && seep < 2);
+    proportion.value = !(1.5 < seep && seep < 2);
   });
 });
 
