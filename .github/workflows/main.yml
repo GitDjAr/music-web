@@ -19,8 +19,8 @@ jobs:
           node-version: 14.19.0
           cache: "npm"
           # 构建使用 npm ci 加速  https://dwye.dev/post/github-action-npm-cache/ ,https://blog.csdn.net/Hodors/article/details/127726899
-      # - run: npm install # 安装第三方包
-      - run: npm ci
+      # - run: npm ci
+      - run: npm install # 安装第三方包
       - run: npm run b # 打包
       - run: tar -zcvf release.tgz dist/
         # 把.nuxt、nuxt.config.js等文件，打包压缩为release.tgz
