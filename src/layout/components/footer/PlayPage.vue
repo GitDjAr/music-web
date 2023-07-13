@@ -15,7 +15,7 @@
         <div class="lyricsItem overflow-y-scroll h-full mr-3" style="">
           <ul class="my-10" :style="styleImg">
             <li
-              class="transition-all text-xl mx-6 py-3 px-6 font-bold rounded-lg cursor-pointer select-none text-slate-300"
+              class="transition-all  text-xl mx-6 py-3 px-6 font-bold rounded-lg cursor-pointer select-none text-slate-300"
               :class="{ line: index == active }"
               v-for="(item, index) in curPlaySong.lrc"
               :id="item.time + ''"
@@ -106,8 +106,7 @@ svg.transform.myfont {
 .line {
   color: var(--ImgColor);
   transform-origin: left center;
-  transform: scale(1.1);
-  transform: translateX(-10px);
+  transform:   scale(1.1) translateX(-10px);
   transition: all;
   font-size: 1.7rem;
 
