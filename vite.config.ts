@@ -3,7 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import * as path from "path";
 //pwa
 import { VitePWA } from "vite-plugin-pwa";
-import { GenerateSW } from "workbox-webpack-plugin";
+// import { GenerateSW } from "workbox-webpack-plugin";
 
 //icons
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
@@ -44,15 +44,15 @@ export default defineConfig({
         ],
       },
     }),
-    {
-      name: "workbox",
-      apply: "build",
-      plugins: [
-        new GenerateSW({
-          swDest: "public/sw.js",
-        }),
-      ],
-    } as PluginOption,
+    // {
+    //   name: "workbox",
+    //   apply: "build",
+    //   plugins: [
+    //     new GenerateSW({
+    //       swDest: "public/sw.js",
+    //     }),
+    //   ],
+    // } as PluginOption,
     zip({
       outputName: "music",
     }),

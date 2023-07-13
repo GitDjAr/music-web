@@ -5,12 +5,10 @@ import router from "./router";
 
 // tailwind.css  样式覆盖问题
 // https://github.com/arco-design/arco-design-vue/issues/759
-import "vue-plyr/dist/vue-plyr.css";
 import "./style/tailwind.css";
 import "./style/reset-arco.scss";
 
 import ArcoVue from "@arco-design/web-vue"; //
-import vuePlyer from "vue-plyr";
 import ArcoVueIcon from "@arco-design/web-vue/es/icon"; //额外引入图标库
 import "@arco-design/web-vue/dist/arco.css";
 import I18n from "./locale/index";
@@ -74,7 +72,6 @@ Sentry.init({
 app
   .use(ArcoVue)
   .use(ArcoVueIcon)
-  .use(vuePlyer, { play: {} })
   .use(store)
   .use(router)
   .use(I18n)
