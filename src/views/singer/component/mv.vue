@@ -55,15 +55,20 @@ const P = defineProps<{
 watch(
   () => P.Activated,
   () => {
-    console.log(111);
-
     if (P.Activated === true) {
-      searchSuggest();
+    // console.log('激活周期',P.Activated)
+      setTimeout(() => {
+        searchSuggest();
+      }, 100);
     }
+  },
+  {
+    immediate: true
   }
 );
 const Emit = defineEmits<{
   (e: "updateId", v: string): void;
+  (e: "update", v: boolean): void;
 }>();
 
 // 滚动加载
@@ -80,7 +85,7 @@ const query = reactive({
   limit: 15,
   pageNum: 1,
 });
-const searchSuggest = async (id?: string) => {
+async function searchSuggest(id?: string) {
   const { mvs = [] } = await _artist_mv({ ...query, offset: offset.value });
   mvList.value.push(...mvs);
   // 更新激活标记

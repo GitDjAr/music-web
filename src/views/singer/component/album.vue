@@ -37,9 +37,9 @@ async function get_artist_album() {
       offset: offset.value,
     });
     albumsList.value.push(...hotAlbums);
-    if (hotAlbums.length == 0 && albumsList.value.length % 2 == 1) {
-      albumsList.value.push({});
-    }
+    // if (hotAlbums.length == 0 && albumsList.value.length % 2 == 1) {
+    //   albumsList.value.push({});
+    // }
   } catch (error) {
     console.log(error);
   }

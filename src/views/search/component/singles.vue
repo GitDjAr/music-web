@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, watch ,onActivated} from "vue";
 import { cloudsearch, T } from "@/api/playlist";
 import { useStore } from "vuex";
 const store = useStore();
@@ -51,8 +51,13 @@ function play(item: { id: any }) {
     list: searchList.value,
   });
 }
+
 // 单曲 搜索
 const searchList = ref<T.Track[] &  T.MusicPlayList[]>([]);
+// 激活之前清空
+onActivated(()=>{
+  searchList.value =[]
+})
 const searchSuggest = async (key?: string) => {
   const {
     result: { songs },
@@ -66,5 +71,7 @@ searchSuggest();
 defineExpose({
   searchSuggest,
 });
+
+
 </script>
 <style scoped lang="scss"></style>

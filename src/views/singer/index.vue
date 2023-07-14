@@ -94,10 +94,6 @@ const updateSinger = (v: string) => {
   });
   if (active.value !== "1") {
     activeFun("0");
-  } else {
-    nextTick(() => {
-      // itemRefList.value[0].searchSuggest()
-    });
   }
   get_artist_detail();
 };
