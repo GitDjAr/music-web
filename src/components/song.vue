@@ -16,7 +16,7 @@
       </div>
       <!-- tag subType=现场版 -->
       <!-- <div>{{ subType }}</div> -->
-      <div>{{ songInfo?.singer }}</div>
+      <div @click.stop="goUser(songInfo)">{{ songInfo?.singer }}</div>
       <div class="w-40 flex justify-around mr-2">
         <MyPlay :id="songInfo.id" />
         <MyLike :id="songInfo.id" />
@@ -45,21 +45,32 @@
 <script lang="ts" setup>
 import { formatTime } from "@/utils/format";
 import { withDefaults } from "vue";
+import {useRouter} from 'vue-router'
+import { GetSongDetail } from "@/api/play";
+const router = useRouter()
 
-const songInfo = withDefaults(
-  defineProps<{
+interface songInfo {
     url?: string;
     singer?: string;
     songName?: string;
     id: number;
     dt?: number;
     orgin?: string;
-  }>(),
+}
+const songInfo = withDefaults(
+  defineProps<songInfo>(),
   {
     url: "",
     dt: 0,
   }
 );
 // console.log('songInfo',songInfo);
+
+async function goUser(row:songInfo) {
+const id=(await GetSongDetail({ ids: row.id }))?.songs[0]?.ar[0]?.id
+  if(id){
+    router.push({ name: "singer", params: { id } });
+  }
+}
 </script>
 <style scoped lang="scss"></style>

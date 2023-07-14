@@ -39,10 +39,16 @@ function toPage() {
 }
 </script>
 <style scoped lang="scss">
-.mybox:hover .changping {
+
+.mybox{
+  background: var(--color-fill-2);
+  &:hover{
+  background-color: rgb(240 249 255 / var(--tw-bg-opacity))
+  }
+  &:hover .changping {
   -webkit-animation: rotate-center 5s linear infinite;
   animation: rotate-center 5s linear infinite;
-}
+}}
 
 @keyframes rotate-center {
   0% {

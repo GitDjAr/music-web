@@ -89,23 +89,23 @@ body {
   --my-white: var($Bcolor);
   --my-color: #2c3e50;
   --image-url: url("./assets/albums-bg.png");
-  // &::after {
-  //   transition: all 0.5s ease-in-out;
-  //   content: "";
-  //   position: absolute;
-  //   z-index: -1;
-  //   top: 0;
-  //   left: 0;
-  //   right: 0;
-  //   height: 0;
-  //   opacity: 0;
-  //   background-image: linear-gradient(
-  //     -20deg,
-  //     #ddd6f3 0%,
-  //     #faaca8 100%,
-  //     #faaca8 100%
-  //   );
-  // }
+  &::after {
+    transition: all 0.5s ease-in-out;
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    opacity: 0;
+    background-image: linear-gradient(
+      -20deg,
+      #ddd6f3 0%,
+      #faaca8 100%,
+      #faaca8 100%
+    );
+  }
 }
 
 html.dark body {
