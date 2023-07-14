@@ -61,9 +61,9 @@ const searchFun: searchF = (Rows) => {
       path: "/Music/search",
       query: { searchKey: <string>str },
     });
-  } else if (Rows.TYPE === "artists" || Rows.TYPE === "albums") {
+  } else if (Rows?.TYPE === "artists" || Rows?.TYPE === "albums") {
     router.push({ path: `/Music/${Rows.TYPE}/${Rows.id}` });
-  } else if (Rows.TYPE === "playlists") {
+  } else if (Rows?.TYPE === "playlists") {
     router.push({ path: `/Music/${Rows.TYPE}/${Rows.id}` });
   } else {
     router.push({

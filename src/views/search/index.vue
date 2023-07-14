@@ -1,9 +1,9 @@
 <!--  -->
 <template>
   <div class="flex flex-col w-full h-full">
-    <div class="h-1/10 max-h-72 overflow-hidden">
+    <!-- <div class="h-1/10 max-h-72 overflow-hidden">
       <Image class="h-full w-full" />
-    </div>
+    </div> -->
     <h1 class="text-lg">
       根据<span class="text-sky-300 inline-block px-1">{{ searchKey }}</span>搜索显示
     </h1>
@@ -101,7 +101,7 @@ const activeFun = (id: string | number) => {
 </script>
 <style scoped lang="scss">
 .My-space {
-  height: calc(100% - 10% - 50px);
+  // height: calc(100% - 10% - 50px);
   overflow: hidden;
 
   :deep(.arco-tabs-content-list),
