@@ -23,9 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import { useMagicKeys, useFullscreen } from "@vueuse/core";
+import { useMagicKeys, useFullscreen, useActiveElement,useIntersectionObserver  } from "@vueuse/core";
 import { ref, watch } from "vue";
 import store from "./store";
+import { computed } from "vue";
 const first = ref(localStorage.getItem("info"));
 const user: string = "Hello " + localStorage.getItem("user");
 const firstF = () => {
@@ -37,42 +38,51 @@ if (first.value) {
   store.dispatch("initQueryData");
   window.$store = store;
 }
-
+const Player:any = computed(()=>(store.state.song?.Player ||{}))
 const { toggle } = useFullscreen();
 
 //监听快捷键 方向键 ArrowUp, ArrowDown, ArrowLeft 和 ArrowRight 来表示
-const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight, F, M } =
+const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight, F, } =
   useMagicKeys();
 
-watch(M, (v) => {
-  v && toggle();
-});
+
+// 禁止使用快捷键
+const isHotKey = () => {
+  const el = useActiveElement()
+  console.log('el.value?.tagName',Player,el.value?.tagName,);
+
+
+  return el.value?.tagName !== "INPUT"
+    && el.value?.tagName !== "TEXTAREA"
+    && el.value?.tagName !== "SELECT"
+    && el.value?.tagName !== "VIDEO"
+};
+
 watch(F, (v) => {
-  v && toggle();
+  v && isHotKey() && toggle();
 });
 watch(space, (v) => {
-  if (v) {
-    store.state.song.Player.pause();
-  }
+  v && isHotKey() && Player.value?.pause();
 });
 watch(Ctrl_ArrowLeft, (v) => {
-  v && store.state.song?.Player?.prevSong();
+  v && isHotKey() && Player.value?.prevSong();
 });
 watch(Ctrl_ArrowRight, (v) => {
-  v && store.state.song?.Player?.nextSong();
+  v && isHotKey() && Player.value?.nextSong();
 });
 watch(ArrowUp, (v) => {
-  v &&
-    store.state.song.Player._setvolume(store.state.song.Player._volume + 0.1);
+  v && isHotKey() &&
+    Player.value?._setvolume(Player.value?._volume + 0.1);
 });
 watch(ArrowDown, (v) => {
-  v &&
-    store.state.song?.Player?._setvolume(store.state.song.Player._volume - 0.1);
+  v && isHotKey() &&
+    Player.value?._setvolume(Player.value?._volume - 0.1);
 });
 </script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@0;1&display=swap");
+
 body {
   transition: all 0.5s ease-in-out;
   position: relative;
@@ -97,6 +107,7 @@ body {
   //   );
   // }
 }
+
 html.dark body {
   --my-color: #fff !important;
   --image-url: url("");
@@ -112,10 +123,12 @@ html.dark body {
     right: 0;
     opacity: 1;
   }
+
   & span[class^="arco-"] {
     border-radius: 4px;
   }
 }
+
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -124,6 +137,7 @@ html.dark body {
   height: 100%;
   position: relative;
   overflow: hidden;
+
   &::after {
     content: "";
     position: absolute;
@@ -134,13 +148,12 @@ html.dark body {
     height: 0;
     transition: all 1s ease-in-out;
     opacity: 0;
-    background-image: linear-gradient(
-      -20deg,
-      #ddd6f3 0%,
-      #faaca8 100%,
-      #faaca8 100%
-    );
+    background-image: linear-gradient(-20deg,
+        #ddd6f3 0%,
+        #faaca8 100%,
+        #faaca8 100%);
   }
+
   &:hover {
     /* &::after {
       top: 0;
@@ -150,5 +163,4 @@ html.dark body {
       opacity: 1;
     } */
   }
-}
-</style>
+}</style>

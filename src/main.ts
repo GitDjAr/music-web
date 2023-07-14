@@ -34,8 +34,17 @@ import "./style/init.scss";
 import loading from "./directives/loading/loading";
 import hoverTitle from "./directives/hoverTitle";
 
-import { BrowserTracing } from "@sentry/tracing";
+import { BrowserTracing } from "@sentry/browser";
 import * as Sentry from "@sentry/vue";
+
+
+// import setupLocatorUI from "@locator/runtime";
+
+// if (import.meta.env.DEV) {
+//   setupLocatorUI({
+//     adapter: "vue"
+//   });
+// }
 
 // 图源
 
