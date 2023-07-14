@@ -11,7 +11,7 @@
     </Suspense> -->
     <router-view></router-view>
   </div>
-  <div v-else class="h-full flex justify-center items-center">
+  <div v-show="!first" class="h-full flex justify-center items-center">
     <transition name="slide-fade">
       <div class="justify-center items-center">
         <Logo />

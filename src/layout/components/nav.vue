@@ -18,9 +18,11 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import { ref, watch } from "vue";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 const Router = useRouter();
+const Store = useStore();
 
 interface NavItem {
   to: string;
@@ -48,6 +50,16 @@ if (import.meta.env.MODE === "development") {
     icon: "report-columns",
   });
 }
+// 是否登录
+watch(()=>Store.getters.loginStatus,(v)=>{
+console.log('123');
+if(v){
+const filterList = ['nav.radio','nav.favorite','nav.history']
+  NavList.value.filter(e=> filterList.includes(e.name) )
+}
+},{
+  immediate:true
+})
 
 // 导航
 const active = ref(-1);

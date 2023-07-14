@@ -15,6 +15,7 @@
         id="scrollTag"
         class="overflow-hidden transf flex ml-2 w-11/12 h-6"
         :class="{ model: showModel }"
+        ref="target"
       >
         <div
           v-for="(tag, index) of tags"
@@ -75,7 +76,7 @@
 
 <script lang="ts" setup>
 import PlayList from "./listcnp.vue";
-import { useStorage } from "@vueuse/core";
+import { useStorage,onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
 import Store from "@/store";
 import { useRouter } from "vue-router";
@@ -131,8 +132,11 @@ async function getPlayGather(name: string) {
   ).playlists;
 }
 
+
 // 标签
 const showModel = ref(false);
+const target = ref(null)
+onClickOutside(target, (event) => showModel.value = false);
 
 async function handleTag(tag: T.tags) {
   const { name } = tag;
