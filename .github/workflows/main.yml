@@ -67,20 +67,20 @@ jobs:
             # pm2 reload pm2.config.json
 
     # 成功或者失败钩子
-    notify:
-    needs: build
-    runs-on: ubuntu-latest
+    # notify:
+    # needs: build
+    # runs-on: ubuntu-latest
 
-    # if: ${{ needs.build.result == 'success' }}
+    # # if: ${{ needs.build.result == 'success' }}
 
-    steps:
-      # 步骤1：安装 curl 工具
-      - name: Install curl
-        run: sudo apt-get install curl -y
+    # steps:
+    #   # 步骤1：安装 curl 工具
+    #   - name: Install curl
+    #     run: sudo apt-get install curl -y
 
-      # 步骤2：发送通知到 Slack
-      - name: Send Notification
-        env:
-          SLACK_WEBHOOK_URL: ${{ https://oapi.dingtalk.com/robot/send?access_token=4461e6fe281c137ddd08169a16dd3ac2f7d180b7f65c3dfdf0c9867975b78f58&secret=SECaf718f3378854a3f55c6e14dddb41beb26daa5f96fa3e137eedcc2b66cf15f49&timestamp=1689240675086 }}
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Workflow succeeded!"}' $SLACK_WEBHOOK_URL
+    #   # 步骤2：发送通知到 Slack
+    #   - name: Send Notification
+    #     env:
+    #       SLACK_WEBHOOK_URL: ${{ https://oapi.dingtalk.com/robot/send?access_token=4461e6fe281c137ddd08169a16dd3ac2f7d180b7f65c3dfdf0c9867975b78f58&secret=SECaf718f3378854a3f55c6e14dddb41beb26daa5f96fa3e137eedcc2b66cf15f49&timestamp=1689240675086 }}
+    #     run: |
+    #       curl -X POST -H 'Content-type: application/json' --data '{"text":"Workflow succeeded!"}' $SLACK_WEBHOOK_URL
