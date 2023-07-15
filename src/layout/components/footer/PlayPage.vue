@@ -7,7 +7,7 @@
         <div class="flex justify-center items-center rounded-md overflow-hidden ">
           <Image :src="curPlaySong.img" class="w-3/5 rounded-md overflow-hidden object-cover" />
         </div>
-        <div class="lyricsItem overflow-y-scroll h-full mr-3" style="">
+        <div class="lyricsItem overflow-y-scroll h-full mr-3 " :class="curPlaySong.lrc.length <= 10 ? `flex items-center` : ''">
           <ul class="my-10" :style="styleImg">
             <li
               class="transition-all    text-xl mx-6 py-3 px-6 font-bold rounded-lg cursor-pointer select-none text-slate-300"
