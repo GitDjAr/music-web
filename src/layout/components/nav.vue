@@ -72,7 +72,8 @@ watch(
 
 // 匹配路由索引
 function NavMatch(path: string) {
-  const index = NavList.value.findIndex((item) => item.to === path);
+  const index = NavFilter.value.findIndex((item) => item.to === path);
+  console.log('path', path, index);
   active.value = index;
   return index;
 }

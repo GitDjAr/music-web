@@ -51,9 +51,9 @@
 <script lang="ts" setup>
 import PlayList from "./listcnp.vue";
 import { useStorage, onClickOutside } from "@vueuse/core";
-import { ref } from "vue";
+import { onActivated, ref, onMounted, nextTick } from "vue";
 import Store from "@/store";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import {
   highQualityPlaylistTags,
   userPlaylist,
@@ -64,6 +64,7 @@ import {
 import * as P from "../../api/playlist";
 
 const router = useRouter();
+const route = useRoute()
 
 //tags
 const tags = ref<T.tags[]>([]);
@@ -105,6 +106,17 @@ async function getPlayGather(name: string) {
     })) as any
   ).playlists;
 }
+
+//tag active
+onActivated(fff)
+onMounted(fff)
+function fff() {
+  nextTick(() => {
+    console.log('route.params.tag', route.query.tag);
+    route.query.tag && handleTag({ name: route.query.tag })
+  })
+}
+
 
 
 // 标签
