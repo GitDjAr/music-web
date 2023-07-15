@@ -1,18 +1,8 @@
 <!--  -->
 <template>
-  <ModalVue
-    to="body"
-    :class="`${proportion ? 'h-full' : ''} transition-all`"
-    :empty="true"
-    :visible="P.show"
-    @close="handleClose"
-  >
-    <vue-plyr
-      v-loading="loading"
-      :options="VideoOptions"
-      ref="videoRef"
-      class="transition-all"
-    >
+  <ModalVue to="body" :class="`${proportion ? ' h-auto' : ''} transition-all`" :empty="true" :visible="P.show"
+    @close="handleClose">
+    <vue-plyr v-loading="loading" :options="VideoOptions" ref="videoRef" class="transition-all">
       <video :src="videoSrc"></video>
     </vue-plyr>
   </ModalVue>
@@ -80,7 +70,7 @@ onMounted(() => {
   player.value.on("loadedmetadata", () => {
     const { videoWidth, videoHeight } = player.value.media;
     let seep = videoWidth / videoHeight;
-    proportion.value = !(1.5 < seep && seep < 2);
+    proportion.value = !(1.2 < seep && seep < 2);
   });
 });
 
@@ -99,4 +89,5 @@ function handleClose() {
   emit("update:show", false);
 }
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>

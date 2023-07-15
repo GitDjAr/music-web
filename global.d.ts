@@ -9,6 +9,7 @@ declare module "*.vue" {
 declare interface Window {
   rendomImgUrl: string;
   $store: any;
+  initMusicApp: Function
 }
 
 declare type RT<T extends () => any> = T extends Promise<infer U>

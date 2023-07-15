@@ -2,24 +2,10 @@
 <template>
   <div class="home-left">
     <h2 class="text-left px-3">{{ $t("home.recommendMv") }}</h2>
-    <a-carousel
-      class="carousel"
-      :auto-play="true"
-      animation-name="fade"
-      show-arrow="never"
-      indicator-type="slider"
-    >
-      <a-carousel-item
-        v-for="(item, index) in state.personalizedMV"
-        :key="index"
-      >
-        <Image
-          :src="item.picUrl"
-          :wh="[1000, 600]"
-          :alt="item.copywriter"
-          @click="GoPlay(item)"
-          class="w-full h-full object-cover"
-        />
+    <a-carousel class="carousel" :auto-play="true" animation-name="fade" show-arrow="never" indicator-type="slider">
+      <a-carousel-item v-for="(item, index) in state.personalizedMV" :key="index">
+        <Image :src="item.picUrl" :wh="[1000, 600]" :alt="item.copywriter" @click="GoPlay(item)"
+          class="w-full h-full object-cover" />
       </a-carousel-item>
     </a-carousel>
     <MyVideo :id="videoId" v-model:show="VideoShow"></MyVideo>
@@ -27,19 +13,10 @@
     <template v-if="Store.getters.loginStatus">
       <h1 class="text-xl text-left">{{ $t("home.recommendPlaylist") }}</h1>
       <div class="Nouvea">
-        <div
-          class="NouList mb-2"
-          :key="index"
-          v-for="(item, index) in recommendPlaylist"
-        >
+        <div class="NouList mb-2" :key="index" v-for="(item, index) in recommendPlaylist">
           <div class="rounded-lg overflow-hidden relative cursor-pointer group">
-            <Image
-              class="list-img transition-all"
-              :src="item.picUrl"
-              :wh="[200, 200]"
-              :alt="item.copywriter"
-              @click="albumOver(item)"
-            >
+            <Image class="list-img transition-all" :src="item.picUrl" :wh="[200, 200]" :alt="item.copywriter"
+              @click="albumOver(item)">
               <div class="playCss">
                 <MyPlay :id="item.id" />
               </div>
@@ -69,7 +46,7 @@ const state = reactive({
 });
 
 const recommendPlaylist = computed(() => {
-  return Store.state.song.recommendPlaylist;
+  return Store.state.song.recommendPlaylist.splice(0, 8);
 });
 
 // 推薦mv
@@ -131,6 +108,7 @@ onMounted(() => {
         transform: translate(-50%, -50%);
         opacity: 0;
         transition: all 0.3s;
+
         div {
           position: absolute;
           top: 50%;
@@ -139,6 +117,7 @@ onMounted(() => {
           border-radius: 100px;
           color: #fff;
         }
+
         &:hover {
           opacity: 1;
         }

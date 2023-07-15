@@ -118,6 +118,13 @@ export default defineConfig({
           "$Tcolor:rgb(169, 169, 169); $Bcolor:rgb(250, 250, 250);" +
           "$T0:#CDD8FC;$T1:#6684E5; $T2:#E3E9FC;$T3:#b0b0fb;$T4:#5858ffd1;",
       },
+      // arco css变量  https://arco.design/vue/docs/theme#Less-%E5%8F%98%E9%87%8F%E6%9B%BF%E6%8D%A2
+      less: {
+        modifyVars: {
+          'arcoblue-6': '176,176,251',
+        },
+        javascriptEnabled: true,
+      }
     },
   },
   resolve: {

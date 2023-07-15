@@ -52,7 +52,7 @@ export function _login_refresh() {
  * 说明: 轮询此接口可获取二维码扫码状态,800 为二维码过期,801 为等待扫码,802 为待确认,803 为授权登录成功(803 状态码下会返回 cookies)
  * 必选参数: key,由第一个接口生成
  */
-export function _login_qr_check(params: { key: string } & often) {
+export function _login_qr_check(params: { key: string, noCookie?: boolean } & often) {
   return request({
     url: "/login/qr/check",
     method: "get",
@@ -64,10 +64,11 @@ export function _login_qr_check(params: { key: string } & often) {
  * 获取账号信息
  * 说明 : 登录后调用此接口 ,可获取用户账号信息
  */
-export function _user_account() {
+export function _user_account(params?: {}) {
   return request({
     url: "/user/account",
     method: "get",
+    params
   });
 }
 /**

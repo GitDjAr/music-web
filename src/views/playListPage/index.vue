@@ -1,70 +1,44 @@
 <template>
-  <div class="select-none h-full">
-    <div class="flex ml-2">
-      <a-radio-group type="button" size="large" v-model="modeStr">
-        <a-radio value="menu">
+  <div class="select-none h-full ">
+    <div class="flex items-center">
+      <a-radio-group class="flex ml-2" type="button" size="large" v-model="modeStr">
+        <a-radio value="menu" style="line-height: 22px;">
           <MyIcon name="menu" size="16rem" />
         </a-radio>
-        <a-radio value="report">
+        <a-radio value="report" style="line-height: 22px;">
           <MyIcon name="report-columns" />
         </a-radio>
       </a-radio-group>
-    </div>
-    <div class="flex relative justify-end">
-      <div
-        id="scrollTag"
-        class="overflow-hidden transf flex ml-2 w-11/12 h-6"
-        :class="{ model: showModel }"
-        ref="target"
-      >
-        <div
-          v-for="(tag, index) of tags"
-          class="mr-5 w-20 inline-block cursor-pointer"
-          :class="{ 'text-pink-500': selectedTag === tag.name }"
-          :key="tag.id"
-          :id="tag.name"
-          :closable="index !== 0"
-          @click="handleTag(tag)"
-        >
-          <p class="w-full whitespace-nowrap text-base">{{ tag.name }}</p>
+      <div class="flex relative justify-end flex-1">
+
+        <div id="scrollTag" class="overflow-hidden transf flex ml-2 w-11/12 h-6" :class="{ model: showModel }"
+          ref="target">
+          <div v-for="(tag, index) of tags" class="mr-5 w-20 inline-block cursor-pointer"
+            :class="{ 'text-[#b0b0fb]': selectedTag === tag.name }" :key="tag.id" :id="tag.name" :closable="index !== 0"
+            @click="handleTag(tag)">
+            <p class="w-full whitespace-nowrap text-base">{{ tag.name }}</p>
+          </div>
         </div>
+        <a-button @click="showModel = !showModel" class="ml-4 float-right dropdownMenu" type="text" size="mini"
+          status="warning">
+          更多
+        </a-button>
       </div>
-      <a-button
-        @click="showModel = !showModel"
-        class="ml-4 float-right dropdownMenu"
-        type="text"
-        size="mini"
-        status="warning"
-      >
-        更多
-      </a-button>
     </div>
     <div class="w-full overflow-y-scroll" style="height: calc(100% - 45px)">
       <template v-if="modeStr === 'menu'">
-        <div
-          v-for="(item, index) of tagList"
-          :key="item.name"
-          class="mt-8"
-          :style="{ '--stagger': index }"
-        >
+        <div v-for="(item, index) of tagList" :key="item.name" class="mt-8" :style="{ '--stagger': index }">
           <h3 class="text-xl font-bold">{{ item.name }}</h3>
-          <PlayList :name="item.tag" :prop-list="item.list" /></div
-      ></template>
+          <PlayList :name="item.tag" :prop-list="item.list" />
+        </div>
+      </template>
       <template v-else>
-        <div
-          v-for="(item, index) in recPlayList"
-          :key="item.id"
-          class="w-1/5 relative inline-block overflow-hidden"
-          data-animate
-          :style="{ '--stagger': index }"
-        >
+        <div v-for="(item, index) in recPlayList" :key="item.id" class="w-1/5 relative inline-block overflow-hidden"
+          data-animate :style="{ '--stagger': index }">
           <div class="content p-4">
-            <Image
-              @click="() => router.push(`/Music/playlist/${item.id}`)"
-              class="rounded-md cursor-pointer h-full w-full"
-              :alt="item.name"
-              :src="`${item.picUrl || item.coverImgUrl}?param=300y300`"
-            />
+            <Image @click="() => router.push(`/Music/playlist/${item.id}`)"
+              class="rounded-md cursor-pointer h-full w-full" :alt="item.name"
+              :src="`${item.picUrl || item.coverImgUrl}?param=300y300`" />
             <p class="my-1 w-full truncate">{{ item.name }}</p>
           </div>
         </div>
@@ -76,7 +50,7 @@
 
 <script lang="ts" setup>
 import PlayList from "./listcnp.vue";
-import { useStorage,onClickOutside } from "@vueuse/core";
+import { useStorage, onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
 import Store from "@/store";
 import { useRouter } from "vue-router";
@@ -105,7 +79,7 @@ async function tagsList() {
 tagsList();
 
 // 模式
-const modeStr = useStorage<"menu" | "report">("mode", "menu");
+const modeStr = useStorage<"menu" | "report">("mode", "report");
 const selectedTag = ref("默认推荐");
 // const filterList = ref("粤语");
 
@@ -188,17 +162,20 @@ const tagList = ref<{ name: string; list?: T.MusicPlayList[]; tag?: string }[]>(
 .arco-radio-button-content {
   padding: 0 6px;
 }
+
 .transf {
   transition: all 0.3s;
   position: absolute;
   z-index: 50;
   left: 0;
 }
+
 .model {
   padding: 5px;
-  color: white;
-  backdrop-filter: blur(20px);
-  background: #4f444463;
+  color: black;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(14px);
+  background: #ffffffba;
   border-radius: 6px;
   height: 200px;
   flex-wrap: wrap;
