@@ -90,14 +90,14 @@ export default defineConfig({
       },
       "/apiG/": {
         //gitee
-        target: "http://xn--lg3a.top:83",
+        target: "http://124.222.62.70:83",
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/apiG\//, ""),
       },
       "/apiG2/": {
         //gtpso.com
-        target: "http://xn--lg3a.top:84",
+        target: "http://124.222.62.70:84",
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/apiG2\//, ""),
