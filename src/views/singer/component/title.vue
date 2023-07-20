@@ -1,18 +1,11 @@
 <!--  -->
 <template>
-  <ModalVue
-    :title="singerInfo?.artist?.name"
-    v-model:visible="visible"
-    to="body"
-  >
+  <ModalVue :title="singerInfo?.artist?.name" v-model:visible="visible" to="body">
     <template #default>
       <p class="text-sm">{{ singerInfo?.artist?.briefDesc }}</p>
       <ul class="my-4">
-        <li
-          class="mr-2 inline-block cursor-pointer"
-          :key="index"
-          v-for="(item, index) in singerInfo?.identify?.imageDesc?.split('、')"
-        >
+        <li class="mr-2 inline-block cursor-pointer" :key="index"
+          v-for="(item, index) in singerInfo?.identify?.imageDesc?.split('、')">
           <ATag :color="tagColor()"> {{ item }} </ATag>
         </li>
       </ul>
@@ -25,31 +18,16 @@
       <AButton @click="copyText(visibleStr.url || '')">拷贝地址</AButton>
     </div>
   </ModalVue>
-  <div
-    class="h-[200px] flex relative box-border overflow-hidden"
-    v-bind="$attrs"
-  >
-    <Image
-      class="object-cover h-full rounded-xl t-2"
-      :src="singerInfo?.user?.avatarUrl"
-      :wh="[320, 320]"
-    />
-    <div
-      class="pl-4 relative overflow-hidden myimg text-lg flex flex-1 flex-col justify-around text-black"
-    >
+  <div class="h-[200px] flex relative box-border overflow-hidden" v-bind="$attrs">
+    <Image class="object-cover h-full rounded-xl t-2" :src="singerInfo?.user?.avatarUrl || singerInfo?.artist?.avatar"
+      :wh="[320, 320]" />
+    <div class="pl-4 relative overflow-hidden myimg text-lg flex flex-1 flex-col justify-around text-black">
       <h1 class="select-none relative text-left">
         {{ singerInfo?.artist?.name }}
-        <level
-          :v="singerInfo?.vipRights?.redVipLevel"
-          class="translate-y-1 -translate-x-2"
-        />
+        <level :v="singerInfo?.vipRights?.redVipLevel" class="translate-y-1 -translate-x-2" />
       </h1>
       <div class="flex justify-end cursor-pointer items-center">
-        <div
-          @click="followSinger"
-          class="py-1 px-12 m-2 rounded-full"
-          :style="{ background: 'rgba(205, 216, 252,0.8)' }"
-        >
+        <div @click="followSinger" class="py-1 px-12 m-2 rounded-full" :style="{ background: 'rgba(205, 216, 252,0.8)' }">
           <icon-heart-fill v-if="follow.isFollow" style="color: red" />
           <icon-heart v-else />
           {{ follow.fansCnt }}
@@ -149,7 +127,7 @@ async function get_artist_follow_count() {
 }
 
 // 更多
-function moreFun() {}
+function moreFun() { }
 
 // 弹框 visible
 const visible = ref(false);
@@ -161,8 +139,7 @@ function openMadol() {
 let tagColor = () => store.getters.tagColor;
 </script>
 <style scoped lang="scss">
-.myimg {
-}
+.myimg {}
 
 .iconcheck {
   position: absolute;

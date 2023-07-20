@@ -36,9 +36,11 @@ const firstF = () => {
 
 if (first.value) {
   store.dispatch("initQueryData");
-  window.$store = store;
 }
-const Player:any = computed(()=>(store.state.song?.Player ||{}))
+window.$store = store;
+window.initMusicApp = () => store.dispatch('initMusicApp')
+console.log('异常情况-重置,控制台输入initMusicApp()');
+const Player: any = computed(() => (store.state.song?.Player || {}))
 const { toggle } = useFullscreen();
 
 //监听快捷键 方向键 ArrowUp, ArrowDown, ArrowLeft 和 ArrowRight 来表示
@@ -49,7 +51,7 @@ const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight, F, } =
 // 禁止使用快捷键
 const isHotKey = () => {
   const el = useActiveElement()
-  console.log('el.value?.tagName',Player,el.value?.tagName,);
+  console.log('el.value?.tagName', Player, el.value?.tagName,);
 
 
   return el.value?.tagName !== "INPUT"
@@ -86,9 +88,11 @@ watch(ArrowDown, (v) => {
 body {
   transition: all 0.5s ease-in-out;
   position: relative;
+  --arcoblue-6: '176,176,251';
   --my-white: var($Bcolor);
   --my-color: #2c3e50;
   --image-url: url("./assets/albums-bg.png");
+
   &::after {
     transition: all 0.5s ease-in-out;
     content: "";
@@ -99,12 +103,10 @@ body {
     right: 0;
     height: 0;
     opacity: 0;
-    background-image: linear-gradient(
-      -20deg,
-      #ddd6f3 0%,
-      #faaca8 100%,
-      #faaca8 100%
-    );
+    background-image: linear-gradient(-20deg,
+        #ddd6f3 0%,
+        #faaca8 100%,
+        #faaca8 100%);
   }
 }
 
@@ -163,4 +165,5 @@ html.dark body {
       opacity: 1;
     } */
   }
-}</style>
+}
+</style>

@@ -83,13 +83,9 @@ const actions = {
     { commit, dispatch, state }: ActionContext<AppType, RootState>,
     info: userInfo_T
   ) {
-    commit("userLogin", info);
     state.loginTime = new Date().getTime() - 2 * 60 * 60 * 1000;
-    dispatch("UserRefresh");
-    dispatch("getLikelist");
-    dispatch("recommendPlaylist");
-    dispatch("recommendSong");
-    dispatch("getUserPlaylist");
+    commit("userLogin", info);
+    dispatch("initMusicApp");
   },
   // 刷新登录
   async UserRefresh({
@@ -98,8 +94,12 @@ const actions = {
     state,
   }: ActionContext<AppType, RootState>) {
     if (state.userInfo?.profile?.userId) {
-      const { cookie } = await _login_refresh();
-      state.cookie = cookie;
+      //不支持刷新二维码登录的cookie)
+      // const { cookie } = await _login_refresh();
+      // if(isQrlogin){
+
+      // }
+      state.cookie = localStorage.getItem('cookie') || '';
       state.loginTime = new Date().getTime();
     }
   },
@@ -116,13 +116,24 @@ const actions = {
   ) {
     if (rootGetters.loginStatus && diffDays(state.loginTime + "") > 1) {
       // console.log("超过1天重新获取token", diffDays(localStorage.getItem("loginTime")), 5);
-      dispatch("UserRefresh");
-      dispatch("getLikelist");
-      dispatch("recommendPlaylist");
-      dispatch("recommendSong");
-      dispatch("getUserPlaylist");
+      dispatch("initMusicApp");
     }
   },
+  // 暴露 异常调用
+  async initMusicApp({
+    rootState,
+    state,
+    dispatch,
+    rootGetters,
+  }: ActionContext<AppType, RootState>,
+  ) {
+
+    dispatch("UserRefresh");
+    dispatch("getLikelist");
+    dispatch("recommendPlaylist");
+    dispatch("recommendSong");
+    dispatch("getUserPlaylist");
+  }
 };
 
 const app = {

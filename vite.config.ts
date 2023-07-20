@@ -90,14 +90,14 @@ export default defineConfig({
       },
       "/apiG/": {
         //gitee
-        target: "http://xn--lg3a.top:83",
+        target: "http://124.222.62.70:83",
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/apiG\//, ""),
       },
       "/apiG2/": {
         //gtpso.com
-        target: "http://xn--lg3a.top:84",
+        target: "http://124.222.62.70:84",
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/apiG2\//, ""),
@@ -118,6 +118,13 @@ export default defineConfig({
           "$Tcolor:rgb(169, 169, 169); $Bcolor:rgb(250, 250, 250);" +
           "$T0:#CDD8FC;$T1:#6684E5; $T2:#E3E9FC;$T3:#b0b0fb;$T4:#5858ffd1;",
       },
+      // arco css变量  https://arco.design/vue/docs/theme#Less-%E5%8F%98%E9%87%8F%E6%9B%BF%E6%8D%A2
+      less: {
+        modifyVars: {
+          'arcoblue-6': '176,176,251',
+        },
+        javascriptEnabled: true,
+      }
     },
   },
   resolve: {

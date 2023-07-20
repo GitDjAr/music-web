@@ -28,8 +28,12 @@ const servers = axios.create(config);
 servers.interceptors.request.use(
   (cf) => {
     // console.log("request cf: ", cf);
-    cf.headers["Cookie"] = localStorage.getItem("token") || "";
+    if (cf.url?.includes('?cookie=')) {
 
+    } else {
+      cf.url += '?cookie=' + localStorage.getItem("cookie")
+    }
+    // console.log(' localStorage.getItem("cookie") || "";', cf);
     return cf;
   },
   (err) => {
