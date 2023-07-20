@@ -67,6 +67,7 @@ jobs:
             # pm2 reload pm2.config.json
 
       - name: 计算签名-发送通知到钉钉
+        shell: node {0}
         run: |
           const crypto = require("crypto");
           const querystring = require("querystring");
