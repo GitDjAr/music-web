@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { useMagicKeys, useFullscreen, useActiveElement,useIntersectionObserver  } from "@vueuse/core";
+import { useMagicKeys, useFullscreen, useActiveElement,  } from "@vueuse/core";
 import { ref, watch } from "vue";
 import store from "./store";
 import { computed } from "vue";

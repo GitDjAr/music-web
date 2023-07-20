@@ -1,254 +1,119 @@
 <!--  -->
 <template>
-  <button
-    class="play-pause-button flex"
-    :class="p.collectFlag ? 'paused' : 'playing'"
-  >
-    <slot>按钮</slot>
-  </button>
+  <div>
+    <inputCss
+      type="checkbox"
+      checked="checked"
+      id="favorite"
+      class="inputCss"
+      name="favorite-checkbox"
+      value="favorite-button"
+    />
+    <label for="favorite" class="container">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-heart"
+      >
+        <path
+          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+        ></path>
+      </svg>
+      <div class="action">
+        <span class="option-1">Add to Favorites</span>
+        <span class="option-2">Added to Favorites</span>
+      </div>
+    </label>
+  </div>
 </template>
 
 <script lang="ts" setup>
-const p = defineProps<{collectFlag:boolean}>();
+const p = defineProps<{ collectFlag: boolean }>();
 </script>
 <style scoped lang="scss">
-.play-pause-button {
-  --play: #6d58ff;
-  --play-shadow: #{rgba(#6d58ff, 0.24)};
-  --pause: #2b3044;
-  --pause-shadow: #{rgba(#2b3044, 0.24)};
-  --color: #fff;
-  --icon: var(--color);
-  margin: 0;
-  line-height: 20px;
-  font-size: 14px;
-  padding: 11px 12px 11px 36px;
-  border-radius: 22px;
-  border: none;
-  background: none;
-  outline: none;
-  cursor: pointer;
+.container {
+  background-color: white;
   display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 15px 10px 10px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  color: black;
+}
+
+.inputCss {
+  display: none;
+}
+
+.inputCss:checked + .container svg {
+  fill: hsl(0deg 100% 50%);
+  stroke: hsl(0deg 100% 50%);
+  animation: heartButton 1s;
+}
+
+@keyframes heartButton {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.3);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  75% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.inputCss + .container .action {
   position: relative;
-  backface-visibility: hidden;
-  -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
-  transform: translateY(var(--y, 0)) translateZ(0);
-  color: var(--color);
-  box-shadow: 0 var(--shadow-y, 6px) var(--shadow-b, 16px)
-    var(--shadow, var(--pause-shadow));
-  background: radial-gradient(
-    circle,
-    var(--play) 0%,
-    var(--play) 50%,
-    var(--pause) 50.5%,
-    var(--pause) 100%
-  );
-  background-size: 400% 400%;
-  background-position: 0% 0%;
-  transition: background 0.8s, box-shadow 0.3s, transform 0.3s;
-  &:hover {
-    --y: -1px;
-    --shadow-y: 8px;
-    --shadow-b: 20px;
-  }
-  &:active {
-    --y: 1px;
-    --shadow-y: 4px;
-    --shadow-b: 12px;
-  }
-  &:before,
-  &:after {
-    content: "";
-    background: var(--icon);
-    width: var(--width, 16px);
-    height: 12px;
-    position: absolute;
-    left: 18px;
-    top: 15px;
-    backface-visibility: hidden;
-    transform-origin: 50% 100%;
-    transform: translateX(var(--x, 0)) translateZ(0);
-    -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
-    clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
-    transition: clip-path 0.6s ease;
-  }
-  &:after {
-    --width: 3px;
-    --x: 6px;
-  }
-  i {
-    display: block;
-    font-weight: bold;
-    font-style: normal;
-    backface-visibility: hidden;
-    opacity: var(--o, 1);
-    transform: translateX(var(--x, 0));
-    transition: transform 0.6s, opacity 0.6s;
-    &:nth-child(2) {
-      --o: 0;
-      --x: 0;
-    }
-    &:nth-child(3) {
-      --x: -50%;
-    }
-    &:nth-child(4) {
-      --o: 0;
-    }
-    &:last-child {
-      --x: -50%;
-    }
-  }
-  &.paused {
-    --shadow: var(--play-shadow);
-    animation: var(--name, background-paused) 0.8s ease forwards;
-    i {
-      &:first-child {
-        --x: 40%;
-      }
-      &:nth-child(2) {
-        --o: 1;
-        --x: 100%;
-      }
-      &:nth-child(3) {
-        --x: 50%;
-      }
-      &:nth-child(4) {
-        --o: 1;
-        --x: 50%;
-      }
-      &:last-child {
-        --x: 0;
-        --o: 0;
-      }
-    }
-    &:before {
-      -webkit-clip-path: polygon(0 0, 11px 6px, 11px 6px, 0 12px);
-      clip-path: polygon(0 0, 11px 6px, 11px 6px, 0 12px);
-      transition-delay: 0.9s;
-    }
-    &:after {
-      animation: to-play 0.9s ease forwards;
-    }
-    &.playing {
-      --shadow: var(--pause-shadow);
-      --name: background-playing;
-      &:before {
-        -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
-        clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
-        transition-delay: 0s;
-      }
-      &:after {
-        animation: to-pause 1.3s ease forwards;
-      }
-      i {
-        &:first-child {
-          --x: 0;
-        }
-        &:nth-child(2) {
-          --o: 0;
-          --x: 0;
-        }
-        &:nth-child(3) {
-          --x: -50%;
-          --o: 1;
-        }
-        &:nth-child(4) {
-          --o: 0;
-          --x: 0;
-        }
-        &:last-child {
-          --x: -50%;
-          --o: 1;
-        }
-      }
-    }
-  }
+  overflow: hidden;
+  display: grid;
 }
 
-@keyframes to-play {
-  15% {
-    transform: translateX(6px) scaleY(1.1);
-  }
-  30% {
-    transform: translateX(6px) scaleY(0.9);
-  }
-  45% {
-    transform: translateX(6px) scaleY(1.15);
-    -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
-    clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
-    transform-origin: 50% 100%;
-  }
-  60%,
-  100% {
-    -webkit-clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
-    clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
-    transform-origin: 50% 10.5px;
-  }
-  60% {
-    transform: translateX(6px);
-  }
-  99% {
-    transform: translateX(0) rotate(-270deg);
-  }
-  100% {
-    transform: translateX(0) rotate(-270deg) scale(0);
-  }
+.inputCss + .container .action span {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  transition: all 0.5s;
 }
 
-@keyframes to-pause {
-  0%,
-  50% {
-    -webkit-clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
-    clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
-    transform-origin: 50% 10.5px;
-  }
-  0%,
-  39% {
-    transform: translateX(0) rotate(-270deg) scale(0);
-  }
-  40% {
-    transform: translateX(0) rotate(-270deg);
-  }
-  50% {
-    transform: translateX(6px) rotate(0deg);
-  }
-  60%,
-  100% {
-    transform: translateX(6px);
-    -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
-    clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
-    transform-origin: 50% 100%;
-  }
-  70% {
-    transform: translateX(6px) scaleY(1.15);
-  }
-  80% {
-    transform: translateX(6px) scaleY(0.9);
-  }
-  90% {
-    transform: translateX(6px) scaleY(1.05);
-  }
-  100% {
-    transform: translateX(6px);
-  }
+.inputCss + .container .action span.option-1 {
+  transform: translate(0px, 0%);
+  opacity: 1;
 }
 
-@keyframes background-paused {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 50% 50%;
-  }
+.inputCss:checked + .container .action span.option-1 {
+  transform: translate(0px, -100%);
+  opacity: 0;
 }
 
-@keyframes background-playing {
-  from {
-    background-position: 50% 50%;
-  }
-  to {
-    background-position: 100% 100%;
-  }
+.inputCss + .container .action span.option-2 {
+  transform: translate(0px, 100%);
+  opacity: 0;
+}
+
+.inputCss:checked + .container .action span.option-2 {
+  transform: translate(0px, 0%);
+  opacity: 1;
 }
 </style>

@@ -74,7 +74,7 @@ const state = {
 const actions = {
   initializePlayer(
     { state }: ActionContext<songType, songType>,
-    Player: Object
+    Player: Object,
   ) {
     state.Player = new MusicPlayer();
   },
@@ -82,14 +82,14 @@ const actions = {
   // 设置播放等级
   async setMusicLevel(
     { state }: ActionContext<songType, RootState>,
-    level: string
+    level: string,
   ) {
     state.musicLevel = level;
   },
 
   async getUserPlaylist(
     { state, rootState }: ActionContext<songType, RootState>,
-    uid: number | null = null
+    uid: number | null = null,
   ) {
     uid ??= rootState?.app?.userInfo?.profile?.userId;
     console.log(rootState, rootState?.app?.userInfo?.profile.userId, uid);
@@ -109,7 +109,7 @@ const actions = {
   // 获取喜欢列表
   async getLikelist(
     { rootState, state }: ActionContext<songType, RootState>,
-    uid: number | null = null
+    uid: number | null = null,
   ) {
     uid ||= rootState?.app?.userInfo?.profile?.userId;
     if (uid) {
@@ -121,7 +121,7 @@ const actions = {
   // 播放列表 删除歌曲
   async deleteSong(
     { state, rootState }: ActionContext<songType, RootState>,
-    id: number
+    id: number,
   ) {
     state.playList = state.playList.filter((item) => item.id !== id);
   },
@@ -154,7 +154,7 @@ const actions = {
   //  歌单 索引 id记录
   async SetPlayList(
     { state }: ActionContext<songType, RootState>,
-    param: Partial<paramType>
+    param: Partial<paramType>,
   ) {
     const { id, playListId, list: updateList = [] } = param;
     const { playbackMode } = state;
@@ -179,7 +179,7 @@ const actions = {
   //设置播放模式
   async SetPlaybackMode(
     { state }: ActionContext<songType, RootState>,
-    str: songType["playbackMode"] | undefined
+    str: songType["playbackMode"] | undefined,
   ) {
     const { playbackMode, randomPlayList, playList } = state;
 
@@ -188,7 +188,7 @@ const actions = {
 
     const list = flag ? randomPlayList : playList;
     state.playListIndex = list.findIndex(
-      (item) => item.id === state.curPlaySong.id
+      (item) => item.id === state.curPlaySong.id,
     );
   },
 
@@ -214,7 +214,7 @@ const actions = {
 
   modeCat(
     { dispatch, state }: ActionContext<songType, RootState>,
-    idx: number
+    idx: number,
   ) {
     const { playList, randomPlayList, playbackMode } = state;
     const list = playbackMode === "random" ? randomPlayList : playList;
@@ -239,23 +239,23 @@ const actions = {
   ToggleSong: throttle(
     (
       { state, dispatch }: ActionContext<songType, RootState>,
-      param: paramType
+      param: paramType,
     ) => {
       dispatch("tog", param);
     },
-    200
+    200,
   ),
 
   // 设置不可播放
   SetNotPlayable(
     { state, dispatch }: ActionContext<songType, RootState>,
-    SongId: number
+    SongId: number,
   ) {
     state.playList[state.playListIndex].isPlay = 0;
   },
   async tog(
     { state, dispatch }: ActionContext<songType, RootState>,
-    param: paramType
+    param: paramType,
   ) {
     const { id } = param;
     if (!id) {
@@ -291,7 +291,7 @@ const actions = {
       GetSongDetail({ ids: id }),
     ];
     const [{ data: SongUrl }, song_lyric, SongDetail] = await Promise.all(
-      plist
+      plist,
     );
     const songs = SongDetail?.songs[0] || {};
     const data: CurSongInfo = {
@@ -318,7 +318,7 @@ const actions = {
 
 function lrcArray(
   str: string,
-  flag: string = "id" //版本
+  flag: string = "id", //版本
 ): Array<{ time: number; txt: string }> {
   const f = (e: string) => {
     let time = e.split("]")[0].slice(1, -1);
