@@ -74,7 +74,7 @@ jobs:
           const https = require("https");
 
           const timestamp = Date.now();
-          const secret = ${{ secrets.DINGDING_SECRET }};
+          const secret = '${{ secrets.DINGDING_SECRET }}';
           const stringToSign = `${timestamp}\n${secret}`;
           const hmac = crypto.createHmac("sha256", secret);
           hmac.update(stringToSign);
@@ -90,7 +90,7 @@ jobs:
           const options = {
             hostname: "oapi.dingtalk.com",
             port: 443,
-            path: `/robot/send?access_token=${{ secrets.DINGDING_TOKEN }}&sign=${sign}&timestamp=${timestamp}`,
+            path: `/robot/send?access_token=${{ 'secrets.DINGDING_TOKEN' }}&sign=${sign}&timestamp=${timestamp}`,
             method: "POST",
             headers: {
               "Content-Type": "application/json",
