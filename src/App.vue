@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { useMagicKeys, useFullscreen, useActiveElement,  } from "@vueuse/core";
+import { useMagicKeys, useFullscreen, useActiveElement } from "@vueuse/core";
 import { ref, watch } from "vue";
 import store from "./store";
 import { computed } from "vue";
@@ -34,30 +34,29 @@ const firstF = () => {
   first.value = "true";
 };
 
-if (first.value) {
-  store.dispatch("initQueryData");
-}
+store.dispatch("initQueryData");
+
 window.$store = store;
-window.initMusicApp = () => store.dispatch('initMusicApp')
-console.log('异常情况-重置,控制台输入initMusicApp()');
-const Player: any = computed(() => (store.state.song?.Player || {}))
+window.initMusicApp = () => store.dispatch("initMusicApp");
+console.log("异常情况-重置,控制台输入initMusicApp()");
+const Player: any = computed(() => store.state.song?.Player || {});
 const { toggle } = useFullscreen();
 
 //监听快捷键 方向键 ArrowUp, ArrowDown, ArrowLeft 和 ArrowRight 来表示
-const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight, F, } =
+const { space, ArrowUp, ArrowDown, Ctrl_ArrowLeft, Ctrl_ArrowRight, F } =
   useMagicKeys();
-
 
 // 禁止使用快捷键
 const isHotKey = () => {
-  const el = useActiveElement()
-  console.log('el.value?.tagName', Player, el.value?.tagName,);
+  const el = useActiveElement();
+  console.log("el.value?.tagName", Player, el.value?.tagName);
 
-
-  return el.value?.tagName !== "INPUT"
-    && el.value?.tagName !== "TEXTAREA"
-    && el.value?.tagName !== "SELECT"
-    && el.value?.tagName !== "VIDEO"
+  return (
+    el.value?.tagName !== "INPUT" &&
+    el.value?.tagName !== "TEXTAREA" &&
+    el.value?.tagName !== "SELECT" &&
+    el.value?.tagName !== "VIDEO"
+  );
 };
 
 watch(F, (v) => {
@@ -73,12 +72,10 @@ watch(Ctrl_ArrowRight, (v) => {
   v && isHotKey() && Player.value?.nextSong();
 });
 watch(ArrowUp, (v) => {
-  v && isHotKey() &&
-    Player.value?._setvolume(Player.value?._volume + 0.1);
+  v && isHotKey() && Player.value?._setvolume(Player.value?._volume + 0.1);
 });
 watch(ArrowDown, (v) => {
-  v && isHotKey() &&
-    Player.value?._setvolume(Player.value?._volume - 0.1);
+  v && isHotKey() && Player.value?._setvolume(Player.value?._volume - 0.1);
 });
 </script>
 
@@ -88,7 +85,7 @@ watch(ArrowDown, (v) => {
 body {
   transition: all 0.5s ease-in-out;
   position: relative;
-  --arcoblue-6: '176,176,251';
+  --arcoblue-6: "176,176,251";
   --my-white: var($Bcolor);
   --my-color: #2c3e50;
   --image-url: url("./assets/albums-bg.png");
@@ -103,10 +100,12 @@ body {
     right: 0;
     height: 0;
     opacity: 0;
-    background-image: linear-gradient(-20deg,
-        #ddd6f3 0%,
-        #faaca8 100%,
-        #faaca8 100%);
+    background-image: linear-gradient(
+      -20deg,
+      #ddd6f3 0%,
+      #faaca8 100%,
+      #faaca8 100%
+    );
   }
 }
 
@@ -150,10 +149,12 @@ html.dark body {
     height: 0;
     transition: all 1s ease-in-out;
     opacity: 0;
-    background-image: linear-gradient(-20deg,
-        #ddd6f3 0%,
-        #faaca8 100%,
-        #faaca8 100%);
+    background-image: linear-gradient(
+      -20deg,
+      #ddd6f3 0%,
+      #faaca8 100%,
+      #faaca8 100%
+    );
   }
 
   &:hover {

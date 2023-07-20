@@ -23,7 +23,7 @@ export interface AppType {
     "arcoblue",
     "purple",
     "pinkpurple",
-    "magenta"
+    "magenta",
   ];
   cookie?: string;
   loginTime?: number;
@@ -71,7 +71,7 @@ const actions = {
   // user退出
   async UserOuting(
     { commit, dispatch, state, rootState }: ActionContext<AppType, RootState>,
-    status: boolean = false
+    status: boolean = false,
   ) {
     state.loginTime = 0;
     state.cookie = "";
@@ -81,7 +81,7 @@ const actions = {
   // 登录
   async UserLogin(
     { commit, dispatch, state }: ActionContext<AppType, RootState>,
-    info: userInfo_T
+    info: userInfo_T,
   ) {
     state.loginTime = new Date().getTime() - 2 * 60 * 60 * 1000;
     commit("userLogin", info);
@@ -99,9 +99,9 @@ const actions = {
       // if(isQrlogin){
 
       // }
-      state.cookie = localStorage.getItem('cookie') || '';
-      state.loginTime = new Date().getTime();
+      state.cookie = localStorage.getItem("cookie") || "";
     }
+    state.loginTime = new Date().getTime();
   },
 
   // 初始化  每天刷新
@@ -112,9 +112,9 @@ const actions = {
       dispatch,
       rootGetters,
     }: ActionContext<AppType, RootState>,
-    info: userInfo_T
+    info: userInfo_T,
   ) {
-    if (rootGetters.loginStatus && diffDays(state.loginTime + "") > 1) {
+    if (rootGetters.loginStatus && diffDays(state.loginTime + "") >= 1) {
       // console.log("超过1天重新获取token", diffDays(localStorage.getItem("loginTime")), 5);
       dispatch("initMusicApp");
     }
@@ -125,15 +125,13 @@ const actions = {
     state,
     dispatch,
     rootGetters,
-  }: ActionContext<AppType, RootState>,
-  ) {
-
+  }: ActionContext<AppType, RootState>) {
     dispatch("UserRefresh");
     dispatch("getLikelist");
     dispatch("recommendPlaylist");
     dispatch("recommendSong");
     dispatch("getUserPlaylist");
-  }
+  },
 };
 
 const app = {

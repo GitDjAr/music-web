@@ -19,7 +19,7 @@ interface DateObj {
 
 export function formatformat(
   date?: string | number | Date,
-  fmt: string = "yyyy-MM-dd"
+  fmt: string = "yyyy-MM-dd",
 ): string {
   const d = new Date(date || new Date());
   const obj: DateObj = {
