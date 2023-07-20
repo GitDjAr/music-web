@@ -66,28 +66,74 @@ jobs:
             # npm install --production
             # pm2 reload pm2.config.json
 
-    # 成功或者失败钩子
-    # notify:
-    # needs: build
-    # runs-on: ubuntu-latest
+      - name: 计算签名-发送通知到钉钉
+        run: |
+          const crypto = require("crypto");
+          const querystring = require("querystring");
+          const https = require("https");
 
-    # # if: ${{ needs.build.result == 'success' }}
+          const timestamp = Date.now();
+          const secret = ${{ secrets.DINGDING_SECRET }};
+          const stringToSign = `${timestamp}\n${secret}`;
+          const hmac = crypto.createHmac("sha256", secret);
+          hmac.update(stringToSign);
+          const sign = querystring.escape(hmac.digest("base64"));
 
-    # steps:
-    #   # 步骤1：安装 curl 工具
-    #   - name: Install curl
-    #     run: sudo apt-get install curl -y
+          const data = JSON.stringify({
+            text: {
+              content: "发版成功啦~\n,${{ github.ref }}",
+            },
+            msgtype: "text",
+          });
 
-    #   # 步骤2：发送通知到 Slack
-    #   - name: Send Notification
-    #     env:
-    #       SLACK_WEBHOOK_URL: ${{ https://oapi.dingtalk.com/robot/send?access_token=4461e6fe281c137ddd08169a16dd3ac2f7d180b7f65c3dfdf0c9867975b78f58&secret=SECaf718f3378854a3f55c6e14dddb41beb26daa5f96fa3e137eedcc2b66cf15f49&timestamp=1689240675086 }}
-    #     run: |
-    #       curl -X POST -H 'Content-type: application/json' --data '{"text":"Workflow succeeded!"}' $SLACK_WEBHOOK_URL
-    # 您好，这是必应。您可以尝试以下几个 Github 镜像网站：
-    # github.com.cnpmjs.org1
-    # hub.fastgit.org1
-    # gitclone.com2
-    # ghproxy.com2
-    # toolwa.com/github/2
-    # github.wuyanzheshui.workers.dev3
+          const options = {
+            hostname: "oapi.dingtalk.com",
+            port: 443,
+            path: `/robot/send?access_token=${{ secrets.DINGDING_TOKEN }}&sign=${sign}&timestamp=${timestamp}`,
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Content-Length": data.length,
+            },
+          };
+
+          const req = https.request(options, (res) => {
+            console.log(`statusCode: ${res.statusCode}`);
+
+            res.on("data", (d) => {
+              process.stdout.write(d);
+            });
+          });
+
+          req.on("error", (error) => {
+            console.error(error);
+          });
+
+          req.write(data);
+          req.end();
+
+        # 成功或者失败都会触发钩子
+        # notify:
+        # needs: build
+        # runs-on: ubuntu-latest
+
+        # # if: ${{ needs.build.result == 'success' }}
+
+        # steps:
+        #   # 步骤1：安装 curl 工具
+        #   - name: Install curl
+        #     run: sudo apt-get install curl -y
+
+        #   # 步骤2：发送通知到 Slack
+        #   - name: Send Notification
+        #     env:
+        #       SLACK_WEBHOOK_URL: ${{ https://oapi.dingtalk.com/robot/send?access_token=4461e6fe281c137ddd08169a16dd3ac2f7d180b7f65c3dfdf0c9867975b78f58&secret=SECaf718f3378854a3f55c6e14dddb41beb26daa5f96fa3e137eedcc2b66cf15f49&timestamp=1689240675086 }}
+        #     run: |
+        #       curl -X POST -H 'Content-type: application/json' --data '{"text":"Workflow succeeded!"}' $SLACK_WEBHOOK_URL
+        # 您好，这是必应。您可以尝试以下几个 Github 镜像网站：
+        # github.com.cnpmjs.org1
+        # hub.fastgit.org1
+        # gitclone.com2
+        # ghproxy.com2
+        # toolwa.com/github/2
+        # github.wuyanzheshui.workers.dev3
