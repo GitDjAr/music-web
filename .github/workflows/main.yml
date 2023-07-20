@@ -86,7 +86,7 @@ jobs:
             },
             msgtype: "text",
           });
-          const url = `/robot/send?access_token=${{ "secrets.DINGDING_TOKEN" }}&sign=${sign}&timestamp=${timestamp}`,
+          const url = `/robot/send?access_token=${ "${{secrets.DINGDING_TOKEN}}" }&sign=${sign}&timestamp=${timestamp}`,
           console.log(url);
           const options = {
             hostname: "oapi.dingtalk.com",
