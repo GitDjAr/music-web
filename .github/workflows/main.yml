@@ -129,7 +129,7 @@ jobs:
         #   # 步骤2：发送通知到 Slack
         #   - name: Send Notification
         #     env:
-        #       SLACK_WEBHOOK_URL: ${{ https://oapi.dingtalk.com/robot/send?access_token=4461e6fe281c137ddd08169a16dd3ac2f7d180b7f65c3dfdf0c9867975b78f58&secret=SECaf718f3378854a3f55c6e14dddb41beb26daa5f96fa3e137eedcc2b66cf15f49&timestamp=1689240675086 }}
+        #       SLACK_WEBHOOK_URL:
         #     run: |
         #       curl -X POST -H 'Content-type: application/json' --data '{"text":"Workflow succeeded!"}' $SLACK_WEBHOOK_URL
         # 您好，这是必应。您可以尝试以下几个 Github 镜像网站：
