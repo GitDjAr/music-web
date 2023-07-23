@@ -19,10 +19,10 @@ jobs:
           node-version: 14.19.0
           cache: "npm"
           #如果 npm ci 命令执行失败，它会输出错误信息并返回一个非零的退出码。在这种情况下，由于我们使用了 || 运算符，所以 npm install 命令将被执行。如果 npm ci 命令执行成功，则 npm install 命令不会被执行。
-      - run: npm i pnpm
-      - run: pnpm ci || pnpm install
+      # - run: npm i pnpm
+      - run: npm ci || npm install
       # - run: npm install # 安装第三方包
-      - run: pnpm  b # 打包
+      - run: npm run b # 打包
       - run: tar -zcvf release.tgz dist/
         # 把.nuxt、nuxt.config.js等文件，打包压缩为release.tgz
 

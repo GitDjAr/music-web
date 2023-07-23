@@ -4,9 +4,7 @@
     <div class="w-full flex justify-between mb-3">
       <div
         :class="`w-1/3 mx-4 p-2 rounded-md h-52 overflow-hidden relative bg-gradient-to-r from-[${randomColor()}] text-white text-left text-xl`"
-        v-for="item in titleList"
-        :key="item.id"
-      >
+        v-for="item in titleList" :key="item.id">
         <div class="">
           <div class="mb-8">{{ item.name }}</div>
           <div v-if="typeof item.content === 'string'" class="text-2xl">
@@ -20,30 +18,29 @@
             </div>
           </div>
         </div>
-        <Image
-          :src="item.url"
-          :wh="[300, 300]"
-          class="absolute top-0 right-0 bottom-0 -z-10"
-        ></Image>
+        <Image :src="item.url" :wh="[300, 300]" class="absolute top-0 right-0 bottom-0 -z-10"></Image>
         <!-- <div>{{ item. }}</div> -->
       </div>
     </div>
     <div class="flex h-96">
+      <div class="w-2/3 mx-4 h-full ">
+        <h3 class="text-xl mb-2" @click="getMyLiveList">我的喜欢</h3>
+        <div class="bg-[var(--color-fill-2)]  h-96  rounded-md px-2 overflow-y-scroll"
+          v-infinite-scroll="[getMyLiveList, { 'distance': 12 }]">
+          <Song v-for="(item, index) in myLiveList" class="border-none" :id="item.id" :dt="item.dt" :songName="item.name"
+            :singer="item?.song?.artists.map((e) => e.name).join('/')" :url="item?.al?.picUrl" @click="playLike(item)"
+            :style="{ '--stagger': index }" data-animate />
+        </div>
+      </div>
+      <div>收藏歌单</div>
+    </div>
+    <div class="flex h-96 my-16">
       <div class="w-2/3 mx-4">
         <h3 class="text-xl mb-2">推荐新音乐</h3>
-        <div class="bg-[#f2f3f5] rounded-md px-2">
-          <Song
-            v-for="(item, index) in newSongList"
-            class="border-none"
-            :id="item.id"
-            :dt="item.dt"
-            :songName="item.name"
-            :singer="item?.song?.artists.map((e) => e.name).join('/')"
-            :url="item?.picUrl"
-            @click="play(item)"
-            :style="{ '--stagger': index }"
-            data-animate
-          />
+        <div class="bg-[var(--color-fill-2)] rounded-md px-2">
+          <Song v-for="(item, index) in newSongList" class="border-none" :id="item.id" :dt="item.dt" :songName="item.name"
+            :singer="item?.song?.artists.map((e) => e.name).join('/')" :url="item?.picUrl" @click="play(item)"
+            :style="{ '--stagger': index }" data-animate />
         </div>
       </div>
       <echarts class="w-1/3 mx-4" :randomColor="randomColor" />
@@ -54,9 +51,11 @@
 <script lang="ts" setup>
 import echarts from "./echarts/index.vue";
 import Song from "@/components/song.vue";
-import { newSong } from "@/api/playlist";
+import { T, newSong } from "@/api/playlist";
+import { GetSongDetail } from "@/api/play";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { vInfiniteScroll } from "@vueuse/components";
 import { useStore } from "vuex";
 import { rgbToHex } from "@/utils/getImgsColor";
 
@@ -98,6 +97,21 @@ const titleList = ref<{}>([
   },
 ]);
 
+//我喜欢
+let len = 0
+const myLiveList = ref<T.MusicPlayList[]>([])
+async function getMyLiveList() {
+  console.log('getMyLiveList', len);
+  const ids = [...store.state.song.myLikeList]?.splice(len, 60)?.join(",")
+  if (ids) {
+    let aa = (await GetSongDetail({ ids }))?.songs || []
+    myLiveList.value.push(...aa)
+    len += 60
+  }
+}
+getMyLiveList()
+
+//推荐新音乐
 const newSongList = ref<any>([]);
 async function getNewSong() {
   const { result } = await newSong();
@@ -112,5 +126,13 @@ function play(item: { id: any }) {
     list: newSongList.value,
   });
 }
+function playLike(item: { id: any }) {
+  store.dispatch("ToggleSong", {
+    id: item.id,
+    playListId: "我的喜欢",
+    list: myLiveList.value,
+  });
+}
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>

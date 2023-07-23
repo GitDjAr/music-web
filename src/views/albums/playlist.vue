@@ -33,7 +33,7 @@
         <a-skeleton-line :rows="3" :widths="['40%', '50%', '80%']" :line-height="22" />
       </a-skeleton>
       <div class="hybull bg-opacity-90 backdrop-filter backdrop-blur-sm flex flex-col overflow-y-auto"
-        v-infinite-scroll="scrollLoad">
+        v-infinite-scroll="[scrollLoad, { 'distance': 12 }]">
         <template v-for="item in AlbumsList" :key="item.id">
           <song :id="item.id" :dt="item.dt" :songName="item.name" :singer="item?.ar?.[0]?.name" :url="item?.al?.picUrl"
             @click="play(item)" />

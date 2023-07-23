@@ -160,10 +160,12 @@ const actions = {
     const { playbackMode } = state;
 
     // 是否切换了歌单
-    const up: playListType[] = updateList.map((e) => ({ ...e, isPlay: 1 }));
+    const up: playListType[] = updateList.filter(e => e.isPlay !== 0).map((e) => ({ ...e, isPlay: 1 }));
 
-    let len = state.playList.length == up.length;
-    if (state.playListId != playListId || len) {
+    let len = state.playList.length !== up.length;
+    // console.log('state.playList.length', state.playList.length, up.length);
+    // id 长度 非零
+    if ((state.playListId != playListId) || len && up.length !== 0) {
       state.playListId = playListId || "errId";
       state.playList = up;
       state.randomPlayList = shuffleArray([...up]);
