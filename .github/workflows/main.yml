@@ -28,7 +28,7 @@ jobs:
       # 2.5  获取更新日志,进行插入
       - name: 获取更新日志,进行插入
         id: commit_logs
-        run: ./.github/workflows/getCommit.sh
+        run: ../.github/workflows/getCommit.sh
 
       # 第三步：发布 Release
       # - name: 发布 Release # 创建Release，可以在仓库看到一个个版本
