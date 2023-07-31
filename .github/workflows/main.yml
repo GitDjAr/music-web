@@ -25,6 +25,11 @@ jobs:
       - run: tar -zcvf release.tgz dist/
         # 把.nuxt、nuxt.config.js等文件，打包压缩为release.tgz
 
+      # 2.5  获取更新日志,进行插入
+      - name: 获取更新日志,进行插入
+        id: commit_logs
+        run: ./getCommit.sh
+
       # 第三步：发布 Release
       - name: 发布 Release # 创建Release，可以在仓库看到一个个版本
         id: create_release
@@ -34,6 +39,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }} # (tag)标签名称
           release_name: Release ${{ github.ref }}
+          body: ${{steps.commit_logs.outputs.commits}}
           draft: false # 是否是草稿
           prerelease: false # 是否是预发布
 
@@ -67,7 +73,9 @@ jobs:
             # npm install --production
             # pm2 reload pm2.config.json
 
+      #always() 会让该步骤在任何情况下都执行。
       - name: 计算签名-发送通知到钉钉
+        if: always()
         shell: node {0}
         run: |
           const crypto = require("crypto");
@@ -81,12 +89,31 @@ jobs:
           hmac.update(stringToSign);
           const sign = querystring.escape(hmac.digest("base64"));
 
+          //获取 ref 和上一次之间的 commit
+          const compareURL = `https://api.github.com/repos/${owner}/${repo}/compare/${base}...${head}`
+          const compareRes = await fetch(compareURL)
+          const compareData = await compareRes.json()
+
+          // github 环境变量 https://devpress.csdn.net/cicd/62edbda3c6770329307f2c57.html
+          let fg = (${{job.status}})?.toLocaleLowerCase() ==='success'
+          let txt =  fg? ${{ github.GITHUB_REPOSITORY  }}:'构建失败'
+          let t = `[ ${txt} ]: ${{ github.GITHUB_RUN_ID }}`
           const data = JSON.stringify({
-            text: {
-              content: "发版成功啦~\n,${{ github.ref }}",
+            "msgtype": "markdown",
+            "markdown": {
+              "title": `【构建日志】`,
+              "text": [
+                "#### <font color="fg?'#1bb24c':'#ff0000'">" + t + "</font>",
+                '> ref:' + ${{ github.GITHUB_REF  }} ,
+                ${{github.ref }},
+                '> ${{steps.commit_logs.outputs.commits}}'
+                "[查看构建详情日志](" + ${{github.GITHUB_SERVER_URL}} + ")"
+              ].join('  \n  ')
             },
-            msgtype: "text",
-          });
+            "at": {
+              "isAtAll": false
+            }
+          })
           const url = `/robot/send?access_token=${ "${{secrets.DINGDING_TOKEN}}" }&sign=${sign}&timestamp=${timestamp}`
           const options = {
             hostname: "oapi.dingtalk.com",
@@ -99,8 +126,7 @@ jobs:
           };
 
           const req = https.request(options, (res) => {
-            console.log(`statusCode: ${res.statusCode}`);
-
+            # console.log(`statusCode: ${res.statusCode}`);
             res.on("data", (d) => {
               process.stdout.write(d);
             });
