@@ -12,7 +12,7 @@
 
     <template v-if="Store.getters.loginStatus">
       <h1 class="text-xl text-left">{{ $t("home.recommendPlaylist") }}</h1>
-      <div class="Nouvea">
+      <div class="Nouvea" >
         <div class="NouList mb-2" :key="index" v-for="(item, index) in recommendPlaylist">
           <div class="rounded-lg overflow-hidden relative cursor-pointer group">
             <Image class="list-img transition-all" :src="item.picUrl" :wh="[200, 200]" :alt="item.copywriter"
@@ -46,7 +46,12 @@ const state = reactive({
 });
 
 const recommendPlaylist = computed(() => {
-  return Store.state.song.recommendPlaylist.splice(0, 8);
+  let list = Store.state.song.recommendPlaylist.splice(0, 8)
+  if(list.length){
+    return list
+  }
+  Store.dispatch("recommendPlaylist")
+  return [];
 });
 
 // 推薦mv

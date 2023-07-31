@@ -100,12 +100,10 @@ body {
     right: 0;
     height: 0;
     opacity: 0;
-    background-image: linear-gradient(
-      -20deg,
-      #ddd6f3 0%,
-      #faaca8 100%,
-      #faaca8 100%
-    );
+    background-image: linear-gradient(-20deg,
+        #ddd6f3 0%,
+        #faaca8 100%,
+        #faaca8 100%);
   }
 }
 
@@ -114,8 +112,8 @@ html.dark body {
   --image-url: url("");
   --color-fill-2: rgba(255, 255, 255, 0.35);
   --my-white: #ffffff29;
-  --color-bg-2: #ffffff7a;
-  --color-fill-2: #ffffff7a;
+  --color-bg-2: #ffffff7a !important;
+  --color-fill-2: #ffffff7a !important;
 
   &::after {
     top: 0;
@@ -149,12 +147,10 @@ html.dark body {
     height: 0;
     transition: all 1s ease-in-out;
     opacity: 0;
-    background-image: linear-gradient(
-      -20deg,
-      #ddd6f3 0%,
-      #faaca8 100%,
-      #faaca8 100%
-    );
+    background-image: linear-gradient(-20deg,
+        #ddd6f3 0%,
+        #faaca8 100%,
+        #faaca8 100%);
   }
 
   &:hover {

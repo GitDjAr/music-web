@@ -85,7 +85,7 @@ const loading = ref(false);
 const SearchList = ref<{ song: string; upload_date: string }[]>([]);
 const handleSearch = async (v: string) => {
   //type 1 | 3
-  SearchList.value = (await search(v || searchable.value)).filter(
+  SearchList.value = (await search(v || searchable.value))?.filter(
     (item: { type: string }) => item.type === "3"
   );
   Hot.value = [...SearchList.value];

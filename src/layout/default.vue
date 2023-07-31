@@ -89,6 +89,7 @@ export default {
   grid-template-columns: minmax(180px, 15%) 1fr;
 
   .left-list {
+    height: calc(100vh - 120px);
     padding: 10px 0;
     margin-right: 10px;
     // background: $Bcolor;
