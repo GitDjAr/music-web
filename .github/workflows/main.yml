@@ -23,12 +23,12 @@ jobs:
       # - run: npm install # 安装第三方包
       - run: npm run  b # 打包
       - run: tar -zcvf release.tgz dist/
-        # 把.nuxt、nuxt.config.js等文件，打包压缩为release.tgz
+      # 把.nuxt、nuxt.config.js等文件，打包压缩为release.tgz
 
       # 2.5  获取更新日志,进行插入
       - name: 获取更新日志,进行插入
         id: commit_logs
-        run: ./getCommit.sh
+        run: ./.github/workflows/getCommit.sh
 
       # 第三步：发布 Release
       - name: 发布 Release # 创建Release，可以在仓库看到一个个版本
@@ -42,7 +42,6 @@ jobs:
           body: ${{steps.commit_logs.outputs.commits}}
           draft: false # 是否是草稿
           prerelease: false # 是否是预发布
-
       # 第四步：上传构建结果到 Release（把打包的tgz上传到Release）
       - name: 上传构建结果到 Release
         id: upload-release-asset
@@ -54,7 +53,6 @@ jobs:
           asset_path: ./release.tgz # 要上传文件
           asset_name: release.tgz # 上传后的文件名
           asset_content_type: application/x-tgz
-
       # 第五步：部署到服务器
       - name: 部署到服务器
         uses: appleboy/ssh-action@master # 使用ssh链接服务器
@@ -69,10 +67,8 @@ jobs:
             wget https://ghproxy.com/https://github.com/GitDjAr/music-web/releases/latest/download/release.tgz -O music.tgz
             tar zxvf music.tgz
             rm -rf music.tgz
-
             # npm install --production
             # pm2 reload pm2.config.json
-
       #always() 会让该步骤在任何情况下都执行。
       - name: 计算签名-发送通知到钉钉
         if: always()
@@ -90,18 +86,21 @@ jobs:
           const sign = querystring.escape(hmac.digest("base64"));
 
           // github 环境变量 https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+
           let fg = (${{job.status}})?.toLocaleLowerCase() ==='success'
           let txt =  fg? ${{ github.repository  }} || 'github.repository':'构建失败'
+          let color = fg?'#1bb24c':'#ff0000'
+          console.log('teststse',fg,github, ${{steps.commit_logs.outputs.commits}})
           let t = `[ ${txt} ]: ${{ github.run_id }}`
           const data = JSON.stringify({
             "msgtype": "markdown",
             "markdown": {
               "title": `【构建日志】`,
               "text": [
-                "## <font color="fg?'#1bb24c':'#ff0000'">" + t + "</font>",
+                "## <font color="+color+">" + t + "</font>",
                 '[可怜] ref:' + ${{ github.ref  }} ,
-                '> ${{steps.commit_logs.outputs.commits}}'
-                "[查看构建详情日志](" + ${{github.server_url}} + ")"
+                '> ${{steps.commit_logs.outputs.commits}}',
+                "[查看构建详情日志](https://github.com/GitDjAr/music-web/actions)"
               ].join('  \n  ')
             },
             "at": {
@@ -120,7 +119,7 @@ jobs:
           };
 
           const req = https.request(options, (res) => {
-            # console.log(`statusCode: ${res.statusCode}`);
+            //console.log(`statusCode: ${res.statusCode}`);
             res.on("data", (d) => {
               process.stdout.write(d);
             });
