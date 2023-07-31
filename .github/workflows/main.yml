@@ -89,20 +89,19 @@ jobs:
           hmac.update(stringToSign);
           const sign = querystring.escape(hmac.digest("base64"));
 
-          // github 环境变量 https://devpress.csdn.net/cicd/62edbda3c6770329307f2c57.html
+          // github 环境变量 https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
           let fg = (${{job.status}})?.toLocaleLowerCase() ==='success'
-          let txt =  fg? ${{ github.GITHUB_REPOSITORY  }}:'构建失败'
-          let t = `[ ${txt} ]: ${{ github.GITHUB_RUN_ID }}`
+          let txt =  fg? ${{ github.repository  }} || 'github.repository':'构建失败'
+          let t = `[ ${txt} ]: ${{ github.run_id }}`
           const data = JSON.stringify({
             "msgtype": "markdown",
             "markdown": {
               "title": `【构建日志】`,
               "text": [
-                "#### <font color="fg?'#1bb24c':'#ff0000'">" + t + "</font>",
-                '> ref:' + ${{ github.GITHUB_REF  }} ,
-                ${{github.ref }},
+                "## <font color="fg?'#1bb24c':'#ff0000'">" + t + "</font>",
+                '[可怜] ref:' + ${{ github.ref  }} ,
                 '> ${{steps.commit_logs.outputs.commits}}'
-                "[查看构建详情日志](" + ${{github.GITHUB_SERVER_URL}} + ")"
+                "[查看构建详情日志](" + ${{github.server_url}} + ")"
               ].join('  \n  ')
             },
             "at": {
