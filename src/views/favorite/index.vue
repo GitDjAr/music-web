@@ -64,8 +64,6 @@
             :singer="item?.song?.artists.map((e) => e.name).join('/')"
             :url="item?.picUrl"
             @click="play(item)"
-            :style="{ '--stagger': index }"
-            data-animate
           />
         </div>
       </div>
@@ -127,12 +125,13 @@ const titleList = ref<{}>([
 let len = 0;
 const myLiveList = ref<T.MusicPlayList[]>([]);
 async function getMyLiveList() {
-  console.log("getMyLiveList", len);
-  const ids = [...store.state.song.myLikeList]?.splice(len, 60)?.join(",");
+  // console.log("getMyLiveList", len);
+  //每次120 叠加
+  const ids = [...store.state.song.myLikeList]?.splice(len, 120)?.join(",");
   if (ids) {
     let aa = (await GetSongDetail({ ids }))?.songs || [];
     myLiveList.value.push(...aa);
-    len += 60;
+    len += 120;
   }
 }
 getMyLiveList();
