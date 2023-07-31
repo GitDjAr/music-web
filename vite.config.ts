@@ -1,14 +1,28 @@
-import { PluginOption, defineConfig } from "vite";
+import { PluginOption, defineConfig, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
 import * as path from "path";
 //pwa
 import { VitePWA } from "vite-plugin-pwa";
+//https://juejin.cn/post/7235818900818526265   打包时间分析
+import { visualizer } from "rollup-plugin-visualizer";
 // import { GenerateSW } from "workbox-webpack-plugin";
 
 //icons
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
+
+// 按需导入 https://github.com/antfu/unplugin-vue-components
+import Components from 'unplugin-vue-components/vite'
+
 //zip
 import zip from "vite-plugin-zip";
+
+/**
+import { DownOutlined } from '@ant-design/icons-vue'
+↓↓↓
+import DownOutlined from '@ant-design/icons-vue/DownOutlined'
+ */
+import vitePluginImp from 'vite-plugin-imp'
+const isBuild = process.env.NODE_ENV === 'production' //判断当前是否处于构建模式
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -62,6 +76,11 @@ export default defineConfig({
       // 指定symbolId格式
       symbolId: "icon-[dir]-[name]",
     }),
+    splitVendorChunkPlugin(),
+
+    Components(/* options */),
+    isBuild && vitePluginImp(),
+    visualizer(),
   ],
 
   define: {
@@ -121,10 +140,10 @@ export default defineConfig({
       // arco css变量  https://arco.design/vue/docs/theme#Less-%E5%8F%98%E9%87%8F%E6%9B%BF%E6%8D%A2
       less: {
         modifyVars: {
-          'arcoblue-6': '176,176,251',
+          "arcoblue-6": "176,176,251",
         },
         javascriptEnabled: true,
-      }
+      },
     },
   },
   resolve: {
@@ -151,6 +170,12 @@ export default defineConfig({
         entryFileNames: "assets/[name].[hash].js",
         chunkFileNames: "assets/[name].[hash].js",
         assetFileNames: "assets/[name].[hash].[ext]",
+        // manualChunks(id) {
+        //   // 静态资源分拆打包
+        //   if (id.includes('node_modules')) {
+        //     return id.toString().split('node_modules/')[1].split('/')[0].toString()
+        //   }
+        // }
       },
     },
   },

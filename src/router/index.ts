@@ -19,6 +19,7 @@ const playHistroy = () => import("../views/playHistroy/index.vue");
 
 // test page
 const test = () => import("../views/test/index.vue");
+const aiVue = () => import("../views/test/ai.vue");
 const Page404 = () => import("../views/404/index.vue");
 
 // 工具
@@ -114,7 +115,15 @@ export const routes: Array<RouteRecordRaw> = [
         path: "test",
         name: "test",
         meta: { title: "test", keepalive: false },
-        component: test,
+        component: aiVue,
+        children: [
+          {
+            path: "ai",
+            name: "ai",
+            meta: { title: "ai", keepalive: false },
+            component: aiVue,
+          }
+        ]
       },
       {
         path: "playHistory",

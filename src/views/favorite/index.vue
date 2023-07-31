@@ -46,21 +46,21 @@
           />
         </div>
       </div>
-      <echarts class="w-1/3 mx-4" :randomColor="randomColor" />
+      <!-- <echarts class="w-1/3 mx-4" :randomColor="randomColor" /> -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import echarts from "./echarts/index.vue";
+// import echarts from "./echarts/index.vue";
 import Song from "@/components/song.vue";
 import { newSong } from "@/api/playlist";
-import { useRouter } from "vue-router";
+// import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { rgbToHex } from "@/utils/getImgsColor";
 
-const router = useRouter();
+// const router = useRouter();
 const store = useStore();
 
 const randomColor = () => {

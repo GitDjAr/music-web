@@ -4,8 +4,9 @@
 </template>
 
 <script lang="ts" setup>
+// 引入echarts
+import echartsFun from "@/utils/echarts";
 import { preference } from "@/api/playlist";
-import * as echarts from "echarts";
 import { onMounted, ref } from "vue";
 const props = defineProps({
   randomColor: {
@@ -16,46 +17,8 @@ const props = defineProps({
 
 onMounted(() => {
   var chartDom = document.getElementById("myChart");
-  var myChart = echarts.init(chartDom);
-  // const m2R2Data = [
-  //   {
-  //     value: 335,
-  //     tagName: "种类01",
-  //     name: "种类01  335",
-  //     itemStyle: { color: props.randomColor() },
-  //   },
-  //   {
-  //     value: 310,
-  //     tagName: "种类02",
-  //     name: "种类02  310",
-  //     itemStyle: { color: "#5085f2" },
-  //   },
-  //   {
-  //     value: 234,
-  //     tagName: "种类03",
-  //     name: "种类03  234",
-  //     itemStyle: { color: "#e75fc3" },
-  //   },
-  //   {
-  //     value: 154,
-  //     tagName: "种类04",
-  //     name: "种类04  154",
-  //     itemStyle: { color: "#f87be2" },
-  //   },
-  //   {
-  //     value: 335,
-  //     tagName: "种类05",
-  //     name: "种类05  335",
-  //     itemStyle: { color: "#f2719a" },
-  //   },
-  //   {
-  //     value: 335,
-  //     tagName: "种类06",
-  //     name: "种类06  335",
-  //     itemStyle: { color: "#fca4bb" },
-  //   },
-  // ];
-
+  var myChart = chartDom && echartsFun.init(chartDom);
+  // const m2R2Data = [ //   { //     value: 335, //     tagName: "种类01", //     name: "种类01  335", //     itemStyle: { color: props.randomColor() }, //   }, //   { //     value: 310, //     tagName: "种类02", //     name: "种类02  310", //     itemStyle: { color: "#5085f2" }, //   }, //   { //     value: 234, //     tagName: "种类03", //     name: "种类03  234", //     itemStyle: { color: "#e75fc3" }, //   }, //   { //     value: 154, //     tagName: "种类04", //     name: "种类04  154", //     itemStyle: { color: "#f87be2" }, //   }, //   { //     value: 335, //     tagName: "种类05", //     name: "种类05  335", //     itemStyle: { color: "#f2719a" }, //   }, //   { //     value: 335, //     tagName: "种类06", //     name: "种类06  335", //     itemStyle: { color: "#fca4bb" }, //   }, // ];
   const option = {
     title: [
       {
