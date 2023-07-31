@@ -98,7 +98,7 @@ jobs:
               "title": `【构建日志】`,
               "text": [
                 "## <font color="+color+">" + t + "</font>",
-                '[可怜] ref:' + ${{ github.ref  }} ,
+                '[可怜] ref: ${{ github.ref  }} ',
                 '> ${{steps.commit_logs.outputs.commits}}',
                 "[查看构建详情日志](https://github.com/GitDjAr/music-web/actions)"
               ].join('  \n  ')
