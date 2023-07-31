@@ -89,11 +89,6 @@ jobs:
           hmac.update(stringToSign);
           const sign = querystring.escape(hmac.digest("base64"));
 
-          //获取 ref 和上一次之间的 commit
-          const compareURL = `https://api.github.com/repos/${owner}/${repo}/compare/${base}...${head}`
-          const compareRes = await fetch(compareURL)
-          const compareData = await compareRes.json()
-
           // github 环境变量 https://devpress.csdn.net/cicd/62edbda3c6770329307f2c57.html
           let fg = (${{job.status}})?.toLocaleLowerCase() ==='success'
           let txt =  fg? ${{ github.GITHUB_REPOSITORY  }}:'构建失败'
