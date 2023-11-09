@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 定义变量
+sha=$(git rev-parse HEAD)
+
 # 获取所有Tag
 tags=$(git tag)
 
@@ -8,18 +11,27 @@ tags=($tags)
 tags=(${tags[@]} )
 tags=($(for i in "${tags[@]}"; do echo $i; done | sort -r))
 
+# 确保GITHUB_TOKEN和GITHUB_REPOSITORY变量存在
+if [[ -z "$GITHUB_TOKEN" || -z "$GITHUB_REPOSITORY" ]]; then
+  echo "Error: GITHUB_TOKEN or GITHUB_REPOSITORY is not set"
+  exit 1
+fi
+
 # 逐个检查Tag状态,直到找到第一个成功的
 for tag in ${tags[@]}; do
-  status=$(git rev-list -n 1 $tag | xargs curl -u "$GITHUB_TOKEN" -i https://api.github.com/repos/$GITHUB_REPOSITORY/commits/$sha/status)
-  echo $status
+  status=$(git rev-list -n 1 $tag | xargs curl -u "${{secrets.TOKEN}}" -i -X GET https://api.github.com/repos/${{ github.repository  }}/commits/$sha/status -v -o /dev/null -w "%{http_code}")
+  echo "Status for tag $tag: $status"
   if [[ $status == *"success"* ]]; then
-    echo $tag
+    echo "Successful tag: $tag"
     break
+  else
+    echo "Error: API request failed for tag $tag"
+    exit 1
   fi
 done
 
 # 输出tag作为输出
-# echo "::set-output name=tag::$tag"
+echo "::set-output name=tag::$tag"
 
 # 获取上一个成功的 Tag
 prev_tag=$tag
