@@ -44,8 +44,6 @@
             :singer="item?.song?.artists.map((e) => e.name).join('/')"
             :url="item?.al?.picUrl"
             @click="playLike(item)"
-            :style="{ '--stagger': index }"
-            data-animate
           />
         </div>
       </div>
@@ -56,7 +54,7 @@
         <h3 class="text-xl mb-2">推荐新音乐</h3>
         <div class="bg-[var(--color-fill-2)] rounded-md px-2">
           <Song
-            v-for="(item, index) in newSongList"
+            v-for="item in newSongList"
             class="border-none"
             :id="item.id"
             :dt="item.dt"
