@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="home-left">
-    <h2 class="text-left px-3">{{ $t("home.recommendMv") }}</h2>
+    <h1 class="text-xl text-left">{{ $t("home.recommendMv") }}</h1>
     <a-carousel
       class="carousel"
       :auto-play="true"
@@ -26,7 +26,7 @@
 
     <template v-if="Store.getters.loginStatus">
       <h1 class="text-xl text-left">{{ $t("home.recommendPlaylist") }}</h1>
-      <div class="Nouvea">
+      <div class="Nouvea gap-8">
         <div
           class="NouList mb-2"
           :key="index"
@@ -45,7 +45,7 @@
               </div>
             </Image>
           </div>
-          <p class="line-clamp-2 leading-tight text-base">
+          <p class="line-clamp-1 leading-tight text-base">
             {{ item.name }}
           </p>
           <!-- <a-tag :color="resourceColor(item.id)" size="mini">{{item.creator.expertTags}}</a-tag> -->
@@ -83,7 +83,6 @@ async function getPersonalized() {
   const { result } = await personalizedMV();
   state.personalizedMV = result?.splice(0, 6);
 }
-// 推荐歌单
 
 // 播放
 const videoId = ref("");
@@ -107,9 +106,9 @@ onMounted(() => {
     margin: 10px 0;
   }
 
-  flex-grow: 1;
-  width: 200px;
-  margin-right: 10px;
+  // flex-grow: 1;
+  // width: 200px;
+  // margin-right: 10px;
 
   .carousel {
     height: 260px;
@@ -124,9 +123,6 @@ onMounted(() => {
     justify-items: center;
 
     .NouList {
-      flex: 1;
-      width: 85%;
-
       .playCss {
         height: 101%;
         width: 101%;
