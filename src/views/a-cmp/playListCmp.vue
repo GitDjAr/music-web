@@ -77,7 +77,7 @@ import ModalVue from "@/components/Modal.vue";
 
 import { ref, computed, reactive } from "vue";
 import { vInfiniteScroll } from "@vueuse/components";
-import { formatTime, formatformat } from "@/utils/format";
+import { formatformat } from "@/utils/format";
 import {
   _playlist_detail,
   _playlist_track_all,
@@ -94,6 +94,8 @@ const emit = defineEmits<["scroll"]>();
 const props = withDefaults(defineProps<{ isShowCollect: boolean }>(), {
   isShowCollect: true,
 });
+
+const scrollLoad = () => {};
 
 const tagColor = () => store.getters.tagColor;
 const id: number = +route.params?.id;

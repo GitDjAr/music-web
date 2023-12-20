@@ -51,9 +51,11 @@
 import { useStorage } from "@vueuse/core";
 import type { CurSongInfo } from "@/store/module/song";
 import { ref, onBeforeUnmount, computed, watch } from "vue";
-import Store from "@/store";
 import { getImgsColor, findClosestColor } from "@/utils/getImgsColor";
 import { nextTick } from "vue";
+import { useStore } from "vuex";
+
+const Store = useStore();
 
 const curPlaySong = computed<CurSongInfo>(() => Store.getters.curPlaySong);
 const Player = computed(() => Store.state?.song?.Player);
@@ -110,11 +112,13 @@ function SetTickLyrics() {
   });
   nextTick(() => tickLyrics(undefined, acv));
 }
+
 // 暴露方法  手动校验
 defineExpose({
   SetTickLyrics,
 });
 </script>
+
 <style scoped lang="scss">
 svg.transform.myfont {
   font-size: 2rem;

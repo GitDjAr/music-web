@@ -3,23 +3,27 @@
   <div class="flex">
     <Logo style="width: 180px" />
     <ul class="title-nav-ul flex items-center ml-3">
-      <li class="title-nav" v-for="(item, index) in titleList" :key="index" :style="{ background: item.c }"
-        @click="item.handler" v-hover:300="item.tip"></li>
+      <li
+        class="title-nav"
+        v-for="(item, index) in titleList"
+        :key="index"
+        :style="{ background: item.c }"
+        @click="item.handler"
+        v-hover:300="item.tip"
+      ></li>
     </ul>
   </div>
   <div class="flex items-center">
     <div v-if="loginStatus" class="flex mx-3 h-[40px] items-center">
       <a-popover position="bottom" trigger="click">
         <a-badge :count="9" dot :offset="[2, -2]">
-          <IconNotification :style="{ color: '#888', fontSize: '18px', verticalAlign: '-3px' }" />
+          <IconNotification
+            :style="{ color: '#888', fontSize: '18px', verticalAlign: '-3px' }"
+          />
         </a-badge>
         <template #content>
-          <a-card :style="{ width: '500px', marginLeft: '24px' }" title="消息" hoverable :bordered="false">
-            <template #extra>
-              <!-- <a-link>全部已读</a-link> -->
-            </template>
-            <meMsg />
-          </a-card>
+          <div class="text-xl mb-2">消息</div>
+          <meMsg />
         </template>
       </a-popover>
     </div>
@@ -29,7 +33,12 @@
         $t("login.login")
       }}</a-button>
       <a-popover v-if="userInfo.title">
-        <Image :src="userInfo.title" style="width: 40px; height: 40px" class="rounded-md" :wh="[80, 80]"></Image>
+        <Image
+          :src="userInfo.title"
+          style="width: 40px; height: 40px"
+          class="rounded-md"
+          :wh="[80, 80]"
+        ></Image>
         <template #content>
           <p @click="Putin">{{ $t("login.outing") }}</p>
         </template>

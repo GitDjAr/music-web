@@ -92,22 +92,21 @@
             <!-- <div class="flex-1 mx-4 h-1 cursor-pointer bg-purple-300 relative"></div> -->
             <div
               @mousedown.self="drag($event, 'volume')"
-              class="group-hover:opacity-100 opacity-0 overflow-hidden transition-all flex-1 h-1 _B2"
+              class="group-hover:opacity-100 opacity-0 overflow-hidden transition-all flex-1 h-1 _B2 rounded-md"
               style="height: 6px"
             >
               <div
                 :style="{ width: Player._volume * 100 + '%' }"
-                class="h-full relative pointer-events-none bg-purple-300 rounded-lg"
-              >
-                <!-- <span
-                  class="h-3 w-3 -right-1.5 -top-2/4 rounded-2xl absolute _B3"
-                ></span> -->
-              </div>
+                class="h-full relative pointer-events-none bg-purple-300 rounded-l-md"
+              ></div>
             </div>
           </div>
         </div>
       </div>
-      <img class="w-10 h-10" src="@/assets/img/sds.gif" />
+      <div class="flex">
+        <p class="flex-1"></p>
+        <img class="w-10 h-10" src="@/assets/img/sds.gif" />
+      </div>
     </div>
     <a-drawer
       class="drawer"

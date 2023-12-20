@@ -50,7 +50,7 @@ const state = {
   loginTime: useStorage("loginTime", ""), // 记录登录时间
   tagColor,
   userInfo: useStorage<userInfo_T>("userInfo", {} as userInfo_T),
-  iconPse: useStorage("iconPse", '/src/assets/icon/runDag.gif'),
+  iconPse: useStorage("iconPse", '/src/assets/myIcon/runDag.gif'),
 };
 const mutations = {
   locale: (state: AppType, status: string): void => {
