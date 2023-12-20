@@ -80,7 +80,7 @@ watch(ArrowDown, (v) => {
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@0;1&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@0;1&display=swap");
 
 body {
   transition: all 0.5s ease-in-out;
@@ -100,10 +100,12 @@ body {
     right: 0;
     height: 0;
     opacity: 0;
-    background-image: linear-gradient(-20deg,
-        #ddd6f3 0%,
-        #faaca8 100%,
-        #faaca8 100%);
+    background-image: linear-gradient(
+      -20deg,
+      #ddd6f3 0%,
+      #faaca8 100%,
+      #faaca8 100%
+    );
   }
 }
 
@@ -147,10 +149,12 @@ html.dark body {
     height: 0;
     transition: all 1s ease-in-out;
     opacity: 0;
-    background-image: linear-gradient(-20deg,
-        #ddd6f3 0%,
-        #faaca8 100%,
-        #faaca8 100%);
+    background-image: linear-gradient(
+      -20deg,
+      #ddd6f3 0%,
+      #faaca8 100%,
+      #faaca8 100%
+    );
   }
 
   &:hover {
