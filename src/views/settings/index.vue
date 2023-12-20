@@ -48,13 +48,18 @@
         @change="store.commit('setLyricColor', !lyricColor)"
       />
     </div>
+    <div class="listItem">
+      <h2>图标:</h2>
+      <iconProgressVue></iconProgressVue>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 // import { useDark, useToggle } from "@vueuse/core";
+import iconProgressVue from "./icon.vue";
 import { reactive, Ref, ref, computed } from "vue";
-import store from "../../store";
+import { useStore } from "vuex";
 import type { levelEnum } from "./type";
 
 const level: Ref<levelEnum> = ref([
@@ -67,6 +72,8 @@ const level: Ref<levelEnum> = ref([
 const state = reactive({
   langList: [{ lang: "zh-CN" }, { lang: "en" }],
 });
+
+const store = useStore();
 
 const I18nChange = (v: string | Event) => {
   store.dispatch("setLocale", v);

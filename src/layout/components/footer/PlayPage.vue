@@ -1,21 +1,43 @@
 <!--  -->
 <template>
-  <div class="palyPage overflow-hidden" v-if="curPlaySong" :style="{ 'background-image': `url(${curPlaySong.img})` }">
-    <div class="backdrop-filter backdrop-blur-xl w-full h-full flex flex-col">
+  <div
+    class="palyPage overflow-hidden"
+    v-if="curPlaySong"
+    :style="{ 'background-image': `url(${curPlaySong.img})` }"
+  >
+    <div class="backdrop-filter backdrop-blur-3xl w-full h-full flex flex-col">
       <div
-        class="pageh overflow-hidden h-full grid grid-cols-2 items-center md:px-4 xl:px-24 grid-flow-col justify-center">
-        <div class="flex justify-center items-center rounded-md overflow-hidden ">
-          <Image :src="curPlaySong.img" class="w-3/5 rounded-md overflow-hidden object-cover" />
+        class="pageh overflow-hidden h-full grid grid-cols-2 items-center md:px-4 xl:px-24 grid-flow-col justify-center"
+      >
+        <div
+          class="flex justify-center items-center rounded-md overflow-hidden"
+        >
+          <Image
+            :src="curPlaySong.img"
+            class="w-3/5 rounded-md overflow-hidden object-cover"
+          />
         </div>
-        <div class="lyricsItem overflow-y-scroll h-full mr-3 " :class="curPlaySong.lrc.length <= 10 ? `flex items-center` : ''">
+        <div
+          class="lyricsItem overflow-y-scroll h-full mr-3"
+          :class="curPlaySong.lrc.length <= 10 ? `flex items-center` : ''"
+        >
           <ul class="my-10" :style="styleImg">
             <li
-              class="transition-all    text-xl mx-6 py-3 px-6 font-bold rounded-lg cursor-pointer select-none text-slate-300"
+              class="transition-all text-xl mx-6 py-3 px-6 font-bold rounded-lg cursor-pointer select-none text-slate-300"
               :class="{
-                line: index == active
+                line: index == active,
               }"
-              :style="{ filter: `blur(${Math.abs(active - index) * 2 / 10 < 1.5 ? Math.abs(active - index) * 2 / 10 : 1.5}px)` }"
-              v-for="(item, index) in curPlaySong.lrc" :id="item.time + ''" @click="tickLyrics(item, index)">
+              :style="{
+                filter: `blur(${
+                  (Math.abs(active - index) * 2) / 10 < 1.5
+                    ? (Math.abs(active - index) * 2) / 10
+                    : 1.5
+                }px)`,
+              }"
+              v-for="(item, index) in curPlaySong.lrc"
+              :id="item.time + ''"
+              @click="tickLyrics(item, index)"
+            >
               {{ item.txt }}
             </li>
           </ul>
@@ -28,9 +50,10 @@
 <script lang="ts" setup>
 import { useStorage } from "@vueuse/core";
 import type { CurSongInfo } from "@/store/module/song";
-import { ref, onBeforeUnmount, computed, watch, onMounted } from "vue";
+import { ref, onBeforeUnmount, computed, watch } from "vue";
 import Store from "@/store";
 import { getImgsColor, findClosestColor } from "@/utils/getImgsColor";
+import { nextTick } from "vue";
 
 const curPlaySong = computed<CurSongInfo>(() => Store.getters.curPlaySong);
 const Player = computed(() => Store.state?.song?.Player);
@@ -40,28 +63,29 @@ const styleImg = ref("--ImgColor:#FDCF41");
 
 watch([curPlaySong, lyricColor], ([curV, curO]) => {
   getImgsColor(curV.img).then((res: string) => {
-    styleImg.value = `--ImgColor:${lyricColor.value ? findClosestColor(res) : "#FDCF41"
-      }`;
+    styleImg.value = `--ImgColor:${
+      lyricColor.value ? findClosestColor(res) : "#FDCF41"
+    }`;
   });
   curV.img !== curO.img && tickLyrics(undefined, 0);
 });
 
 // 歌词滚动
-let Timer = setInterval(() => {
+const tickScroll = () => {
   const currentTime = Player.value?.getHow()?.seek();
   const lineTime = curPlaySong?.value?.lrc[active?.value + 1]?.time;
 
   if (lineTime && currentTime >= lineTime) {
     tickLyrics(undefined, active?.value + 1);
   }
-}, 100);
+};
+let Timer = setInterval(tickScroll, 100);
 onBeforeUnmount(() => {
   clearInterval(Timer);
 });
 
 // 移动播放节点
 const active = useStorage("lrcActive", 0);
-onMounted(() => { });
 function tickLyrics(item: { time: any } | undefined, index: number) {
   const el = document.querySelector(".lyricsItem");
   if (!el) return;
@@ -84,7 +108,7 @@ function SetTickLyrics() {
       acv++;
     }
   });
-  tickLyrics(undefined, acv);
+  nextTick(() => tickLyrics(undefined, acv));
 }
 // 暴露方法  手动校验
 defineExpose({
@@ -109,7 +133,6 @@ svg.transform.myfont {
   //   filter: invert(1);
   // }
 }
-
 
 .lyricsItem {
   li:hover {

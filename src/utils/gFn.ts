@@ -137,3 +137,16 @@ export function checkHTTP(url: string): Promise<boolean> {
     http.send(null);
   });
 }
+
+
+/**
+ * vue文件中不能使用 import.meta.glob
+ * 封装成一个 promise 方法
+ */
+export function iconGif(): Promise<any> {
+  return new Promise(async (resolve) => {
+    const icons = await import.meta.glob("@/assets/myIcon/*")
+    console.log("🚀 ~ file: gFn.ts:152 ~ returnnewPromise ~ icons:", icons)
+    return resolve(Object.values(icons));
+  });
+}

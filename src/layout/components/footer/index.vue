@@ -7,7 +7,7 @@
     v-if="curPlaySong.id"
   >
     <div
-      class="myclass h-full w-full grid select-none padding10"
+      class="myclass h-full w-full grid items-center select-none padding10"
       :class="visible ? 'absolute padding10' : ''"
     >
       <div
@@ -32,25 +32,27 @@
         </div>
         <MyLike :id="curPlaySong.id" />
       </div>
-      <div class="grid">
-        <div
-          @click.stop
-          class="flex items-center justify-between"
-          style="height: 25px"
-        >
+      <div class="grid" @click.stop>
+        <div class="flex items-center justify-between" style="height: 25px">
           <span class="w-12">{{ formatTime(Player._progress * 1000) }}</span>
-          <div
-            @mousedown.self="drag($event, 'progress')"
-            class="flex-1 mx-4 border-white cursor-pointer _B2 rounded-md"
-            style="height: 6px"
-          >
+          <div class="mx-4 flex-1 rounded-md">
             <div
-              :style="{ width: CurTimeTack }"
-              class="progress-bar-inner relative pointer-events-none rounded-md bg-purple-300 h-full"
+              @mousedown.self="drag($event, 'progress')"
+              class="border-white cursor-pointer _B2 rounded-md"
+              style="height: 6px"
             >
-              <!-- <span
-                class="h-3 w-3 -right-1.5 -top-2/4 rounded-2xl absolute _B3"
-              ></span> -->
+              <div
+                :style="{ width: CurTimeTack }"
+                class="progress-bar-inner relative transition-all pointer-events-none bg-purple-300 h-full rounded-l-md myImg"
+              >
+                <img
+                  :src="Store.state.app.iconPse"
+                  alt=""
+                  srcset=""
+                  class=""
+                  ref="myImg"
+                />
+              </div>
             </div>
           </div>
           <span class="w-12">{{
@@ -59,10 +61,7 @@
               : formatTime(curPlaySong.duration)
           }}</span>
         </div>
-        <div
-          class="flex justify-center items-center transition-all"
-          style="height: 35px"
-        >
+        <div class="flex justify-center items-center" style="height: 35px">
           <MyIcon
             name="playlist"
             @click.stop="toggle(1)"
@@ -93,7 +92,7 @@
             <!-- <div class="flex-1 mx-4 h-1 cursor-pointer bg-purple-300 relative"></div> -->
             <div
               @mousedown.self="drag($event, 'volume')"
-              class="group-hover:opacity-100 opacity-0 overflow-hidden group-hover:-translate-x-0 translate-x-10 transition-all flex-1 h-1 _B2"
+              class="group-hover:opacity-100 opacity-0 overflow-hidden transition-all flex-1 h-1 _B2"
               style="height: 6px"
             >
               <div
@@ -108,6 +107,7 @@
           </div>
         </div>
       </div>
+      <img class="w-10 h-10" src="@/assets/img/sds.gif" />
     </div>
     <a-drawer
       class="drawer"
@@ -137,21 +137,22 @@
 import playListVue from "./playList.vue";
 import PlayPage from "./PlayPage.vue";
 import { formatTime } from "@/utils/format";
-import { ref, computed } from "vue";
+import { ref, computed, RendererElement, watch } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { RendererElement } from "vue";
 
 const router = useRouter();
 const Store = useStore();
 Store.dispatch("initializePlayer");
-let Player = computed(() => Store.state.song.Player);
+const Player = computed(() => Store.state.song.Player);
+console.log("🚀 ~ file: index.vue:145 ~ Player:", Player);
 
 const curPlaySong = computed(() => Store.getters.curPlaySong);
+const myProcess = ref();
 let CurTimeTack = computed(() => {
-  return `${
-    ((Player.value._progress * 1000) / curPlaySong.value.duration) * 100
-  }%`;
+  let tack =
+    ((Player.value._progress * 1000) / curPlaySong.value.duration) * 100;
+  return `${myProcess.value || tack}%`;
 });
 
 // visible
@@ -184,7 +185,7 @@ const map = {
 };
 const mode = computed(() => {
   let key = Store.state.song.playbackMode as unknown as string;
-  return map[key]
+  return map[key];
 });
 
 const playPageRef = ref<RendererElement>();
@@ -207,6 +208,8 @@ const drag = (e: MouseEvent, id: string) => {
     }
     if (id === "volume") {
       Player.value?._setvolume(wff / 100);
+    } else if (id === "progress") {
+      myProcess.value = wff;
     }
   };
   // 解绑
@@ -216,6 +219,7 @@ const drag = (e: MouseEvent, id: string) => {
 
       Player.value.SetSeeks(seek / 1000);
       playPageRef?.value?.SetTickLyrics();
+      myProcess.value = null;
     } else if (id === "volume") {
       Player.value?._setvolume(wff / 100);
     }
@@ -255,9 +259,18 @@ const iconSvg = computed(() => {
     font-size: 1.3rem;
     margin: 5px 10px;
   }
-
-  .progress-bar-inner {
-    transition: width 1s ease-in;
+  .myImg {
+    img {
+      position: absolute;
+      background-repeat: no-repeat;
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      top: 0px;
+      right: -20px;
+      transform: translateY(-56%);
+    }
   }
 }
 </style>

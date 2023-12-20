@@ -150,7 +150,7 @@ class Player implements PlayerInstance {
     window.clearInterval(this._interval);
     this._interval = window.setInterval(() => {
       this.SetSeeks();
-    }, 1000);
+    }, 100);
   }
   stop() {
     this._howler.pause();
@@ -170,7 +170,7 @@ class Player implements PlayerInstance {
         onend: () => {
           this.nextSong();
         },
-        onload: () => {},
+        onload: () => { },
       });
 
       setTitle(this._currentTrack);

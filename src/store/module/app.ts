@@ -10,6 +10,7 @@ import type { RootState } from "../index";
 export interface AppType {
   userInfo: userInfo_T;
   locale?: string;
+  iconPse?: string;
   lyricColor?: boolean;
   tagColor: [
     "red",
@@ -49,10 +50,14 @@ const state = {
   loginTime: useStorage("loginTime", ""), // 记录登录时间
   tagColor,
   userInfo: useStorage<userInfo_T>("userInfo", {} as userInfo_T),
+  iconPse: useStorage("iconPse", '/src/assets/icon/runDag.gif'),
 };
 const mutations = {
   locale: (state: AppType, status: string): void => {
     state.locale = status;
+  },
+  iconPse: (state: AppType, status: string): void => {
+    state.iconPse = status;
   },
   userLogin: (state: AppType, status: userInfo_T): void => {
     state.userInfo = status;
@@ -67,6 +72,10 @@ const actions = {
   // 设置语言
   async setLocale({ commit }: ActionContext<AppType, RootState>, lang: string) {
     commit("locale", lang);
+  },
+  //图标
+  async setIcon({ commit }: ActionContext<AppType, RootState>, icon: string) {
+    commit("iconPse", icon);
   },
   // user退出
   async UserOuting(

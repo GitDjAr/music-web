@@ -27,7 +27,6 @@ const isBuild = process.env.NODE_ENV === 'production' //判断当前是否处于
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/",
-
   plugins: [
     vue({
       reactivityTransform: false, // 开启reactivityTransform $ref
@@ -58,18 +57,6 @@ export default defineConfig({
         ],
       },
     }),
-    // {
-    //   name: "workbox",
-    //   apply: "build",
-    //   plugins: [
-    //     new GenerateSW({
-    //       swDest: "public/sw.js",
-    //     }),
-    //   ],
-    // } as PluginOption,
-    // zip({
-    //   outputName: "music",
-    // }),
     createSvgIconsPlugin({
       // 指定需要缓存的图标文件夹
       iconDirs: [path.resolve(process.cwd(), "src/assets/svg")],
@@ -77,12 +64,11 @@ export default defineConfig({
       symbolId: "icon-[dir]-[name]",
     }),
     splitVendorChunkPlugin(),
-
     Components(/* options */),
     isBuild && vitePluginImp(),
-    visualizer(),
-  ],
+    // visualizer(),
 
+  ],
   define: {
     //https://vue-i18n.intlify.dev/guide/advanced/optimization.html#reduce-bundle-size-with-feature-build-flags
     // __VUE_I18N_FULL_INSTALL__: true,
@@ -149,15 +135,15 @@ export default defineConfig({
   resolve: {
     extensions: [".ts", ".js", ".jsx", ".tsx", ".json"],
     alias: {
-      "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js",
       "@": path.resolve(__dirname, "src"),
+      "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js",
       // "@components": path.resolve(__dirname, "src/components/"),
     },
   },
   build: {
     minify: true, //代码压缩功能
     sourcemap: true, //源代码映射
-    assetsDir: "assets",
+    // assetsDir: "assets",
     outDir: "dist",
     target: "es2015",
     rollupOptions: {
@@ -179,4 +165,4 @@ export default defineConfig({
       },
     },
   },
-});
+})
