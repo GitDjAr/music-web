@@ -145,8 +145,8 @@ export function checkHTTP(url: string): Promise<boolean> {
  */
 export function iconGif(): Promise<any> {
   return new Promise(async (resolve) => {
-    const icons = await import.meta.glob("@/assets/myIcon/*")
-    console.log("🚀 ~ file: gFn.ts:152 ~ returnnewPromise ~ icons:", icons)
+    const icons = await import.meta.glob("/src/assets/myIcon/*", { as: 'url', eager: true })
+    console.log("🚀 ~ file: gFn.ts:152 ~ return new Promise ~ icons:", icons)
     return resolve(Object.values(icons));
   });
 }

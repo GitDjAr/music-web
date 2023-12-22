@@ -8,10 +8,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest # 运行环境，告诉它运行在什么环境
     steps: # 步骤
-      # 第一步：下载源码（CI/CD拉取代码到自己的本地）
+      ## 第一步：下载源码（CI/CD拉取代码到自己的本地）
       - name: Checkout
         uses: actions/checkout@master
-      # # 第二步：打包构建
+      ## 第二步：打包构建
       - name: Build
         uses: actions/setup-node@master
         # 构建使用 npm ci 加速  https://dwye.dev/post/github-action-npm-cache/ ,https://blog.csdn.net/Hodors/article/details/127726899
@@ -73,10 +73,11 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script:
-            | # 执行命令（运行到服务器）cd：要确保服务器有这个目录； wget：下载上一步的release到服务器； tar：解压； 安装依赖；启动服务
+          # 执行命令（运行到服务器）cd：要确保服务器有这个目录； wget：下载上一步的release到服务器； tar：解压； 安装依赖；启动服务
+          # 代理下载github https://ghproxy.com/  国内比较难访问,一旦被墙,代理就失效了
+          script: |
             cd /usr/local/nginx/html
-            wget https://ghproxy.com/https://github.com/GitDjAr/music-web/releases/latest/download/release.tgz -O music.tgz
+            wget https://mirror.ghproxy.com/https://github.com/GitDjAr/music-web/releases/latest/download/release.tgz -O music.tgz
             tar zxvf music.tgz
             rm -rf music.tgz
             # npm install --production

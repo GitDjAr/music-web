@@ -2,16 +2,16 @@
 <template>
   <div class="grid gap-2 grid-cols-4">
     <div
-      :key="item.name"
+      :key="item"
       v-for="item in iconList"
-      @click="store.dispatch('setIcon', item.name)"
+      @click="store.dispatch('setIcon', item)"
       :class="` w-16 h-16 cursor-pointer    ${
-        store.state.app.iconPse === item.name
+        store.state.app.iconPse === item
           ? 'border-b-4 border-purple-800  rounded'
           : ''
       }`"
     >
-      <img :src="item.name" :alt="item.name" srcset="" />
+      <img :src="item" :alt="item" srcset="" />
     </div>
   </div>
 </template>
@@ -24,7 +24,6 @@ import { iconGif } from "@/utils/gFn";
 const store = useStore();
 const iconList = ref();
 iconGif().then((res) => {
-  console.log("iconGif", res);
   iconList.value = res;
 });
 </script>

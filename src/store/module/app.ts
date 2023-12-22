@@ -6,6 +6,7 @@ import { userInfo_T } from "../types/userInfog";
 import { diffDays } from "@/utils/format";
 // import type Song from '../types/song'
 import type { RootState } from "../index";
+import defaultIcon from '@/assets/myIcon/runDag.gif'
 
 export interface AppType {
   userInfo: userInfo_T;
@@ -50,7 +51,7 @@ const state = {
   loginTime: useStorage("loginTime", ""), // 记录登录时间
   tagColor,
   userInfo: useStorage<userInfo_T>("userInfo", {} as userInfo_T),
-  iconPse: useStorage("iconPse", '/src/assets/myIcon/runDag.gif'),
+  iconPse: useStorage("iconPse", defaultIcon),
 };
 const mutations = {
   locale: (state: AppType, status: string): void => {

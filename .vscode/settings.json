@@ -97,7 +97,5 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "github-actions.workflows.pinned.workflows": [
-    ".github/workflows/main.yml"
-  ]
+  "github-actions.workflows.pinned.workflows": []
 }

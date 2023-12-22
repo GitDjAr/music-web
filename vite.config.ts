@@ -1,25 +1,31 @@
 import { PluginOption, defineConfig, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
 import * as path from "path";
+
 //pwa
 import { VitePWA } from "vite-plugin-pwa";
-//https://juejin.cn/post/7235818900818526265   打包时间分析
+
+//https://juejin.cn/post/7235818900818526265   打包时间分析  构建时长、chunk 数量及大小
 import { visualizer } from "rollup-plugin-visualizer";
 // import { GenerateSW } from "workbox-webpack-plugin";
 
 //icons
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
-// 按需导入 https://github.com/antfu/unplugin-vue-components
-import Components from 'unplugin-vue-components/vite'
-
 //zip
 import zip from "vite-plugin-zip";
 
+// https://github.com/antfu/unplugin-vue-components
+// arco-design-vue 按需引入+自动 import+模板组件提示
+import { vitePluginForArco } from "@arco-plugins/vite-vue";
+import Components from 'unplugin-vue-components/vite';
+import { ArcoResolver } from 'unplugin-vue-components/resolvers';
+
 /**
-import { DownOutlined } from '@ant-design/icons-vue'
-↓↓↓
-import DownOutlined from '@ant-design/icons-vue/DownOutlined'
+ * design-icon图标
+  import { DownOutlined } from '@ant-design/icons-vue'
+  ↓↓↓
+  import DownOutlined from '@ant-design/icons-vue/DownOutlined'
  */
 import vitePluginImp from 'vite-plugin-imp'
 const isBuild = process.env.NODE_ENV === 'production' //判断当前是否处于构建模式
@@ -38,6 +44,21 @@ export default defineConfig({
         },
       },
     }),
+    // Components({/**自动引入使用的组件,使用不多 */
+    //   resolvers: [
+    //     ArcoResolver({
+    //       // importStyle: 'less', // 可以不写
+    //       resolveIcons: true,
+    //       // 这里必须设置为 true，否则 yarn build 不会将自动导入的 arco 组件的样式文件打包
+    //       sideEffect: process.env.NODE_ENV === 'production',
+    //     }),
+    //   ],
+    //   dts: false,
+    // }),
+    // vitePluginForArco({
+    //   // theme: '填写主题包名，没有就不用配置这个属性',
+    //   varsInjectScope: ['*'],
+    // }),
     VitePWA({
       manifest: {
         name: "Example App",
@@ -64,9 +85,8 @@ export default defineConfig({
       symbolId: "icon-[dir]-[name]",
     }),
     splitVendorChunkPlugin(),
-    Components(/* options */),
     isBuild && vitePluginImp(),
-    // visualizer(),
+    visualizer(),
 
   ],
   define: {
@@ -137,7 +157,6 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "src"),
       "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js",
-      // "@components": path.resolve(__dirname, "src/components/"),
     },
   },
   build: {

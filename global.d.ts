@@ -8,12 +8,6 @@ declare module "*.vue" {
   export default component;
 }
 
-declare interface Window {
-  rendomImgUrl: string;
-  $store: any;
-  initMusicApp: Function
-}
-
 interface myStyle {
   '--stagger'?: number
   '--delay'?: string

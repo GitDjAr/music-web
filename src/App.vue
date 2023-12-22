@@ -25,8 +25,11 @@
 <script setup lang="ts">
 import { useMagicKeys, useFullscreen, useActiveElement } from "@vueuse/core";
 import { ref, watch } from "vue";
-import store from "./store";
 import { computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
 const first = ref(localStorage.getItem("info"));
 const user: string = "Hello " + localStorage.getItem("user");
 const firstF = () => {

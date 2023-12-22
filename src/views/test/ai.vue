@@ -1,20 +1,13 @@
 <template>
   <div>
     {{ format }}
-    <a-button @click="ff">Speak Text</a-button>
     <a-button @click="format = 'wav'">Save WAV</a-button>
     <a-button @click="format = 'mp3'">Save MP3</a-button>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue"; // Importing create file method from package
-import { createAudioFile } from "simple-tts-mp3";
-
-// Creates an "output.mp3" audio file with default English text
-function ff() {
-  createAudioFile("Hi, How are you?", "output");
-}
+import { ref } from "vue";
 
 const format = ref("mp3");
 const text = ref(
