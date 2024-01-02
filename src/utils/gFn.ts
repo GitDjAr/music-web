@@ -150,3 +150,15 @@ export function iconGif(): Promise<any> {
     return resolve(Object.values(icons));
   });
 }
+
+/**
+ * 提出cookie
+ */
+export function extractMusicUValue(cookieString: string): string {
+  const regex = /MUSIC_U=([^;]+)/;
+  const match = cookieString.match(regex);
+  if (match && match[1]) {
+    return match[1]
+  }
+  return ''
+}

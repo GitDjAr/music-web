@@ -4,6 +4,7 @@ import { _login_refresh } from "@/api/user";
 import { useStorage } from "@vueuse/core";
 import { userInfo_T } from "../types/userInfog";
 import { diffDays } from "@/utils/format";
+import { extractMusicUValue } from '@/utils/gFn'
 // import type Song from '../types/song'
 import type { RootState } from "../index";
 import defaultIcon from '@/assets/myIcon/runDag.gif'
@@ -111,7 +112,7 @@ const actions = {
 
       // }
       state.cookie = localStorage.getItem("cookie") || "";
-      document.cookie = localStorage.getItem("cookie") || ''
+      document.cookie = 'MUSIC_U' + extractMusicUValue(state.cookie)
     }
     state.loginTime = new Date().getTime();
   },
