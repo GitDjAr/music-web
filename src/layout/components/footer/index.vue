@@ -43,15 +43,9 @@
             >
               <div
                 :style="{ width: CurTimeTack }"
-                class="progress-bar-inner relative transition-all pointer-events-none bg-purple-300 h-full rounded-l-md myImg"
+                class="progress-bar-inner relative transition-all pointer-events-none bg-purple-300 h-full rounded-l-md"
               >
-                <img
-                  :src="Store.state.app.iconPse"
-                  alt=""
-                  srcset=""
-                  class=""
-                  ref="myImg"
-                />
+                <palyGif :src="Store.state.app.iconPse" alt="" ref="myImg" />
               </div>
             </div>
           </div>
@@ -134,6 +128,7 @@
 
 <script lang="ts" setup>
 import playListVue from "./playList.vue";
+import palyGif from "@/components/playGfi.vue";
 import PlayPage from "./PlayPage.vue";
 import { formatTime } from "@/utils/format";
 import { ref, computed, RendererElement, watch } from "vue";
@@ -257,19 +252,6 @@ const iconSvg = computed(() => {
     cursor: pointer;
     font-size: 1.3rem;
     margin: 5px 10px;
-  }
-  .myImg {
-    img {
-      position: absolute;
-      background-repeat: no-repeat;
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
-      min-height: 40px;
-      top: 0px;
-      right: -20px;
-      transform: translateY(-56%);
-    }
   }
 }
 </style>

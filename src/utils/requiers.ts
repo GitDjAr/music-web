@@ -23,17 +23,14 @@ const config = {
   // 默认配置
   baseURL: import.meta.env.VITE_APP_api,
   timeout: 20000,
+  withCredentials: true,
+  headers: {
+    // "Cookie": document.cookie
+  }
 };
 const servers = axios.create(config);
 servers.interceptors.request.use(
   (cf) => {
-    // console.log("request cf: ", cf);
-    if (cf.url?.includes('?cookie=')) {
-
-    } else {
-      cf.url += '?cookie=' + localStorage.getItem("cookie")
-    }
-    // console.log(' localStorage.getItem("cookie") || "";', cf);
     return cf;
   },
   (err) => {

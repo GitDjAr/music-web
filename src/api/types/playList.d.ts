@@ -1,5 +1,6 @@
 // MusicPlayList
 export interface MusicPlayList {
+  isPlay?: number;
   name: string;
   id: number;
   trackNumberUpdateTime: number;

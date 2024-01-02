@@ -55,11 +55,12 @@ export function formatformat(
  * @param date2 第二个时间字符串或时间戳
  * @returns 两个时间之间相差的天数，如果参数无效返回 NaN
  */
-export function diffDays(date1: string | number | Date, date2 = null): number {
-  const d1 = new Date(date1);
+export function diffDays(date1: Date, date2 = null): number {
+  const d1 = date1;
   const d2 = new Date(date2 || new Date());
   if (isNaN(d1.getTime()) || isNaN(d2.getTime())) {
-    return NaN;
+    throw new Error("日期比较错误:检查入参是否正确");
+
   }
   const diff = Math.abs(d2.getTime() - d1.getTime());
   return Math.floor(diff / (1000 * 60 * 60 * 24));

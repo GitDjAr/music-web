@@ -95,6 +95,7 @@ const actions = {
   ) {
     state.loginTime = new Date().getTime() - 2 * 60 * 60 * 1000;
     commit("userLogin", info);
+
     dispatch("initMusicApp");
   },
   // 刷新登录
@@ -110,6 +111,7 @@ const actions = {
 
       // }
       state.cookie = localStorage.getItem("cookie") || "";
+      document.cookie = localStorage.getItem("cookie") || ''
     }
     state.loginTime = new Date().getTime();
   },
@@ -124,7 +126,7 @@ const actions = {
     }: ActionContext<AppType, RootState>,
     info: userInfo_T,
   ) {
-    if (rootGetters.loginStatus && diffDays(state.loginTime + "") >= 1) {
+    if (rootGetters.loginStatus && diffDays(new Date(Number(state?.loginTime))) >= 1) {
       // console.log("超过1天重新获取token", diffDays(localStorage.getItem("loginTime")), 5);
       dispatch("initMusicApp");
     }

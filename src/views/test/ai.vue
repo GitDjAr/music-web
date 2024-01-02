@@ -1,87 +1,156 @@
+<!--  -->
 <template>
-  <div>
-    {{ format }}
-    <a-button @click="format = 'wav'">Save WAV</a-button>
-    <a-button @click="format = 'mp3'">Save MP3</a-button>
+  <div class="myImg">
+    <!-- <canvas height="40" width="40" ref="refCanvas"></canvas> -->
+    <div>
+      <img :src="url" alt="" srcset="" />
+    </div>
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+import defaultIcon from "@/assets/myIcon/runDag.gif";
+import { useStore } from "vuex";
+import { computed } from "vue";
 import { ref } from "vue";
+import { watch } from "vue";
+import { onMounted } from "vue";
 
-const format = ref("mp3");
-const text = ref(
-  "“嘿嘿……” “嘿嘿嘿嘿……” 一阵极其奇怪的笑声传开。 教室的所有人都看向了后排，一脸的怪异模样。 一名男生正将头趴在桌子上，不断发出奇怪的笑声，更是伴随着身躯的颤动，显得极为兴奋。",
-);
-
-function speak() {
-  // Speech synthesis init
-  const utterance = new SpeechSynthesisUtterance(text.value);
-  utterance.lang = "zh-CN";
-
-  utterance.onend = function (event) {
-    // Save audio file part
-    let audioData = new Uint8Array(this.audioBuffer);
-    let blob = new Blob([audioData], { type: "audio/wav" });
-
-    if (format.value === "mp3") {
-      // Convert WAV to MP3
-      const encoder = new Lame.Encoder({
-        channels: 1,
-        bitDepth: 16,
-        sampleRate: 44100,
-        bitRate: 128,
-        outSampleRate: 44100,
-        mode: Lame.MONO,
-      });
-
-      const wavData = new DataView(audioData.buffer);
-      const samples = new Int16Array(audioData.buffer.slice(44));
-
-      let mp3Data = [];
-      let remaining = samples.length;
-      let i = 0;
-
-      while (remaining >= 0) {
-        const left = samples.subarray(i, i + 1152);
-        const mp3buf = encoder.encodeBuffer(left);
-        mp3Data.push(mp3buf);
-        remaining -= 1152;
-        i += 1152;
-      }
-
-      mp3Data.push(encoder.flush());
-
-      blob = new Blob(mp3Data, { type: "audio/mp3" });
-    }
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `speech.${format.value}`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const audioCtx = new AudioContext();
-  utterance.audioBuffer = new ArrayBuffer(0);
-  utterance.onaudioprocess = function (event) {
-    const channelData = event.inputBuffer.getChannelData(0);
-    const buffer = new Int16Array(channelData.length);
-
-    for (let i = 0; i < channelData.length; i++) {
-      buffer[i] = channelData[i] * 0x7fff;
-    }
-
-    const newBuffer = new Uint8Array(buffer.buffer);
-    const audioData = new Uint8Array(
-      this.audioBuffer.byteLength + newBuffer.byteLength,
-    );
-    audioData.set(new Uint8Array(this.audioBuffer), 0);
-    audioData.set(newBuffer, this.audioBuffer.byteLength);
-    this.audioBuffer = audioData.buffer;
-  };
-
-  speechSynthesis.speak(utterance);
+interface VideoFrame {
+  duration: number;
 }
+
+const props = defineProps<{
+  src: string;
+}>();
+
+const store = useStore();
+const url = computed(() => {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  const img = new Image();
+  img.src = props.src;
+  img.onload = () => {
+    if (ctx) {
+      // Draw only the first frame of the GIF
+      ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 40, 40);
+    }
+  };
+  console.log("🚀 ~ file: ai.vue:41 ~ url ~ canvas?.toDataURL():", canvas?.toDataURL())
+  return store.state.song.Player._playing ? props.src : canvas?.toDataURL();
+});
+
+const refCanvas = ref();
+const flag = typeof window?.ImageDecoder === "function";
+console.log("🚀 ~ file: playGfi.vue:34 ~ flag1:", flag);
+if (flag) {
+  watch(
+    () => store.state.song.Player._playing,
+    (v) => (v ? play : pause),
+  );
+}
+
+const context = ref();
+onMounted(() => {
+  context.value = refCanvas.value.getContext("2d");
+  animation();
+});
+
+// 一些与GIF播放有关的变量
+let imageDecoder = null;
+let imageIndex = 0;
+let paused = false;
+const gifData = ref();
+async function animation() {
+  if (!gifData.value) {
+    gifData.value = await fetch(defaultIcon);
+  }
+  // 设置canvas尺寸
+  refCanvas.value.width = "400";
+  refCanvas.value.height = "400";
+  // 实际显示尺寸
+  imageDecoder = new window.ImageDecoder({
+    data: gifData.value.body,
+    type: "image/gif",
+  });
+  imageDecoder.decode({ frameIndex: imageIndex }).then((res) => {
+    refCanvas.value.nextResult = res;
+    renderImage(res);
+  });
+}
+
+function renderImage(result: {
+  // 解码的图像
+  image: VideoFrame;
+  // 如果为true，则表示该图像包含最终的完整细节输出。
+  complete: boolean;
+}) {
+  //清空上一张
+  context.value.clearRect(0, 0, refCanvas.value.width, refCanvas.value.height);
+  context.value.drawImage(result.image, 0, 0);
+  // console.log("🚀 ~ file: ai.vue:84 ~ result.image:", result.image);
+
+  const track = imageDecoder.tracks.selectedTrack;
+  // console.log("🚀 ~ file: playGfi.vue:70 ~ track:", imageDecoder);
+
+  // 如果播放结束，从头开始循环
+  if (imageDecoder.complete) {
+    if (track.frameCount === 1) {
+      return;
+    }
+
+    if (imageIndex + 1 >= track.frameCount) {
+      imageIndex = 0;
+    }
+  }
+
+  // 绘制下一帧内容
+  imageDecoder
+    .decode({ frameIndex: ++imageIndex })
+    .then((nextResult) => {
+      // console.log("🚀 ~ file: ai.vue:107 ~ .then ~ nextResult:", nextResult);
+      if (paused === false) {
+        setTimeout(() => {
+          renderImage(nextResult);
+        }, result.image.duration / 1000.0);
+      } else {
+        refCanvas.value.nextResult = nextResult;
+      }
+    })
+    .catch((e) => {
+      // imageIndex可能超出的容错处理
+      if (e instanceof RangeError) {
+        imageIndex = 0;
+        imageDecoder.decode({ frameIndex: imageIndex }).then(renderImage);
+      } else {
+        throw e;
+      }
+    });
+}
+// 播放和暂停方法
+const play = function () {
+  paused = false;
+  renderImage(refCanvas.value.nextResult);
+};
+
+const pause = function () {
+  paused = true;
+};
 </script>
+<style scoped lang="scss">
+.myImg {
+  img,
+  canvas {
+    border: 1px solid red;
+    position: absolute;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    min-height: 80px;
+    top: 220px;
+    right: 220px;
+    transform: translateY(-56%);
+  }
+}
+</style>
