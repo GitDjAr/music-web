@@ -97,5 +97,9 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "github-actions.workflows.pinned.workflows": []
+  "github-actions.workflows.pinned.workflows": [],
+  "i18n-ally.localesPaths": [
+    "src/locale",
+    "src/locale/lang"
+  ]
 }
