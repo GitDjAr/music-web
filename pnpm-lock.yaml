@@ -6,7 +6,6 @@ specifiers:
   '@commitlint/config-conventional': 16.2.1
   '@iconify/json': ^2.2.160
   '@locator/runtime': ^0.2.4
-  '@sentry/browser': ^8.7.0
   '@sentry/tracing': ^7.58.0
   '@sentry/vue': ^7.58.0
   '@types/howler': ^2.2.7
@@ -59,7 +58,6 @@ specifiers:
   workbox-build: ^6.6.1
 
 dependencies:
-  '@sentry/browser': 8.7.0
   '@sentry/tracing': registry.npmmirror.com/@sentry/tracing/7.58.0
   '@sentry/vue': registry.npmmirror.com/@sentry/vue/7.58.0_vue@3.2.31
   '@vueuse/components': registry.npmmirror.com/@vueuse/components/9.6.0_vue@3.2.31
@@ -509,44 +507,6 @@ packages:
       '@intlify/shared': 9.2.0-beta.31
     dev: false
 
-  /@sentry-internal/browser-utils/8.7.0:
-    resolution: {integrity: sha512-RFBK1sYBwV5qGMEwWF0rjOTqQpp4/SvE+qHkOJNRUTVYmfjM+Y9lcxwn4B6lu3aboxePpBw/i1PlP6XwX4UnGA==}
-    engines: {node: '>=14.18'}
-    dependencies:
-      '@sentry/core': 8.7.0
-      '@sentry/types': 8.7.0
-      '@sentry/utils': 8.7.0
-    dev: false
-
-  /@sentry-internal/feedback/8.7.0:
-    resolution: {integrity: sha512-qcGtWCtRB4eP7NVQoxW936oPkU4qu9otMLYELPGmOJPnuAG0lujlJXW7BucaM7ADyJgJTE75hG849bHecfnbmQ==}
-    engines: {node: '>=14.18'}
-    dependencies:
-      '@sentry/core': 8.7.0
-      '@sentry/types': 8.7.0
-      '@sentry/utils': 8.7.0
-    dev: false
-
-  /@sentry-internal/replay-canvas/8.7.0:
-    resolution: {integrity: sha512-FOnvBPbq6MJVHPduc0hcsdE3PeeovQ2z5WJnZDGhvp/Obehxqe+XgX7K/595vRIknv4EokRn/3Kw0mFwG8E+ZQ==}
-    engines: {node: '>=14.18'}
-    dependencies:
-      '@sentry-internal/replay': 8.7.0
-      '@sentry/core': 8.7.0
-      '@sentry/types': 8.7.0
-      '@sentry/utils': 8.7.0
-    dev: false
-
-  /@sentry-internal/replay/8.7.0:
-    resolution: {integrity: sha512-bQzOkWplaWTe3u+aDBhxWY3Qy0aT7ss2A3VR8iC6N8ZIEP9PxqyJwTNoouhinfgmlnCguI7RDOO4f3r3e2M80Q==}
-    engines: {node: '>=14.18'}
-    dependencies:
-      '@sentry-internal/browser-utils': 8.7.0
-      '@sentry/core': 8.7.0
-      '@sentry/types': 8.7.0
-      '@sentry/utils': 8.7.0
-    dev: false
-
   /@sentry/browser/7.58.0:
     resolution: {integrity: sha512-v+PaTuK4LOJ1/uAxNQHUMRLWdlIOdiKlZAgoZojixdFKajHAeguzok93d0u2SZJaGDaLmkJYSiGAPBs1d1jHhA==}
     engines: {node: '>=8'}
@@ -559,19 +519,6 @@ packages:
       tslib: registry.npmmirror.com/tslib/1.14.1
     dev: false
 
-  /@sentry/browser/8.7.0:
-    resolution: {integrity: sha512-4EEp+PlcktsMN0p+MdCPl/lghTkq7eOtZjQG9NGhWzfyWrJ3tuL1nsDr2SSivJ1V277F01KtKYo6BFwP2NtBZA==}
-    engines: {node: '>=14.18'}
-    dependencies:
-      '@sentry-internal/browser-utils': 8.7.0
-      '@sentry-internal/feedback': 8.7.0
-      '@sentry-internal/replay': 8.7.0
-      '@sentry-internal/replay-canvas': 8.7.0
-      '@sentry/core': 8.7.0
-      '@sentry/types': 8.7.0
-      '@sentry/utils': 8.7.0
-    dev: false
-
   /@sentry/core/7.58.0:
     resolution: {integrity: sha512-tdz+HOh9blnfJ4ZSfsaVaSh/i7pD2QfmC0///fWlNm+IvD+SAgYFP6M3PIsJMsaN5heZ9XMNY4wnxvd+vvJwPQ==}
     engines: {node: '>=8'}
@@ -581,22 +528,9 @@ packages:
       tslib: registry.npmmirror.com/tslib/1.14.1
     dev: false
 
-  /@sentry/core/8.7.0:
-    resolution: {integrity: sha512-Sq/46B+5nWmgnCD6dEMZ6HTkKbV/KAdgaSvT8oXDb9OWoPy1jJ/gbLrhLs62KbjuDQk4/vWnOgHiKQbcslSzMw==}
-    engines: {node: '>=14.18'}
-    dependencies:
-      '@sentry/types': 8.7.0
-      '@sentry/utils': 8.7.0
-    dev: false
-
   /@sentry/types/7.58.0:
     resolution: {integrity: sha512-uy8rww5R0WSxr9kB1R1BXWomkKXosK+jOFslbIda4CfTiAMEINi7rXkqTzPJKCIRLHFvKXDFUIkMCHNMkgYjwA==}
     engines: {node: '>=8'}
-    dev: false
-
-  /@sentry/types/8.7.0:
-    resolution: {integrity: sha512-11KLOKumP6akugVGLvSoEig+JlP0ZEzW3nN9P+ppgdIx9HAxMIh6UvumbieG4/DWjAh2kh6NPNfUw3gk2Gfq1A==}
-    engines: {node: '>=14.18'}
     dev: false
 
   /@sentry/utils/7.58.0:
@@ -605,13 +539,6 @@ packages:
     dependencies:
       '@sentry/types': 7.58.0
       tslib: registry.npmmirror.com/tslib/1.14.1
-    dev: false
-
-  /@sentry/utils/8.7.0:
-    resolution: {integrity: sha512-aWmcbSoOmrbzll/FkNQFJcCtLAuJLvTYbRKiCSkV3FScA7UaA742HkTZAPFiioALFIESWk/fcGZqtN0s4I281Q==}
-    engines: {node: '>=14.18'}
-    dependencies:
-      '@sentry/types': 8.7.0
     dev: false
 
   /@types/js-cookie/3.0.1:
