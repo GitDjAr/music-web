@@ -34,7 +34,7 @@ import "./style/init.scss";
 import loading from "./directives/loading/loading";
 import hoverTitle from "./directives/hoverTitle";
 
-import { BrowserTracing } from "@sentry/browser";
+// import { BrowserTracing } from "@sentry/browser";
 import * as Sentry from "@sentry/vue";
 
 
@@ -64,7 +64,7 @@ Sentry.init({
   app,
   dsn: "https://8962dde768ed446ca227bb12f2fddb50@o4504920564432896.ingest.sentry.io/4504926220779520",
   integrations: [
-    new BrowserTracing({
+    new Sentry.BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
       tracePropagationTargets: ["localhost", "my-site-url.com", /^\//],
     }),
