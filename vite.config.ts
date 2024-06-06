@@ -100,7 +100,8 @@ export default defineConfig({
     host: "0.0.0.0",
     proxy: {
       "/api/": {
-        target: "http://124.222.62.70:803",
+        // target: "http://124.222.62.70:803",
+        target: "https://neteasecloudmusicapi.vercel.app",
         // target: "https://music.qier222.com/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\//, ""),
