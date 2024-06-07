@@ -4,7 +4,7 @@ import * as path from "path";
 
 //pwa
 import { VitePWA } from "vite-plugin-pwa";
-
+import basicSsl from '@vitejs/plugin-basic-ssl'
 //https://juejin.cn/post/7235818900818526265   打包时间分析  构建时长、chunk 数量及大小
 import { visualizer } from "rollup-plugin-visualizer";
 // import { GenerateSW } from "workbox-webpack-plugin";
@@ -44,6 +44,7 @@ export default defineConfig({
         },
       },
     }),
+    basicSsl(),
     // Components({/**自动引入使用的组件,使用不多 */
     //   resolvers: [
     //     ArcoResolver({
@@ -98,6 +99,7 @@ export default defineConfig({
   server: {
     port: 4000,
     host: "0.0.0.0",
+    https:true,
     proxy: {
       "/api/": {
         // target: "http://124.222.62.70:803",
