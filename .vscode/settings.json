@@ -101,5 +101,8 @@
   "i18n-ally.localesPaths": [
     "src/locale",
     "src/locale/lang"
-  ]
+  ],
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

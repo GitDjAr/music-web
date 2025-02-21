@@ -25,18 +25,24 @@ const config = {
   timeout: 20000,
   withCredentials: true,
   headers: {
-    // "Cookie": document.cookie
-  }
+    Cookie: document.cookie,
+  },
 };
 const servers = axios.create(config);
 servers.interceptors.request.use(
   (cf) => {
+    const cookie = localStorage.getItem("cookie");
+    if (!cf.url?.includes("?")) {
+      cf.url += `?cookie=${cookie}`;
+    } else {
+      cf.url += `&cookie=${cookie}`;
+    }
     return cf;
   },
   (err) => {
     Message.error(`request err: ${err}`);
     return Promise.reject(err);
-  }
+  },
 );
 
 servers.interceptors.response.use(
@@ -65,7 +71,7 @@ servers.interceptors.response.use(
       message: err.message || err.response?.statusText || "未知错误",
     });
     return Promise.reject({ data: {}, err });
-  }
+  },
 );
 
 // show Message
@@ -111,7 +117,7 @@ function apprentice<T = any>(RqConfig: MyAxiosRequestConfig): Promise<T> {
   //   // console.log('cache :>> ', CacheName, Cache.get(CacheName));
   //   return Promise.resolve(Cache.get(CacheName))
   // }
-  // const cookie = JSON.parse(localStorage.getItem("userInfo") || "{}")?.cookie
-  return servers(RqConfig) as unknown as Promise<T>;
+  // const cookie = JSON.parse(localStorage.getItem("userInfo") || "{}")?.cookie;
+  return servers({ ...RqConfig }) as unknown as Promise<T>;
 }
 export default apprentice;

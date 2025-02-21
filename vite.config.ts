@@ -87,7 +87,6 @@ export default defineConfig({
     }),
     splitVendorChunkPlugin(),
     isBuild && vitePluginImp(),
-    visualizer(),
 
   ],
   define: {
@@ -97,13 +96,14 @@ export default defineConfig({
     // __INTLIFY_PROD_DEVTOOLS__: false,
   },
   server: {
-    port: 4000,
+    port: 80,
     host: "0.0.0.0",
-    https:true,
+    https: false,//https://neteasecloudmusicapi.vercel.app 测试的时候使用
     proxy: {
       "/api/": {
         // target: "http://124.222.62.70:803",
-        target: "https://neteasecloudmusicapi.vercel.app",
+        // target: "https://neteasecloudmusicapi.vercel.app",
+        target: "http://localhost:4000",
         // target: "https://music.qier222.com/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\//, ""),

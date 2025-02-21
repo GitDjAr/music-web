@@ -1,22 +1,39 @@
 <!--  -->
 <template>
-  <a-drawer class="Adrawer overflow-hidden" :closable="false" @cancel="$emit('update:visible', false)" width="400px"
-    :visible="visible">
+  <a-drawer
+    class="Adrawer overflow-hidden"
+    :closable="false"
+    @cancel="$emit('update:visible', false)"
+    width="400px"
+    :visible="visible"
+  >
     <template #title>{{ $t("login.login") }}</template>
     <Logo logo="1" width="60%" />
     <a-space direction="vertical" size="large" :style="{ width: '100%' }">
-      <div v-if="Qrflag" class="flex justify-center" :style="{ height: '264px' }">
+      <div
+        v-if="Qrflag"
+        class="flex justify-center"
+        :style="{ height: '264px' }"
+      >
         <img :src="imgSrc" alt="" v-if="imgSrc" />
         <img
           src="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp"
-          alt="" v-else />
+          alt=""
+          v-else
+        />
       </div>
       <a-form :model="form" layout="vertical" fo v-else="Qrflag">
         <a-form-item field="phone" :label="$t('login.phone')">
-          <a-input v-model="form.phone" placeholder="please enter your phone..." />
+          <a-input
+            v-model="form.phone"
+            placeholder="please enter your phone..."
+          />
         </a-form-item>
         <a-form-item field="password" :label="$t('login.password')">
-          <a-input-password v-model="form.password" placeholder="please enter your password..." />
+          <a-input-password
+            v-model="form.password"
+            placeholder="please enter your password..."
+          />
         </a-form-item>
         <a-form-item field="isRead">
           <a-checkbox v-model="form.isRead">{{
@@ -24,7 +41,13 @@
           }}</a-checkbox>
         </a-form-item>
         <a-form-item>
-          <a-button type="outline" size="large" class="button-login" @click="login">{{ $t("login.login") }}</a-button>
+          <a-button
+            type="outline"
+            size="large"
+            class="button-login"
+            @click="login"
+            >{{ $t("login.login") }}</a-button
+          >
         </a-form-item>
       </a-form>
       <a-button type="text" class="login-way" @click="tagger">
@@ -81,7 +104,7 @@ export default defineComponent({
         } else {
           clearTimer();
         }
-      }
+      },
     );
     type AccountObj = Account | { account: Account } | {};
     const checkRes = (res: AccountObj) => {
@@ -129,8 +152,10 @@ export default defineComponent({
         if (code === 803) {
           clearInterval(timeToken);
           localStorage.setItem("cookie", cookie);
-          document.cookie = 'cookie=' + cookie
-          let acc = await _user_account();
+          document.cookie = "cookie=" + cookie;
+          let acc = await _user_account({
+            timestamp: new Date().getTime(),
+          });
           // checkRes(acc);
           const user = await userDetail(acc.account.id);
           checkRes(user);
