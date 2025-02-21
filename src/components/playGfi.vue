@@ -1,20 +1,27 @@
 <!--  -->
 <template>
   <div class="myImg">
-    <canvas height="100%" width="100%" ref="refCanvas"></canvas>
+    <canvas
+      v-if="isSupport"
+      height="100%"
+      width="100%"
+      ref="refCanvas"
+    ></canvas>
+    <img v-else :src="url" alt="" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import defaultIcon from "@/assets/myIcon/runDag.gif";
 import { useStore } from "vuex";
 import { computed } from "vue";
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { watch } from "vue";
 import { onMounted } from "vue";
 
-interface VideoFrame {
-  duration: number;
+interface ImageDecoderInstance {
+  decode(options: { frameIndex: number }): Promise<any>;
+  tracks: { selectedTrack: any };
+  complete: boolean;
 }
 
 const props = defineProps<{
@@ -23,53 +30,71 @@ const props = defineProps<{
 
 const store = useStore();
 const url = computed(() => {
-  return store.state.song.Player._playing ? props.src : "";
+  return props.src;
+});
+
+const isSupport = computed(() => {
+  return typeof window?.ImageDecoder === "function";
 });
 
 const refCanvas = ref();
-const flag = typeof window?.ImageDecoder === "function";
-console.log("🚀 ~ file: playGfi.vue:34 ~ flag1:", flag);
-// if (flag) {
-watch(
-  () => store.state.song.Player._playing,
-  (v) => (v ? play : pause),
-);
-// }
+if (isSupport.value) {
+  watch(
+    () => store.state.song.Player._playing,
+    (v) => (v ? play : pause),
+  );
+}
 
 const context = ref();
 onMounted(() => {
   context.value = refCanvas.value.getContext("2d");
   animation();
 });
-
-// 一些与GIF播放有关的变量
-let imageDecoder = null;
+let imageDecoder: ImageDecoderInstance | null = null;
 let imageIndex = 0;
 let paused = false;
 const gifData = ref();
+
 async function animation() {
   if (!gifData.value) {
     gifData.value = await fetch(props.src);
   }
-  console.log(
-    "🚀 ~ file: playGfi.vue:48 ~ animation ~ body:",
-    gifData.value.body,
-  );
-  imageDecoder = new window.ImageDecoder({
-    data: gifData.value.body,
-    type: "image/gif",
-  });
-  imageDecoder.decode({ frameIndex: imageIndex }).then((res) => {
-    refCanvas.value.nextResult = res;
-  });
+
+  // 检查浏览器是否支持 ImageDecoder
+  if (!window.ImageDecoder) {
+    console.error("当前浏览器不支持 ImageDecoder API");
+    return;
+  }
+
+  // 检查 body 是否是 ReadableStream
+  if (!gifData.value.body || !(gifData.value.body instanceof ReadableStream)) {
+    console.error("fetch 返回的 body 不是 ReadableStream");
+    return;
+  }
+
+  // 初始化 ImageDecoder
+  try {
+    imageDecoder = new window.ImageDecoder({
+      data: gifData.value.body,
+      type: "image/gif",
+    });
+
+    // 解码第一帧
+    imageDecoder.decode({ frameIndex: imageIndex }).then((res) => {
+      refCanvas.value.nextResult = res;
+      renderImage(res); // 开始渲染
+    });
+  } catch (error) {
+    console.error("ImageDecoder 初始化失败:", error);
+  }
 }
 
-function renderImage(result: {
-  // 解码的图像
-  image: VideoFrame;
-  // 如果为true，则表示该图像包含最终的完整细节输出。
-  complete: boolean;
-}) {
+function renderImage(result: { image: { duration: number } }) {
+  if (!imageDecoder) {
+    console.error("imageDecoder 未初始化");
+    return;
+  }
+
   context.value.drawImage(result.image, 0, 0);
 
   const track = imageDecoder.tracks.selectedTrack;
@@ -102,12 +127,17 @@ function renderImage(result: {
       // imageIndex可能超出的容错处理
       if (e instanceof RangeError) {
         imageIndex = 0;
-        imageDecoder.decode({ frameIndex: imageIndex }).then(renderImage);
+        if (imageDecoder) {
+          imageDecoder.decode({ frameIndex: imageIndex }).then(renderImage);
+        } else {
+          console.error("imageDecoder 未初始化");
+        }
       } else {
         throw e;
       }
     });
 }
+
 // 播放和暂停方法
 const play = function () {
   paused = false;

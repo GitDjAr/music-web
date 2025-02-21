@@ -32,10 +32,13 @@ const servers = axios.create(config);
 servers.interceptors.request.use(
   (cf) => {
     const cookie = localStorage.getItem("cookie");
-    if (!cf.url?.includes("?")) {
-      cf.url += `?cookie=${cookie}`;
-    } else {
-      cf.url += `&cookie=${cookie}`;
+    // 必须是网易云接口
+    if (cf.baseURL === "/api") {
+      if (cf.url?.includes("?")) {
+        cf.url += `&cookie=${cookie}`;
+      } else {
+        cf.url += `?cookie=${cookie}`;
+      }
     }
     return cf;
   },

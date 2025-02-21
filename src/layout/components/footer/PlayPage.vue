@@ -18,7 +18,7 @@
           />
         </div>
         <div
-          class="lyricsItem overflow-y-scroll h-full mr-3"
+          class="lyricsItem overflow-x-hidden overflow-y-scroll h-full mr-3"
           :class="curPlaySong.lrc.length <= 10 ? `flex items-center` : ''"
         >
           <ul class="my-10" :style="styleImg">
@@ -139,6 +139,7 @@ svg.transform.myfont {
 }
 
 .lyricsItem {
+  scrollbar-width: none;
   li:hover {
     filter: blur(0) !important;
     background: rgba(255, 255, 255, 0.1);

@@ -34,9 +34,8 @@ li {
   box-sizing: inherit;
 }
 
-$BG: #fff;
+$BG: rgba(0, 0, 0, 0);
 
-// 浏览器滚动条美化
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {
@@ -44,17 +43,21 @@ $BG: #fff;
   scrollbar-color: $T2 $BG;
 }
 
+.dark {
+  scrollbar-color: #bbcbfe $BG;
+}
+
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 10px;
+  width: 16px;
 }
 
 *::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0);
+  background: #ffffff;
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: $T2;
   border-radius: 10px;
-  border: 2px solid #fff;
+  border: 3px solid #ffffff;
 }
