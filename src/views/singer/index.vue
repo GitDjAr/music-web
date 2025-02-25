@@ -64,8 +64,8 @@ onMounted(() => {
 
 // 激活 tabs
 const active = ref("1");
-const activeFun = (id: string | number) => {
-  active.value = "" + id;
+const activeFun = (v: string | number) => {
+  active.value = "" + v;
 };
 
 const tabsList: Ref<tabsType[]> = ref([
