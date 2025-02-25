@@ -5,16 +5,18 @@
     ref="playDom"
     class="playlistCss overflow-hidden h-full flex flex-col select-none px-3"
   >
-    <div class="p-2 flex">
-      <h3>播放队列 :&nbsp;&nbsp;</h3>
-      <div>
-        <span class="text-[#b0b0fb]">{{ playlist.length }}</span> 首歌曲
+    <div class="p-2 flex items-center justify-between">
+      <div class="flex items-center">
+        <h3>播放队列 :&nbsp;&nbsp;</h3>
+        <div>
+          <span class="text-[#b0b0fb]">{{ playlist.length }}</span> 首歌曲
+        </div>
       </div>
+      <p class="divide-y text-[#b0b0fb] items-end">
+        <icon-pushpin class="text-xl" @click.stop="pushpin" />
+      </p>
     </div>
     <div class="overflow-y-scroll relative" id="playId">
-      <p class="pushpinCss divide-y divide-purple-700">
-        <icon-pushpin @click.stop="pushpin" />
-      </p>
       <div v-for="item in playlist" :key="item.id" class="">
         <div
           @click="play(item.id)"
@@ -98,16 +100,6 @@ const playDom = ref<HTMLDivElement>();
 .playlistCss {
   border-left: 1px solid #e6e6e6;
   position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    filter: blur(50px);
-  }
 }
 
 .pushpinCss {

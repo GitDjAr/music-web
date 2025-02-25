@@ -36,7 +36,8 @@ const router = useRouter();
 const Store = useStore();
 // 每日推薦
 const recommendSong = computed(() => {
-  return Store.state.song.recommendSong.splice(0, 9);
+  let v = Store.state.song.recommendSong;
+  return v.length > 10 ? Store.state.song.recommendSong.splice(0, 10) : v;
 });
 
 const palySong = async (item: any) => {

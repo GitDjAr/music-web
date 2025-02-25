@@ -88,7 +88,7 @@ const id: number = +route.params?.id;
 
 // 详情
 const visible = ref(false);
-const albumInfo = ref({ songs: {}, album: {} });
+const albumInfo = ref<any>({ songs: {}, album: {}, publishTime: "", tags: [] });
 async function getAlbumContent() {
   albumInfo.value = await albumContent({ id });
 }

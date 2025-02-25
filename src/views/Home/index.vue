@@ -5,8 +5,9 @@
       <PanelLeftVue class="col-span-2" />
       <PanelRightVue />
     </div>
-    <TopChartsVue :id="1" class="my-5" />
-    <Singer></Singer>
+    <TopChartsVue :id="1" class="my-16" />
+    <Singer />
+    <div class="h-10"></div>
   </div>
 </template>
 

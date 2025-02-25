@@ -4,14 +4,17 @@
     <h1 class="text-xl text-left" ref="singerDom">
       {{ $t("home.recommendArtist") }}
     </h1>
-    <div class="grid grid-cols-6 items-center justify-between gap-6">
+    <div class="grid grid-cols-5 items-center justify-between gap-6">
       <div
         class="mx-1.5 truncate rounded-full group/singer transition-all"
         :alt="item.reason"
         :key="index"
         v-for="(item, index) in artistsList"
         @click="CheckSinger(item.id)"
-        :style="{ '--stagger': index }"
+        :style="{
+          '--stagger': index,
+          transform: index > 4 ? `translate(56%,-13%)` : '',
+        }"
       >
         <div class="nils-css">
           <img
@@ -54,7 +57,7 @@ watch(() => targetIsVisible.value, getArtists);
 // 热门歌手
 async function getArtists() {
   const { artists } = await Getartists({});
-  artistsList.value = artists.splice(0, 6);
+  artistsList.value = artists.splice(0, 9);
   console.log(
     "🚀 ~ file: singer.vue:58 ~ getArtists ~ artistsList.value:",
     artistsList.value,
@@ -64,6 +67,7 @@ async function getArtists() {
 
 // 去歌手主页
 function CheckSinger(id: number) {
+  console.log(id);
   router.push(`/Music/singer/${id}`);
 }
 </script>

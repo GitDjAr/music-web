@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class=""></div>
+  <div class="">123</div>
 </template>
 
 <script lang="ts" setup>

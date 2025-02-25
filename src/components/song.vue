@@ -45,30 +45,27 @@
 <script lang="ts" setup>
 import { formatTime } from "@/utils/format";
 import { withDefaults } from "vue";
-import {useRouter} from 'vue-router'
+import { useRouter } from "vue-router";
 import { GetSongDetail } from "@/api/play";
-const router = useRouter()
+const router = useRouter();
 
 interface songInfo {
-    url?: string;
-    singer?: string;
-    songName?: string;
-    id: number;
-    dt?: number;
-    orgin?: string;
+  url?: string;
+  singer?: string;
+  songName?: string;
+  id: number;
+  dt?: number;
+  orgin?: string;
 }
-const songInfo = withDefaults(
-  defineProps<songInfo>(),
-  {
-    url: "",
-    dt: 0,
-  }
-);
+const songInfo = withDefaults(defineProps<songInfo>(), {
+  url: "",
+  dt: 0,
+});
 // console.log('songInfo',songInfo);
 
-async function goUser(row:songInfo) {
-const id=(await GetSongDetail({ ids: row.id }))?.songs[0]?.ar[0]?.id
-  if(id){
+async function goUser(row: songInfo) {
+  const id = (await GetSongDetail({ ids: row.id }))?.songs[0]?.ar[0]?.id;
+  if (id) {
     router.push({ name: "singer", params: { id } });
   }
 }

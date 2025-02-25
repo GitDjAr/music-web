@@ -6,9 +6,18 @@
       <h2>{{ "最多播放" }}</h2>
       <ul class="p-2 rounded-md">
         <template v-for="(item, index) in artistsSing">
-          <li class="flex mb-2 justify-between items-center overflow-hidden cursor-pointer leading-5"
-            @click="Musicianly(item)" v-if="index < 6" :key="item.id">
-            <Image class="rounded-t w-14 h-14" :src="item?.al?.picUrl" :wh="[80, 80]" alt="" />
+          <li
+            class="flex mb-2 justify-between items-center overflow-hidden cursor-pointer leading-5"
+            @click="Musicianly(item)"
+            v-if="index < 6"
+            :key="item.id"
+          >
+            <Image
+              class="rounded-t w-14 h-14"
+              :src="item?.al?.picUrl"
+              :wh="[80, 80]"
+              alt=""
+            />
             <span class="flex-1 inline-block px-3 items-center truncate">{{
               item?.name
             }}</span>
@@ -21,8 +30,18 @@
     <div class="w-1/4">
       <h2>{{ "相关艺人" }}</h2>
       <ul>
-        <li class="flex items-center mt-2" @click="singerReps(item.id)" v-for="item in simiartist" :key="item.id">
-          <Image class="rounded-full w-16 h-16" :src="item?.img1v1Url" :wh="[80, 80]" alt="" />
+        <li
+          class="flex items-center mt-2"
+          @click="singerReps(item.id)"
+          v-for="item in simiartist"
+          :key="item.id"
+        >
+          <Image
+            class="rounded-full w-16 h-16"
+            :src="item?.img1v1Url"
+            :wh="[80, 80]"
+            alt=""
+          />
           <span class="inline-block flex-1 pl-2 box-border text-left">{{
             item?.name
           }}</span>
@@ -92,7 +111,7 @@ watch(
   () => P.props.id,
   () => {
     init();
-  }
+  },
 );
 function init() {
   get_simi_artist(P.props.id);

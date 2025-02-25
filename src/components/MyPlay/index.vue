@@ -1,8 +1,9 @@
 <!--  -->
 <template>
-  <div class="mysvg">
+  <div class="mysvg" :style="{ height: fontSize }">
     <svg
       v-if="isPlay"
+      :style="{ fontSize }"
       class="svg-"
       version="1.1"
       id="Layer_1"
@@ -89,7 +90,7 @@
         ></animate>
       </rect>
     </svg>
-    <icon-play-arrow v-else></icon-play-arrow>
+    <icon-play-arrow :style="{ fontSize }" v-else></icon-play-arrow>
   </div>
 </template>
 
@@ -98,6 +99,7 @@ import { computed } from "vue";
 import store from "@/store";
 const P = defineProps<{
   id: number;
+  size: string;
 }>();
 const isPlay = computed(() => {
   return (
@@ -105,10 +107,17 @@ const isPlay = computed(() => {
     store.state.song.Player?.playStatus
   );
 });
+const fontSize = computed(() => {
+  return {
+    mini: "14px",
+    default: "16px",
+    small: "20px",
+    large: "24px",
+  }[P.size || "default"];
+});
 </script>
 <style scoped lang="scss">
 .mysvg {
-  height: 18px;
   .svg- {
     transform: scale(1.3);
   }

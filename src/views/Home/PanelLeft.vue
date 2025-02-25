@@ -7,6 +7,7 @@
       :auto-play="true"
       animation-name="fade"
       show-arrow="never"
+      indicator-position="right"
       indicator-type="slider"
     >
       <a-carousel-item
@@ -24,7 +25,7 @@
     </a-carousel>
     <MyVideo :id="videoId" v-model:show="VideoShow"></MyVideo>
 
-    <template v-if="Store.getters.loginStatus">
+    <div v-if="Store.getters.loginStatus" class="mt-8">
       <h1 class="text-xl text-left">{{ $t("home.recommendPlaylist") }}</h1>
       <div class="Nouvea gap-8">
         <div
@@ -51,7 +52,7 @@
           <!-- <a-tag :color="resourceColor(item.id)" size="mini">{{item.creator.expertTags}}</a-tag> -->
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -111,7 +112,7 @@ onMounted(() => {
   // margin-right: 10px;
 
   .carousel {
-    height: 260px;
+    height: 300px;
     border-radius: 30px;
     overflow: hidden;
   }

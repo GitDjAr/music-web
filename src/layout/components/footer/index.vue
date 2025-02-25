@@ -239,6 +239,14 @@ const iconSvg = computed(() => {
   return icon;
 });
 </script>
+<style>
+.drawer {
+  .arco-drawer {
+    background-color: #ffffff91;
+    backdrop-filter: blur(10px);
+  }
+}
+</style>
 <style scoped lang="scss">
 .myclass {
   grid-template-columns: 2fr 7fr 1fr;

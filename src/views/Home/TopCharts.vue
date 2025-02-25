@@ -3,22 +3,24 @@
   <div class="w-full">
     <div class="mb-4" :key="index" v-for="(item, index) in state.TopList">
       <a-divider
-        :orientation="(orientation[index] as OrientationType)"
+        :orientation="orientation[index] as OrientationType"
         :margin="20"
       >
         {{ item.name }}
       </a-divider>
       <template v-if="item.tracks.length > 0">
-        <div class="flex">
+        <div
+          class="flex"
+          @click="
+            () => router.push({ name: 'playlist', params: { id: item.id } })
+          "
+        >
           <Image
             :wh="[130, 130]"
             class="mr-2 w-28 cursor-pointer rounded-md"
             :src="item.coverImgUrl"
-            @click="
-              () => router.push({ name: 'playlist', params: { id: item.id } })
-            "
           />
-          <div class="w-full flex flex-col">
+          <div class="w-1/2 flex flex-col ml-20">
             <div
               :class="{ 'li-box': true }"
               :key="index"

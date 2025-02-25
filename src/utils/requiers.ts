@@ -24,9 +24,9 @@ const config = {
   baseURL: import.meta.env.VITE_APP_api,
   timeout: 20000,
   withCredentials: true,
-  headers: {
-    Cookie: document.cookie,
-  },
+  // headers: {
+  //   Cookie: document.cookie,
+  // },
 };
 const servers = axios.create(config);
 servers.interceptors.request.use(
@@ -102,7 +102,7 @@ function ShowMessage(data: ShowMessageOptions) {
 //   return str
 // }
 
-function apprentice<T = any>(RqConfig: MyAxiosRequestConfig): Promise<T> {
+function apprentice<T = any>(RqConfig: MyAxiosRequestConfig = {}): Promise<T> {
   // const { data, method, url } = RqConfig
   // const type = method?.toLowerCase()
   // if (type === "get") {

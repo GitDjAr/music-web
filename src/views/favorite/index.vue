@@ -28,11 +28,12 @@
         <!-- <div>{{ item. }}</div> -->
       </div>
     </div>
-    <div class="flex h-96">
-      <div class="w-2/3 mx-4 h-full">
-        <h3 class="text-xl mb-2" @click="getMyLiveList">我的喜欢</h3>
+    <div class="flex mt-10" :style="{ height: '660px' }">
+      <div class="w-5/12 mx-4 h-full pr-5">
+        <h3 class="text-xl mb-4" @click="getMyLiveList">我的喜欢</h3>
         <div
-          class="bg-[var(--color-fill-2)] h-96 rounded-md px-2 overflow-y-scroll"
+          :style="{ height: '650px' }"
+          class="bg-[var(--color-fill-2)] rounded-md px-2 overflow-y-scroll"
           v-infinite-scroll="[getMyLiveList, { distance: 12 }]"
         >
           <Song
@@ -47,10 +48,17 @@
           />
         </div>
       </div>
-      <div>收藏歌单</div>
+
+      <div class="w-7/12 mx-4 h-full">
+        <h3 class="text-xl mb-2">收藏歌单</h3>
+        <userLikePlaylistVue />
+      </div>
     </div>
-    <div class="flex h-96 my-16">
-      <div class="w-2/3 mx-4">
+
+    <div class="my-16 py-10">
+      <newSong />
+    </div>
+    <!-- <div class="w-2/3 mx-4">
         <h3 class="text-xl mb-2">推荐新音乐</h3>
         <div class="bg-[var(--color-fill-2)] rounded-md px-2">
           <Song
@@ -64,8 +72,24 @@
             @click="play(item)"
           />
         </div>
+      </div> -->
+    <!-- <echarts class="w-1/3 mx-4" :randomColor="randomColor" /> -->
+    <div class="flex h-96 my-16">
+      <div
+        class="card card-compact bg-base-100 w-96 shadow-xl"
+        v-for="item in newSongList"
+      >
+        <figure>
+          <img :src="item?.picUrl" alt="Shoes" />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Shoes!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary">Buy Now</button>
+          </div>
+        </div>
       </div>
-      <!-- <echarts class="w-1/3 mx-4" :randomColor="randomColor" /> -->
     </div>
   </div>
 </template>
@@ -73,7 +97,8 @@
 <script lang="ts" setup>
 // import echarts from "./echarts/index.vue";
 import Song from "@/components/song.vue";
-import { T, newSong } from "@/api/playlist";
+import userLikePlaylistVue from "./userLikePlaylistVue.vue";
+import newSong from "./newSong.vue";
 import { GetSongDetail } from "@/api/play";
 // import { useRouter } from "vue-router";
 import { ref } from "vue";

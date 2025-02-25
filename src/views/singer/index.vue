@@ -48,13 +48,13 @@ import type { Component } from "vue";
 import type { tabsType } from "./type";
 
 const route = useRoute();
-const id = <string>route.params.id;
+const singerId = <string>route.params.id;
 
 const Aprons = reactive<{
   id: string;
   singerInfo?: Object;
 }>({
-  id,
+  id: singerId,
   singerInfo: {},
 });
 
@@ -101,7 +101,7 @@ const updateSinger = (v: string) => {
 const loading = ref(false);
 async function get_artist_detail() {
   loading.value = true;
-  const { data } = await _artist_detail({ id });
+  const { data } = await _artist_detail({ id: singerId });
   Aprons.singerInfo = data;
   loading.value = false;
 }
