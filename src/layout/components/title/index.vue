@@ -34,6 +34,7 @@
       }}</a-button>
       <a-popover v-if="userInfo.title">
         <Image
+          v-show="!isNotFavorite"
           :src="userInfo.title"
           style="width: 40px; height: 40px"
           class="rounded-md"
@@ -65,6 +66,9 @@ let loginStatus = computed(() => store.getters.loginStatus);
 const vueInstance = getCurrentInstance();
 window.vueInstance = vueInstance;
 
+const isNotFavorite = computed(() => {
+  return Router.currentRoute.value.name !== "favorite";
+});
 // 主题
 const isDark = useDark();
 const state = reactive({

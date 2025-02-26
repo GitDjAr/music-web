@@ -9,7 +9,9 @@
         </transition>
       </router-view>
     </Suspense> -->
-    <router-view></router-view>
+    <StarportCarrier>
+      <router-view></router-view>
+    </StarportCarrier>
   </div>
   <div v-show="!first" class="h-full flex justify-center items-center">
     <transition name="slide-fade">
@@ -23,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import { StarportCarrier } from "vue-starport";
 import { useMagicKeys, useFullscreen, useActiveElement } from "@vueuse/core";
 import { ref, watch } from "vue";
 import { computed } from "vue";

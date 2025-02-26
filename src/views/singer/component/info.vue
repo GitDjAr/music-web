@@ -14,11 +14,12 @@
           >
             <Image
               class="rounded-t w-14 h-14"
-              :src="`https://p2.music.126.net/diGAyEmpymX8G7JcnElncQ==/${item.al.pic_str}.jpg?param=100y100`"
+              :src="item.al.picUrl"
+              :wh="[80, 80]"
               alt=""
             />
             <span class="flex-1 inline-block px-3 items-center truncate">{{
-              item?.name
+              item?.al.name
             }}</span>
             <MyPlay :id="item.id" class="mx-4" />
             <MyLike :id="item.id" />
@@ -54,6 +55,7 @@
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { _simi_artist, _artists, _simi_playlist } from "@/api/user";
+import { getMusicDetail } from "@/api/music";
 import Store from "@/store";
 
 type IdType = string | number;
@@ -103,7 +105,10 @@ async function get_artists(id: IdType) {
     hotSongs,
     artist: { name },
   } = await _artists({ id });
-  artistsSing.value = hotSongs.splice(0, 5);
+
+  artistsSing.value = (
+    await getMusicDetail(hotSongs.splice(0, 8)?.map((e) => e.id))
+  ).songs;
   user.value = name;
 }
 

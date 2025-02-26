@@ -10,7 +10,6 @@
         class="rounded-lg ml-2 mb-5"
         :wh="[500, 500]"
       />
-
       <Button @click="collect" :collectFlag="collectFlag">
         {{ $t("nav.collect") + $t("playlist.playlist") }}
         <icon-heart-fill
@@ -27,7 +26,7 @@
         :class="`text-left   pb-4  transition-all w-full flex flex-col justify-between  h-52 `"
         style="color: var(--my-color)"
       >
-        <h1 class="font-bold titleCss h-12">{{ Albums.name }}</h1>
+        <h1 class="fleetingTime">{{ Albums.name }}</h1>
         <p>创建日期: {{ formatformat(Albums.createTime, DateFormat.ymd) }}</p>
         <p>播放次数: {{ Albums.playCount }}</p>
         <p @click="visible = true" class="cursor-pointer truncate w-11/12">
@@ -185,21 +184,6 @@ function play(item: { id: any }) {
   background-image: var(--image-url);
   background-repeat: no-repeat;
   background-size: 105% auto;
-  .titleCss {
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 300%;
-    background-image: linear-gradient(
-      45deg,
-      rgb(255, 178, 64),
-      rgb(255, 100, 106),
-      rgb(211, 118, 247),
-      rgb(55, 75, 249)
-    );
-    position: relative;
-    z-index: 1;
-    animation: 5s ease-in-out 0s infinite normal none running TextFlow;
-  }
 
   .hybull {
     height: calc(100% - 208px);

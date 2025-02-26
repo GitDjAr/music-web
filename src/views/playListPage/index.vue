@@ -71,6 +71,7 @@
             <p class="my-1 w-full truncate">{{ item.name }}</p>
           </div>
         </div>
+
         <div class="w-1/5" v-for="item in 5 - (recPlayList.length % 5)"></div>
       </template>
     </div>

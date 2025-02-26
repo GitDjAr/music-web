@@ -4,10 +4,10 @@ import { _login_refresh } from "@/api/user";
 import { useStorage } from "@vueuse/core";
 import { userInfo_T } from "../types/userInfog";
 import { diffDays } from "@/utils/format";
-import { extractMusicUValue } from '@/utils/gFn'
+import { extractMusicUValue } from "@/utils/gFn";
 // import type Song from '../types/song'
 import type { RootState } from "../index";
-import defaultIcon from '@/assets/myIcon/runDag.gif'
+import defaultIcon from "@/assets/myIcon/runDag.gif";
 
 export interface AppType {
   userInfo: userInfo_T;
@@ -112,7 +112,7 @@ const actions = {
 
       // }
       state.cookie = localStorage.getItem("cookie") || "";
-      document.cookie = 'MUSIC_U' + extractMusicUValue(state.cookie)
+      document.cookie = "MUSIC_U" + extractMusicUValue(state.cookie);
     }
     state.loginTime = new Date().getTime();
   },
@@ -127,7 +127,10 @@ const actions = {
     }: ActionContext<AppType, RootState>,
     info: userInfo_T,
   ) {
-    if (rootGetters.loginStatus && diffDays(new Date(Number(state?.loginTime))) >= 1) {
+    if (
+      rootGetters.loginStatus &&
+      diffDays(new Date(Number(state?.loginTime))) >= 1
+    ) {
       // console.log("超过1天重新获取token", diffDays(localStorage.getItem("loginTime")), 5);
       dispatch("initMusicApp");
     }
@@ -139,6 +142,7 @@ const actions = {
     dispatch,
     rootGetters,
   }: ActionContext<AppType, RootState>) {
+    dispatch("getFollowlist");
     dispatch("UserRefresh");
     dispatch("getLikelist");
     dispatch("recommendPlaylist");

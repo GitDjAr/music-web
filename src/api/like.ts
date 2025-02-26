@@ -22,3 +22,19 @@ export function like(params: Data) {
     params,
   });
 }
+
+/**
+ * 当前账号关注的用户/歌手
+说明 : 调用此接口, 可获得当前账号关注的用户/歌手
+可选参数 : size : 返回数量 , 默认为 30
+cursor : 返回数据的 cursor, 默认为 0 , 传入上一次返回结果的 cursor,将会返回下一页的数据
+scene : 场景, 0 表示所有关注, 1 表示关注的歌手, 2 表示关注的用户, 默认为 0
+ */
+export function user_follow_mixed(params: Data) {
+  return request({
+    url: `/user/follow/mixed`,
+    method: "get",
+    params,
+    show: true,
+  });
+}

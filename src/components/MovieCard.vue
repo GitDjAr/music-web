@@ -1,73 +1,209 @@
 <template>
-  <div class="relative w-96 h-48 bg-white overflow-hidden mb-4 shadow-lg">
-    <!-- Overlay -->
-    <div
-      class="absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-300"
-    ></div>
-
-    <!-- Share Icons -->
-    <div class="absolute top-4 right-4 flex space-x-2">
-      <button
-        class="text-white opacity-0 hover:opacity-100 transition-opacity duration-300"
-      >
-        <i class="material-icons">&#xe87d;</i>
-      </button>
-      <button
-        class="text-white opacity-0 hover:opacity-100 transition-opacity duration-300"
-      >
-        <i class="material-icons">&#xe253;</i>
-      </button>
-      <button
-        class="text-white opacity-0 hover:opacity-100 transition-opacity duration-300"
-      >
-        <i class="material-icons">&#xe80d;</i>
-      </button>
+  <div class="card" :style="{ 'background-image': `url(${prop.item.cover})` }">
+    <div class="border"></div>
+    <div class="content">
+      <div class="logo">
+        <div class="logo1">{{ prop.item.name }}</div>
+        <div class="logo2">{{ prop.item.artistName }}</div>
+        <span class="trail"></span>
+      </div>
+      <span class="logo-bottom-text">{{ prop.item.publishTime }}</span>
     </div>
-
-    <!-- Content -->
-    <div class="absolute inset-0 p-4 flex flex-col justify-end">
-      <h1 class="text-2xl font-bold text-white">{{ title }}</h1>
-      <h4 class="text-sm text-gray-300">{{ info }}</h4>
-      <p class="text-sm text-gray-200 mt-2">{{ description }}</p>
-      <button
-        class="mt-4 px-4 py-2 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-colors duration-300"
-      >
-        Watch Trailer
-      </button>
-    </div>
-
-    <!-- Background Image -->
-    <div
-      class="absolute inset-0 bg-cover bg-center"
-      :style="{ backgroundImage: `url(${imageUrl})` }"
-    ></div>
+    <span class="bottom-text">{{ "1000万" }}</span>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    title: String,
-    info: String,
-    description: String,
-    imageUrl: String,
-  },
-};
+<script lang="ts" setup>
+const prop = defineProps(["item"]);
 </script>
 
 <style scoped>
-.material-icons {
-  font-family: "Material Icons";
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
+/* From Uiverse.io by Smit-Prajapati */
+.card {
+  width: 300px !important;
+  height: 200px !important;
+  position: relative;
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: grid;
+  place-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+}
+
+#logo-main,
+#logo-second {
+  height: 100%;
+}
+
+#logo-main {
+  fill: #bd9f67;
+}
+
+#logo-second {
+  padding-bottom: 10px;
+  fill: none;
+  stroke: #bd9f67;
+  stroke-width: 1px;
+}
+
+.border {
+  position: absolute;
+  inset: 0px;
+  border: 2px solid #bd9f67;
+  opacity: 0;
+  transform: rotate(10deg);
+  transition: all 0.5s ease-in-out;
+}
+
+.bottom-text {
+  position: absolute;
+  left: 50%;
+  bottom: 13px;
+  transform: translateX(-50%);
+  font-size: 6px;
+  text-transform: uppercase;
+  padding: 0px 5px 0px 8px;
+  color: #bd9f67;
+  background: #243137;
+  opacity: 0;
+  letter-spacing: 7px;
+  transition: all 0.5s ease-in-out;
+}
+
+.content {
+  transition: all 0.5s ease-in-out;
+}
+
+.content .logo {
+  height: 35px;
+  position: relative;
+  width: 33px;
+  overflow: hidden;
+  transition: all 1s ease-in-out;
+}
+
+.content .logo .logo1 {
+  height: 33px;
+  position: absolute;
+  left: 0;
+}
+
+.content .logo .logo2 {
+  height: 33px;
+  position: absolute;
+  left: 33px;
+}
+
+.content .logo .trail {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+}
+
+.content .logo-bottom-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 30px;
+  color: #bd9f67;
+  padding-left: 8px;
+  font-size: 11px;
+  opacity: 0;
+  letter-spacing: none;
+  transition: all 0.5s ease-in-out 0.5s;
+}
+
+.card:hover {
+  border-radius: 0;
+  transform: scale(1.1);
+}
+
+.card:hover .logo {
+  width: 134px;
+  animation: opacity 1s ease-in-out;
+}
+
+.card:hover .border {
+  inset: 15px;
+  opacity: 1;
+  transform: rotate(0);
+}
+
+.card:hover .bottom-text {
+  letter-spacing: 3px;
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
+.card:hover .content .logo-bottom-text {
+  opacity: 1;
+  letter-spacing: 9.5px;
+}
+
+.card:hover .trail {
+  animation: trail 1s ease-in-out;
+}
+
+@keyframes opacity {
+  0% {
+    border-right: 1px solid transparent;
+  }
+
+  10% {
+    border-right: 1px solid #bd9f67;
+  }
+
+  80% {
+    border-right: 1px solid #bd9f67;
+  }
+
+  100% {
+    border-right: 1px solid transparent;
+  }
+}
+
+@keyframes trail {
+  0% {
+    background: linear-gradient(
+      90deg,
+      rgba(189, 159, 103, 0) 90%,
+      rgb(189, 159, 103) 100%
+    );
+    opacity: 0;
+  }
+
+  30% {
+    background: linear-gradient(
+      90deg,
+      rgba(189, 159, 103, 0) 70%,
+      rgb(189, 159, 103) 100%
+    );
+    opacity: 1;
+  }
+
+  70% {
+    background: linear-gradient(
+      90deg,
+      rgba(189, 159, 103, 0) 70%,
+      rgb(189, 159, 103) 100%
+    );
+    opacity: 1;
+  }
+
+  95% {
+    background: linear-gradient(
+      90deg,
+      rgba(189, 159, 103, 0) 90%,
+      rgb(189, 159, 103) 100%
+    );
+    opacity: 0;
+  }
 }
 </style>

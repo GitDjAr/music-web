@@ -1,8 +1,34 @@
 <!--  -->
 <template>
   <div class="w-full h-52">
-    <div class="w-full flex justify-between mb-3">
-      <div
+    <div class="mb-3 px-3 text-xl">
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center gap-10">
+          <div>
+            <p>{{ user.profile.followeds }}</p>
+            <span>粉丝</span>
+          </div>
+          <div>
+            <p>{{ user.profile.follows }}</p>
+            <span>关注</span>
+          </div>
+          <div>
+            <p>{{ user.level }}</p>
+            <span>等级</span>
+          </div>
+        </div>
+        <div class="flex items-end">
+          <div class="mr-5">
+            <p class="mb-5 text-right">{{ user.name }}</p>
+            <p class="text-base truncate">
+              {{ user.profile.signature }}
+            </p>
+          </div>
+          <Image class="rounded-xl" :src="user.title" :wh="[100, 100]"></Image>
+        </div>
+      </div>
+
+      <!-- <div
         :class="`w-1/3 mx-4 p-2 rounded-md h-52 overflow-hidden relative bg-gradient-to-r from-[${randomColor()}] text-white text-left text-xl`"
         v-for="item in titleList"
         :key="item.id"
@@ -25,8 +51,7 @@
           :wh="[300, 300]"
           class="absolute top-0 right-0 bottom-0 -z-10"
         ></Image>
-        <!-- <div>{{ item. }}</div> -->
-      </div>
+      </div> -->
     </div>
     <div class="flex mt-10" :style="{ height: '660px' }">
       <div class="w-5/12 mx-4 h-full pr-5">
@@ -58,22 +83,6 @@
     <div class="my-16 py-10">
       <newSong />
     </div>
-    <!-- <div class="w-2/3 mx-4">
-        <h3 class="text-xl mb-2">推荐新音乐</h3>
-        <div class="bg-[var(--color-fill-2)] rounded-md px-2">
-          <Song
-            v-for="item in newSongList"
-            class="border-none"
-            :id="item.id"
-            :dt="item.dt"
-            :songName="item.name"
-            :singer="item?.song?.artists.map((e) => e.name).join('/')"
-            :url="item?.picUrl"
-            @click="play(item)"
-          />
-        </div>
-      </div> -->
-    <!-- <echarts class="w-1/3 mx-4" :randomColor="randomColor" /> -->
     <div class="flex h-96 my-16">
       <div
         class="card card-compact bg-base-100 w-96 shadow-xl"
@@ -101,13 +110,14 @@ import userLikePlaylistVue from "./userLikePlaylistVue.vue";
 import newSong from "./newSong.vue";
 import { GetSongDetail } from "@/api/play";
 // import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { vInfiniteScroll } from "@vueuse/components";
 import { useStore } from "vuex";
 import { rgbToHex } from "@/utils/getImgsColor";
 
 // const router = useRouter();
 const store = useStore();
+const user = computed(() => store.getters?.userInfo);
 
 const randomColor = () => {
   let color = getComputedStyle(document.body)

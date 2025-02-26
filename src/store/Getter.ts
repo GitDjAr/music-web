@@ -4,10 +4,10 @@ const Getter = {
   },
   userInfo: (store: any) => {
     const { userInfo } = store.app;
-    const { account, profile } = userInfo;
+    const { profile } = userInfo;
 
     return {
-      ...account,
+      ...userInfo,
       title: profile?.avatarUrl,
       backgroundUrl: profile?.backgroundUrl,
       name: profile?.nickname,

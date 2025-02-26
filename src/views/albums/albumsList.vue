@@ -16,7 +16,7 @@
         <h1 class="font-bold">
           {{ albumInfo.album.name }} - {{ albumInfo.album.company }}
         </h1>
-        <div class="flex justify-between items-center mr-20">
+        <div class="flex justify-between items-center">
           <div class="leading-10">
             <p>
               发布时间:
@@ -24,17 +24,28 @@
             </p>
             <p>播放次数:{{ albumInfo.playCount }}</p>
           </div>
-          <likeBut
-            ><div :class="`px-4 `">
-              收 藏
-              <component
-                :is="`icon-heart${
-                  albumInfo?.album?.info?.liked ? '-fill' : ''
-                }`"
-                :class="`cursor-pointer text-4xl`"
-                @click.stop="linkTo"
-              /></div
-          ></likeBut>
+          <div class="flex gap-16">
+            <button
+              @click="play(albumInfo.songs[0])"
+              class="flex items-center rounded-3xl bg-white bg-opacity-40 border border-gray-300"
+            >
+              <div :class="`px-5 text-base w-32 leading-10 `">播 放</div>
+            </button>
+            <button
+              class="flex items-center rounded-3xl bg-white bg-opacity-40 border border-gray-300"
+            >
+              <div :class="`px-5 text-base w-32 leading-10 `">
+                <component
+                  :is="`icon-heart${
+                    albumInfo?.album?.info?.liked ? '-fill' : ''
+                  }`"
+                  :class="`cursor-pointer text-4xl`"
+                  @click.stop="linkTo"
+                />
+                收 藏
+              </div>
+            </button>
+          </div>
         </div>
         <p @click="visible = true" class="cursor-pointer truncate">
           {{ albumInfo.album.description }}
@@ -52,20 +63,32 @@
         </div>
       </div>
     </div>
-    <div class="overscroll-y-auto hybull">
-      <div
-        v-for="item in albumInfo.songs"
-        :key="item.id"
-        @click="play(item)"
-        class="flex h-14 my-1 px-4 mx-40 justify-between bg-white bg-opacity-50 backdrop-filter backdrop-blur-sm items-center hover:shadow-xl hover:border-gray-300 cursor-pointer transition-all rounded-md border border-b"
-      >
-        <div class="flex-1 mx-2 text-left inline-block truncate">
-          {{ item.name }}
+    <div class="flex justify-between gap-4 px-3 overscroll-y-auto">
+      <div class="hybull w-1/2">
+        <h2 class="h-4"></h2>
+        <div
+          v-for="item in albumInfo.songs"
+          :key="item.id"
+          @click="play(item)"
+          class="flex h-14 my-1 px-4 justify-between backdrop-blur-sm items-center hover:shadow-xl hover:border-gray-300 cursor-pointer transition-all rounded-md"
+        >
+          <div class="flex-1 mx-2 text-left inline-block truncate">
+            {{ item.name }}
+          </div>
+          <div class="w-40 flex justify-around">
+            <MyPlay :id="item.id" />
+            <span> {{ formatTime(item.dt) || "00:00:00" }}</span>
+          </div>
         </div>
-        <div class="w-40 flex justify-around mr-2">
-          <MyPlay :id="item.id" />
-          <span> {{ formatTime(item.dt) || "00:00:00" }}</span>
-        </div>
+      </div>
+      <div class="w-1/2">
+        <h2 class="text-xl">mv影视</h2>
+        <MovieCard
+          class="m-6 mx-auto"
+          v-for="item in mvList"
+          :key="item.id"
+          :item="item"
+        ></MovieCard>
       </div>
     </div>
   </div>
@@ -82,6 +105,7 @@ import { reactive, ref } from "vue";
 import { formatTime, formatformat } from "@/utils/format";
 import { albumContent } from "@/api/playlist";
 import { getMusicDetail } from "@/api/music";
+import { mvDetail } from "@/api/mv";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { DateFormat } from "@/utils/type/funType";
@@ -99,14 +123,25 @@ const albumInfo = reactive<any>({
   publishTime: "",
   tags: [],
 });
+const mvList = ref<Array<any>>([]);
+getAlbumContent();
 async function getAlbumContent() {
   const obj = await albumContent({ id });
   const songIds = obj.songs.map((e: any) => e.id);
   const songList = await getMusicDetail(songIds);
   Object.assign(albumInfo, obj);
-  albumInfo.songs = songList;
+  albumInfo.songs = songList.songs;
+  const arr = songList.songs.map((e: any) => e.mv).filter(Boolean);
+  for (let i = 0; i < arr.length; i++) {
+    if (i < 3) {
+      getMv(arr[i]);
+    }
+  }
 }
-getAlbumContent();
+async function getMv(mvid: number) {
+  const f = await mvDetail(mvid);
+  mvList.value.push(f.data);
+}
 
 // 播放
 function play(item: { id: any }) {

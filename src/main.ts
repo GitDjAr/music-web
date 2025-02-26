@@ -24,6 +24,7 @@ import image from "./components/image.vue";
 import level from "./components/level.vue";
 import song from "./components/song.vue";
 import ModalVue from "@/components/Modal.vue";
+import MovieCard from "@/components/MovieCard.vue";
 import MyLike from "@/components/like/index.vue";
 import MyVideo from "@/components/MyVideo/index.vue";
 import MyPlay from "@/components/MyPlay/index.vue";
@@ -36,10 +37,6 @@ import hoverTitle from "./directives/hoverTitle";
 
 // import { BrowserTracing } from "@sentry/browser";
 import * as Sentry from "@sentry/vue";
-
-
-
-
 
 // import setupLocatorUI from "@locator/runtime";
 
@@ -90,6 +87,7 @@ app
   .component("Logo", Logo)
   .component("Image", image)
   .component("ModalVue", ModalVue)
+  .component("MovieCard", MovieCard)
   .component("MyLike", MyLike)
   .component("MyPlay", MyPlay)
   .component("MyVideo", MyVideo)

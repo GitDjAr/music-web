@@ -82,7 +82,6 @@
     "vite-plugin-pwa": "^0.14.7",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-zip": "^1.0.1",
-    "vue-starport": "^0.3.0",
     "vue-tsc": "^0.29.8",
     "workbox-build": "^6.6.1"
   },
