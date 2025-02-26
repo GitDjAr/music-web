@@ -26,7 +26,7 @@
         <p
           class="absolute bottom-0 w-full flex p-3 transition-all justify-between text-white opacity-0 group-hover:opacity-100"
         >
-          <span>{{ item.playCount }}</span>
+          <span>播放 {{ (item.playCount / 10000).toFixed(1) }} 万</span>
           <span>{{ item.publishTime }}</span>
         </p>
       </div>
@@ -56,15 +56,15 @@ watch(
   () => P.Activated,
   () => {
     if (P.Activated === true) {
-    // console.log('激活周期',P.Activated)
+      // console.log('激活周期',P.Activated)
       setTimeout(() => {
         searchSuggest();
       }, 100);
     }
   },
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 );
 const Emit = defineEmits<{
   (e: "updateId", v: string): void;
@@ -90,7 +90,7 @@ async function searchSuggest(id?: string) {
   mvList.value.push(...mvs);
   // 更新激活标记
   Emit("update", true);
-};
+}
 
 const videoId = ref("");
 const VideoShow = ref(false);

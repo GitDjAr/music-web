@@ -2,8 +2,8 @@
 <template>
   <div class="flex justify-between">
     <!-- <div class="w-1/4"> <h2>{{ "最新专辑" }}</h2> <div class="flex items-center"> <Image class="w-32 h-32 rounded-md shadow-md" src="" :wh="[220, 220]" alt="" /> <div class="flex-1"> <span>title</span> <p>content</p> <p>mo</p> <div> <icon-plus v-if="true" /> <icon-check v-else /> 收藏 </div> <UsesDesc></UsesDesc> </div> </div> </div> -->
-    <div class="flex-1 max-w-1/2 px-20 overflow-hidden">
-      <h2>{{ "最多播放" }}</h2>
+    <div class="flex-1 max-w-1/2 pr-20 overflow-hidden">
+      <h2 class="">{{ "最多播放" }}</h2>
       <ul class="p-2 rounded-md">
         <template v-for="(item, index) in artistsSing">
           <li
@@ -14,8 +14,7 @@
           >
             <Image
               class="rounded-t w-14 h-14"
-              :src="item?.al?.picUrl"
-              :wh="[80, 80]"
+              :src="`https://p2.music.126.net/diGAyEmpymX8G7JcnElncQ==/${item.al.pic_str}.jpg?param=100y100`"
               alt=""
             />
             <span class="flex-1 inline-block px-3 items-center truncate">{{
@@ -71,6 +70,7 @@ const Emit = defineEmits<{
 }>();
 
 function Musicianly(item: { id: number }) {
+  console.log(item);
   Store.dispatch("ToggleSong", {
     id: item.id,
     playListId: user.value + "-最多播放",

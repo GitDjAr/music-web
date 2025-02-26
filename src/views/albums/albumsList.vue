@@ -4,7 +4,7 @@
     class="myclass box-border flex flex-col select-none overflow-hidden h-full w-full relative"
     v-bind="$attrs"
   >
-    <div class="flex h-52 w-full mb-3">
+    <div class="flex h-52 w-full my-5 px-3">
       <Image
         class="h-52 w-52 rounded-lg"
         :src="albumInfo?.album?.picUrl"
@@ -16,23 +16,26 @@
         <h1 class="font-bold">
           {{ albumInfo.album.name }} - {{ albumInfo.album.company }}
         </h1>
-        <p>
-          发布时间: {{ formatformat(albumInfo.publishTime, DateFormat.ymd) }}
-        </p>
-        <p>播放次数:{{ albumInfo.playCount }}</p>
-
-        <p>
-          是否收藏:
-          <component
-            :is="`icon-heart${albumInfo?.album?.info?.liked ? '-fill' : ''}`"
-            :class="`cursor-pointer text-4xl ${
-              albumInfo?.album?.info?.liked
-                ? ' bg-red-900'
-                : 'hover:text-pink-500'
-            }`"
-            @click.stop="linkTo"
-          />
-        </p>
+        <div class="flex justify-between items-center mr-20">
+          <div class="leading-10">
+            <p>
+              发布时间:
+              {{ formatformat(albumInfo.publishTime, DateFormat.ymd) }}
+            </p>
+            <p>播放次数:{{ albumInfo.playCount }}</p>
+          </div>
+          <likeBut
+            ><div :class="`px-4 `">
+              收 藏
+              <component
+                :is="`icon-heart${
+                  albumInfo?.album?.info?.liked ? '-fill' : ''
+                }`"
+                :class="`cursor-pointer text-4xl`"
+                @click.stop="linkTo"
+              /></div
+          ></likeBut>
+        </div>
         <p @click="visible = true" class="cursor-pointer truncate">
           {{ albumInfo.album.description }}
         </p>
@@ -49,7 +52,7 @@
         </div>
       </div>
     </div>
-    <div class="overflow-y-scroll hybull bg-white">
+    <div class="overscroll-y-auto hybull">
       <div
         v-for="item in albumInfo.songs"
         :key="item.id"
@@ -73,10 +76,12 @@
 </template>
 
 <script lang="ts" setup>
+import likeBut from "@/components/button/like.vue";
 import ModalVue from "@/components/Modal.vue";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { formatTime, formatformat } from "@/utils/format";
 import { albumContent } from "@/api/playlist";
+import { getMusicDetail } from "@/api/music";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { DateFormat } from "@/utils/type/funType";
@@ -88,9 +93,18 @@ const id: number = +route.params?.id;
 
 // 详情
 const visible = ref(false);
-const albumInfo = ref<any>({ songs: {}, album: {}, publishTime: "", tags: [] });
+const albumInfo = reactive<any>({
+  songs: {},
+  album: {},
+  publishTime: "",
+  tags: [],
+});
 async function getAlbumContent() {
-  albumInfo.value = await albumContent({ id });
+  const obj = await albumContent({ id });
+  const songIds = obj.songs.map((e: any) => e.id);
+  const songList = await getMusicDetail(songIds);
+  Object.assign(albumInfo, obj);
+  albumInfo.songs = songList;
 }
 getAlbumContent();
 
@@ -99,7 +113,7 @@ function play(item: { id: any }) {
   store.dispatch("ToggleSong", {
     id: item.id,
     playListId: id,
-    list: albumInfo.value.songs,
+    list: albumInfo.songs,
   });
 }
 // like

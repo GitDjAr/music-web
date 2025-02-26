@@ -36,7 +36,7 @@ const P = withDefaults(
     wh: null,
     unit: "px",
     fit: "cover",
-  }
+  },
 );
 
 const objectify = ref("object-" + P.fit);
@@ -61,6 +61,7 @@ const imgSrc = ref("");
 watchEffect(() => {
   const img = new Image();
   img.src = Immure.value;
+  console.log(Immure.value);
   img.onload = () => {
     imgSrc.value = Immure.value;
   };

@@ -1,28 +1,49 @@
 <!--  -->
 <template>
-  <div class="myclass box-border flex select-none overflow-hidden h-full w-full relative" v-bind="$attrs">
+  <div
+    class="myclass box-border flex select-none overflow-hidden h-full w-full relative"
+    v-bind="$attrs"
+  >
     <div class="w-1/5 pt-5 mr-5" style="min-width: 160px">
-      <Image :src="Albums.coverImgUrl" class="rounded-lg ml-2 mb-5" :wh="[500, 500]" />
+      <Image
+        :src="Albums.coverImgUrl"
+        class="rounded-lg ml-2 mb-5"
+        :wh="[500, 500]"
+      />
 
       <Button @click="collect" :collectFlag="collectFlag">
         {{ $t("nav.collect") + $t("playlist.playlist") }}
-        <icon-heart-fill v-if="collectFlag" :style="{ color: 'red' }" class="cursor-pointer" />
+        <icon-heart-fill
+          v-if="collectFlag"
+          :style="{ color: 'red' }"
+          class="cursor-pointer"
+        />
         <icon-heart v-else class="hover: text-pink - 500 cursor - pointer" />
       </Button>
     </div>
     <div class="flex-1 w-0" ref="refBox">
-      <div v-if="Albums.name" :class="`text-left   pb-4  transition-all w-full flex flex-col justify-between  h-52 `"
-        style="color: var(--my-color)">
-        <h1 class="font-bold titleCss">{{ Albums.name }}</h1>
+      <div
+        v-if="Albums.name"
+        :class="`text-left   pb-4  transition-all w-full flex flex-col justify-between  h-52 `"
+        style="color: var(--my-color)"
+      >
+        <h1 class="font-bold titleCss h-12">{{ Albums.name }}</h1>
         <p>创建日期: {{ formatformat(Albums.createTime, DateFormat.ymd) }}</p>
         <p>播放次数: {{ Albums.playCount }}</p>
         <p @click="visible = true" class="cursor-pointer truncate w-11/12">
           {{ Albums.description }}
         </p>
         <div>
-          <a-tag :color="tagColor()" :checked="true" :default-checked="true" @click="goPlayPage(item)"
-            v-for="item in Albums.tags" :style="{ marginRight: '10px' }">
-            {{ item }}</a-tag>
+          <a-tag
+            :color="tagColor()"
+            :checked="true"
+            :default-checked="true"
+            @click="goPlayPage(item)"
+            v-for="item in Albums.tags"
+            :style="{ marginRight: '10px' }"
+          >
+            {{ item }}</a-tag
+          >
         </div>
       </div>
 
@@ -30,13 +51,25 @@
         <div class="mb-5">
           <a-skeleton-line :rows="1" :widths="['90%']" :line-height="35" />
         </div>
-        <a-skeleton-line :rows="3" :widths="['40%', '50%', '80%']" :line-height="22" />
+        <a-skeleton-line
+          :rows="3"
+          :widths="['40%', '50%', '80%']"
+          :line-height="22"
+        />
       </a-skeleton>
-      <div class="hybull bg-opacity-90 backdrop-filter backdrop-blur-sm flex flex-col overflow-y-auto"
-        v-infinite-scroll="[scrollLoad, { 'distance': 12 }]">
+      <div
+        class="hybull bg-opacity-90 backdrop-filter backdrop-blur-sm flex flex-col overflow-y-auto"
+        v-infinite-scroll="[scrollLoad, { distance: 12 }]"
+      >
         <template v-for="item in AlbumsList" :key="item.id">
-          <song :id="item.id" :dt="item.dt" :songName="item.name" :singer="item?.ar?.[0]?.name" :url="item?.al?.picUrl"
-            @click="play(item)" />
+          <song
+            :id="item.id"
+            :dt="item.dt"
+            :songName="item.name"
+            :singer="item?.ar?.[0]?.name"
+            :url="item?.al?.picUrl"
+            @click="play(item)"
+          />
         </template>
         <p v-show="playListEnd" class="text-center text-sky-300">
           到底辣 ~ ~ ~
@@ -73,7 +106,7 @@ import { DateFormat } from "@/utils/type/funType";
 
 const store = useStore();
 const route = useRoute();
-const router = useRouter()
+const router = useRouter();
 const tagColor = () => store.getters.tagColor;
 const id: number = +route.params?.id;
 
@@ -88,11 +121,10 @@ async function get_playlist_detail() {
 
 //去歌单页面
 const goPlayPage = (v: string) => {
+  router.push({ path: "/Music/playListPage", query: { tag: v } });
 
-  router.push({ path: '/Music/playListPage', query: { tag: v } })
-
-  console.log('v', v,);
-}
+  console.log("v", v);
+};
 
 type alb = T.MusicPlayList & {
   ar?: { name: string }[];
@@ -153,16 +185,17 @@ function play(item: { id: any }) {
   background-image: var(--image-url);
   background-repeat: no-repeat;
   background-size: 105% auto;
-
   .titleCss {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 300%;
-    background-image: linear-gradient(45deg,
-        rgb(255, 178, 64),
-        rgb(255, 100, 106),
-        rgb(211, 118, 247),
-        rgb(55, 75, 249));
+    background-image: linear-gradient(
+      45deg,
+      rgb(255, 178, 64),
+      rgb(255, 100, 106),
+      rgb(211, 118, 247),
+      rgb(55, 75, 249)
+    );
     position: relative;
     z-index: 1;
     animation: 5s ease-in-out 0s infinite normal none running TextFlow;
