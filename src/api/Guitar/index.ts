@@ -1,4 +1,4 @@
-import requier from "@/utils/requiers"
+import requier from "@/utils/requires.js";
 
 // 获取首页推荐
 // url https://gitee.com/duanfb/ApiCenter/raw/master/gtp/home.json
@@ -8,7 +8,7 @@ async function getHomelist() {
     method: "GET",
     show: true,
     baseURL: "/apiG",
-  })
+  });
 }
 
 // https://www.gtpso.com/index.php/Home/QueryService/getNewTabs?num=100
@@ -18,7 +18,7 @@ function getNewTabs() {
     method: "GET",
     show: true,
     baseURL: "/apiG2",
-  })
+  });
 }
 
 // https://www.gtpso.com/index.php/Home/QueryService/search?searchBy=tab&search=%E5%91%A8%E6%9D%B0%E4%BC%A6&p=1
@@ -28,7 +28,7 @@ function search(search: string) {
     method: "GET",
     show: true,
     baseURL: "/apiG2",
-  })
+  });
 }
 
 // https://www.gtpso.com/index.php/Home/QueryService/getUrlById?fileId=84322
@@ -38,14 +38,7 @@ function getUrlById(fileId: string | number) {
     method: "GET",
     show: true,
     baseURL: "/apiG2/",
-  })
+  });
 }
 
-
-export {
-  getHomelist,
-  getNewTabs,
-  search,
-  getUrlById
-}
-
+export { getHomelist, getNewTabs, search, getUrlById };

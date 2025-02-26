@@ -1,15 +1,15 @@
 // 收藏 喜欢
-import request from "../utils/requiers"
-type Data = Object | string
+import request from "../utils/requires.js";
+type Data = Object | string;
 
 // 收藏/取消收藏歌手 /artist/sub
 export function artist_sub(params: Data) {
   return request({
     url: `/artist/sub`,
-    method: 'get',
+    method: "get",
     params,
     show: true,
-  })
+  });
 }
 
 //喜欢音乐
@@ -18,7 +18,7 @@ export function artist_sub(params: Data) {
 export function like(params: Data) {
   return request({
     url: `/like`,
-    method: 'get',
+    method: "get",
     params,
-  })
+  });
 }

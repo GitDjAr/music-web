@@ -1,4 +1,4 @@
-import request from "../utils/requiers";
+import request from "../utils/requires.js";
 import { often } from "./types/all";
 import * as T from "./types/playList";
 export type { T };
@@ -385,7 +385,6 @@ export function newSong(params?: Object) {
     params,
   });
 }
-
 
 /**
  * 曲风偏好

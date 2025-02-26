@@ -1,4 +1,4 @@
-import request from "../../utils/requiers";
+import request from "../../utils/requires.js";
 
 /**
  * 接口翻译

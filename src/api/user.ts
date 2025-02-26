@@ -1,4 +1,4 @@
-import request from "../utils/requiers";
+import request from "../utils/requires.js";
 
 import type { RootUser } from "./types/user";
 import type * as T from "./types/playList";

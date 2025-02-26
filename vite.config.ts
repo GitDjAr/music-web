@@ -4,7 +4,7 @@ import * as path from "path";
 
 //pwa
 import { VitePWA } from "vite-plugin-pwa";
-import basicSsl from '@vitejs/plugin-basic-ssl'
+import basicSsl from "@vitejs/plugin-basic-ssl";
 //https://juejin.cn/post/7235818900818526265   打包时间分析  构建时长、chunk 数量及大小
 import { visualizer } from "rollup-plugin-visualizer";
 // import { GenerateSW } from "workbox-webpack-plugin";
@@ -18,8 +18,8 @@ import zip from "vite-plugin-zip";
 // https://github.com/antfu/unplugin-vue-components
 // arco-design-vue 按需引入+自动 import+模板组件提示
 import { vitePluginForArco } from "@arco-plugins/vite-vue";
-import Components from 'unplugin-vue-components/vite';
-import { ArcoResolver } from 'unplugin-vue-components/resolvers';
+import Components from "unplugin-vue-components/vite";
+import { ArcoResolver } from "unplugin-vue-components/resolvers";
 
 /**
  * design-icon图标
@@ -27,8 +27,8 @@ import { ArcoResolver } from 'unplugin-vue-components/resolvers';
   ↓↓↓
   import DownOutlined from '@ant-design/icons-vue/DownOutlined'
  */
-import vitePluginImp from 'vite-plugin-imp'
-const isBuild = process.env.NODE_ENV === 'production' //判断当前是否处于构建模式
+import vitePluginImp from "vite-plugin-imp";
+const isBuild = process.env.NODE_ENV === "production"; //判断当前是否处于构建模式
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -87,7 +87,6 @@ export default defineConfig({
     }),
     splitVendorChunkPlugin(),
     isBuild && vitePluginImp(),
-
   ],
   define: {
     //https://vue-i18n.intlify.dev/guide/advanced/optimization.html#reduce-bundle-size-with-feature-build-flags
@@ -98,12 +97,12 @@ export default defineConfig({
   server: {
     port: 80,
     host: "0.0.0.0",
-    https: false,//https://neteasecloudmusicapi.vercel.app 测试的时候使用
+    https: false, //https://neteasecloudmusicapi.vercel.app 测试的时候使用
     proxy: {
       "/api/": {
         // target: "http://124.222.62.70:803",
         // target: "https://neteasecloudmusicapi.vercel.app",
-        target: "http://localhost:4000",
+        target: "http://localhost:3000",
         // target: "https://music.qier222.com/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\//, ""),
@@ -180,12 +179,12 @@ export default defineConfig({
         assetFileNames: "assets/[ext]/[name].[hash].[ext]",
         manualChunks(id) {
           // 静态资源分拆打包
-          if (id.includes('node_modules')) {
-            console.log("🚀 ~ manualChunks ~ id:", id)
-            return id.toString().split('.pnpm/')[1]?.split('/')[0].toString()
+          if (id.includes("node_modules")) {
+            console.log("🚀 ~ manualChunks ~ id:", id);
+            return id.toString().split(".pnpm/")[1]?.split("/")[0].toString();
           }
-        }
+        },
       },
     },
   },
-})
+});

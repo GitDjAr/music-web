@@ -1,4 +1,4 @@
-import request from "../utils/requiers"
+import request from "../utils/requires.js";
 // import { mapTrackPlayableStatus } from '@/utils/common';
 // import { cacheAlbum, getAlbumFromCache } from '@/utils/db';
 
@@ -9,12 +9,12 @@ import request from "../utils/requiers"
  */
 export function getAlbum(id: number) {
   return request({
-    url: '/album',
-    method: 'get',
+    url: "/album",
+    method: "get",
     params: {
       id,
     },
-  })
+  });
 }
 
 /**
@@ -29,14 +29,14 @@ export function getAlbum(id: number) {
  * @param {string} params.area
  */
 export interface albumList {
-  limit: number,
-  offset: number,
-  area: string,
+  limit: number;
+  offset: number;
+  area: string;
 }
 export function newAlbums(params: albumList) {
   return request({
-    url: '/album/new',
-    method: 'get',
+    url: "/album/new",
+    method: "get",
     params,
   });
 }
@@ -49,8 +49,8 @@ export function newAlbums(params: albumList) {
  */
 export function albumDynamicDetail(id: number) {
   return request({
-    url: '/album/detail/dynamic',
-    method: 'get',
+    url: "/album/detail/dynamic",
+    method: "get",
     params: { id, timestamp: new Date().getTime() },
   });
 }
@@ -65,13 +65,13 @@ export function albumDynamicDetail(id: number) {
  * @param {number} params.t
  */
 export interface albumCollect {
-  id: number,
-  t: number,
+  id: number;
+  t: number;
 }
 export function likeAAlbum(params: albumCollect) {
   return request({
-    url: '/album/sub',
-    method: 'post',
+    url: "/album/sub",
+    method: "post",
     params,
   });
 }
