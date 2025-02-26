@@ -49,10 +49,10 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.39.1",
+    "@arco-design/web-vue": "^2.56.3",
     "@arco-plugins/vite-vue": "^1.4.5",
     "@commitlint/config-conventional": "16.2.1",
-    "@iconify/json": "^2.2.160",
+    "@iconify/json": "^2.2.310",
     "@locator/runtime": "^0.2.4",
     "@types/howler": "^2.2.7",
     "@types/js-cookie": "^3.0.1",

@@ -33,6 +33,12 @@
             </button>
             <button
               class="flex items-center rounded-3xl bg-white bg-opacity-40 border border-gray-300"
+              @click="
+                toggleLikeAlbum(
+                  albumInfo.album.id,
+                  albumInfo.album.info.liked ? 0 : 1,
+                )
+              "
             >
               <div :class="`px-5 text-base w-32 leading-10 `">
                 <component
@@ -40,7 +46,6 @@
                     albumInfo?.album?.info?.liked ? '-fill' : ''
                   }`"
                   :class="`cursor-pointer text-4xl`"
-                  @click.stop="linkTo"
                 />
                 收 藏
               </div>
@@ -83,12 +88,15 @@
       </div>
       <div class="w-1/2">
         <h2 class="text-xl">mv影视</h2>
-        <MovieCard
-          class="m-6 mx-auto"
-          v-for="item in mvList"
-          :key="item.id"
-          :item="item"
-        ></MovieCard>
+        <template v-if="mvList.length">
+          <MovieCard
+            class="m-6 mx-auto"
+            v-for="item in mvList"
+            :key="item.id"
+            :item="item"
+          ></MovieCard>
+        </template>
+        <a-empty v-else />
       </div>
     </div>
   </div>
@@ -99,12 +107,26 @@
 </template>
 
 <script lang="ts" setup>
-import likeBut from "@/components/button/like.vue";
 import ModalVue from "@/components/Modal.vue";
 import { reactive, ref } from "vue";
 import { formatTime, formatformat } from "@/utils/format";
 import { albumContent } from "@/api/playlist";
 import { getMusicDetail } from "@/api/music";
+// Start of Selection
+import { likeAAlbum } from "@/api/album";
+
+async function toggleLikeAlbum(albumId: number, isLike: number) {
+  const params = {
+    id: albumId,
+    t: isLike,
+  };
+  try {
+    await likeAAlbum(params);
+    // 可以在这里添加成功后的处理逻辑，比如更新UI
+  } catch (error) {
+    console.error("收藏/取消收藏专辑失败:", error);
+  }
+}
 import { mvDetail } from "@/api/mv";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";

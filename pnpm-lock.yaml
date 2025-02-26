@@ -73,7 +73,7 @@ importers:
         version: 4.1.0(vue@3.2.31)
     devDependencies:
       '@arco-design/web-vue':
-        specifier: ^2.39.1
+        specifier: ^2.56.3
         version: 2.56.3(vue@3.2.31)
       '@arco-plugins/vite-vue':
         specifier: ^1.4.5
@@ -82,7 +82,7 @@ importers:
         specifier: 16.2.1
         version: 16.2.1
       '@iconify/json':
-        specifier: ^2.2.160
+        specifier: ^2.2.310
         version: 2.2.310
       '@locator/runtime':
         specifier: ^0.2.4

@@ -8,7 +8,7 @@
           :src="item.picUrl"
           class="rounded-xl"
           :alt="item.name"
-          wh="[200, 200]"
+          :wh="[200, 200]"
         />
         <div class="flex items-center justify-between text-base p-2">
           <div class="overflow-hidden flex-1 text-left">

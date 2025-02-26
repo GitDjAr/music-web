@@ -12,7 +12,7 @@
         v-if="imgSrc"
       />
       <a-skeleton v-else :animation="true" class="w-full h-full">
-        <a-skeleton-shape class="pb-[100%]" style="width: 100%" />
+        <a-skeleton-shape class="pb-[100%]" style="width: 100%" size="medium" />
       </a-skeleton>
     </Transition>
     <slot> </slot>

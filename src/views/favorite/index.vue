@@ -83,23 +83,6 @@
     <div class="my-16 py-10">
       <newSong />
     </div>
-    <div class="flex h-96 my-16">
-      <div
-        class="card card-compact bg-base-100 w-96 shadow-xl"
-        v-for="item in newSongList"
-      >
-        <figure>
-          <img :src="item?.picUrl" alt="Shoes" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary">Buy Now</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -109,6 +92,7 @@ import Song from "@/components/song.vue";
 import userLikePlaylistVue from "./userLikePlaylistVue.vue";
 import newSong from "./newSong.vue";
 import { GetSongDetail } from "@/api/play";
+import { T } from "@/api/playlist";
 // import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import { vInfiniteScroll } from "@vueuse/components";
@@ -169,21 +153,6 @@ async function getMyLiveList() {
 }
 getMyLiveList();
 
-//推荐新音乐
-const newSongList = ref<any>([]);
-async function getNewSong() {
-  const { result } = await newSong();
-  newSongList.value = result.splice(0, 6);
-}
-getNewSong();
-
-function play(item: { id: any }) {
-  store.dispatch("ToggleSong", {
-    id: item.id,
-    playListId: "推荐新音乐",
-    list: newSongList.value,
-  });
-}
 function playLike(item: { id: any }) {
   store.dispatch("ToggleSong", {
     id: item.id,
