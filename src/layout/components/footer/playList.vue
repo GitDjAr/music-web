@@ -27,13 +27,21 @@
             class="overflow-ellipsis whitespace-nowrap w-4/5 overflow-hidden"
           >
             {{ item.name }} -
-            {{ item?.ar?.[0]?.name || item?.artists?.[0]?.name }}
+            {{
+              item?.ar?.[0]?.name ||
+              item?.artists?.[0]?.name ||
+              item.song?.artists?.[0]?.name
+            }}
           </div>
           <div class="flex justify-end px-4">
             <div class="flex items-center w-36 justify-between">
               <MyLike :id="item.id" class="" />
               <MyPlay :id="item.id" />
-              <p>{{ formatTime(item?.dt || item?.duration) }}</p>
+              <p>
+                {{
+                  formatTime(item?.dt || item?.duration || item?.song?.duration)
+                }}
+              </p>
             </div>
             <div class="w-6 transition-all">
               <icon-close

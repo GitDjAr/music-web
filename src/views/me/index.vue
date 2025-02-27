@@ -8,7 +8,7 @@
     </div>
    -->
   <div
-    class="max-h-[500px] overflow-scroll divide-y divide-purple-800"
+    class="max-h-[500px] overflow-y-scroll divide-y divide-purple-800"
     v-infinite-scroll="[get_notice, { distance: 12 }]"
   >
     <div
@@ -21,7 +21,7 @@
       <div class="w-12 h-12 grid-cols-1">
         <Image
           alt="avatar"
-          class="rounded-md"
+          class="rounded-full"
           :src="item.notice?.user?.avatarUrl"
           :wh="[50, 50]"
         />

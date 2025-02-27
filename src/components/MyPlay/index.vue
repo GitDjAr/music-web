@@ -1,6 +1,9 @@
 <!--  -->
 <template>
-  <div class="mysvg" :style="{ height: fontSize }">
+  <div
+    class="mysvg cursor-pointer"
+    :style="{ height: fontSize, width: fontSize }"
+  >
     <svg
       v-if="isPlay"
       :style="{ fontSize }"
