@@ -1,7 +1,9 @@
 <!--  -->
 <template>
   <div class="home-right h-full flex items-center flex-col">
-    <h1 class="text-xl">{{ title }}</h1>
+    <h1 class="text-xl">
+      {{ isLoging ? $t("home.dayList") : $t("home.newSongExpress") }}
+    </h1>
     <ul class="right-ul w-11/12 overflow-y-scroll no-scroll">
       <template v-for="item in list">
         <li
@@ -35,7 +37,6 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import { topSong } from "@/api/track";
-const { t } = useI18n();
 const router = useRouter();
 const Store = useStore();
 const isLoging = computed(() => Store.getters.loginStatus);
@@ -43,9 +44,6 @@ const list = computed(() => {
   // 每日推薦
   const v = isLoging.value ? Store.state.song.recommendSong : topSongList.value;
   return v.length > 10 ? v.splice(0, 10) : v;
-});
-const title = computed(() => {
-  return isLoging.value ? t("home.dayList") : t("home.newSongExpress");
 });
 //新歌速递
 const topSongList = ref<any[]>([]);
@@ -59,7 +57,7 @@ getInit();
 const palySong = async (item: any) => {
   Store.dispatch("ToggleSong", {
     id: item.id,
-    playListId: title.value,
+    playListId: "推荐",
     list: list.value,
   });
 };

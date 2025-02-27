@@ -1,36 +1,37 @@
 <template>
-  <div class="items-center justify-center flex group no-scroll pr-1">
-    <IconDoubleRight
-      @click="pageChange(-1)"
-      class="group-hover:opacity-100 opacity-0 group-hover:scale-150 w-12 transition-all rotate-180"
-    />
-    <div class="w-full px-4">
-      <TransitionGroup
-        name="fade"
-        tag="div"
-        class="relative transition-all overflow-hidden"
-      >
-        <div
-          v-for="item in playlistItems"
-          :key="item.id"
-          class="w-1/4 ccc relative inline-block overflow-hidden"
-        >
-          <div class="content p-5">
-            <Image
-              @click="() => router.push(`/Music/playlist/${item.id}`)"
-              class="rounded-md cursor-pointer h-full w-full"
-              :alt="item.name"
-              :src="`${item.coverImgUrl}?param=300y300`"
-            />
-            <p class="my-1 w-full truncate">{{ item.name }}</p>
-          </div>
-        </div>
-      </TransitionGroup>
+  <div>
+    <div class="flex justify-between items-center my-5">
+      <p class="text-xl text-left">{{ Props.name }}</p>
+      <div class="gap-5">
+        <IconDoubleLeft @click="pageChange(-1)" />
+        <IconDoubleRight @click="pageChange(1)" />
+      </div>
     </div>
-    <IconDoubleRight
-      @click="pageChange(1)"
-      class="w-12 group-hover:opacity-100 opacity-0 group-hover:scale-150 transition-all"
-    />
+    <div class="items-center justify-center flex group no-scroll pr-1">
+      <div class="w-full">
+        <TransitionGroup
+          name="fade"
+          tag="div"
+          class="relative transition-all gap-10 grid grid-cols-2"
+        >
+          <div
+            v-for="item in playlistItems"
+            :key="item.id"
+            class="ccc relative"
+          >
+            <div class="content">
+              <Image
+                @click="() => router.push(`/Music/playlist/${item.id}`)"
+                class="rounded-md cursor-pointer h-full w-full"
+                :alt="item.name"
+                :src="`${item.coverImgUrl}?param=300y300`"
+              />
+              <p class="my-1 w-full truncate">{{ item.name }}</p>
+            </div>
+          </div>
+        </TransitionGroup>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -43,6 +44,7 @@ import { watch } from "vue";
 import { Notification } from "@arco-design/web-vue";
 
 interface Props {
+  type: string;
   name?: string;
   PropList?: Array<T.MusicPlayList>;
 }
@@ -52,10 +54,11 @@ const router = useRouter();
 
 // 网友精选
 const page = ref(1);
+const numberSize = 2;
 const playlistItems = computed(() => {
-  const endIndex = page.value * 4;
+  const endIndex = page.value * numberSize;
 
-  return hig.playlist.slice(endIndex, endIndex + 8);
+  return hig.playlist.slice(endIndex, endIndex + numberSize * 2);
 });
 
 const hig = reactive<{ playlist: T.MusicPlayList[]; total: number }>({
@@ -75,16 +78,13 @@ async function getPlayGather({ name }: { name: string | undefined }) {
 
 // Initialize the component with the initial request
 getPlayGather({ name: Props.name });
-watch(
-  () => Props.name,
-  () => {
-    getPlayGather({ name: Props.name });
-  },
-);
 
 // Method to handle page changes
 const pageChange = (num: number) => {
-  if (page.value + num > 0 && page.value + num <= Math.floor(hig.total / 8)) {
+  if (
+    page.value + num > 0 &&
+    page.value + num <= Math.floor(hig.total / (numberSize * 2))
+  ) {
     page.value += num;
   } else {
     Notification.info("真的一滴都没有了...");
@@ -94,7 +94,7 @@ const pageChange = (num: number) => {
 <style scoped lang="scss">
 .ccc {
   height: 0px;
-  padding-bottom: 25%;
+  padding-bottom: 100%;
 
   .content {
     position: absolute;

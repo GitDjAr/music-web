@@ -53,10 +53,15 @@
         </div>
       </div>
     </div>
+    <div class="grid grid-cols-2 gap-10" v-else>
+      <PlayList type="流行" name="流行" />
+      <PlayList type="粤语" name="粤语" />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import PlayList from "../playListPage/listcnp.vue";
 import { reactive, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { personalizedMV } from "@/api/Home";

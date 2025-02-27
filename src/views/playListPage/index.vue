@@ -1,16 +1,6 @@
 <template>
   <div class="select-none h-full">
     <div class="flex items-center">
-      <div class="flex ml-2 leading-6 w-5">
-        <i
-          class="ci-drag-vertical text-sm"
-          :class="modeStr == 'report' ? 'text-gray-400' : ''"
-        ></i>
-        <i
-          class="ci-command"
-          :class="modeStr == 'menu' ? 'text-gray-400' : ''"
-        ></i>
-      </div>
       <div class="flex relative justify-end flex-1">
         <div
           id="scrollTag"
@@ -42,44 +32,30 @@
       </div>
     </div>
     <div class="w-full overflow-y-scroll" style="height: calc(100% - 45px)">
-      <template v-if="modeStr === 'menu'">
-        <div
-          v-for="(item, index) of tagList"
-          :key="item.name"
-          class="mt-8"
-          :style="{ '--stagger': index }"
-        >
-          <h3 class="text-xl font-bold">{{ item.name }}</h3>
-          <PlayList :name="item.tag" :prop-list="item.list" />
+      <div
+        v-for="(item, index) in recPlayList"
+        :key="item.id"
+        class="w-1/5 relative inline-block overflow-hidden"
+        data-animate
+        :style="{ '--stagger': index }"
+      >
+        <div class="content p-4">
+          <Image
+            @click="() => router.push(`/Music/playlist/${item.id}`)"
+            class="rounded-md cursor-pointer h-full w-full"
+            :alt="item.name"
+            :src="`${item.picUrl || item.coverImgUrl}?param=300y300`"
+          />
+          <p class="my-1 w-full truncate">{{ item.name }}</p>
         </div>
-      </template>
-      <template v-else>
-        <div
-          v-for="(item, index) in recPlayList"
-          :key="item.id"
-          class="w-1/5 relative inline-block overflow-hidden"
-          data-animate
-          :style="{ '--stagger': index }"
-        >
-          <div class="content p-4">
-            <Image
-              @click="() => router.push(`/Music/playlist/${item.id}`)"
-              class="rounded-md cursor-pointer h-full w-full"
-              :alt="item.name"
-              :src="`${item.picUrl || item.coverImgUrl}?param=300y300`"
-            />
-            <p class="my-1 w-full truncate">{{ item.name }}</p>
-          </div>
-        </div>
+      </div>
 
-        <div class="w-1/5" v-for="item in 5 - (recPlayList.length % 5)"></div>
-      </template>
+      <div class="w-1/5" v-for="item in 5 - (recPlayList.length % 5)"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import PlayList from "./listcnp.vue";
 import { useStorage, onClickOutside } from "@vueuse/core";
 import { onActivated, ref, onMounted, nextTick } from "vue";
 import Store from "@/store";
@@ -110,7 +86,6 @@ async function tagsList() {
 tagsList();
 
 // 模式
-const modeStr = useStorage<"menu" | "report">("mode", "report");
 const selectedTag = ref("默认推荐");
 // const filterList = ref("粤语");
 
