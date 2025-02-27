@@ -90,7 +90,11 @@
         ></animate>
       </rect>
     </svg>
-    <icon-play-arrow :style="{ fontSize }" v-else></icon-play-arrow>
+    <i
+      class="i-line-md-pause-to-play-transition inline-block"
+      :style="{ fontSize }"
+      v-else
+    ></i>
   </div>
 </template>
 
@@ -109,10 +113,11 @@ const isPlay = computed(() => {
 });
 const fontSize = computed(() => {
   return {
-    mini: "14px",
-    default: "16px",
-    small: "20px",
-    large: "24px",
+    mini: "18px",
+    small: "22px",
+    default: "24px",
+    large: "28px",
+    maxlarge: "38px",
   }[P.size || "default"];
 });
 </script>

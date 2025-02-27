@@ -15,7 +15,7 @@ import I18n from "./locale/index";
 import store from "./store/index";
 
 import PASS from "./utils/$PASS";
-
+import "virtual:uno.css";
 //svg
 import "virtual:svg-icons-register";
 import SvgIcon from "@/components/svg/index.vue";
