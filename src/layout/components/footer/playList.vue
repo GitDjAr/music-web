@@ -16,7 +16,7 @@
         <icon-pushpin class="text-xl" @click.stop="pushpin" />
       </p>
     </div>
-    <div class="overflow-y-scroll relative" id="playId">
+    <div class="overflow-y-scroll relative no-scroll" id="playId">
       <div v-for="item in playlist" :key="item.id" class="">
         <div
           @click="play(item.id)"
@@ -26,13 +26,14 @@
           <div
             class="overflow-ellipsis whitespace-nowrap w-4/5 overflow-hidden"
           >
-            {{ item.name }} - {{ item?.ar?.[0]?.name }}
+            {{ item.name }} -
+            {{ item?.ar?.[0]?.name || item?.artists?.[0]?.name }}
           </div>
           <div class="flex justify-end px-4">
             <div class="flex items-center w-36 justify-between">
               <MyLike :id="item.id" class="" />
               <MyPlay :id="item.id" />
-              <p>{{ formatTime(item?.dt) }}</p>
+              <p>{{ formatTime(item?.dt || item?.duration) }}</p>
             </div>
             <div class="w-6 transition-all">
               <icon-close
@@ -86,19 +87,19 @@ const playDom = ref<HTMLDivElement>();
 </script>
 <style scoped lang="scss">
 .activeCss {
-  background: #99bfff1c;
+  background: #afe4ff75;
   color: #fbc2eb;
 }
 
 .playlistCss .group {
   &:hover {
-    background: #ebedee;
+    background: #afe4ff75;
     transition: all 0.3s;
   }
 }
 
 .playlistCss {
-  border-left: 1px solid #e6e6e6;
+  border-left: 1px solid #afe4ff75;
   position: relative;
 }
 

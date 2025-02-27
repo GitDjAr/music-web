@@ -68,8 +68,8 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-between gap-4 px-3 overscroll-y-auto">
-      <div class="hybull w-1/2 no-scroll">
+    <div class="flex justify-between gap-4 px-3 overflow-scroll no-scroll">
+      <div class="hybull w-1/2">
         <h2 class="h-4"></h2>
         <div
           v-for="item in albumInfo.songs"
@@ -82,7 +82,9 @@
           </div>
           <div class="w-40 flex justify-around">
             <MyPlay :id="item.id" />
-            <span> {{ formatTime(item.dt) || "00:00:00" }}</span>
+            <span>
+              {{ formatTime(item.dt || item.duration) || "00:00:00" }}</span
+            >
           </div>
         </div>
       </div>

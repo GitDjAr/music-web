@@ -99,7 +99,11 @@
       </div>
       <div class="flex">
         <p class="flex-1"></p>
-        <img class="w-10 h-10" src="@/assets/img/sds.gif" />
+        <img
+          @click.stop="getSimi"
+          class="w-10 h-10"
+          src="@/assets/img/sds.gif"
+        />
       </div>
     </div>
     <a-drawer
@@ -123,11 +127,32 @@
       />
       <playListVue v-show="!typeDrawer" @change="visible = false" />
     </a-drawer>
+
+    <ModalVue
+      width="800px"
+      v-model:visible="showDrawer"
+      :title="`${curPlaySong?.songName}-相似推荐`"
+    >
+      <div>
+        <songVue
+          v-for="item in simiMusic"
+          :id="item.id"
+          :dt="item.album.dt || item.duration"
+          :songName="item.name"
+          :singer="item?.album?.artists.map((e: any) => e.name).join('/')"
+          :url="item?.album?.picUrl"
+          @click="playLike(item)"
+        />
+      </div>
+    </ModalVue>
   </div>
 </template>
 
 <script lang="ts" setup>
+import songVue from "@/components/song.vue";
+import ModalVue from "@/components/Modal.vue";
 import playListVue from "./playList.vue";
+import { _simi_song } from "@/api/play";
 import palyGif from "@/components/playGfi.vue";
 import PlayPage from "./PlayPage.vue";
 import { formatTime } from "@/utils/format";
@@ -238,6 +263,22 @@ const iconSvg = computed(() => {
 
   return icon;
 });
+
+// 相似推荐
+const showDrawer = ref(false);
+const simiMusic = ref<any>([]);
+const getSimi = async () => {
+  showDrawer.value = true;
+  simiMusic.value = (await _simi_song({ id: curPlaySong.value.id })).songs;
+};
+
+function playLike(item: { id: any }) {
+  Store.dispatch("ToggleSong", {
+    id: item.id,
+    playListId: "相似推荐-" + curPlaySong.value.songName,
+    list: simiMusic.value,
+  });
+}
 </script>
 <style>
 .drawer {

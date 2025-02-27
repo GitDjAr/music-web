@@ -60,3 +60,18 @@ export function _lyric(params: object = {}) {
     params,
   });
 }
+
+/**
+ * 获取相似音乐
+说明 : 调用此接口 , 传入歌曲 id, 可获得相似歌曲
+必选参数 : id: 歌曲 id
+接口地址 : /simi/song
+调用例子 : /simi/song?id=347230 ( 对应 ' 光辉岁月 ' 相似歌曲 )
+ */
+export function _simi_song(params: { id: number }) {
+  return request({
+    url: "/simi/song",
+    method: "get",
+    params,
+  });
+}
