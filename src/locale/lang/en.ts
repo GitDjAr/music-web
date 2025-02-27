@@ -28,6 +28,7 @@ export default {
     charts: "Top Charts",
     recommendMv: "Recommend Mv",
     dayList: "Daily Single",
+    newSongExpress: "New Song Express",
   },
   library: {
     sLibrary: "'s Library",

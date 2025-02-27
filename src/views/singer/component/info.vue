@@ -27,7 +27,7 @@
         </template>
       </ul>
     </div>
-    <div class="w-1/4">
+    <div class="w-1/4" v-if="simiartist.length">
       <h2>{{ "相关艺人" }}</h2>
       <ul>
         <li

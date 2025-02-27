@@ -34,7 +34,7 @@
       }}</a-button>
       <a-popover v-if="userInfo.title">
         <Image
-          v-show="!isNotFavorite"
+          v-show="isNotFavorite"
           :src="userInfo.title"
           style="width: 40px; height: 40px"
           class="rounded-md"

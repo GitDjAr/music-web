@@ -16,7 +16,7 @@ export default {
     history: "播放历史",
     guitar: "吉他谱",
     polymerization: "聚合工具",
-    tools:{
+    tools: {
       nextPage: "前进",
       prevPage: "后退",
       theme: "主题",
@@ -30,6 +30,7 @@ export default {
     charts: "排行榜",
     recommendMv: "推荐mv",
     dayList: "每日单曲",
+    newSongExpress: "新歌速递",
   },
   library: {
     sLibrary: "的音乐库",

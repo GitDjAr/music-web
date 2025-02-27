@@ -49,10 +49,10 @@ servers.interceptors.request.use(
 );
 
 servers.interceptors.response.use(
-  async (res) => {
-    const { data = {} } = res;
+  async (res: any) => {
+    const { data = {}, code } = res;
     ShowMessage(data);
-    let co = data.code;
+    let co = code;
     // 进行缓存
     if (co === 200) {
       const CacheName =
@@ -60,8 +60,6 @@ servers.interceptors.response.use(
           ? res.config.url
           : JSON.stringify(res.config.data);
       Cache.set(CacheName, data || res);
-    } else if (co === 301) {
-      Notification.warning(res.data.msg);
     } else if ([404, 500, 502, 503].includes(co)) {
       return Promise.reject(data);
     }
@@ -70,8 +68,9 @@ servers.interceptors.response.use(
   async (err: AxiosError) => {
     ShowMessage({
       show: true,
-      code: 500,
-      message: err.message || err.response?.statusText || "未知错误",
+      code: err.response?.data.code || 500,
+      message:
+        err.response?.data.message || err.response?.statusText || "未知错误",
     });
     return Promise.reject({ data: {}, err });
   },
