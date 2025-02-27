@@ -2,7 +2,7 @@
 <template>
   <div class="flex">
     <Logo style="width: 180px" />
-    <ul class="title-nav-ul flex items-center ml-3">
+    <ul class="title-nav-ul flex items-center gap-3 ml-3">
       <li
         class="title-nav"
         v-for="(item, index) in titleList"
@@ -10,7 +10,9 @@
         :style="{ background: item.c }"
         @click="item.handler"
         v-hover:300="item.tip"
-      ></li>
+      >
+        <!-- <i :class="item.icon" class="text-white w-full h-full block"></i> -->
+      </li>
     </ul>
   </div>
   <div class="flex items-center">
@@ -81,13 +83,16 @@ nextTick(() => {
     {
       c: "#CDD8FC",
       tip: vueInstance?.ctx?.$t?.("nav.tools.prevPage"),
+      icon: "i-line-md-arrow-small-left",
       handler: () => {
+        1;
         Router.go(-1);
       },
     },
     {
       c: "#DED5FC",
       tip: vueInstance?.ctx?.$t?.("nav.tools.nextPage"),
+      icon: "i-line-md-arrow-small-right",
       handler: () => {
         Router.go(1);
       },
@@ -95,6 +100,7 @@ nextTick(() => {
     {
       c: "#E3E9FC",
       tip: vueInstance?.ctx?.$t?.("nav.tools.theme"),
+      icon: "i-line-md-moon",
       handler: useToggle(isDark),
     },
   ];
@@ -111,9 +117,8 @@ const Putin = () => {
 .title-nav-ul {
   .title-nav {
     cursor: pointer;
-    height: 15px;
-    width: 15px;
-    margin-right: 10px;
+    height: 22px;
+    width: 22px;
     border-radius: 50px;
   }
 }

@@ -42,7 +42,7 @@
               @click="albumOver(item)"
             >
               <div class="playCss">
-                <MyPlay :id="item.id" />
+                <MyPlay :id="item.id" size="maxlarge" />
               </div>
             </Image>
           </div>

@@ -1,20 +1,34 @@
 <template>
-  <div class="card" :style="{ 'background-image': `url(${prop.item.cover})` }">
+  <div
+    class="card"
+    :style="{ 'background-image': `url(${prop.item.cover})` }"
+    @click="playHandle"
+  >
     <div class="border"></div>
     <div class="content">
-      <div class="logo">
-        <div class="logo1">{{ prop.item.name }}</div>
-        <div class="logo2">{{ prop.item.artistName }}</div>
+      <div class="logo mb-4">
+        <div class="logo1 i-mynaui-music-hexagon text-xl"></div>
+        <div class="logo2 leading-8 text-xl">{{ prop.item.name }}</div>
         <span class="trail"></span>
       </div>
       <span class="logo-bottom-text">{{ prop.item.publishTime }}</span>
     </div>
-    <span class="bottom-text">{{ "1000万" }}</span>
+    <span class="bottom-text"
+      >{{ (prop.item.playCount / 10000).toFixed(2) }}万</span
+    >
+    <MyVideo :id="prop.item.id" v-model:show="VideoShow"></MyVideo>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ref } from "vue";
+
 const prop = defineProps(["item"]);
+
+const VideoShow = ref(false);
+const playHandle = () => {
+  VideoShow.value = true;
+};
 </script>
 
 <style scoped lang="scss">
@@ -86,11 +100,13 @@ const prop = defineProps(["item"]);
   overflow: hidden;
   transition: all 1s ease-in-out;
   color: #a8dba8;
+  opacity: 0;
 }
 
 .content .logo .logo1 {
   height: 33px;
   position: absolute;
+  width: 30px;
   left: 0;
 }
 
@@ -102,7 +118,7 @@ const prop = defineProps(["item"]);
 
 .content .logo .trail {
   position: absolute;
-  right: 0;
+  right: 0px;
   height: 100%;
   width: 100%;
   opacity: 0;
@@ -132,11 +148,11 @@ const prop = defineProps(["item"]);
     height: 100%;
     background: linear-gradient(
       rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0.9) 50%,
+      rgba(0, 0, 0, 1) 50%,
       rgba(0, 0, 0, 0.4) 100%
     );
     transition: opacity 0.5s ease-in-out; /* 优化：用 opacity 替代背景渐变过渡 */
-    opacity: 0.2;
+    opacity: 0.01;
     will-change: opacity, transform; /* 启用硬件加速优化性能 */
   }
 
@@ -145,7 +161,7 @@ const prop = defineProps(["item"]);
     border-radius: 6px;
 
     &::before {
-      opacity: 0.7; /* 通过透明度变化替代复杂渐变修改 */
+      opacity: 0.8; /* 通过透明度变化替代复杂渐变修改 */
     }
   }
 }
@@ -153,6 +169,7 @@ const prop = defineProps(["item"]);
 .card:hover .logo {
   width: 134px;
   animation: opacity 1s ease-in-out;
+  opacity: 1;
 }
 
 .card:hover .border {
@@ -228,7 +245,7 @@ const prop = defineProps(["item"]);
       rgba(189, 159, 103, 0) 90%,
       rgb(189, 159, 103) 100%
     );
-    opacity: 0;
+    opacity: 1;
   }
 }
 </style>

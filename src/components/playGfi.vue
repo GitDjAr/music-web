@@ -154,10 +154,10 @@ const pause = function () {
   canvas {
     position: absolute;
     background-repeat: no-repeat;
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    min-height: 40px;
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
     top: 0px;
     right: -20px;
     transform: translateY(-56%);

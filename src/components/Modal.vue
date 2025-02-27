@@ -109,7 +109,8 @@ function Close() {
 
 // 动态css
 const classContext = computed(() => {
-  return `${props.empty ? "p-0" : "p-5"} ${props.visible ? "mt-50" : "mt-0"} `;
+  // return `${props.empty ? "p-0" : "p-5"} ${props.visible ? "mt-50" : "mt-0"} `;
+  return `${props.empty ? "p-0" : "p-5"} ${props.visible ? "mt-0" : "mt-0"} `;
 });
 </script>
 <style scoped lang="scss">

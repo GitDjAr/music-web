@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="grid gap-2 grid-cols-4">
+  <div class="grid gap-2 grid-cols-3">
     <div
       :key="item"
       v-for="item in iconList"

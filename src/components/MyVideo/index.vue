@@ -1,8 +1,18 @@
 <!--  -->
 <template>
-  <ModalVue to="body" :class="`${proportion ? ' h-auto' : ''} transition-all`" :empty="true" :visible="P.show"
-    @close="handleClose">
-    <vue-plyr v-loading="loading" :options="VideoOptions" ref="videoRef" class="transition-all">
+  <ModalVue
+    to="body"
+    :class="`${proportion ? ' h-auto' : ''} transition-all`"
+    :empty="true"
+    :visible="P.show"
+    @close="handleClose"
+  >
+    <vue-plyr
+      v-loading="loading"
+      :options="VideoOptions"
+      ref="videoRef"
+      class="transition-all"
+    >
       <video :src="videoSrc"></video>
     </vue-plyr>
   </ModalVue>
@@ -52,8 +62,10 @@ watch(
   () => {
     if (player?.value?.playing && !P.show) {
       player.value.pause();
-    } else if (P.show) {
+    } else if (P.show && videoSrc.value) {
       VideoPlay();
+    } else {
+      get_mv_url();
     }
   },
 );
@@ -89,5 +101,4 @@ function handleClose() {
   emit("update:show", false);
 }
 </script>
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

@@ -101,7 +101,9 @@
         <p class="flex-1"></p>
         <img
           @click.stop="getSimi"
-          class="w-10 h-10"
+          alt="点我???"
+          title="点我???"
+          class="w-10 h-10 cursor-pointer"
           src="@/assets/img/sds.gif"
         />
       </div>

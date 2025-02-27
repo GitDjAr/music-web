@@ -35,11 +35,10 @@
         ></a-option>
       </a-select>
     </div>
-    <!-- <div class="listItem">
-      <h2>播放器样式:</h2>
-      {{ isDark }}
+    <div class="listItem">
+      <h2>主题:</h2>
       <a-switch type="round" v-model="isDark" @change="toggleDark" />
-    </div> -->
+    </div>
     <div class="listItem">
       <h2>歌词:</h2>
       <a-switch
@@ -56,7 +55,7 @@
 </template>
 
 <script lang="ts" setup>
-// import { useDark, useToggle } from "@vueuse/core";
+import { useDark, useToggle } from "@vueuse/core";
 import iconProgressVue from "./icon.vue";
 import { reactive, Ref, ref, computed } from "vue";
 import { useStore } from "vuex";
@@ -87,8 +86,8 @@ const lyricColor = computed(() => {
   return store.state?.app?.lyricColor;
 });
 
-// const isDark = ref(useDark());
-// const toggleDark = useToggle(isDark);
+const isDark = ref(useDark());
+const toggleDark = useToggle(isDark);
 </script>
 <style scoped lang="scss">
 .listBox {
@@ -96,8 +95,7 @@ const lyricColor = computed(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 30px;
-    margin-top: 30px;
+    margin: 30px;
   }
 }
 
