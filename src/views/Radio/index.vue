@@ -9,7 +9,7 @@
         unchecked-color="#14C9C9"
       />
     </div>
-    <div class="overflow-y-scroll scroll-none flex ml-2">
+    <div class="overflow-y-scroll no-scroll flex ml-2">
       <a-tag
         v-for="(tag, index) of tags"
         :key="tag"

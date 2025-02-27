@@ -183,7 +183,7 @@ export function likedArtists(params: any) {
  * 说明 : 调用此接口可获取到用户收藏的MV
  */
 export function likedMVs(params: { limit: number } & common) {
-  return request({
+  return request<{ data: T.mvSubscriber[] }>({
     url: "/mv/sublist",
     method: "get",
     params: {

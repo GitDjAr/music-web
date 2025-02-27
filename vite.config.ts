@@ -12,9 +12,6 @@ import { visualizer } from "rollup-plugin-visualizer";
 //icons
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
-//zip
-import zip from "vite-plugin-zip";
-
 // https://github.com/antfu/unplugin-vue-components
 // arco-design-vue 按需引入+自动 import+模板组件提示
 import { vitePluginForArco } from "@arco-plugins/vite-vue";

@@ -2,7 +2,7 @@
 <template>
   <div
     style="height: 60px"
-    class="relative w-full overflow-hidden"
+    class="relative w-full"
     @click.stop="toggle(2)"
     v-if="curPlaySong.id"
   >

@@ -312,3 +312,23 @@ export interface Album {
   artists: any[];
   isSub: boolean;
 }
+
+// mv
+export interface mvSubscriber {
+  type: number;
+  title: string;
+  durationms: number;
+  creator: Creator[];
+  playTime: number;
+  coverUrl: string;
+  vid: string;
+  aliaName: string;
+  transName: string;
+  alg?: any;
+  markTypes?: any;
+}
+
+export interface Creator {
+  userId: number;
+  userName: string;
+}

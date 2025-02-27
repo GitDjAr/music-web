@@ -1,5 +1,5 @@
 <template>
-  <div class="items-center justify-center flex group scroll-none pr-1">
+  <div class="items-center justify-center flex group no-scroll pr-1">
     <IconDoubleRight
       @click="pageChange(-1)"
       class="group-hover:opacity-100 opacity-0 group-hover:scale-150 w-12 transition-all rotate-180"
@@ -79,7 +79,7 @@ watch(
   () => Props.name,
   () => {
     getPlayGather({ name: Props.name });
-  }
+  },
 );
 
 // Method to handle page changes

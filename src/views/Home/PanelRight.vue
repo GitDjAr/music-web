@@ -3,7 +3,7 @@
   <div class="home-right h-full flex items-center flex-col">
     <template v-if="Store.getters.loginStatus">
       <h1 class="text-xl">{{ $t("home.dayList") }}</h1>
-      <ul class="right-ul w-11/12 overflow-scroll">
+      <ul class="right-ul w-11/12 overflow-y-scroll no-scroll">
         <template v-for="item in recommendSong">
           <li
             class="ul-li text-left flex items-center mb-5"

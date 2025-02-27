@@ -8,7 +8,7 @@
       <div class="left-list">
         <navVue />
       </div>
-      <div class="right-box w-full h-full">
+      <div class="right-box w-full h-full no-scroll">
         <!-- <router-view></router-view> -->
         <Suspense>
           <router-view v-slot="{ Component, route }">

@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-  <div class="w-full h-52">
-    <div class="mb-3 px-3 text-xl">
+  <div class="w-full h-52 p-4 select-none">
+    <div class="mb-3 text-xl">
       <div class="flex items-center justify-between w-full">
         <div class="flex items-center gap-10">
           <div>
@@ -54,7 +54,7 @@
       </div> -->
     </div>
     <div class="flex mt-10" :style="{ height: '660px' }">
-      <div class="w-5/12 mx-4 h-full pr-5">
+      <div class="w-5/12 h-full pr-5">
         <h3 class="text-xl mb-4" @click="getMyLiveList">我的喜欢</h3>
         <div
           :style="{ height: '650px' }"
@@ -74,20 +74,20 @@
         </div>
       </div>
 
-      <div class="w-7/12 mx-4 h-full">
+      <div class="w-7/12 h-full">
         <h3 class="text-xl mb-2">收藏歌单</h3>
         <userLikePlaylistVue />
       </div>
     </div>
 
-    <div class="my-16 py-10">
-      <newSong />
-    </div>
+    <newSong class="my-16 py-10" />
+    <mvCard class="pb-10" />
   </div>
 </template>
 
 <script lang="ts" setup>
 // import echarts from "./echarts/index.vue";
+import mvCard from "./mvCard.vue";
 import Song from "@/components/song.vue";
 import userLikePlaylistVue from "./userLikePlaylistVue.vue";
 import newSong from "./newSong.vue";

@@ -69,7 +69,7 @@
       </div>
     </div>
     <div class="flex justify-between gap-4 px-3 overscroll-y-auto">
-      <div class="hybull w-1/2">
+      <div class="hybull w-1/2 no-scroll">
         <h2 class="h-4"></h2>
         <div
           v-for="item in albumInfo.songs"
@@ -190,10 +190,6 @@ async function linkTo() {}
   transform: rotate(10deg);
 
   .hybull {
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
     height: calc(100% - 270px);
   }
 }

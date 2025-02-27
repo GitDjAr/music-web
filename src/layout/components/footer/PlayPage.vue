@@ -18,7 +18,7 @@
           />
         </div>
         <div
-          class="lyricsItem overflow-x-hidden overflow-y-scroll h-full mr-3"
+          class="lyricsItem overflow-x-hidden overflow-y-scroll h-full mr-3 no-scroll"
           :class="curPlaySong.lrc.length <= 10 ? `flex items-center` : ''"
         >
           <!--     :style="{
@@ -193,9 +193,5 @@ svg.transform.myfont {
     height: calc(100% - 80px);
     margin: 10px 0;
   }
-}
-
-.lyricsItem::-webkit-scrollbar {
-  display: none;
 }
 </style>

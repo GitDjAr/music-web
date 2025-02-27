@@ -1,7 +1,12 @@
-.scroll-none {
-  & ::-webkit-scrollbar {
-    display: none;
-  }
+.no-scroll ::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scroll {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .padding10 {
@@ -28,7 +33,7 @@
 }
 
 
-//https://antfu.me/posts/sliding-enter-animation  动画
+//https://antfu.me/posts/sliding-enter-animation  入场动画
 @keyframes enter {
   0% {
     opacity: 0;
