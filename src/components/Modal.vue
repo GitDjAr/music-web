@@ -3,23 +3,34 @@
 <template>
   <Teleport :to="props.to">
     <Transition name="modal">
-      <div v-show="props.visible" @click.self="maskClose"
-        :class="`flex transition-all  justify-center overflow-hidden items-center top-0 left-0 right-0 bottom-0 absolute z-10 bg-black bg-opacity-30`">
-        <div :style="{ width: props.width, maxHeight: '85vh' }" v-bind="$attrs"
-          :class="` ${classContext} modal-container flex flex-col  transition-all bg-white  overflow-hidden rounded-xl `">
+      <div
+        v-show="props.visible"
+        @click.self="maskClose"
+        :class="`flex transition-all  justify-center overflow-hidden items-center top-0 left-0 right-0 bottom-0 absolute z-10 bg-black bg-opacity-30`"
+      >
+        <div
+          :style="{ width: props.width, maxHeight: '85vh' }"
+          v-bind="$attrs"
+          :class="` ${classContext} modal-container flex flex-col  transition-all bg-white  overflow-hidden rounded-xl `"
+        >
           <template v-if="props.empty">
             <slot>空模板</slot>
           </template>
           <template v-else>
             <div class="flex justify-between items-center mb-4">
-              <p class="title" :class="`text-${props.center} text-2xl font-bold`">
+              <p
+                class="title"
+                :class="`text-${props.center} text-2xl font-bold`"
+              >
                 <slot name="title">
                   {{ props.title }}
                 </slot>
               </p>
               <icon-close @click="beforeClose" :style="{ fontSize: '26px' }" />
             </div>
-            <div class="classBody leading-relaxed w-full overflow-y-scroll overflow-x-hidden">
+            <div
+              class="classBody leading-relaxed w-full overflow-y-auto overflow-x-hidden"
+            >
               <slot>
                 {{ context }}
               </slot>
@@ -35,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-import { withDefaults, computed, } from "vue";
+import { withDefaults, computed } from "vue";
 import { RendererElement } from "vue";
 interface PropsType {
   width?: string;
