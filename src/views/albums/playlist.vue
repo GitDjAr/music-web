@@ -10,7 +10,7 @@
         class="rounded-lg ml-2 mb-5"
         :wh="[500, 500]"
       />
-      <Button @click="collect" :collectFlag="collectFlag">
+      <!-- <Button @click="collect" :collectFlag="collectFlag">
         {{ $t("nav.collect") + $t("playlist.playlist") }}
         <icon-heart-fill
           v-if="collectFlag"
@@ -18,7 +18,15 @@
           class="cursor-pointer"
         />
         <icon-heart v-else class="hover: text-pink - 500 cursor - pointer" />
-      </Button>
+      </Button> -->
+      <div>
+        <icon-heart-fill
+          v-if="collectFlag"
+          :style="{ color: 'red' }"
+          class="cursor-pointer"
+        />
+        <icon-heart v-else class="hover: text-pink - 500 cursor - pointer" />
+      </div>
     </div>
     <div class="flex-1 w-0" ref="refBox">
       <div

@@ -13,7 +13,7 @@
       <div
         class="grid items-center justify-center"
         style="grid-template-columns: 60px 3fr 1fr"
-        @click.stop
+        @click.stop="toggle(2)"
       >
         <Image
           style="width: 50px"

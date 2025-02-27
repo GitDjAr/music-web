@@ -35,7 +35,7 @@
       <div
         v-for="(item, index) in recPlayList"
         :key="item.id"
-        class="w-1/5 relative inline-block overflow-hidden"
+        class="recPlay"
         data-animate
         :style="{ '--stagger': index }"
       >
@@ -194,5 +194,8 @@ const tagList = ref<{ name: string; list?: T.MusicPlayList[]; tag?: string }[]>(
   border-radius: 6px;
   height: 200px;
   flex-wrap: wrap;
+}
+.recPlay {
+  @apply w-1/5 relative inline-block overflow-hidden;
 }
 </style>

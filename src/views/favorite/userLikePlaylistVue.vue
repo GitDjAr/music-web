@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="snap-x flex items-center overflow-x-scroll h-full flex-col flex-wrap box-border justify-around"
-  >
+  <div class="likeList">
     <div class="snap-start rounded-md" v-for="item in list">
       <albumVue
         mode="playlist"
@@ -38,4 +36,8 @@ const initData = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.likeList {
+  @apply snap-x flex items-center overflow-x-scroll h-full flex-col flex-wrap box-border justify-around;
+}
+</style>

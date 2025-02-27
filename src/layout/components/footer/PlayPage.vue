@@ -30,7 +30,7 @@
               }" -->
           <ul class="my-10" :style="styleImg" @click="handleClick">
             <li
-              class="transition-all text-xl mx-6 py-3 px-6 font-bold rounded-lg cursor-pointer select-none text-slate-300"
+              class="lrcLi"
               :class="{
                 line: index == active,
               }"
@@ -168,6 +168,7 @@ svg.transform.myfont {
   will-change: scroll-position;
 
   li {
+    @apply transition-all text-xl mx-6 py-3 px-6 font-bold rounded-lg cursor-pointer select-none text-slate-300;
     will-change: transform, opacity;
     &:hover {
       filter: blur(0) !important;

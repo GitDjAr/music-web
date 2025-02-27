@@ -1,31 +1,25 @@
 <!--  -->
 <template>
   <Transition name="fade" mode="out-in">
-    <div
-      v-if="songInfo.url"
-      class="flex justify-between items-center p-2 px-4 mb-3 hover:shadow-xl hover:border-gray-300 cursor-pointer transition-all rounded-md border border-b"
-    >
+    <div v-if="songInfo.url" class="songBox">
       <Image
         v-show="songInfo.url"
         :src="songInfo.url"
         :wh="[120, 120]"
         class="w-14 h-14 rounded-md"
       />
-      <div class="flex-1 mx-2 text-left inline-block truncate">
+      <div class="songName">
         {{ songInfo?.songName }}
       </div>
       <!-- tag subType=现场版 -->
       <!-- <div>{{ subType }}</div> -->
       <div @click.stop="goUser(songInfo)">{{ songInfo?.singer }}</div>
-      <div class="w-40 flex justify-around mr-2">
+      <div class="myButton">
         <MyPlay :id="songInfo.id" />
         <MyLike :id="songInfo.id" />
       </div>
       <span v-show="songInfo.dt"> {{ formatTime(songInfo.dt) }}</span>
-      <div
-        v-show="songInfo?.orgin"
-        class="w-40 truncate overflow-hidden whitespace-nowrap"
-      >
+      <div v-show="songInfo?.orgin" class="orgin">
         {{ songInfo?.orgin }}
       </div>
     </div>
@@ -70,4 +64,17 @@ async function goUser(row: songInfo) {
   }
 }
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.songBox {
+  @apply flex justify-between items-center p-2 px-4 mb-3 hover:shadow-xl hover:border-gray-300 cursor-pointer transition-all rounded-md border border-b;
+  .songName {
+    @apply flex-1 mx-2 text-left inline-block truncate;
+  }
+  .myButton {
+    @apply w-40 flex justify-around mr-2;
+  }
+  .orgin {
+    @apply w-40 truncate overflow-hidden whitespace-nowrap;
+  }
+}
+</style>
