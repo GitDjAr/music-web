@@ -152,7 +152,7 @@ svg.transform.myfont {
 }
 
 .lyricsItem .line {
-  filter: blur(0) !important;
+  // filter: blur(0) !important;
   color: var(--ImgColor);
   transform-origin: left center;
   transform: scale(1.1) translateX(-10px);
@@ -171,7 +171,7 @@ svg.transform.myfont {
     @apply transition-all text-xl mx-6 py-3 px-6 font-bold rounded-lg cursor-pointer select-none text-slate-300;
     will-change: transform, opacity;
     &:hover {
-      filter: blur(0) !important;
+      // filter: blur(0) !important;
       background: rgba(255, 255, 255, 0.1);
     }
   }

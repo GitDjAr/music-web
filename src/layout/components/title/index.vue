@@ -15,7 +15,7 @@
       </li>
     </ul>
   </div>
-  <div class="flex items-center">
+  <div class="flex items-center gap-3">
     <div v-if="loginStatus" class="flex mx-3 h-[40px] items-center">
       <a-popover position="bottom" trigger="click">
         <a-badge :count="9" dot :offset="[2, -2]">

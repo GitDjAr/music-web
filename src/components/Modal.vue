@@ -3,11 +3,7 @@
 <template>
   <Teleport :to="props.to">
     <Transition name="modal">
-      <div
-        v-show="props.visible"
-        @click.self="maskClose"
-        :class="`flex transition-all  justify-center overflow-hidden items-center top-0 left-0 right-0 bottom-0 absolute z-10 bg-black bg-opacity-30`"
-      >
+      <div v-show="props.visible" @click.self="maskClose" :class="`myModal`">
         <div
           :style="{ width: props.width, maxHeight: '85vh' }"
           v-bind="$attrs"
@@ -114,6 +110,10 @@ const classContext = computed(() => {
 });
 </script>
 <style scoped lang="scss">
+.myModal {
+  @apply flex transition-all  justify-center overflow-hidden items-center top-0 left-0 right-0 bottom-0 absolute z-10 bg-black bg-opacity-30;
+  z-index: 9999;
+}
 .modal-container {
   transition: all 0.3s ease;
 }
