@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-// import vuex from "./store/index"
 
 // tailwind.css  样式覆盖问题
 // https://github.com/arco-design/arco-design-vue/issues/759

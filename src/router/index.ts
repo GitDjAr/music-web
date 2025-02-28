@@ -7,20 +7,16 @@ const Home = () => import("../views/Home/index.vue");
 const search = () => import("../views/search/index.vue");
 const radio = () => import("../views/Radio/index.vue");
 const setting = () => import("../views/settings/index.vue");
-const About = () => import("../views/About.vue");
 const TopCharts = () => import("../views/Home/TopCharts.vue");
-const albums = () => import("../views/albums/index.vue");
 const playListPage = () => import("../views/playListPage/index.vue");
-const albumsList = () => import("../views/albums/albumsList.vue");
-const playlist = () => import("../views/albums/playlist.vue");
+const albumsList = () => import("../views/singer/albums/albumsList.vue");
+const playlist = () => import("../views/singer/albums/playlist.vue");
 const singer = () => import("../views/singer/index.vue");
 const favorite = () => import("../views/favorite/index.vue");
 const playHistroy = () => import("../views/playHistroy/index.vue");
 
 // test page
-const test = () => import("../views/test/index.vue");
-const aiVue = () => import("../views/test/ai.vue");
-const Page404 = () => import("../views/404/index.vue");
+const Page404 = () => import("../views/404.vue");
 
 // 工具
 const polymerization = () => import("../views/polymerization/index.vue");
@@ -61,12 +57,6 @@ export const routes: Array<RouteRecordRaw> = [
         component: playListPage,
       },
       {
-        path: "albums",
-        name: "albums",
-        meta: { title: "专辑", keepalive: true },
-        component: albums,
-      },
-      {
         path: "albums/:id",
         name: "albums",
         meta: { title: "专辑", keepalive: true },
@@ -87,12 +77,12 @@ export const routes: Array<RouteRecordRaw> = [
         //   { path: '', component: Page404 },
         // ]
       },
-      {
-        path: "about",
-        name: "about",
-        meta: { title: "关于", keepalive: true },
-        component: About,
-      },
+      // {
+      //   path: "about",
+      //   name: "about",
+      //   meta: { title: "关于", keepalive: true },
+      //   component: About,
+      // },
       {
         path: "favorite",
         name: "favorite",
@@ -110,20 +100,6 @@ export const routes: Array<RouteRecordRaw> = [
         name: "search",
         meta: { title: "搜索", keepalive: false },
         component: search,
-      },
-      {
-        path: "test",
-        name: "test",
-        meta: { title: "test", keepalive: false },
-        component: aiVue,
-        children: [
-          {
-            path: "ai",
-            name: "ai",
-            meta: { title: "ai", keepalive: false },
-            component: aiVue,
-          }
-        ]
       },
       {
         path: "playHistory",
@@ -165,7 +141,6 @@ export const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-
   {
     path: "/",
     redirect: "/Music/home",

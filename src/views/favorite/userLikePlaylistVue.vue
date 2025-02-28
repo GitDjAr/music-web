@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-import albumVue from "@/components/album/index.vue";
+import albumVue from "../singer/component/item.vue";
 import { T, userPlaylist } from "@/api/playlist";
 
 import { useStore } from "vuex";

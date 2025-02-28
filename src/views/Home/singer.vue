@@ -22,12 +22,6 @@
             :src="`${item.img1v1Url}?param=180y180`"
           />
         </div>
-
-        <!-- <p
-          class="group-hover/singer:opacity-100 group-hover/singer:translate-y-0 -translate-y-1 opacity-0 my-1 w-full"
-        >
-          {{ item.name }}
-        </p> -->
       </div>
     </div>
   </div>

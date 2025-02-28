@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import meMsg from "@/views/me/index.vue";
+import meMsg from "@/views/home/msg/index.vue";
 import { useDark, useToggle } from "@vueuse/core";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";

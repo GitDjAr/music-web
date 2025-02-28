@@ -13,7 +13,7 @@
 
 <script lang="ts" setup>
 import { vInfiniteScroll } from "@vueuse/components";
-import albumVue from "@/components/album/index.vue";
+import albumVue from "./item.vue";
 import { _artist_album } from "@/api/user";
 import { ref, Ref, computed, reactive } from "vue";
 

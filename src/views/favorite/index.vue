@@ -13,8 +13,8 @@
             <span>关注</span>
           </div>
           <div>
-            <p>{{ user.level }}</p>
-            <span>等级</span>
+            <level :v="user.level"></level>
+            <p>等级</p>
           </div>
         </div>
         <div class="flex items-end">

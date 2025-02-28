@@ -1,14 +1,5 @@
 <template>
   <div v-if="first" :msg="user" @contextmenu.prevent>
-    <!-- <Suspense>
-      <router-view v-slot="{ Component, route }">
-        <transition :name="route.meta.transition || 'fade'" mode="out-in">
-          <keep-alive>
-          <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined" />
-          </keep-alive>
-        </transition>
-      </router-view>
-    </Suspense> -->
     <router-view></router-view>
   </div>
   <div v-show="!first" class="h-full flex justify-center items-center">
@@ -83,8 +74,6 @@ watch(ArrowDown, (v) => {
 </script>
 
 <style lang="scss">
-// @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@0;1&display=swap");
-
 body {
   transition: all 0.5s ease-in-out;
   position: relative;
@@ -158,16 +147,6 @@ html.dark body {
       #faaca8 100%,
       #faaca8 100%
     );
-  }
-
-  &:hover {
-    /* &::after {
-      top: 0;
-      left: 0;
-      height: 100vh;
-      right: 0;
-      opacity: 1;
-    } */
   }
 }
 </style>

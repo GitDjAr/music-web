@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import albumVue from "@/components/album/index.vue";
+import albumVue from "../../singer/component/item.vue";
 import { ref, watch } from "vue";
 import { cloudsearch, T } from "@/api/playlist";
 
@@ -36,7 +36,7 @@ watch(
     if (!params.activation && Activated === true) {
       searchSuggest();
     }
-  }
+  },
 );
 const arr = ref([]);
 arr.value = Array.from({ length: 8 });

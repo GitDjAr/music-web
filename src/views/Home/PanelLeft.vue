@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts" setup>
-import PlayList from "../playListPage/listcnp.vue";
+import PlayList from "../playListPage/carefullyChosen.vue";
 import { reactive, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { personalizedMV } from "@/api/Home";

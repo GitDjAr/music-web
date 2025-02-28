@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 import { _mv_url } from "@/api/user";
-import vuePlyr from "@/components/playVideo/index.vue";
+import vuePlyr from "@/components/MyVideo/playVideo.vue";
 import videoInstance from "@/components/MyVideo/type";
 import { onMounted } from "vue";
 import { watch, withDefaults, computed, ref, Ref } from "vue";
