@@ -1,19 +1,12 @@
 <!--  -->
 <template>
-  <!--
-    在Tailwind CSS中，您可以使用以下类名来实现 grid-template-columns: auto 1fr; 的效果：
-    <div class="grid grid-cols-2 gap-4">
-      <div class="col-span-1">...</div>
-      <div class="col-span-2">...</div>
-    </div>
-   -->
   <div
-    class="max-h-[500px] overflow-y-scroll divide-y divide-purple-800"
+    class="max-h-[500px] overflow-y-scroll"
     v-infinite-scroll="[get_notice, { distance: 12 }]"
   >
     <div
       v-for="(item, idx) in User_notices"
-      class="grid gap-2 grid-cols-2 py-1 mb-1"
+      class="grid gap-3 grid-cols-2 py-1 mb-4"
       style="grid-template-columns: auto 1fr"
       :key="idx"
       @click="showModel(item)"

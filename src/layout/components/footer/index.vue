@@ -26,7 +26,7 @@
           >
             {{ curPlaySong?.songName }}
           </h2>
-          <p class="cursor-pointer pt-1" @click="goUser">
+          <p class="cursor-pointer pt-2" @click.stop="goUser">
             {{ curPlaySong?.user }}
           </p>
         </div>

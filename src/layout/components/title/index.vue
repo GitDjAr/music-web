@@ -122,4 +122,7 @@ const Putin = () => {
     border-radius: 50px;
   }
 }
+.arco-trigger-content {
+  border-radius: 20px;
+}
 </style>

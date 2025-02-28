@@ -4,10 +4,11 @@
       <div
         v-for="(item, index) in projects"
         :key="index"
-        class="project"
-        @click="toggleOpen(index)"
+        class="project rounded-md overflow-hidden"
       >
-        <Image
+        <MovieCard :key="item.vid" :item="item" />
+
+        <!-- <Image
           style="width: 250px; height: 250px"
           :src="item.coverUrl"
           :wh="[300, 300]"
@@ -30,12 +31,7 @@
             :d="paths[i]"
             :fill="color"
           />
-        </svg>
-        <div class="shadow"></div>
-        <div
-          v-if="index === 2"
-          :class="{ video: true, 'is-opened': openedIndex === index }"
-        ></div>
+        </svg> -->
       </div>
     </div>
   </div>
@@ -48,6 +44,7 @@ import { T } from "@/api/playlist";
 import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { getImgsColor } from "@/utils/getImgsColor";
+import MovieCard from "@/components/MovieCard.vue";
 
 // 注册 Draggable 插件
 gsap.registerPlugin(Draggable);
@@ -72,11 +69,6 @@ export default defineComponent({
     let prevX = 0;
     let diffX = 0;
     let draggableX = 0;
-
-    // 切换打开状态
-    const toggleOpen = (index: number) => {
-      openedIndex.value = openedIndex.value === index ? null : index;
-    };
 
     // 初始化动画和拖拽
     onMounted(() => {
@@ -147,7 +139,6 @@ export default defineComponent({
       paths,
       pathColors,
       openedIndex,
-      toggleOpen,
     };
   },
 });
@@ -163,7 +154,7 @@ export default defineComponent({
 }
 
 .project {
-  @apply flex  relative w-[445px] h-[250px]  items-center justify-between rounded-md flex-shrink-0 text-[#20004a] font-bold text-[34px] leading-tight tracking-[0.02em];
+  @apply flex  relative w-[300px] h-[200px]  items-center justify-between rounded-md flex-shrink-0 text-[#20004a] font-bold text-[34px] leading-tight tracking-[0.02em];
 }
 
 .title {
@@ -177,9 +168,5 @@ export default defineComponent({
 .video {
   @apply absolute top-1/2 left-1/2 w-[200%] h-[200%] bg-black transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-[cubic-bezier(0.87,0,0.13,1)] z-20;
   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
-}
-
-.video.is-opened {
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 </style>

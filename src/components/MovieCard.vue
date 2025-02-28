@@ -1,22 +1,29 @@
 <template>
   <div
     class="card"
-    :style="{ 'background-image': `url(${prop.item.cover})` }"
+    :style="{
+      'background-image': `url(${prop.item.cover || prop.item.coverUrl})`,
+    }"
     @click="playHandle"
   >
     <div class="border"></div>
     <div class="content">
       <div class="logo mb-4">
         <div class="logo1 i-mynaui-music-hexagon text-xl"></div>
-        <div class="logo2 leading-8 text-xl">{{ prop.item.name }}</div>
+        <div class="logo2 leading-8 text-xl">
+          {{ prop.item.name || prop.item.title }}
+        </div>
         <span class="trail"></span>
       </div>
       <span class="logo-bottom-text">{{ prop.item.publishTime }}</span>
     </div>
-    <span class="bottom-text"
+    <span class="bottom-text" v-show="prop.item.playCount"
       >{{ (prop.item.playCount / 10000).toFixed(2) }}万</span
     >
-    <MyVideo :id="prop.item.id" v-model:show="VideoShow"></MyVideo>
+    <MyVideo
+      :id="prop.item.id || prop.item.vid"
+      v-model:show="VideoShow"
+    ></MyVideo>
   </div>
 </template>
 
@@ -37,7 +44,7 @@ const playHandle = () => {
   width: 300px !important;
   height: 200px !important;
   position: relative;
-  background-size: auto 100%;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
 
