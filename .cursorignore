@@ -1,0 +1,36 @@
+# 依赖目录
+node_modules/
+venv/
+.env/
+__pycache__/
+
+# 构建输出
+dist/
+build/
+out/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+logs/
+
+# IDE 配置
+.idea/
+.vscode/
+
+# 临时文件
+*.tmp
+*.temp
+*.swp
+
+# 编译文件
+*.pyc
+*.class
+*.o
+
+# 包管理文件
+package-lock.json
+yarn.lock
