@@ -1,0 +1,10 @@
+version: "3"
+services:
+  vue-app:
+    build: .
+    container_name: vue-app
+    ports:
+      - "88:88"
+    restart: unless-stopped
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf

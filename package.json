@@ -8,7 +8,7 @@
     "deploy:js": "vite build && config/deploy.js",
     "T-dep": "curl http://124.222.62.70:2004/update/file -F file=@dist/music.zip -F path=/myServer/music-web/",
     "b": "vue-tsc --noEmit && vite build ",
-    "build": " vite build",
+    "build": " vite build --mode production",
     "preview": "vite preview",
     "postinstall": "husky install",
     "cz": "git add . && cz",
